@@ -29,13 +29,13 @@
 </head>
 
 <body>
-    <%@ include file="/common/web/header.jsp"%>
+    <%@ include file="/common/user/header.jsp"%>
     
     <div class="main">
 		<sitemesh:write property="body"/>
 	</div>
 	
-	<%@ include file="/common/web/footer.jsp"%>
+	<%@ include file="/common/user/footer.jsp"%>
 
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/modernizr-3.6.0.min.js"></script>

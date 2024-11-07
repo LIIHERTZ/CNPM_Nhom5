@@ -109,11 +109,6 @@
 			<version>1.5</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.movie</groupId>
-			<artifactId>Online-Cinema-Ticket-Booking-System</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
