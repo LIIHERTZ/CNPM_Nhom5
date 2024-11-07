@@ -15,19 +15,19 @@ import jakarta.persistence.Table;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int perID;
+    protected int perID;
 
     @Column(nullable = false)
-    private String fullName;
+    protected String fullName;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    protected String email;
 
     @Column(nullable = false)
-    private String password;
+    protected String password;
 
-    private String phone;
-    private String role;
+    protected String phone;
+    protected String role;
 
     @OneToMany(mappedBy = "person")
     private List<Review> reviews;
@@ -37,5 +37,79 @@ public class Person {
 
     @OneToMany(mappedBy = "person")
     private List<Message> messages;
+
+	public int getPerID() {
+		return perID;
+	}
+
+	public void setPerID(int perID) {
+		this.perID = perID;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public List<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(List<Payment> payments) {
+		this.payments = payments;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+    
+    
 }
     // Getters and setters
