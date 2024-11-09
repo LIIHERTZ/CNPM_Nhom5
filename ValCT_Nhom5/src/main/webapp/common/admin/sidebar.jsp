@@ -42,6 +42,10 @@
 				<li class="sidebar__nav-item">
 					<a href="catalog.html" class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Catalog</span></a>
 				</li>
+				
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/adminnewsOrDiscounts" class="sidebar__nav-link"><i
+						class="ti ti-notification"></i> <span>News And Discount</span></a></li>
 
 				<li class="sidebar__nav-item">
 					<a href="users.html" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
