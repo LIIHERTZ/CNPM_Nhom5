@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 
@@ -31,19 +31,32 @@
 
 	<!-- ==========Banner-Section========== -->
 	<section class="details-banner hero-area bg_img"
-		data-background="assets/images/banner/banner03.jpg">
+		data-background="'assets/images/banner/banner03.jpg'">
 		<div class="container">
 			<div class="details-banner-wrapper">
 				<div class="details-banner-content">
-					<h3 class="title">Venus</h3>
-					<div class="tags">
-						<a href="#0">English</a> <a href="#0">Hindi</a> <a href="#0">Telegu</a>
-						<a href="#0">Tamil</a>
+					<!-- Display movie title -->
+					<h3 class="title">${movie.movieName}</h3>
+
+					<!-- Optional: Add additional movie information here -->
+					<div class="movie-info">
+						<!-- Example: Movie duration -->
+						<p>
+							<strong>Duration:</strong> ${movie.movieDuration}
+						</p>
+
+						<!-- Example: Movie release date -->
+						<p>
+							<strong>Category:</strong> ${movie.category}
+						</p>
+
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
 	<!-- ==========Banner-Section========== -->
 	<!-- ==========Book-Section========== -->
 	<section class="book-section bg-one">
@@ -80,15 +93,15 @@
 					<div class="thumb">
 						<img src="assets/images/ticket/city.png" alt="ticket">
 					</div>
-					<span class="type">location</span> <select class="select-bar">
-						<option value="london">London</option>
-						<option value="dhaka">dhaka</option>
-						<option value="rosario">rosario</option>
-						<option value="madrid">madrid</option>
-						<option value="koltaka">kolkata</option>
-						<option value="rome">rome</option>
-						<option value="khoksa">khoksa</option>
+					<span class="type">location</span> <select class="select-bar"
+						name="location" onchange="this.form.submit()">
+						<option value="">Select Location</option>
+						<c:forEach var="location" items="${locations}">
+							<option value="${location}"
+								>${location}</option>
+						</c:forEach>
 					</select>
+
 				</div>
 				<div class="form-group">
 					<div class="thumb">
