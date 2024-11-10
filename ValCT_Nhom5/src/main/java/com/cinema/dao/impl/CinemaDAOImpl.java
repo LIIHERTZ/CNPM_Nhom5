@@ -6,6 +6,7 @@ import java.util.List;
 import com.cinema.configs.JPAConfig;
 import com.cinema.dao.ICinemaDAO;
 import com.cinema.entity.Cinema;
+import com.cinema.entity.MovieScreenings;
 import com.cinema.entity.Person;
 import com.cinema.entity.Cinema;
 

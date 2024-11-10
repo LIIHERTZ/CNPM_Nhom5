@@ -5,6 +5,7 @@ import java.util.List;
 import com.cinema.dao.ICinemaDAO;
 import com.cinema.dao.impl.CinemaDAOImpl;
 import com.cinema.entity.Cinema;
+import com.cinema.entity.MovieScreenings;
 import com.cinema.services.ICinemaService;
 
 public class CinemaServiceImpl implements ICinemaService {
@@ -45,6 +46,7 @@ public class CinemaServiceImpl implements ICinemaService {
 	public List<Cinema> getCinemaByLocation(String location) {
 		return cinemaDao.getCinemaByLocation(location);
 	}
+
 
 
 

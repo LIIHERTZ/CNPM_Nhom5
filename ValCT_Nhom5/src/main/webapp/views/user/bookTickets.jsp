@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 
@@ -98,7 +99,8 @@
 						<option value="">Select Location</option>
 						<c:forEach var="location" items="${locations}">
 							<option value="${location}"
-								>${location}</option>
+								${location == selectedLocation ? "selected" : ""}>
+								${location}</option>
 						</c:forEach>
 					</select>
 
@@ -141,133 +143,28 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-9 mb-5 mb-lg-0">
 					<ul class="seat-plan-wrapper bg-five">
-						<li>
-							<div class="movie-name">
-								<div class="icons">
-									<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
+						<c:forEach var="cinema" items="${listCinema}">
+							<li>
+								<div class="movie-name">
+									<div class="icons">
+										<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
+									</div>
+									<a href="#0" class="name">${cinema.cinemaName}</a>
+									<div class="location-icon">
+										<i class="fas fa-map-marker-alt"></i>
+									</div>
 								</div>
-								<a href="#0" class="name">Genesis Cinema</a>
-								<div class="location-icon">
-									<i class="fas fa-map-marker-alt"></i>
+								<div class="movie-schedule">
+									<!-- Lấy danh sách suất chiếu từ cinemaScreeningsMap -->
+									<c:forEach var="screening"
+										items="${cinemaScreeningsMap[cinema.cinemaID]}">
+										<div class="item">
+											<fmt:formatDate value="${screening.startHour}"
+												pattern="HH:mm" />
+										</div>
+									</c:forEach>
 								</div>
-							</div>
-							<div class="movie-schedule">
-								<div class="item">09:40</div>
-								<div class="item">13:45</div>
-								<div class="item">15:45</div>
-								<div class="item">19:50</div>
-
-								<div class="item">21:50</div>
-
-								<div class="item">22:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-								<div class="item">23:50</div>
-
-							</div>
-						</li>
-						<li>
-							<div class="movie-name">
-								<div class="icons">
-									<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
-								</div>
-								<a href="#0" class="name">the beach</a>
-								<div class="location-icon">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-							</div>
-							<div class="movie-schedule">
-								<div class="item">09:40</div>
-								<div class="item">13:45</div>
-								<div class="item">15:45</div>
-								<div class="item">19:50</div>
-
-								<div class="item">19:50</div>
-							</div>
-						</li>
-						<li class="active">
-							<div class="movie-name">
-								<div class="icons">
-									<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
-								</div>
-								<a href="#0" class="name">city work</a>
-								<div class="location-icon">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-							</div>
-							<div class="movie-schedule">
-								<div class="item">09:40</div>
-								<div class="item active">13:45</div>
-								<div class="item">15:45</div>
-								<div class="item">19:50</div>
-							</div>
-						</li>
-						<li>
-							<div class="movie-name">
-								<div class="icons">
-									<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
-								</div>
-								<a href="#0" class="name">box park</a>
-								<div class="location-icon">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-							</div>
-							<div class="movie-schedule">
-								<div class="item">09:40</div>
-								<div class="item">13:45</div>
-								<div class="item">15:45</div>
-								<div class="item">19:50</div>
-							</div>
-						</li>
-						<li>
-							<div class="movie-name">
-								<div class="icons">
-									<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
-								</div>
-								<a href="#0" class="name">la mer</a>
-								<div class="location-icon">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-							</div>
-							<div class="movie-schedule">
-								<div class="item">09:40</div>
-								<div class="item">13:45</div>
-								<div class="item">15:45</div>
-								<div class="item">19:50</div>
-							</div>
-						</li>
-						<li>
-							<div class="movie-name">
-								<div class="icons">
-									<i class="far fa-heart"></i> <i class="fas fa-heart"></i>
-								</div>
-								<a href="#0" class="name">wanted</a>
-								<div class="location-icon">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-							</div>
-							<div class="movie-schedule">
-								<div class="item">09:40</div>
-								<div class="item">13:45</div>
-								<div class="item">15:45</div>
-								<div class="item">19:50</div>
-							</div>
-						</li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>

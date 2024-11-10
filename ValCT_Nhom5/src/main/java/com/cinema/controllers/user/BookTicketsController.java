@@ -2,14 +2,19 @@ package com.cinema.controllers.user;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cinema.entity.Cinema;
 import com.cinema.entity.Movie;
+import com.cinema.entity.MovieScreenings;
 import com.cinema.services.ICinemaService;
 import com.cinema.services.IMovieService;
+import com.cinema.services.IMovieScreeningsService;
 import com.cinema.services.impl.CinemaServiceImpl;
 import com.cinema.services.impl.MoviceServiceImpl;
+import com.cinema.services.impl.MovieScreeningsServiceImpl;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -24,31 +29,70 @@ public class BookTicketsController extends HttpServlet {
 
 	private IMovieService movieService = new MoviceServiceImpl();
 	private ICinemaService cinemaService = new CinemaServiceImpl();
+	private IMovieScreeningsService  movieScreeningService = new MovieScreeningsServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		String movieId = "1";
 
-		Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
-		
-		List<Cinema> listCinema = cinemaService.getAllCinema();
-		List<String> locations = new ArrayList<>();
-		for (Cinema cinema : listCinema) {
-			locations.add(cinema.getLocation());
-		}
-		req.setAttribute("locations", locations);
-		
-		req.setAttribute("listCinema", listCinema);
+	    String movieId = "2";
+	    String selectedLocation = req.getParameter("location");
 
-		   req.setAttribute("selectedLocation", req.getParameter("location")); 
-		// Set the movie name as a request attribute
-		req.setAttribute("movie", movie);
+	    Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
+	    List<Cinema> listCinema = cinemaService.getAllCinema();
+	    List<Cinema> filteredCinema = new ArrayList<>();
+	    
+	    
+	    Map<Integer, List<MovieScreenings>> cinemaScreeningsMap = new HashMap<>();
 
-		// Forward the request to the bookTickets.jsp page
-		RequestDispatcher rd = req.getRequestDispatcher("/views/user/bookTickets.jsp");
-		rd.forward(req, resp);
+	    
+	    // Nếu selectedLocation khác null và không rỗng, chỉ lấy các rạp có location phù hợp
+	    if (selectedLocation != null && !selectedLocation.isEmpty()) {
+	        for (Cinema cinema : listCinema) {
+	            if (cinema.getLocation().equals(selectedLocation)) {
+	                filteredCinema.add(cinema);
+	                
+	                
+	             // Lấy danh sách suất chiếu của bộ phim cho rạp này
+	                List<MovieScreenings> screenings = movieScreeningService.getScreeningsByMovieIdAndCinemaId(movie.getMovieID(), cinema.getCinemaID());
+	                cinemaScreeningsMap.put(cinema.getCinemaID(), screenings);
+	                
+	                
+	            }
+	        }
+	    } else {
+	        // Nếu selectedLocation là null hoặc rỗng, hiển thị tất cả rạp
+	        filteredCinema = listCinema;
+	        
+	        
+	        for (Cinema cinema : listCinema) {
+	            List<MovieScreenings> screenings = movieScreeningService.getScreeningsByMovieIdAndCinemaId(movie.getMovieID(), cinema.getCinemaID());
+	            cinemaScreeningsMap.put(cinema.getCinemaID(), screenings);
+	        }
+	        
+	        
+	        
+	    }
+
+	    List<String> locations = new ArrayList<>();
+	    for (Cinema cinema : listCinema) {
+	        if (!locations.contains(cinema.getLocation())) {
+	            locations.add(cinema.getLocation());
+	        }
+	    }
+
+	    req.setAttribute("locations", locations);
+	    req.setAttribute("listCinema", filteredCinema);
+	    req.setAttribute("selectedLocation", selectedLocation); 
+	    req.setAttribute("movie", movie);
+
+	    
+	    req.setAttribute("cinemaScreeningsMap", cinemaScreeningsMap); // Đưa map suất chiếu vào JSP
+	    
+	    
+	    RequestDispatcher rd = req.getRequestDispatcher("/views/user/bookTickets.jsp");
+	    rd.forward(req, resp);
 	}
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
