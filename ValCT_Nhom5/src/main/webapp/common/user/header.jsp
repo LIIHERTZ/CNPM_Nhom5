@@ -95,14 +95,14 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#0">blog</a>
+                        <a href="#0">Others</a>
                         <ul class="submenu">
                             <li>
-                                <a href="blog.html">Blog</a>
+                                <a href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsOrDiscount</a>
                             </li>
-                            <li>
-                                <a href="blog-details.html">Blog Single</a>
-                            </li>
+<!--                             <li> -->
+<!--                                 <a href="blog-details.html">Blog Single</a> -->
+<!--                             </li> -->
                         </ul>
                     </li>
                     <li>
