@@ -110,8 +110,8 @@ public class BookTicketsController extends HttpServlet {
 	    // Lưu dữ liệu vào session
 	    HttpSession session = req.getSession();
 	    session.setAttribute("selectedLocation", selectedLocation);
-	    session.setAttribute("startHour", startHour);
-	    session.setAttribute("date", date);
+	    session.setAttribute("selectedStartHour", startHour);
+	    session.setAttribute("selectedTime", date);
 	    session.setAttribute("experience", experience);
 	    session.setAttribute("version", version);
 	    session.setAttribute("movie", movie);

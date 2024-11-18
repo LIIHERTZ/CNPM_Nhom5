@@ -1,16 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%
-// Lấy ngày hiện tại
-Calendar calendar = Calendar.getInstance();
-SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd yyyy");
-String currentDate = sdf.format(calendar.getTime());
-
 // Lấy giờ đã chọn (giả sử giờ được gửi từ server)
-String selectedTime = (String) request.getAttribute("date");
+String selectedTime = (String) request.getAttribute("startHour");
 if (selectedTime == null) {
 	selectedTime = "09:40"; // Giá trị mặc định nếu chưa có
 }
@@ -75,12 +70,13 @@ int countdownMinutes = 5;
 					</a>
 				</div>
 
-				<!-- Hiển thị ngày -->
+				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
-					<span class="date"><%=selectedTime%></span>
-					<!-- Dropdown chỉ hiển thị giờ đã chọn -->
+					<!-- Hiển thị ngày và giờ từ biến selectedTime (có thể chứa ngày và startHour) -->
+					<span class="date">  ${selectedStartHour} at ${selectedTime} 
+					</span>
 				</div>
-				
+
 				<!-- Đếm ngược thời gian -->
 				<div class="item">
 					<h5 class="title" id="countdown-timer">05:00</h5>
@@ -89,6 +85,7 @@ int countdownMinutes = 5;
 			</div>
 		</div>
 	</section>
+
 	<!-- ==========Page-Title========== -->
 
 	<!-- ==========Movie-Section========== -->
@@ -376,32 +373,20 @@ int countdownMinutes = 5;
 	</div>
 	<!-- ==========Movie-Section========== -->
 	<script>
-    // Đếm ngược thời gian
-    let countdownMinutes = <%= countdownMinutes %>; // Thời gian đặt vé (phút)
-    let countdownTime = countdownMinutes * 60; // Chuyển sang giây
-    const timerElement = document.getElementById("countdown-timer");
+    // Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
+    var countdown = 300;
+    var countdownTimer = document.getElementById("countdown-timer");
 
-    function startCountdown() {
-        const interval = setInterval(() => {
-            const minutes = Math.floor(countdownTime / 60);
-            const seconds = countdownTime % 60;
+    setInterval(function() {
+        var minutes = Math.floor(countdown / 60);
+        var seconds = countdown % 60;
+        countdownTimer.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        countdown--;
 
-            // Cập nhật hiển thị
-            timerElement.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-            // Khi đếm ngược về 0, dừng và có thể redirect hoặc thông báo
-            if (countdownTime <= 0) {
-                clearInterval(interval);
-                alert("Time is up! Redirecting to ticket selection.");
-                window.location.href = "/ValCT_Nhom5/bookTickets"; // Chuyển hướng nếu hết thời gian
-            }
-
-            countdownTime--;
-        }, 1000);
-    }
-
-    // Bắt đầu đếm ngược
-    startCountdown();
+        if (countdown < 0) {
+            clearInterval(countdownInterval); // Dừng đếm ngược khi hết thời gian
+        }
+    }, 1000);
 </script>
 </body>
 </html>
