@@ -1,7 +1,10 @@
 package com.cinema.controllers.user;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +107,7 @@ public class BookTicketsController extends HttpServlet {
 	    String version = req.getParameter("version");
 	    String startHour = req.getParameter("startHour");
 
+	    
 	    // Lấy thông tin movie
 	    Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
 

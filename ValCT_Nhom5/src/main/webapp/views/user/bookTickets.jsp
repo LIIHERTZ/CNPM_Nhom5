@@ -30,8 +30,8 @@
 					Seat Plans <i class="fas fa-angle-right"></i>
 				</button>
 			</form>
-			
-			
+
+
 
 
 		</div>
@@ -85,7 +85,7 @@
 						int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
 						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-						calendar.set(Calendar.DAY_OF_MONTH, 1); // Đặt về ngày đầu tiên của tháng
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay); // Đặt về ngày đầu tiên của tháng
 
 						while (calendar.get(Calendar.MONTH) == month) {
 							String date = sdf.format(calendar.getTime());
@@ -163,15 +163,14 @@
 									</div>
 								</div>
 								<div class="movie-schedule">
+									<!-- Lấy danh sách suất chiếu từ cinemaScreeningsMap -->
 									<c:forEach var="screening"
 										items="${cinemaScreeningsMap[cinema.cinemaID]}">
-										<div class="item">
-											<!-- Khi người dùng bấm chọn, giá trị startHour sẽ được gắn vào form -->
-											<button type="button" class="custom-button"
-												onclick="setStartHour('${screening.startHour}')">
-												<fmt:formatDate value="${screening.startHour}"
-													pattern="HH:mm" />
-											</button>
+										<div class="item" style="cursor: pointer;"
+											onclick="setStartHour('${screening.startHour}')">
+											<!-- Giữ giao diện cũ -->
+											<fmt:formatDate value="${screening.startHour}"
+												pattern="HH:mm" />
 										</div>
 									</c:forEach>
 								</div>
