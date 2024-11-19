@@ -26,7 +26,7 @@ public class SelectSeatsController extends HttpServlet {
 	    String location = req.getParameter("location");
 	    String experience = req.getParameter("experience");
 	    String version = req.getParameter("version");
-
+	    System.out.print(version);
 	    // Chuyển tiếp đến trang tiếp theo hoặc xử lý thêm
 	    req.setAttribute("startHour", startHour);
 	    req.setAttribute("date", date);

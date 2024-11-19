@@ -10,9 +10,9 @@ SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd yyyy");
 String currentDate = sdf.format(calendar.getTime());
 
 // Lấy giờ đã chọn (giả sử giờ được gửi từ server)
-String selectedTime = (String) request.getAttribute("date");
+String selectedTime = (String) request.getAttribute("startHour");
 if (selectedTime == null) {
-	selectedTime = "09:40"; // Giá trị mặc định nếu chưa có
+	selectedTime = "9:40"; // Giá trị mặc định nếu chưa có
 }
 
 // Đặt thời gian đếm ngược (5 phút)
@@ -75,7 +75,6 @@ int countdownMinutes = 5;
 					</a>
 				</div>
 
-				<!-- Hiển thị ngày -->
 				<div class="item date-item">
 					<span class="date"><%=selectedTime%></span>
 					<!-- Dropdown chỉ hiển thị giờ đã chọn -->
