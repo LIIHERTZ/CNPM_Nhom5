@@ -21,19 +21,6 @@ public class SelectSeatsController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String startHour = req.getParameter("startHour"); // Lấy giá trị startHour
-	    String date = req.getParameter("date");
-	    String location = req.getParameter("location");
-	    String experience = req.getParameter("experience");
-	    String version = req.getParameter("version");
-	    System.out.print(version);
-	    // Chuyển tiếp đến trang tiếp theo hoặc xử lý thêm
-	    req.setAttribute("startHour", startHour);
-	    req.setAttribute("date", date);
-	    req.setAttribute("location", location);
-	    req.setAttribute("experience", experience);
-	    req.setAttribute("version", version);
-
 	    req.getRequestDispatcher("/views/user/movie-seat-plan.jsp").forward(req, resp);
 	}
 
