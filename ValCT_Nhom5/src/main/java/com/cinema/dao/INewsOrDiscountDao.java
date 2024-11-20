@@ -9,7 +9,9 @@ public interface INewsOrDiscountDao {
 
 	List<NewsOrDiscount> findAll(int page, int pageSize);
 
-	List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName);
+	List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName, int page, int pageSize);
+	
+	int countBySearch(String searchKeyword);
 
 	List<NewsOrDiscount> findAll();
 
@@ -20,4 +22,5 @@ public interface INewsOrDiscountDao {
 	void update(NewsOrDiscount newsOrDiscount);
 
 	void insert(NewsOrDiscount newsOrDiscount);
+
 }

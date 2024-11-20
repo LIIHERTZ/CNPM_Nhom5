@@ -113,8 +113,42 @@ public class NewsOrDiscountController extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 
 		if (url.contains("newsOrDiscounts")) {
-			List<NewsOrDiscount> list = newsOrDiscountService.findAll();
-			req.setAttribute("listNewsOrDiscount", list);
+//			List<NewsOrDiscount> list = newsOrDiscountService.findAll();
+//			req.setAttribute("listNewsOrDiscount", list);
+			
+	        String searchKeyword = req.getParameter("search");
+	        int page = 0;
+	        int pageSize = 5; // Số item trên mỗi trang, có thể tùy chỉnh
+
+	        try {
+	            page = Integer.parseInt(req.getParameter("page"));
+	        } catch (NumberFormatException e) {
+	            // Mặc định page = 0 nếu không truyền hoặc lỗi định dạng
+	        }
+
+	        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+	            // Tìm kiếm
+	            List<NewsOrDiscount> searchResults = newsOrDiscountService.findByNewsOrDiscountname(searchKeyword, page, pageSize);
+	            
+	            // Tính số trang
+	            int totalItems = newsOrDiscountService.countBySearch(searchKeyword); // Phương thức đếm kết quả tìm kiếm
+	            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+	            
+	            req.setAttribute("listNewsOrDiscount", searchResults);
+	            req.setAttribute("totalPages", totalPages);
+	            req.setAttribute("currentPage", page);
+	        } else {
+	            // Phân trang
+	            List<NewsOrDiscount> pagedResults = newsOrDiscountService.findAll(page, pageSize);
+	            int totalItems = newsOrDiscountService.count();
+	            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+	            req.setAttribute("listNewsOrDiscount", pagedResults);
+	            req.setAttribute("totalPages", totalPages);
+	            req.setAttribute("currentPage", page);
+	        }
+			
+			
 			req.getRequestDispatcher("/views/admin/newsordiscount.jsp").forward(req, resp);
 		} else if (url.contains("newsOrDiscountadd")) {
 			req.getRequestDispatcher("/views/admin/newsordiscount-add.jsp").forward(req, resp);
@@ -142,12 +176,6 @@ public class NewsOrDiscountController extends HttpServlet {
 		
 		String uploadPath = "D:/images";
 
-//		String uploadPath = getServletContext().getRealPath("/images");
-//		File uploadDir = new File(uploadPath);
-//		if (!uploadDir.exists()) {
-//			uploadDir.mkdir();
-//		}
-
 		if (url.contains("newsOrDiscountinsert")) {
 			String title = req.getParameter("title");
 			String description = req.getParameter("description");
@@ -167,29 +195,6 @@ public class NewsOrDiscountController extends HttpServlet {
 			newsOrDiscount.setDetail(detail);
 			newsOrDiscount.setAuthor(author);
 			newsOrDiscount.setDate(date);
-
-//			String fname = "";
-//            String uploadPath = "C:\\Users\\ACER\\OneDrive\\Pictures\\Screenshots\\Web";
-//            File uploadDir = new File(uploadPath);
-//            if (!uploadDir.exists()) {
-//                uploadDir.mkdir();
-//            }
-
-//			try {
-//				Part part = req.getPart("images");
-//				if (part.getSize() > 0) {
-//					String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-//					fname = filename;
-//					part.write(uploadPath + File.separator + fname);
-////                    part.write(uploadPath + "/" + fname);
-//					newsOrDiscount.setImages(fname);
-//				} else {
-//					newsOrDiscount.setImages(
-//							"https://thumbs.dreamstime.com/b/news-woodn-dice-depicting-letters-bundle-small-newspapers-leaning-left-dice-34802664.jpg");
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 
 			String oldFile = newsOrDiscount.getImages();
 			handleImageUpload(req, newsOrDiscount, uploadPath);
@@ -222,22 +227,7 @@ public class NewsOrDiscountController extends HttpServlet {
 			newsOrDiscount.setAuthor(author);
 			newsOrDiscount.setDate(date);
 
-//			NewsOrDiscount oldNewsOrDiscount = newsOrDiscountService.findById(newsOrDiscountId);
-//			String oldFile = oldNewsOrDiscount.getImages();
-//
-//			String fname = "";
-//            String uploadPath = "C:\\Users\\ACER\\OneDrive\\Pictures\\Screenshots\\Web";
-//            File uploadDir = new File(uploadPath);
-//			if (!uploadDir.exists()) {
-//				uploadDir.mkdir();
-//			}
-
-//			String uploadPath = req.getServletContext().getRealPath("/images");
 			String oldFile = req.getParameter("oldImage");
-//            handleImageUpload(req, newsOrDiscount, uploadPath);
-//            if (newsOrDiscount.getImages() == null || newsOrDiscount.getImages().isEmpty()) {
-//                newsOrDiscount.setImages(oldFile);
-//            }
 			
 			try {
 		        Part part = req.getPart("images");
@@ -251,23 +241,7 @@ public class NewsOrDiscountController extends HttpServlet {
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
-			
-//			try {
-//				Part part = req.getPart("images");
-//				if (part.getSize() > 0) {
-//					String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-//					fname = filename;
-//					part.write(uploadPath + File.separator + fname);
-////                    part.write(uploadPath + "/" + fname);
-//					newsOrDiscount.setImages(fname);
-//				} else {
-//					newsOrDiscount.setImages(oldFile);
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-
-			
+						
 			newsOrDiscountService.update(newsOrDiscount);
 			resp.sendRedirect(req.getContextPath() + "/adminnewsOrDiscounts");
 		}

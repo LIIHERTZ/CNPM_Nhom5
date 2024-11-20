@@ -46,7 +46,8 @@
 											<c:otherwise>
 												<c:set var="imgUrl" value="${newsOrDiscount.images}" />
 											</c:otherwise>
-										</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;"/>
+										</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}"
+										style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;" />
 									</a>
 								</div>
 								<div class="post-content">
@@ -65,10 +66,6 @@
 												Bởi tác giả
 											</span>
 											<div class="authors">
-<!-- 												<div class="thumb"> -->
-<!-- 													<a href="#0"><img src="assets/images/blog/author.jpg" -->
-<!-- 														alt="#0"></a> -->
-<!-- 												</div> -->
 												<h6 class="title">
 													<a href="#0">${newsOrDiscount.author}</a>
 												</h6>
@@ -81,65 +78,96 @@
 								</div>
 							</div>
 						</c:forEach>
-						<!-- 						<div class="post-item"> -->
-						<!-- 							<div class="post-thumb"> -->
-						<!-- 								<a href="blog-details.html"> <img -->
-						<!-- 									src="assets/images/blog/blog04.jpg" alt="blog"> -->
-						<!-- 								</a> -->
-						<!-- 							</div> -->
-						<!-- 							<div class="post-content"> -->
-						<!-- 								<div class="post-header"> -->
-						<!-- 									<h4 class="title"> -->
-						<!-- 										<a href="blog-details.html"> Movie Ticket Prices: One Size -->
-						<!-- 											Fits All? It's Time to Experiment </a> -->
-						<!-- 									</h4> -->
-						<!-- 									<div class="meta-post"> -->
-						<!-- 										<a href="#0" class="mr-4"><i class="flaticon-conversation"></i>20 -->
-						<!-- 											Comments</a> <a href="#0"><i class="flaticon-view"></i>466 -->
-						<!-- 											View</a> -->
-						<!-- 									</div> -->
-						<!-- 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. -->
-						<!-- 										Phasellus ac cursus leo. Nullam dolor nunc, hendrerit non -->
-						<!-- 										velit id, pharetra viverra elit.</p> -->
-						<!-- 								</div> -->
-						<!-- 								<div class="entry-content"> -->
-						<!-- 									<div class="left"> -->
-						<!-- 										<span class="date">Dece 15, 2020 BY </span> -->
-						<!-- 										<div class="authors"> -->
-						<!-- 											<div class="thumb"> -->
-						<!-- 												<a href="#0"><img src="assets/images/blog/author.jpg" -->
-						<!-- 													alt="#0"></a> -->
-						<!-- 											</div> -->
-						<!-- 											<h6 class="title"> -->
-						<!-- 												<a href="#0">Alvin Mcdaniel</a> -->
-						<!-- 											</h6> -->
-						<!-- 										</div> -->
-						<!-- 									</div> -->
-						<!-- 									<a href="#0" class="buttons">Read More <i -->
-						<!-- 										class="flaticon-right"></i></a> -->
-						<!-- 								</div> -->
-						<!-- 							</div> -->
-						<!-- 						</div> -->
 					</article>
+					<!-- 										<div class="pagination-area text-center"> -->
+					<!-- 											<a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a> -->
+					<!-- 											<a href="#0">1</a> <a href="#0">2</a> <a href="#0" class="active">3</a> -->
+					<!-- 											<a href="#0">4</a> <a href="#0">5</a> <a href="#0"><span>Next</span><i -->
+					<!-- 												class="fas fa-angle-double-right"></i></a> -->
+					<!-- 										</div> -->
+					<span class="pagination-area text-center">${currentPage + 1}
+						of ${totalPages}</span>
+
 					<div class="pagination-area text-center">
-						<a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a>
-						<a href="#0">1</a> <a href="#0">2</a> <a href="#0" class="active">3</a>
-						<a href="#0">4</a> <a href="#0">5</a> <a href="#0"><span>Next</span><i
-							class="fas fa-angle-double-right"></i></a>
+
+
+						<div class="main__paginator-list">
+							<!-- Nút "Prev" -->
+							<c:choose>
+								<c:when test="${currentPage > 0}">
+									<a
+										href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage - 1}"
+										class="paginator__item"> <i
+										class="fas fa-angle-double-left"></i><span>Prev</span>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<span class="paginator__item disabled"> <i
+										class="fas fa-angle-double-left"></i><span>Prev</span>
+									</span>
+								</c:otherwise>
+							</c:choose>
+
+							<!-- Hiển thị từng trang (0-based index) -->
+							<c:forEach var="i" begin="0" end="${totalPages - 1}">
+								<c:choose>
+									<c:when test="${i == currentPage}">
+										<!-- Trang hiện tại -->
+										<a href="#" class="active">${i + 1}</a>
+									</c:when>
+									<c:otherwise>
+										<!-- Các trang khác -->
+										<a
+											href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${i}">
+											${i + 1} </a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+							<!-- Nút "Next" -->
+							<c:choose>
+								<c:when test="${currentPage < totalPages - 1}">
+									<a
+										href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage + 1}"
+										class="paginator__item"> <span>Next</span><i
+										class="fas fa-angle-double-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<span class="paginator__item disabled"> <span>Next</span><i
+										class="fas fa-angle-double-right"></i>
+									</span>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
+
 				</div>
 				<div class="col-lg-4 col-sm-10 col-md-8">
 					<aside>
+						<!-- 						<div class="widget widget-search"> -->
+						<!-- 							<h5 class="title">search</h5> -->
+						<!-- 							<form class="search-form"> -->
+						<!-- 								<input type="text" placeholder="Enter your Search Content" -->
+						<!-- 									required> -->
+						<!-- 								<button type="submit"> -->
+						<!-- 									<i class="flaticon-loupe"></i>Search -->
+						<!-- 								</button> -->
+						<!-- 							</form> -->
+						<!-- 						</div> -->
 						<div class="widget widget-search">
-							<h5 class="title">search</h5>
-							<form class="search-form">
-								<input type="text" placeholder="Enter your Search Content"
-									required>
+							<h5 class="title">Search</h5>
+							<form class="search-form" method="get"
+								action="${pageContext.request.contextPath}/usernewsOrDiscounts">
+								<!-- Thêm một ô input với giá trị là từ khóa tìm kiếm -->
+								<input type="text" name="search" value="${param.search}"
+									placeholder="Enter your Search Content">
 								<button type="submit">
 									<i class="flaticon-loupe"></i>Search
 								</button>
 							</form>
 						</div>
+
 						<div class="widget widget-post">
 							<h5 class="title">latest post</h5>
 							<div class="slider-nav">
@@ -147,40 +175,38 @@
 								<span class="flaticon-right-arrow-angle widget-next active"></span>
 							</div>
 							<div class="widget-slider owl-carousel owl-theme">
-								<div class="item">
-									<div class="thumb">
-										<a href="#0"> <img src="assets/images/blog/slider01.jpg"
-											alt="blog">
-										</a>
-									</div>
-									<div class="content">
-										<h6 class="p-title">
-											<a href="#0">Three Ways to Book Sporting Event Tickets</a>
-										</h6>
-										<div class="meta-post">
-											<a href="#0" class="mr-4"><i class="flaticon-loupe"></i>20
-												Comments</a> <a href="#0"><i class="flaticon-loupe"></i>466
-												View</a>
+								<!-- Vòng lặp hiển thị các bài viết mới -->
+								<c:forEach items="${listNewsOrDiscount}" var="newsOrDiscount">
+									<div class="item">
+										<div class="thumb">
+											<a
+												href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+												<c:choose>
+													<c:when
+														test="${newsOrDiscount.images.substring(0,5) != 'https'}">
+														<c:url value="/image?fname=${newsOrDiscount.images}"
+															var="imgUrl" />
+													</c:when>
+													<c:otherwise>
+														<c:set var="imgUrl" value="${newsOrDiscount.images}" />
+													</c:otherwise>
+												</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}"
+												style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;" />
+											</a>
+										</div>
+										<div class="content">
+											<h6 class="p-title">
+												<a
+													href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+													${newsOrDiscount.title} </a>
+											</h6>
+											<div class="meta-post">
+												<a href="#0"><i class="flaticon-user"></i>
+													${newsOrDiscount.author}</a>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="item">
-									<div class="thumb">
-										<a href="#0"> <img src="assets/images/blog/slider01.jpg"
-											alt="blog">
-										</a>
-									</div>
-									<div class="content">
-										<h6 class="p-title">
-											<a href="#0">Three Ways to Book Sporting Event Tickets</a>
-										</h6>
-										<div class="meta-post">
-											<a href="#0" class="mr-4"><i class="flaticon-loupe"></i>20
-												Comments</a> <a href="#0"><i class="flaticon-loupe"></i>466
-												View</a>
-										</div>
-									</div>
-								</div>
+								</c:forEach>
 							</div>
 						</div>
 					</aside>

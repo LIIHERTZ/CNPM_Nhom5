@@ -31,14 +31,19 @@ public class NewsOrDiscountDaoImpl implements INewsOrDiscountDao {
 	}
 
 	@Override
-	public List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName) {
+	public List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName, int page, int pageSize) {
 		EntityManager enma = JPAConfig.getEntityManager();
-        String jpql = "SELECT n FROM NewsOrDiscount n WHERE n.name LIKE :newsOrDiscountName";
+        String jpql = "SELECT n FROM NewsOrDiscount n WHERE n.title LIKE :newsOrDiscountName";
         TypedQuery<NewsOrDiscount> query = enma.createQuery(jpql, NewsOrDiscount.class);
         query.setParameter("newsOrDiscountName", "%" + newsOrDiscountName + "%");
+        
+     // Phân trang: setFirstResult và setMaxResults
+        query.setFirstResult(page * pageSize);
+        query.setMaxResults(pageSize);
+        
         return query.getResultList();
 	}
-
+	
 	@Override
 	public List<NewsOrDiscount> findAll() {
 		EntityManager enma = JPAConfig.getEntityManager();
@@ -107,6 +112,15 @@ public class NewsOrDiscountDaoImpl implements INewsOrDiscountDao {
         } finally {
             enma.close();
         }
+	}
+
+	@Override
+	public int countBySearch(String searchKeyword) {
+		EntityManager enma = JPAConfig.getEntityManager();
+	    String jpql = "SELECT COUNT(n) FROM NewsOrDiscount n WHERE n.title LIKE :newsOrDiscountName";
+	    TypedQuery<Long> query = enma.createQuery(jpql, Long.class);
+	    query.setParameter("newsOrDiscountName", "%" + searchKeyword + "%");
+	    return query.getSingleResult().intValue();
 	}
 
 }
