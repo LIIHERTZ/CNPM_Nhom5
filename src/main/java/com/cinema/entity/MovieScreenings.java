@@ -25,6 +25,9 @@ public class MovieScreenings {
 
     @Column(nullable = false)
     private Date endHour;
+    
+    @Column(name = "status", nullable = false, columnDefinition = "BIT")
+    private boolean status; // New field for cinema status using bit, named "status"
 
     @ManyToOne
     @JoinColumn(name = "roomID", nullable = false)
@@ -84,6 +87,14 @@ public class MovieScreenings {
 
 	@OneToMany(mappedBy = "movieScreenings")
     private List<Ticket> tickets;
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
     // Getters and setters
 }

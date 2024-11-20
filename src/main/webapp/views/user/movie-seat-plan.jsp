@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%
 // Lấy giờ đã chọn (giả sử giờ được gửi từ server)
 String selectedTime = (String) request.getAttribute("startHour");
 if (selectedTime == null) {
-	selectedTime = "09:40"; // Giá trị mặc định nếu chưa có
+	selectedTime = "9:40"; // Giá trị mặc định nếu chưa có
 }
 
 // Đặt thời gian đếm ngược (5 phút)
@@ -73,8 +75,8 @@ int countdownMinutes = 5;
 				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
 					<!-- Hiển thị ngày và giờ từ biến selectedTime (có thể chứa ngày và startHour) -->
-					<span class="date">  ${selectedStartHour} at ${selectedTime} 
-					</span>
+					<span class="date"> ${fn:substring(selectedStartHour, 11, 16)}
+						, ${selectedTime} </span>
 				</div>
 
 				<!-- Đếm ngược thời gian -->
@@ -373,20 +375,21 @@ int countdownMinutes = 5;
 	</div>
 	<!-- ==========Movie-Section========== -->
 	<script>
-    // Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
-    var countdown = 300;
-    var countdownTimer = document.getElementById("countdown-timer");
+		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
+		var countdown = 300;
+		var countdownTimer = document.getElementById("countdown-timer");
 
-    setInterval(function() {
-        var minutes = Math.floor(countdown / 60);
-        var seconds = countdown % 60;
-        countdownTimer.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-        countdown--;
+		setInterval(function() {
+			var minutes = Math.floor(countdown / 60);
+			var seconds = countdown % 60;
+			countdownTimer.textContent = minutes + ":"
+					+ (seconds < 10 ? "0" : "") + seconds;
+			countdown--;
 
-        if (countdown < 0) {
-            clearInterval(countdownInterval); // Dừng đếm ngược khi hết thời gian
-        }
-    }, 1000);
-</script>
+			if (countdown < 0) {
+				clearInterval(countdownInterval); // Dừng đếm ngược khi hết thời gian
+			}
+		}, 1000);
+	</script>
 </body>
 </html>

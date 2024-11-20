@@ -39,7 +39,7 @@
 
 
 			<property name="jakarta.persistence.jdbc.password"
-				value="123456" />
+				value="123..231" />
 
 
 			<property

@@ -2,7 +2,6 @@ package com.cinema.controllers.user;
 
 import java.io.IOException;
 
-import com.cinema.entity.Movie;
 import com.cinema.services.IMovieService;
 import com.cinema.services.impl.MoviceServiceImpl;
 
@@ -11,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/selectSeats")
 public class SelectSeatsController extends HttpServlet {
