@@ -10,7 +10,9 @@ public interface INewsOrDiscountService {
 
 	List<NewsOrDiscount> findAll(int page, int pagesize);
 
-	List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName);
+	List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName, int page, int pageSize);
+	
+	int countBySearch(String searchKeyword);
 
 	List<NewsOrDiscount> findAll();
 
@@ -21,5 +23,4 @@ public interface INewsOrDiscountService {
 	void update(NewsOrDiscount NewsOrDiscount);
 
 	void insert(NewsOrDiscount NewsOrDiscount);
-
 }

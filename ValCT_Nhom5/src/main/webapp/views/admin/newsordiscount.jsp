@@ -27,18 +27,18 @@
 						<a
 							href="${pageContext.request.contextPath}/adminnewsOrDiscountadd"
 							class="main__title-link main__title-link--wrap">Add item</a>
-
-						<!-- <select class="filter__select" name="sort" id="filter__sort">
-								<option value="0">Date created</option>
-								<option value="1">Rating</option>
-								<option value="2">Views</option>
-							</select> -->
-
 						<!-- search -->
-						<form action="#" class="main__title-form">
-							<input type="text" placeholder="Find...Not Code Yet">
-							<button type="button">
-								<i class="ti ti-search"></i>
+<!-- 												<form action="#" class="main__title-form"> -->
+<!-- 													<input type="text" placeholder="Find...Not Code Yet"> -->
+<!-- 													<button type="button"> -->
+<!-- 														<i class="ti ti-search"></i> -->
+<!-- 													</button> -->
+<!-- 												</form> -->
+						<form action="/ValCT_Nhom5/adminnewsOrDiscounts" class="main__title-form" method="get">
+							<input type="text" name="search" placeholder="Search by title"
+								value="${param.search}">
+							<button type="submit">
+							<i class="ti ti-search"></i>
 							</button>
 						</form>
 						<!-- end search -->
@@ -102,18 +102,10 @@
 													pattern="yyyy-MM-dd" />
 											</div>
 										</td>
-
 										<c:set var="formattedDetail"
 											value="${fn:escapeXml(newsOrDiscount.detail)}" />
-
-
 										<td>
 											<div class="catalog__btns">
-												<!-- 												<a href="javascript:void(0);" -->
-												<%-- 														onclick="showDescription('${newsOrDiscount.detail}');" --%>
-												<!-- 													class="catalog__btn catalog__btn--edit"> <i -->
-												<!-- 													class="ti ti-eye"></i> -->
-												<!-- 												</a> -->
 												<a href="javascript:void(0);"
 													onclick="showDescriptionFromElement(this);"
 													data-description="<c:out value="${newsOrDiscount.detail}" />"
@@ -123,15 +115,7 @@
 													href="<c:url value='/adminnewsOrDiscountedit?id=${newsOrDiscount.newsID }'/>"
 													class="catalog__btn catalog__btn--edit"> <i
 													class="ti ti-edit"></i>
-												</a>
-												<%-- 												<a href="<c:url value='/adminnewsOrDiscountdelete?id=${newsOrDiscount.newsID}' />"> --%>
-												<!-- 													<button type="button" data-bs-toggle="modal" -->
-												<!-- 														class="catalog__btn catalog__btn--delete" -->
-												<!-- 														data-bs-target="#modal-delete"> -->
-												<!-- 														<i class="ti ti-trash"></i> -->
-												<!-- 													</button> -->
-												<!-- 												</a> -->
-												<a href="javascript:void(0);"
+												</a> <a href="javascript:void(0);"
 													onclick="setDeleteId('${newsOrDiscount.newsID}');"
 													data-bs-toggle="modal"
 													class="catalog__btn catalog__btn--delete"
@@ -140,49 +124,6 @@
 											</div>
 										</td>
 								</c:forEach>
-								<!-- 									<td> -->
-								<!-- 										<div class="catalog__text">1</div> -->
-								<!-- 									</td> -->
-								<!-- 									<td> -->
-								<!-- 										<div class="catalog__text"> -->
-
-								<!-- 										</div> -->
-								<!-- 									</td> -->
-								<!-- 									<td> -->
-								<!-- 										<div class="catalog__text">Movie</div> -->
-								<!-- 									</td> -->
-								<!-- 									<td> -->
-								<!-- 										<div class="catalog__text"> -->
-								<!-- 											<img -->
-								<!-- 												src="https://i.pinimg.com/236x/60/52/7e/60527e7b1168ab96af4bc4a402ec0300--anime-princess-ren.jpg" -->
-								<!-- 												alt="Image Description" style="width: 75px; height: 75px;"> -->
-								<!-- 										</div> -->
-								<!-- 									</td> -->
-								<!-- 									<td> -->
-								<!-- 										<div class="catalog__text catalog__text--green"> -->
-								<!-- 											<img -->
-								<!-- 												src="https://th.bing.com/th/id/OIP.TeBA_Y7VB4E3BJiHZdR5mwHaEj?rs=1&pid=ImgDetMain" -->
-								<!-- 												alt="Image Description" style="width: 75px; height: 75px;"> -->
-								<!-- 										</div> -->
-								<!-- 									</td> -->
-								<!-- 									<td> -->
-								<!-- 										<div class="catalog__text">05.02.2023</div> -->
-								<!-- 									</td> -->
-								<!-- 								<td> -->
-								<!-- 									<div class="catalog__btns"> -->
-								<!-- 										<a -->
-								<%-- 											href="<c:url value='/admin/newsOrDiscount/edit?id=${newsOrDiscount.newsID }'/>" --%>
-								<!-- 											class="catalog__btn catalog__btn--edit"> <i -->
-								<!-- 											class="ti ti-edit"></i> -->
-								<!-- 										</a> <a> -->
-								<!-- 											<button type="button" data-bs-toggle="modal" -->
-								<!-- 												class="catalog__btn catalog__btn--delete" -->
-								<!-- 												data-bs-target="#modal-delete"> -->
-								<!-- 												<i class="ti ti-trash"></i> -->
-								<!-- 											</button> -->
-								<!-- 										</a> -->
-								<!-- 									</div> -->
-								<!-- 								</td> -->
 							</tr>
 						</tbody>
 					</table>
@@ -191,36 +132,74 @@
 			<!-- end items -->
 
 			<!-- paginator -->
+<!-- 						<div class="col-12"> -->
+<!-- 							<div class="main__paginator"> -->
+<!-- 								amount <span class="main__paginator-pages">10 of 169</span> end -->
+<!-- 								amount -->
+
+<!-- 								<ul class="main__paginator-list"> -->
+<!-- 									<li><a href="#"> <i class="ti ti-chevron-left"></i> <span>Prev</span> -->
+<!-- 									</a></li> -->
+<!-- 									<li><a href="#"> <span>Next</span> <i -->
+<!-- 											class="ti ti-chevron-right"></i> -->
+<!-- 									</a></li> -->
+<!-- 								</ul> -->
+
+<!-- 								<ul class="paginator"> -->
+<!-- 									<li class="paginator__item paginator__item--prev"><a href="#"><i -->
+<!-- 											class="ti ti-chevron-left"></i></a></li> -->
+<!-- 									<li class="paginator__item"><a href="#">1</a></li> -->
+<!-- 									<li class="paginator__item paginator__item--active"><a -->
+<!-- 										href="#">2</a></li> -->
+<!-- 									<li class="paginator__item"><a href="#">3</a></li> -->
+<!-- 									<li class="paginator__item"><a href="#">4</a></li> -->
+<!-- 									<li class="paginator__item"><span>...</span></li> -->
+<!-- 									<li class="paginator__item"><a href="#">29</a></li> -->
+<!-- 									<li class="paginator__item"><a href="#">30</a></li> -->
+<!-- 									<li class="paginator__item paginator__item--next"><a href="#"><i -->
+<!-- 											class="ti ti-chevron-right"></i></a></li> -->
+<!-- 								</ul> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 			<div class="col-12">
 				<div class="main__paginator">
-					<!-- amount -->
-					<span class="main__paginator-pages">10 of 169</span>
-					<!-- end amount -->
+				 <span class="main__paginator-pages">${currentPage + 1}
+						of ${totalPages}</span>
 
 					<ul class="main__paginator-list">
-						<li><a href="#"> <i class="ti ti-chevron-left"></i> <span>Prev</span>
+						<li><a
+							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
+								<i class="ti ti-chevron-left"></i> <span>Prev</span>
 						</a></li>
-						<li><a href="#"> <span>Next</span> <i
-								class="ti ti-chevron-right"></i>
+						<li><a
+							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
+								<span>Next</span> <i class="ti ti-chevron-right"></i>
 						</a></li>
 					</ul>
 
 					<ul class="paginator">
-						<li class="paginator__item paginator__item--prev"><a href="#"><i
-								class="ti ti-chevron-left"></i></a></li>
-						<li class="paginator__item"><a href="#">1</a></li>
-						<li class="paginator__item paginator__item--active"><a
-							href="#">2</a></li>
-						<li class="paginator__item"><a href="#">3</a></li>
-						<li class="paginator__item"><a href="#">4</a></li>
-						<li class="paginator__item"><span>...</span></li>
-						<li class="paginator__item"><a href="#">29</a></li>
-						<li class="paginator__item"><a href="#">30</a></li>
-						<li class="paginator__item paginator__item--next"><a href="#"><i
-								class="ti ti-chevron-right"></i></a></li>
+						<li class="paginator__item paginator__item--prev"><a
+							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
+								<i class="ti ti-chevron-left"></i>
+						</a></li>
+
+						<!-- Hiển thị các trang -->
+						<c:forEach begin="0" end="${totalPages - 1}" var="i">
+							<li
+								class="paginator__item ${i == currentPage ? 'paginator__item--active' : ''}">
+								<a
+								href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${i}&search=${param.search}">${i + 1}</a>
+							</li>
+						</c:forEach>
+
+						<li class="paginator__item paginator__item--next"><a
+							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
+								<i class="ti ti-chevron-right"></i>
+						</a></li>
 					</ul>
 				</div>
 			</div>
+
 			<!-- end paginator -->
 		</div>
 	</div>
@@ -247,19 +226,6 @@
 }
 </style>
 
-	<!-- 		<div class="modal" id="modal-description" tabindex="-1" -->
-	<!-- 			aria-labelledby="modal-description" aria-hidden="true"> -->
-	<!-- 			<div class="modal__content"> -->
-	<!-- 				<h4 class="modal__title">Detail</h4> -->
-	<!-- 				<p id="descriptionContent" class="modal__text"></p> -->
-	<!-- 				<div class="modal__btns text-center"> -->
-	<!-- 					<button class="btn btn-secondary" type="button" -->
-	<!-- 						data-bs-dismiss="modal" aria-label="Close"> -->
-	<!-- 						<span>Close</span> -->
-	<!-- 					</button> -->
-	<!-- 				</div> -->
-	<!-- 			</div> -->
-	<!-- 		</div> -->
 	<div class="modal" id="modal-description" tabindex="-1"
 		aria-labelledby="modal-description" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -332,36 +298,6 @@
 }
 </style>
 
-	<!-- 	<!-- delete modal -->
-	-->
-	<!-- 	<div class="modal fade" id="modal-delete" tabindex="-1" -->
-	<!-- 		aria-labelledby="modal-delete" aria-hidden="true"> -->
-	<!-- 		<div class="modal-dialog modal-dialog-centered"> -->
-	<!-- 			<div class="modal-content"> -->
-	<!-- 				<div class="modal__content"> -->
-	<!-- 					<form action="#" class="modal__form"> -->
-	<!-- 						<h4 class="modal__title">Item delete</h4> -->
-
-	<!-- 						<p class="modal__text">Are you sure to permanently delete this -->
-	<!-- 							item?</p> -->
-
-	<!-- 						<div class="modal__btns"> -->
-	<!-- 							<button class="modal__btn modal__btn--apply" type="button"> -->
-	<!-- 								<span>Delete</span> -->
-	<!-- 							</button> -->
-	<!-- 							<button class="modal__btn modal__btn--dismiss" type="button" -->
-	<!-- 								data-bs-dismiss="modal" aria-label="Close"> -->
-	<!-- 								<span>Dismiss</span> -->
-	<!-- 							</button> -->
-	<!-- 						</div> -->
-	<!-- 					</form> -->
-	<!-- 				</div> -->
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
-	<!-- 	<!-- end delete modal -->
-	-->
-	<!-- delete modal -->
 	<div class="modal fade" id="modal-delete" tabindex="-1"
 		aria-labelledby="modal-delete" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -411,8 +347,10 @@
 
 							if (deleteId) {
 								// Tạo URL xóa với id
-// 								const deleteUrl = `${contextPath}/adminnewsOrDiscountdelete?id=${deleteId}`;
-								const deleteUrl = contextPath + '/adminnewsOrDiscountdelete?id=' + deleteId;
+								// 								const deleteUrl = `${contextPath}/adminnewsOrDiscountdelete?id=${deleteId}`;
+								const deleteUrl = contextPath
+										+ '/adminnewsOrDiscountdelete?id='
+										+ deleteId;
 
 								// Điều hướng trình duyệt đến URL xóa
 								window.location.href = deleteUrl;
