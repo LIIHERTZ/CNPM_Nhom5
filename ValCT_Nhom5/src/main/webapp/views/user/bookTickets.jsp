@@ -26,13 +26,12 @@
 			<form action="/ValCT_Nhom5/bookTickets" method="post"
 				onsubmit="transferDataAndSubmit(); return false;">
 				<input type="hidden" id="startHourInput" name="startHour" value="">
+				<input type="hidden" id="screeningIdInput" name="screeningId"
+					value="">
 				<button type="submit" class="custom-button seatPlanButton">
 					Seat Plans <i class="fas fa-angle-right"></i>
 				</button>
 			</form>
-
-
-
 
 		</div>
 	</section>
@@ -59,8 +58,6 @@
 						<p>
 							<strong>Category:</strong> ${movie.category}
 						</p>
-
-
 					</div>
 				</div>
 			</div>
@@ -100,6 +97,8 @@
 						%>
 					</select>
 				</div>
+
+
 				<div class="form-group">
 					<div class="thumb">
 						<img src="assets/images/ticket/city.png" alt="ticket">
@@ -167,8 +166,8 @@
 									<c:forEach var="screening"
 										items="${cinemaScreeningsMap[cinema.cinemaID]}">
 										<div class="item" style="cursor: pointer;"
-											onclick="setStartHour('${screening.startHour}')">
-											<!-- Giữ giao diện cũ -->
+											onclick="setScreeningData('${screening.startHour}', '${screening.msID}')">
+											<!-- Hiển thị giờ chiếu -->
 											<fmt:formatDate value="${screening.startHour}"
 												pattern="HH:mm" />
 										</div>
@@ -182,47 +181,44 @@
 	</div>
 	<!-- ==========Movie-Section========== -->
 	<script>
-	 // Hàm để cập nhật giá trị startHour vào form
-    function setStartHour(startHour) {
-        const startHourInput = document.getElementById('startHourInput');
-        startHourInput.value = startHour; // Gán giá trị startHour vào input ẩn
+    // Hàm để cập nhật giá trị startHour và screeningId vào form
+    function setScreeningData(startHour, screeningId) {
+        document.getElementById('startHourInput').value = startHour; // Gán giá trị startHour
+        document.getElementById('screeningIdInput').value = screeningId; // Gán giá trị screeningId
     }
-    function transferDataAndSubmit() {
-        // Lấy form cần submit
-        const formToSubmit = document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]');
-        const searchForm = document.querySelector('form.ticket-search-form');
-        const startHourInput = document.getElementById('startHourInput');
 
-        if (!startHourInput.value) {
+    // Hàm chuyển dữ liệu từ form tìm kiếm sang form cần submit
+    function transferDataAndSubmit() {
+        const formToSubmit = document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]'); // Form chính
+        const searchForm = document.querySelector('form.ticket-search-form'); // Form tìm kiếm
+        const startHourInput = document.getElementById('startHourInput');
+        const screeningIdInput = document.getElementById('screeningIdInput');
+
+        // Kiểm tra nếu người dùng chưa chọn startHour hoặc screeningId
+        if (!startHourInput.value || !screeningIdInput.value) {
             alert('Please select a showtime before proceeding.');
-            return false; // Ngăn form submit nếu chưa chọn startHour
+            return false;
         }
 
-
-        // Lấy dữ liệu từ form search
-        const date = searchForm.querySelector('select[name="date"]').value;
-        const location = searchForm.querySelector('select[name="location"]').value;
-        const experience = searchForm.querySelector('select[name="experience"]').value;
-        const version = searchForm.querySelector('select[name="version"]').value;
+        // Lấy dữ liệu từ form tìm kiếm
+        const data = {
+            date: searchForm.querySelector('select[name="date"]').value,
+            location: searchForm.querySelector('select[name="location"]').value,
+            experience: searchForm.querySelector('select[name="experience"]').value,
+            version: searchForm.querySelector('select[name="version"]').value,
+        };
 
         // Tạo các input ẩn để thêm dữ liệu vào form cần submit
-        const inputs = [
-            { name: 'date', value: date },
-            { name: 'location', value: location },
-            { name: 'experience', value: experience },
-            { name: 'version', value: version },
-        ];
-
-        inputs.forEach(inputData => {
+        Object.entries(data).forEach(([name, value]) => {
             const input = document.createElement('input');
             input.type = 'hidden';
-            input.name = inputData.name;
-            input.value = inputData.value;
+            input.name = name;
+            input.value = value;
             formToSubmit.appendChild(input);
         });
 
-        // Nếu có giá trị startHour, submit form
-        document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]').submit();
+        // Submit form
+        formToSubmit.submit();
     }
 </script>
 </body>

@@ -38,89 +38,113 @@ public class BookTicketsController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-	    String movieId = "2";
-	    String selectedLocation = req.getParameter("location");
+		String movieId = "2"; // ID phim cố định
+		String selectedLocation = req.getParameter("location");
+		String selectedDate = req.getParameter("date");
 
-	    Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
-	    List<Cinema> listCinema = cinemaService.getAllCinema();
-	    List<Cinema> filteredCinema = new ArrayList<>();
-	    
-	    
-	    Map<Integer, List<MovieScreenings>> cinemaScreeningsMap = new HashMap<>();
+		// Lấy ngày hiện tại nếu chưa chọn
+		if (selectedDate == null || selectedDate.isEmpty()) {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			selectedDate = sdf.format(new Date());
+		}
 
-	    
-	    // Nếu selectedLocation khác null và không rỗng, chỉ lấy các rạp có location phù hợp
-	    if (selectedLocation != null && !selectedLocation.isEmpty()) {
-	        for (Cinema cinema : listCinema) {
-	            if (cinema.getLocation().equals(selectedLocation)) {
-	                filteredCinema.add(cinema);
-	                
-	                
-	             // Lấy danh sách suất chiếu của bộ phim cho rạp này
-	                List<MovieScreenings> screenings = movieScreeningService.getScreeningsByMovieIdAndCinemaId(movie.getMovieID(), cinema.getCinemaID());
-	                cinemaScreeningsMap.put(cinema.getCinemaID(), screenings);
-	                
-	                
-	            }
-	        }
-	    } else {
-	        // Nếu selectedLocation là null hoặc rỗng, hiển thị tất cả rạp
-	        filteredCinema = listCinema;
-	        
-	        
-	        for (Cinema cinema : listCinema) {
-	            List<MovieScreenings> screenings = movieScreeningService.getScreeningsByMovieIdAndCinemaId(movie.getMovieID(), cinema.getCinemaID());
-	            cinemaScreeningsMap.put(cinema.getCinemaID(), screenings);
-	        }
-	        
-	        
-	        
-	    }
+		// Lấy thông tin phim
+		Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
 
-	    List<String> locations = new ArrayList<>();
-	    for (Cinema cinema : listCinema) {
-	        if (!locations.contains(cinema.getLocation())) {
-	            locations.add(cinema.getLocation());
-	        }
-	    }
+		// Lấy danh sách rạp
+		List<Cinema> listCinema = cinemaService.getAllCinema();
+		List<Cinema> filteredCinema = new ArrayList<>();
+		Map<Integer, List<MovieScreenings>> cinemaScreeningsMap = new HashMap<>();
 
-	    req.setAttribute("locations", locations);
-	    req.setAttribute("listCinema", filteredCinema);
-	    req.setAttribute("selectedLocation", selectedLocation); 
-	    req.setAttribute("movie", movie);
+		// Lọc danh sách rạp và suất chiếu dựa trên location và date
+		for (Cinema cinema : listCinema) {
+			// Nếu location được chọn, lọc theo location
+			if (selectedLocation != null && !selectedLocation.isEmpty() && !cinema.getLocation().equals(selectedLocation)) {
+				continue;
+			}
 
-	    
-	    req.setAttribute("cinemaScreeningsMap", cinemaScreeningsMap); // Đưa map suất chiếu vào JSP
-	    
-	    
-	    RequestDispatcher rd = req.getRequestDispatcher("/views/user/bookTickets.jsp");
-	    rd.forward(req, resp);
+			// Lấy danh sách suất chiếu theo movieID và cinemaID
+			List<MovieScreenings> screenings = movieScreeningService.getScreeningsByMovieIdAndCinemaId(movie.getMovieID(), cinema.getCinemaID());
+
+			// Lọc suất chiếu theo ngày
+			List<MovieScreenings> filteredScreenings = new ArrayList<>();
+			for (MovieScreenings screening : screenings) {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				String screeningDate = sdf.format(screening.getStartHour());
+				if (screeningDate.equals(selectedDate)) {
+					filteredScreenings.add(screening);
+				}
+			}
+
+			// Nếu có suất chiếu hợp lệ, thêm rạp và suất chiếu vào danh sách
+			if (!filteredScreenings.isEmpty()) {
+				filteredCinema.add(cinema);
+				cinemaScreeningsMap.put(cinema.getCinemaID(), filteredScreenings);
+			}
+		}
+
+		// Lấy danh sách location và date từ tất cả các rạp và suất chiếu
+		List<String> locations = new ArrayList<>();
+		List<String> dates = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		for (Cinema cinema : listCinema) {
+			// Thêm location
+			if (!locations.contains(cinema.getLocation())) {
+				locations.add(cinema.getLocation());
+			}
+
+			// Thêm date từ suất chiếu
+			List<MovieScreenings> screenings = movieScreeningService.getScreeningsByMovieIdAndCinemaId(movie.getMovieID(), cinema.getCinemaID());
+			for (MovieScreenings screening : screenings) {
+				String date = sdf.format(screening.getStartHour());
+				if (!dates.contains(date)) {
+					dates.add(date);
+				}
+			}
+		}
+
+		// Truyền dữ liệu vào request
+		req.setAttribute("locations", locations);
+		req.setAttribute("dates", dates);
+		req.setAttribute("listCinema", filteredCinema);
+		req.setAttribute("selectedLocation", selectedLocation);
+		req.setAttribute("selectedDate", selectedDate);
+		req.setAttribute("movie", movie);
+		req.setAttribute("cinemaScreeningsMap", cinemaScreeningsMap);
+
+		// Forward đến JSP
+		RequestDispatcher rd = req.getRequestDispatcher("/views/user/bookTickets.jsp");
+		rd.forward(req, resp);
 	}
-
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String movieId = "2";
+	    String movieId = "2";
+	    String screeningId = req.getParameter("screeningId");
+	    String startHour = req.getParameter("startHour");
 	    String selectedLocation = req.getParameter("location");
-	    String date = req.getParameter("date");
+	    String selectedDate = req.getParameter("date");
 	    String experience = req.getParameter("experience");
 	    String version = req.getParameter("version");
-	    String startHour = req.getParameter("startHour");
 
-	    
-	    // Lấy thông tin movie
+	    if (screeningId == null || screeningId.isEmpty()) {
+	        resp.sendRedirect("/ValCT_Nhom5/bookTickets");
+	        return;
+	    }
 	    Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
-
-	    // Lưu dữ liệu vào session
+	    
+	    // Lưu các thông tin vào Session
 	    HttpSession session = req.getSession();
+	    session.setAttribute("movie", movie);
+	    session.setAttribute("screeningId", screeningId);
+	    session.setAttribute("startHour", startHour);
 	    session.setAttribute("selectedLocation", selectedLocation);
-	    session.setAttribute("selectedStartHour", startHour);
-	    session.setAttribute("selectedTime", date);
+	    session.setAttribute("selectedDate", selectedDate);
 	    session.setAttribute("experience", experience);
 	    session.setAttribute("version", version);
-	    session.setAttribute("movie", movie);
 
-	    // Chuyển hướng đến controller xử lý chọn ghế
+	    // Chuyển hướng tới selectSeats
 	    resp.sendRedirect("selectSeats");
 	}
 
