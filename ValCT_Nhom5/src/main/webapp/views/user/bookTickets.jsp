@@ -2,8 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%--<%@ page import="java.util.Calendar" %>--%>
-<%--<%@ page import="java.text.SimpleDateFormat" %>--%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -26,12 +26,13 @@
 			<form action="/ValCT_Nhom5/bookTickets" method="post"
 				onsubmit="transferDataAndSubmit(); return false;">
 				<input type="hidden" id="startHourInput" name="startHour" value="">
-				<input type="hidden" id="screeningIdInput" name="screeningId"
-					value="">
 				<button type="submit" class="custom-button seatPlanButton">
 					Seat Plans <i class="fas fa-angle-right"></i>
 				</button>
 			</form>
+
+
+
 
 		</div>
 	</section>
@@ -58,6 +59,8 @@
 						<p>
 							<strong>Category:</strong> ${movie.category}
 						</p>
+
+
 					</div>
 				</div>
 			</div>
@@ -69,49 +72,34 @@
 	<section class="book-section bg-one">
 		<div class="container">
 			<form class="ticket-search-form two">
-				<%--            <div class="form-group">--%>
-				<%--                <div class="thumb">--%>
-				<%--                    <img src="assets/images/ticket/date.png" alt="ticket">--%>
-				<%--                </div>--%>
-				<%--                <span class="type">date</span> <select class="select-bar"--%>
-				<%--                                                       name="date">--%>
-				<%--                <%--%>
-				<%--                    Calendar calendar = Calendar.getInstance();--%>
-				<%--                    int year = calendar.get(Calendar.YEAR);--%>
-				<%--                    int month = calendar.get(Calendar.MONTH); // Tháng hiện tại--%>
-				<%--                    int currentDay = calendar.get(Calendar.DAY_OF_MONTH);--%>
-
-				<%--                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");--%>
-				<%--                    calendar.set(Calendar.DAY_OF_MONTH, currentDay); // Đặt về ngày đầu tiên của tháng--%>
-
-				<%--                    while (calendar.get(Calendar.MONTH) == month) {--%>
-				<%--                        String date = sdf.format(calendar.getTime());--%>
-				<%--                %>--%>
-				<%--                <option value="<%=date%>"--%>
-				<%--                        <%=(calendar.get(Calendar.DAY_OF_MONTH) == currentDay) ? "selected" : ""%>>--%>
-				<%--                    <%=date%>--%>
-				<%--                </option>--%>
-				<%--                <%--%>
-				<%--                        calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày--%>
-				<%--                    }--%>
-				<%--                %>--%>
-				<%--            </select>--%>
-				<%--            </div>--%>
-
 				<div class="form-group">
 					<div class="thumb">
 						<img src="assets/images/ticket/date.png" alt="ticket">
 					</div>
 					<span class="type">date</span> <select class="select-bar"
-						name="date" onchange="this.form.submit()">
-						<c:forEach var="date" items="${dates}">
-							<option value="${date}" ${date == selectedDate ? "selected" : ""}>
-								${date}</option>
-						</c:forEach>
+						name="date">
+						<%
+						Calendar calendar = Calendar.getInstance();
+						int year = calendar.get(Calendar.YEAR);
+						int month = calendar.get(Calendar.MONTH); // Tháng hiện tại
+						int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay); // Đặt về ngày đầu tiên của tháng
+
+						while (calendar.get(Calendar.MONTH) == month) {
+							String date = sdf.format(calendar.getTime());
+						%>
+						<option value="<%=date%>"
+							<%=(calendar.get(Calendar.DAY_OF_MONTH) == currentDay) ? "selected" : ""%>>
+							<%=date%>
+						</option>
+						<%
+						calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày
+						}
+						%>
 					</select>
 				</div>
-
-
 				<div class="form-group">
 					<div class="thumb">
 						<img src="assets/images/ticket/city.png" alt="ticket">
@@ -179,8 +167,8 @@
 									<c:forEach var="screening"
 										items="${cinemaScreeningsMap[cinema.cinemaID]}">
 										<div class="item" style="cursor: pointer;"
-											onclick="setScreeningData('${screening.startHour}', '${screening.msID}')">
-											<!-- Hiển thị giờ chiếu -->
+											onclick="setStartHour('${screening.startHour}')">
+											<!-- Giữ giao diện cũ -->
 											<fmt:formatDate value="${screening.startHour}"
 												pattern="HH:mm" />
 										</div>
@@ -194,44 +182,47 @@
 	</div>
 	<!-- ==========Movie-Section========== -->
 	<script>
-    // Hàm để cập nhật giá trị startHour và screeningId vào form
-    function setScreeningData(startHour, screeningId) {
-        document.getElementById('startHourInput').value = startHour; // Gán giá trị startHour
-        document.getElementById('screeningIdInput').value = screeningId; // Gán giá trị screeningId
-    }
-
-    // Hàm chuyển dữ liệu từ form tìm kiếm sang form cần submit
-    function transferDataAndSubmit() {
-        const formToSubmit = document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]'); // Form chính
-        const searchForm = document.querySelector('form.ticket-search-form'); // Form tìm kiếm
+	 // Hàm để cập nhật giá trị startHour vào form
+    function setStartHour(startHour) {
         const startHourInput = document.getElementById('startHourInput');
-        const screeningIdInput = document.getElementById('screeningIdInput');
+        startHourInput.value = startHour; // Gán giá trị startHour vào input ẩn
+    }
+    function transferDataAndSubmit() {
+        // Lấy form cần submit
+        const formToSubmit = document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]');
+        const searchForm = document.querySelector('form.ticket-search-form');
+        const startHourInput = document.getElementById('startHourInput');
 
-        // Kiểm tra nếu người dùng chưa chọn startHour hoặc screeningId
-        if (!startHourInput.value || !screeningIdInput.value) {
+        if (!startHourInput.value) {
             alert('Please select a showtime before proceeding.');
-            return false;
+            return false; // Ngăn form submit nếu chưa chọn startHour
         }
 
-        // Lấy dữ liệu từ form tìm kiếm
-        const data = {
-            date: searchForm.querySelector('select[name="date"]').value,
-            location: searchForm.querySelector('select[name="location"]').value,
-            experience: searchForm.querySelector('select[name="experience"]').value,
-            version: searchForm.querySelector('select[name="version"]').value,
-        };
+
+        // Lấy dữ liệu từ form search
+        const date = searchForm.querySelector('select[name="date"]').value;
+        const location = searchForm.querySelector('select[name="location"]').value;
+        const experience = searchForm.querySelector('select[name="experience"]').value;
+        const version = searchForm.querySelector('select[name="version"]').value;
 
         // Tạo các input ẩn để thêm dữ liệu vào form cần submit
-        Object.entries(data).forEach(([name, value]) => {
+        const inputs = [
+            { name: 'date', value: date },
+            { name: 'location', value: location },
+            { name: 'experience', value: experience },
+            { name: 'version', value: version },
+        ];
+
+        inputs.forEach(inputData => {
             const input = document.createElement('input');
             input.type = 'hidden';
-            input.name = name;
-            input.value = value;
+            input.name = inputData.name;
+            input.value = inputData.value;
             formToSubmit.appendChild(input);
         });
 
-        // Submit form
-        formToSubmit.submit();
+        // Nếu có giá trị startHour, submit form
+        document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]').submit();
     }
 </script>
 </body>

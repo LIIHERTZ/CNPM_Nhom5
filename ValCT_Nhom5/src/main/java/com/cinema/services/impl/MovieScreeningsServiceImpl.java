@@ -14,9 +14,4 @@ public class MovieScreeningsServiceImpl implements IMovieScreeningsService {
 	public List<MovieScreenings> getScreeningsByMovieIdAndCinemaId(int movieId, int cinemaId) {
 		return cinemaDao.getScreeningsByMovieIdAndCinemaId(movieId, cinemaId);
 	}
-	@Override
-	public List<String> findAvailableDatesByMovieId(Long movieId) {
-		return cinemaDao.findAvailableDatesByMovieId(movieId);
-	}
-	
 }

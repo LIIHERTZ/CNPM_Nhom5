@@ -1,6 +1,5 @@
 package com.cinema.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,21 +36,8 @@ public class MovieScreenings {
     @ManyToOne
     @JoinColumn(name = "movieID", nullable = false)
     private Movie movie;
-    
-    @OneToMany(mappedBy = "screening")
-    private List<SeatStatus> seatStatus;
-    
-    
-    
-    public List<SeatStatus> getSeatStatus() {
-		return seatStatus;
-	}
 
-	public void setSeatStatus(List<SeatStatus> seatStatus) {
-		this.seatStatus = seatStatus;
-	}
-
-	public int getMsID() {
+    public int getMsID() {
 		return msID;
 	}
 
