@@ -7,5 +7,6 @@ import com.cinema.entity.MovieScreenings;
 public interface IMovieScreeningsService {
 
 	public List<MovieScreenings> getScreeningsByMovieIdAndCinemaId(int movieId, int cinemaId) ;
+	List<String> findAvailableDatesByMovieId(Long movieId);
 
 }
