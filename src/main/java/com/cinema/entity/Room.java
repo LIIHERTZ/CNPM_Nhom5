@@ -31,7 +31,7 @@ public class Room {
     
     
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    private List<Chair> chair;
+    private List<Seat> chair;
 
     @ManyToOne
     @JoinColumn(name = "cinemaID", nullable = false)
