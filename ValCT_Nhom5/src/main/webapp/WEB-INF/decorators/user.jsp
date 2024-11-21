@@ -23,7 +23,7 @@
 
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
 
-    <title>ValCT  - Online Ticket Booking Website</title>
+    <title>ValCT  - Online Ticket Booking Website USER</title>
 
 
 </head>

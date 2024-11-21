@@ -10,8 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 @Entity
-@Table(name = "DetailPopCorn")
-public class DetailPopCorn {
+@Table(name = "PopCornPayment")
+public class PopCornPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int detailPopCornID;
