@@ -17,13 +17,19 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cinemaID;
 
-    @Column(nullable = false)
+    @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
     private String cinemaName;
-
+    @Column(columnDefinition = "NVARCHAR(500)")
     private String address;
-    
+    @Column(columnDefinition = "NVARCHAR(500)")
     private String location;
+    
+    @Column(name = "status", nullable = false, columnDefinition = "BIT")
+    private boolean status; // New field for cinema status using bit, named "status"
 
+    @Column(nullable = false)
+    private int roomCount; // New field for the number of rooms
+    
     @OneToMany(mappedBy = "cinema")
     private List<Room> rooms;
 
@@ -66,6 +72,22 @@ public class Cinema {
 	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
+	
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getRoomCount() {
+        return roomCount;
+    }
+
+    public void setRoomCount(int roomCount) {
+        this.roomCount = roomCount;
+    }
 
     // Getters and setters
     

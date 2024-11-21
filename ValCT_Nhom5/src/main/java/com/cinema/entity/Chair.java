@@ -19,7 +19,39 @@ public class Chair {
 	 
 	 private Boolean status;
 	 
-	 @ManyToOne
+	 public int getChairID() {
+		return chairID;
+	}
+
+	public void setChairID(int chairID) {
+		this.chairID = chairID;
+	}
+
+	public String getChairName() {
+		return chairName;
+	}
+
+	public void setChairName(String chairName) {
+		this.chairName = chairName;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	@ManyToOne
 	 @JoinColumn(name = "roomID")
 	 private Room room;
 	 

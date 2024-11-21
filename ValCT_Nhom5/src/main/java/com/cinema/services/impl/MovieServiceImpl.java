@@ -7,13 +7,12 @@ import com.cinema.dao.impl.MovieDAOImpl;
 import com.cinema.entity.Movie;
 import com.cinema.services.IMovieService;
 
-public class MoviceServiceImpl implements IMovieService{
+public class MovieServiceImpl implements IMovieService{
 
 	IMovieDAO movieDao = new MovieDAOImpl();
 	@Override
 	public List<Movie> getAllMovie() {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.getAllMovie();
 	}
 
 	@Override
@@ -38,5 +37,9 @@ public class MoviceServiceImpl implements IMovieService{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+    public Movie getMovieById(int movieID) {
+        return movieDao.getMovieById(movieID);
+    }
 	
 }

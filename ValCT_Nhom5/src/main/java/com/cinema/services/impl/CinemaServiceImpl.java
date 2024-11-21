@@ -10,43 +10,70 @@ import com.cinema.services.ICinemaService;
 
 public class CinemaServiceImpl implements ICinemaService {
 
-	ICinemaDAO cinemaDao = new CinemaDAOImpl();
-	@Override
-	public List<Cinema> getAllCinema() {
-		return cinemaDao.getAllCinema();
-	}
-	
+    ICinemaDAO cinemaDao = new CinemaDAOImpl();
 
-	@Override
-	public Cinema getOneCinema(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Cinema> getAllCinema() {
+        return cinemaDao.getAllCinema();
+    }
 
-	@Override
-	public boolean insertCinema(Cinema Cinema) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public Cinema getOneCinema(int id) {
+        return cinemaDao.getCinemaById(id);
+    }
 
-	@Override
-	public boolean updateCinema(Cinema Cinema) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean insertCinema(Cinema cinema) {
+        return cinemaDao.insertCinema(cinema);
+    }
 
-	@Override
-	public boolean deleteCinema(Cinema Cinema) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean updateCinema(Cinema cinema) {
+        return cinemaDao.updateCinema(cinema);
+    }
 
+    @Override
+    public boolean deleteCinema(int ID) {
+        return cinemaDao.deleteCinema(ID);
+    }
 
-	@Override
-	public List<Cinema> getCinemaByLocation(String location) {
-		return cinemaDao.getCinemaByLocation(location);
-	}
+    @Override
+    public List<Cinema> getCinemaByLocation(String location) {
+        return cinemaDao.getCinemaByLocation(location);
+    }
 
+    @Override
+    public List<Cinema> getCinemas(int offset, int noOfRecords) {
+        return cinemaDao.getCinemas(offset, noOfRecords);
+    }
+
+    @Override
+    public int getNoOfRecords() {
+        return cinemaDao.getNoOfRecords();
+    }
+
+    @Override
+    public Cinema getCinemaById(int id) {
+        return cinemaDao.getCinemaById(id);
+    }
+
+    @Override
+    public boolean addCinema(Cinema cinema) {
+        return cinemaDao.insertCinema(cinema);
+    }
+
+//    @Override
+//    public List<Cinema> searchCinemas(String keyword) {
+//        return cinemaDao.searchCinemas(keyword);
+//    }
+    @Override
+    public List<Cinema> searchCinemas(String keyword, int offset, int limit) {
+        return cinemaDao.searchCinemas(keyword, offset, limit);
+    }
+    @Override
+    public int getNoOfSearchResults(String keyword) {
+        return cinemaDao.getNoOfSearchResults(keyword);
+    }
 
 
 

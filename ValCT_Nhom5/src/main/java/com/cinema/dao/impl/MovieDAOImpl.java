@@ -13,9 +13,18 @@ public class MovieDAOImpl implements IMovieDAO {
 
 	@Override
 	public List<Movie> getAllMovie() {
-		// TODO Auto-generated method stub
-		return null;
+	    EntityManager em = JPAConfig.getEntityManager();
+	    List<Movie> movies = null;
+	    try {
+	        movies = em.createQuery("FROM Movie", Movie.class).getResultList();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        em.close();
+	    }
+	    return movies;
 	}
+
 
 	@Override
 	public Movie getOneMovie(int id) {
@@ -48,5 +57,13 @@ public class MovieDAOImpl implements IMovieDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	@Override
+    public Movie getMovieById(int movieID) {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            return em.find(Movie.class, movieID);
+        } finally {
+            em.close();
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface IMovieDAO {
 	boolean insertMovie(Movie Movie); 
 	boolean updateMovie(Movie Movie); 
 	boolean deleteMovie(Movie Movie); 
+	Movie getMovieById(int movieID);  // Thêm phương thức getMovieById
 }

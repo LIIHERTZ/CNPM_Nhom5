@@ -1,5 +1,6 @@
 package com.cinema.entity;
 
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -28,6 +29,15 @@ public class Movie {
 
     private String image;
     private String movieDuration;
+    
+    @Column(nullable = false)
+    private Date releaseDay;
+
+    @Column(nullable = false)
+    private float rating;
+
+    @Column(nullable = false)
+    private boolean status;
 
     @OneToMany(mappedBy = "movie")
     private List<MovieScreenings> movieScreenings;

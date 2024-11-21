@@ -13,7 +13,7 @@ import com.cinema.services.ICinemaService;
 import com.cinema.services.IMovieService;
 import com.cinema.services.IMovieScreeningsService;
 import com.cinema.services.impl.CinemaServiceImpl;
-import com.cinema.services.impl.MoviceServiceImpl;
+import com.cinema.services.impl.MovieServiceImpl;
 import com.cinema.services.impl.MovieScreeningsServiceImpl;
 
 import jakarta.servlet.RequestDispatcher;
@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class BookTicketsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private IMovieService movieService = new MoviceServiceImpl();
+	private IMovieService movieService = new MovieServiceImpl();
 	private ICinemaService cinemaService = new CinemaServiceImpl();
 	private IMovieScreeningsService  movieScreeningService = new MovieScreeningsServiceImpl();
 
