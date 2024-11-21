@@ -20,6 +20,9 @@ public class Seat {
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SeatStatus> seatStatuses;
 
+    @Column(name = "isCouple", nullable = false)
+    private boolean isCouple = false;
+
     // Getters and Setters
     public int getSeatID() {
         return seatID;
@@ -51,5 +54,13 @@ public class Seat {
 
     public void setSeatStatuses(List<SeatStatus> seatStatuses) {
         this.seatStatuses = seatStatuses;
+    }
+
+    public boolean isCouple() {
+        return isCouple;
+    }
+
+    public void setCouple(boolean isCouple) {
+        this.isCouple = isCouple;
     }
 }

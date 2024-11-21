@@ -2,8 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%--<%@ page import="java.util.Calendar" %>--%>
-<%--<%@ page import="java.text.SimpleDateFormat" %>--%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -69,45 +69,33 @@
 	<section class="book-section bg-one">
 		<div class="container">
 			<form class="ticket-search-form two">
-				<%--            <div class="form-group">--%>
-				<%--                <div class="thumb">--%>
-				<%--                    <img src="assets/images/ticket/date.png" alt="ticket">--%>
-				<%--                </div>--%>
-				<%--                <span class="type">date</span> <select class="select-bar"--%>
-				<%--                                                       name="date">--%>
-				<%--                <%--%>
-				<%--                    Calendar calendar = Calendar.getInstance();--%>
-				<%--                    int year = calendar.get(Calendar.YEAR);--%>
-				<%--                    int month = calendar.get(Calendar.MONTH); // Tháng hiện tại--%>
-				<%--                    int currentDay = calendar.get(Calendar.DAY_OF_MONTH);--%>
-
-				<%--                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");--%>
-				<%--                    calendar.set(Calendar.DAY_OF_MONTH, currentDay); // Đặt về ngày đầu tiên của tháng--%>
-
-				<%--                    while (calendar.get(Calendar.MONTH) == month) {--%>
-				<%--                        String date = sdf.format(calendar.getTime());--%>
-				<%--                %>--%>
-				<%--                <option value="<%=date%>"--%>
-				<%--                        <%=(calendar.get(Calendar.DAY_OF_MONTH) == currentDay) ? "selected" : ""%>>--%>
-				<%--                    <%=date%>--%>
-				<%--                </option>--%>
-				<%--                <%--%>
-				<%--                        calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày--%>
-				<%--                    }--%>
-				<%--                %>--%>
-				<%--            </select>--%>
-				<%--            </div>--%>
-
 				<div class="form-group">
 					<div class="thumb">
 						<img src="assets/images/ticket/date.png" alt="ticket">
 					</div>
 					<span class="type">date</span> <select class="select-bar"
 						name="date" onchange="this.form.submit()">
-						<c:forEach var="date" items="${dates}">
-							<option value="${date}" ${date == selectedDate ? "selected" : ""}>
-								${date}</option>
-						</c:forEach>
+						<%
+						// Lấy ngày hiện tại
+						Calendar calendar = Calendar.getInstance();
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+						// Ngày được chọn từ request hoặc mặc định là ngày hiện tại
+						String selectedDateFromRequest = request.getParameter("date");
+						String selectedDate = selectedDateFromRequest != null ? selectedDateFromRequest : sdf.format(calendar.getTime());
+
+						// Hiển thị 30 ngày kể từ hôm nay
+						for (int i = 0; i < 30; i++) {
+							String date = sdf.format(calendar.getTime());
+						%>
+						<option value="<%=date%>"
+							<%=date.equals(selectedDate) ? "selected" : ""%>>
+							<%=date%>
+						</option>
+						<%
+						calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày
+						}
+						%>
 					</select>
 				</div>
 
