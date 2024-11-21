@@ -33,10 +33,76 @@ public class Payment {
     private int status;
 
     @OneToMany(mappedBy = "payment")
-    private List<DetailTicket> detailTickets;
+    private List<TicketPayment> TicketPayments;
 
     @OneToMany(mappedBy = "payment")
-    private List<DetailPopCorn> detailPopCorns;
+    private List<PopCornPayment> PopCornPayments;
+
+	public int getPaymentID() {
+		return paymentID;
+	}
+
+	public void setPaymentID(int paymentID) {
+		this.paymentID = paymentID;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Coupon getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public List<TicketPayment> getTicketPayments() {
+		return TicketPayments;
+	}
+
+	public void setTicketPayments(List<TicketPayment> ticketPayments) {
+		TicketPayments = ticketPayments;
+	}
+
+	public List<PopCornPayment> getPopCornPayments() {
+		return PopCornPayments;
+	}
+
+	public void setPopCornPayments(List<PopCornPayment> popCornPayments) {
+		PopCornPayments = popCornPayments;
+	}
 
     // Getters and setters
+    
+    
 }

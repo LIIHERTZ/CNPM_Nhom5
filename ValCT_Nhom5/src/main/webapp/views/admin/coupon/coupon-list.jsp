@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
 
 <!-- sidebar -->
@@ -110,19 +110,17 @@
 			<!-- main title -->
 			<div class="col-12">
 				<div class="main__title">
-					<h2>Users</h2>
-
-					<span class="main__title-stat">3,702 Total</span>
+					<h2>Coupons</h2>
 
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
-							class="main__title-link main__title-link--wrap" 
-							onclick="window.location.href= '${pageContext.request.contextPath}/admin/users/add '">Add user</button>
+							class="main__title-link main__title-link--wrap"
+							data-bs-target="#modal-user">Add Coupon</button>
 						<!-- search -->
-						<form action=" ${pageContext.request.contextPath}/admin/users"
+						<form action=" ${pageContext.request.contextPath}/admin/coupons"
 							method="get" class="main__title-form">
 							<input type="text" name="searchQuery" value="${searchQuery}"
-								placeholder="Find user..">
+								placeholder="Find coupon...">
 							<button type="submit">
 								<i class="ti ti-search"></i>
 							</button>
@@ -139,40 +137,41 @@
 					<table class="catalog__table">
 						<thead>
 							<tr>
-								<th>ID</th>
-								<th>BASIC INFO</th>
-								<th>USERNAME</th>
+								<th>COUPON ID</th>
+								<th>COUPON NAME</th>
+								<th>COUPON TYPE</th>
+								<th>COUPON VALUE</th>
+								<th>START DATE</th>
+								<th>END DATE</th>
 								<th>ACTIONS</th>
 							</tr>
 						</thead>
 
 						<tbody>
 
-							<c:forEach var="user" items="${users}">
+							<c:forEach var="coupon" items="${coupons}">
 								<tr>
-									<td><div class="catalog__text">${user.perID }</div></td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="/ValCT_Nhom5/assets2/img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>${user.fullName }</h3>
-												<span>${user.email }</span>
-											</div>
-										</div>
-									</td>
-									<td><div class="catalog__text">${user.phone }</div></td>
-
+									<td><div class="catalog__text">${coupon.couponID }</div></td>
+									<td><div class="catalog__text">${coupon.couponName }</div></td>
+									<td><div class="catalog__text">${coupon.couponType }</div></td>
+									<td><div class="catalog__text">${coupon.couponValue }</div></td>
+									<!-- Định dạng ngày sử dụng JSTL -->
+									<fmt:formatDate value="${coupon.startDate}"
+										pattern="yyyy-MM-dd" var="startDateFormatted" />
+									<fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd"
+										var="endDateFormatted" />
+									<td><div class="catalog__text">${startDateFormatted }</div></td>
+									<td><div class="catalog__text">${endDateFormatted }</div></td>
 									<td>
 										<div class="catalog__btns">
-											<a href="${pageContext.request.contextPath}/admin/users/edit?userId=${user.perID}"
+											<a
+												href="${pageContext.request.contextPath}/admin/coupons/edit?couponID=${coupon.couponID}"
 												class="catalog__btn catalog__btn--edit"> <i
 												class="ti ti-edit"></i>
 											</a>
 											<button type="button" data-bs-toggle="modal"
 												class="catalog__btn catalog__btn--delete"
-												data-bs-target="#modal-delete" data-id="${user.perID}">
+												data-bs-target="#modal-delete" data-id="${coupon.couponID}">
 												<i class="ti ti-trash"></i>
 											</button>
 										</div>
@@ -196,16 +195,16 @@
 						${totalPages}</span>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector">
+					<div class="page-size-selector main__paginator-pages"  >
 						<label for="pageSize"
-							style="background-color: #1a191f; color: #333; padding: 5px 10px; border-radius: 5px;">Page
-							Size: </label> <select id="pageSize" name="pageSize"
+							style= color: #333; padding: 5px 10px; border-radius: 5px;>Page
+							Size  :   </label> <select id="pageSize" name="pageSize"
 							onchange="updatePageSize(this)"
 							style= "background-color : #222028 ;  border :#222028; color :white; ">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-							<option value="20" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-							<option value="50" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>> 5</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>> 10</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>> 15</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>> 20</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -218,20 +217,20 @@
 					<ul class="paginator">
 						<!-- Prev button -->
 						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber - 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber - 1}&pageSize=${pageSize}</c:if>">
 								<i class="ti ti-chevron-left"></i>
 						</a></li>
 						<!-- Page numbers -->
 						<c:forEach var="i" begin="0" end="${totalPages - 1}">
 							<li class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
 								<a
-								href="${pageContext.request.contextPath}/admin/users?pageNumber=${i + 1}&pageSize=${pageSize}">
+								href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}">
 									${i + 1} </a>
 							</li>
 						</c:forEach>
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
 								<i class="ti ti-chevron-right"></i>
 						</a></li>
 					</ul>
@@ -243,6 +242,71 @@
 </main>
 <!-- end main content -->
 
+<!-- user modal -->
+<div class="modal fade" id="modal-user" tabindex="-1"
+	aria-labelledby="modal-user" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal__content">
+				<form
+					action="${pageContext.request.contextPath}/admin/coupons/save "
+					method="post" class="modal__form">
+					<h4 class="modal__title">Add Coupon</h4>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="couponName">Coupon Name</label>
+								<input type="text" class="sign__input" name="couponName"
+									id="couponName" placeholder="Coupon Name" required>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="couponType">Type</label> <select
+									class="sign__selectjs" name="couponType" id="couponType"
+									required>
+									<option value="Coupon 1">Coupon 1</option>
+									<option value="Coupon 2">Coupon 2</option>
+									<option value="Coupon 3">Coupon 3</option>
+									<option value="Coupon 4 ">Coupon 4</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="couponValue">Coupon
+									Value</label> <input type="number" class="sign__input" name="couponValue"
+									id="couponValue" placeholder="Coupon Value" required>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="startDate">Start Date</label> <input
+									type="Date" class="sign__input" name="startDate" id="startDate"
+									required>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="endDate">End Date</label> <input
+									type="Date" class="sign__input" name="endDate" id="endDate"
+									required>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<button type="submit" class="sign__btn sign__btn--small">
+								<span>Save</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end user modal -->
 
 <!-- delete modal -->
 <div class="modal fade" id="modal-delete" tabindex="-1"
@@ -250,14 +314,13 @@
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal__content">
-				<form action="${pageContext.request.contextPath}/admin/users/delete" method ="POST"
-					class="modal__form_delete">
-					<h4 class="modal__title">User delete</h4>
+				<form
+					action="${pageContext.request.contextPath}/admin/coupons/delete"
+					method="POST" class="modal__form_delete">
+					<h4 class="modal__title">Coupon delete</h4>
 
 					<p class="modal__text">Are you sure to permanently delete this
-						user?</p>
-					<!-- Hidden input for user ID -->
-					<input type="hidden" id="deleteUserId" name="userId" value="">
+						Coupon delete?</p>
 					<div class="modal__btns">
 						<button class="modal__btn modal__btn--apply" type="submit">
 							<span>Delete</span>
@@ -282,7 +345,7 @@
 	function updatePageSize(select) {
 		var pageSize = select.value;
 		var urlParams = new URLSearchParams(window.location.search);
-		var pageNumber =  1; // Default to 1
+		var pageNumber = 1; // Default to 1 
 		urlParams.set('pageSize', pageSize); // Update the page size query param
 		urlParams.set('pageNumber', pageNumber);
 
@@ -296,15 +359,11 @@
 	document.addEventListener("DOMContentLoaded", function () {
 	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // Nút mở modal xóa
 	    const modalForm = document.querySelector(".modal__form_delete"); // Form trong modal
-	    console.log("Action attribute: ", modalForm.getAttribute("action"));
-	    console.log("modalForm : " + modalForm);
 	    deleteButtons.forEach(button => {
 	        button.addEventListener("click", function () {
-	            const userId = this.getAttribute("data-id"); // Lấy userId từ attribute
-	            console.log("userID : " + userId);
+	            const couponID = this.getAttribute("data-id"); // Lấy userId từ attribute
 	            const baseFormAction = modalForm.getAttribute("action"); // URL ban đầu của form
-	            console.log("baseFormAction : " + baseFormAction);
-	            const link = baseFormAction+'?userId='+userId;
+	            const link = baseFormAction+'?couponID='+couponID;
 	            console.log("link : " + link);
 	            modalForm.setAttribute("action", link); 
 	        });

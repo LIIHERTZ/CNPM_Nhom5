@@ -9,65 +9,65 @@ import com.cinema.services.IPersonService;
 
 public class PersonServiceImpl implements IPersonService {
 
-	IPersonDAO PersonDao = new PersonDAOImpl();
+	IPersonDAO personDao = new PersonDAOImpl();
 	@Override
 	public List<Person> getAllPerson() {
-		return PersonDao.getAllPerson();
+		return personDao.getAllPerson();
 	}
 
 	@Override
 	public Person getOnePerson(int id) {
-		return PersonDao.getOnePerson(id);
+		return personDao.getOnePerson(id);
 	}
 	@Override
-	public boolean insertPerson(Person Person) {
-		return PersonDao.insertPerson(Person);
+	public boolean insertPerson(Person person) {
+		return personDao.insertPerson(person);
 	}
 
 	@Override
-	public boolean updatePerson(Person Person) {
-		return PersonDao.updatePerson(Person);
+	public boolean updatePerson(Person person) {
+		return personDao.updatePerson(person);
 		
 	}
 
 	@Override
-	public boolean deletePerson(Person Person) {
-		return PersonDao.deletePerson(Person);
+	public boolean deletePerson(Person person) {
+		return personDao.deletePerson(person);
 		
 	}
 
 	@Override
 	public String  getRolePerson(String email,String password) {
-		Person acc = PersonDao.findByEmailAndPass(email, password);
+		Person acc = personDao.findByEmailAndPass(email, password);
 		if(acc != null)
-			return PersonDao.getRolePerson(acc.getPerID());
+			return personDao.getRolePerson(acc.getPerID());
 		else
 			return "NULL";
 	}
 	
 	@Override
 	public Person findByName(String username) {
-		Person acc =  PersonDao.findByName(username);
-		return PersonDao.getOnePerson(acc.getPerID());
+		Person acc =  personDao.findByName(username);
+		return personDao.getOnePerson(acc.getPerID());
 	}
 
 	@Override
 	public Person login(String email, String password) {
-		Person acc =  PersonDao.findByEmail(email);
+		Person acc =  personDao.findByEmail(email);
 		if(acc.getPerID() != 0 && password.equals(acc.getPassword())) {
-			return PersonDao.getOnePerson(acc.getPerID());
+			return personDao.getOnePerson(acc.getPerID());
 		}
 		return null;
 	}
 	
 	@Override
 	public Person findByEmail(String email) {
-		return PersonDao.findByEmail(email);
+		return personDao.findByEmail(email);
 	}
 
 	@Override
 	public boolean checkPassword(int userID, String password) {
-		Person Person=PersonDao.getOnePerson(userID);
+		Person Person=personDao.getOnePerson(userID);
 		if(Person!=null && Person.getPassword().equals(password)) {
 			return true;
 		}
