@@ -100,7 +100,10 @@ int countdownMinutes = 5;
 
     /* Thay đổi hình ảnh ghế khi checkbox được chọn */
     .seat-checkbox:checked + img {
-        content: url("assets/images/movie/seat01-booked.png"); /* Hình ảnh ghế đang chọn */
+        content: url("assets/images/movie/seat01-booked.png"); /* Hình ảnh ghế thường đang chọn */
+    }
+    .seat-checkbox.couple:checked + img {
+        content: url("assets/images/movie/seat02-booked.png"); /* Hình ảnh ghế đôi đang chọn */
     }
 </style>
 
@@ -126,11 +129,17 @@ int countdownMinutes = 5;
                                         <li class="single-seat">
                                             <label class="seat-label">
                                                 <!-- Checkbox cho ghế -->
-                                                <input type="checkbox" class="seat-checkbox" name="selectedSeats" value="${seatStatus.seat.seatID}"
+                                                <input type="checkbox" 
+                                                       class="seat-checkbox ${seatStatus.seat.isCouple() ? 'couple' : ''}" 
+                                                       name="selectedSeats"  data-status="free"
+                                                       value="${seatStatus.seat.seatID}"
                                                        ${seatStatus.status ? 'disabled' : ''}>
-                                                <!-- Hình ảnh dựa trên trạng thái ghế -->
-                                                <img src="assets/images/movie/${seatStatus.status ? 'seat01.png' : 'seat01-free.png'}" 
-                                                     alt="seat">
+                                                <!-- Hình ảnh dựa trên trạng thái và loại ghế -->
+                                                <img src="assets/images/movie/${
+                                                    seatStatus.seat.isCouple() 
+                                                    ? (seatStatus.status ? 'seat02-free.png' : 'seat02.png') 
+                                                    : (seatStatus.status ? 'seat01-free.png' : 'seat01.png')
+                                                }" alt="seat">
                                                 <span>${seatStatus.seat.seatNumber}</span>
                                             </label>
                                         </li>
@@ -146,6 +155,7 @@ int countdownMinutes = 5;
         </div>
     </div>
 </div>
+
 
 
 	<!-- ==========Movie-Section========== -->
@@ -165,19 +175,34 @@ int countdownMinutes = 5;
 				clearInterval(countdownInterval); // Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
-	    document.querySelectorAll(".single-seat input[type='checkbox']").forEach(function(checkbox) {
-	        checkbox.addEventListener("change", function() {
-	            const img = this.closest("label").querySelector("img");
-	            if (this.checked) {
-	                img.src = "assets/images/movie/seat01-booked.png"; // Hình ảnh khi ghế được chọn
-	            } else {
-	                img.src = this.dataset.status === "booked"
-	                    ? "assets/images/movie/seat01.png" // Trạng thái đã đặt
-	                    : "assets/images/movie/seat01-free.png"; // Trạng thái trống
-	            }
-	        });
-	    });
-	</script>
+		document.querySelectorAll(".single-seat input[type='checkbox']").forEach(function (checkbox) {
+		    checkbox.addEventListener("change", function () {
+		        const img = this.closest("label").querySelector("img");
 
+		        // Khi checkbox được chọn
+		        if (this.checked) {
+		            img.src = this.classList.contains("couple")
+		                ? "assets/images/movie/seat02-booked.png" // Hình ảnh ghế đôi đang chọn
+		                : "assets/images/movie/seat01-booked.png"; // Hình ảnh ghế đơn đang chọn
+		        }
+		        // Khi checkbox bị bỏ chọn
+		        else {
+		            const isCouple = this.classList.contains("couple");
+		            const isBooked = this.dataset.status === "booked";
+
+		            // Kiểm tra trạng thái ban đầu
+		            if (isBooked) {
+		                img.src = isCouple
+		                    ? "assets/images/movie/seat02-booked.png" // Ghế đôi đã đặt
+		                    : "assets/images/movie/seat01-booked.png"; // Ghế đơn đã đặt
+		            } else {
+		                img.src = isCouple
+		                    ? "assets/images/movie/seat02.png" // Ghế đôi trống
+		                    : "assets/images/movie/seat01.png"; // Ghế đơn trống
+		            }
+		        }
+		    });
+		});
+	</script>
 </body>
 </html>

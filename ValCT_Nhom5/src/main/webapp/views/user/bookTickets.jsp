@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -89,6 +91,28 @@
 						%>
 						<option value="<%=date%>"
 							<%=(calendar.get(Calendar.DAY_OF_MONTH) == currentDay) ? "selected" : ""%>>
+							<%=date%>
+						</option>
+						<%
+						calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày
+						}
+						%>
+						name="date" onchange="this.form.submit()">
+						<%
+						// Lấy ngày hiện tại
+						Calendar calendar = Calendar.getInstance();
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+						// Ngày được chọn từ request hoặc mặc định là ngày hiện tại
+						String selectedDateFromRequest = request.getParameter("date");
+						String selectedDate = selectedDateFromRequest != null ? selectedDateFromRequest : sdf.format(calendar.getTime());
+
+						// Hiển thị 30 ngày kể từ hôm nay
+						for (int i = 0; i < 30; i++) {
+							String date = sdf.format(calendar.getTime());
+						%>
+						<option value="<%=date%>"
+							<%=date.equals(selectedDate) ? "selected" : ""%>>
 							<%=date%>
 						</option>
 						<%
