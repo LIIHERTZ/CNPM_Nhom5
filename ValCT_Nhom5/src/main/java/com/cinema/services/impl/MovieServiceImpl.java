@@ -22,24 +22,39 @@ public class MovieServiceImpl implements IMovieService{
 
 	@Override
 	public boolean insertMovie(Movie Movie) {
-		// TODO Auto-generated method stub
-		return false;
+		return movieDao.insertMovie(Movie);
 	}
 
 	@Override
 	public boolean updateMovie(Movie Movie) {
-		// TODO Auto-generated method stub
-		return false;
+		return movieDao.updateMovie(Movie);
 	}
 
 	@Override
-	public boolean deleteMovie(Movie Person) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteMovie(int movieID) {
+		return movieDao.deleteMovie(movieID);
 	}
 	@Override
     public Movie getMovieById(int movieID) {
         return movieDao.getMovieById(movieID);
     }
+	public List<Movie> getMovies(int offset, int noOfRecords) {
+		return movieDao.getMovies( offset, noOfRecords);
+	}
+
+	@Override
+	public int getNoOfRecords() {
+		return movieDao.getNoOfRecords();
+	}
+
+	@Override
+	public List<Movie> searchMovies(String keyword, int i, int recordsPerPage) {
+		return movieDao.searchMovies(keyword,i,recordsPerPage);
+	}
+
+	@Override
+	public int getNoOfSearchResults(String keyword) {
+		return movieDao.getNoOfSearchResults(keyword);
+	}
 	
 }
