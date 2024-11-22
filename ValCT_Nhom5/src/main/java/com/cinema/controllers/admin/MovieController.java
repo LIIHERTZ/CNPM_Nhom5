@@ -27,7 +27,7 @@ import jakarta.servlet.http.Part;
 import com.cinema.services.IMovieService;
 import com.cinema.services.impl.MovieServiceImpl;
 
-@WebServlet(urlPatterns = {"/admin/addMovie", "/admin/showAddMovie", "/admin/editMovie", "/admin/deleteMovie", "/admin/searchMovie", "/admin/movies"})
+@WebServlet(urlPatterns = {"/admin/movies","/admin/addMovie", "/admin/showAddMovie", "/admin/editMovie", "/admin/deleteMovie", "/admin/searchMovie"})
 @MultipartConfig
 public class MovieController extends HttpServlet {
 
