@@ -12,17 +12,17 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- CSS -->
-<link rel="stylesheet" href="assets2/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets2/css/slimselect.css">
-<link rel="stylesheet" href="assets2/css/admin.css">
+<link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/slimselect.css">
+<link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/admin.css">
 
 <!-- Icon font -->
-<link rel="stylesheet" href="assets2/webfont/tabler-icons.min.css">
+<link rel="stylesheet" href="/ValCT_Nhom5/assets2/webfont/tabler-icons.min.css">
 
 <!-- Favicons -->
-<link rel="icon" type="image/png" href="assets2/icon/favicon-32x32.png"
+<link rel="icon" type="image/png" href="/ValCT_Nhom5/assets2/icon/favicon-32x32.png"
 	sizes="32x32">
-<link rel="apple-touch-icon" href="assets2/icon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/ValCT_Nhom5/assets2/icon/favicon-32x32.png">
 
 <meta name="description"
 	content="Online Movies, TV Shows & Cinema HTML Template">
@@ -43,10 +43,10 @@
 	<%@ include file="/common/admin/footer.jsp"%>
 
 	<!-- JS -->
-	<script src="assets2/js/bootstrap.bundle.min.js"></script>
-	<script src="assets2/js/slimselect.min.js"></script>
-	<script src="assets2/js/smooth-scrollbar.js"></script>
-	<script src="assets2/js/admin.js"></script>
+	<script src="/ValCT_Nhom5/assets2/js/bootstrap.bundle.min.js"></script>
+	<script src="/ValCT_Nhom5/assets2/js/slimselect.min.js"></script>
+	<script src="/ValCT_Nhom5/assets2/js/smooth-scrollbar.js"></script>
+	<script src="/ValCT_Nhom5/assets2/js/admin.js"></script>
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:36 GMT -->

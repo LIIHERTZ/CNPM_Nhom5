@@ -180,5 +180,30 @@
 			mainBg.style.backgroundSize = 'cover';
 		}
 	}
+	if (document.querySelector('#sign__roomtype')) {
+		new SlimSelect({
+			select: '#sign__roomtype',
+			settings: {
+				placeholderText: 'Choose room type',
+			}
+		});
+	}
+	
+	if (document.querySelector('#sign__status')) {
+		new SlimSelect({
+			select: '#sign__status',
+			settings: {
+				placeholderText: 'Choose status',
+			}
+		});
+	}
+	if (document.querySelector('#sign__popcorntype')) {
+		new SlimSelect({
+			select: '#sign__popcorntype',
+			settings: {
+				placeholderText: 'Choose popcorntype',
+			}
+		});
+	}
 
 })(window, document);
