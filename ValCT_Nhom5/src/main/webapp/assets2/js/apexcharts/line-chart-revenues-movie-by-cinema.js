@@ -6,13 +6,9 @@
       
         var options = {
             series: [{
-            name: 'Revenue',
+            name: 'Customer Amount',
             type: 'column',
-            data: chartDataMovie.movieNameRevenueList
-          }, {
-            name: 'Amountl',
-            type: 'line',
-            data: chartDataMovie.movieNameAmountList
+            data: jsonChartDataMovies.revenueOfCinemaByMovieList
           }],
           chart: {
             height: 404,
@@ -64,7 +60,7 @@
             tooltip: {
               enabled: false
             },
-            categories: chartDataMovie.movieNameList
+            categories: jsonChartDataMovies.cinemaNameList
           },
           responsive: [{
             breakpoint: 991,
@@ -89,10 +85,10 @@
         };
 
         chart = new ApexCharts(
-          document.querySelector("#line-chart-7"),
+          document.querySelector("#line-chart-revenues-movie-by-cinema"),
           options
         );
-        if ($("#line-chart-7").length > 0) {
+        if ($("#line-chart-revenues-movie-by-cinema").length > 0) {
           chart.render();
         }
       };

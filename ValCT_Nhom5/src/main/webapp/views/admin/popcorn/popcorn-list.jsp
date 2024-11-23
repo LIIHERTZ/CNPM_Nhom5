@@ -156,13 +156,16 @@
 									<td><div class="catalog__text">${popcorn.namePopCorn }</div></td>
 									<td><div class="catalog__text">${popcorn.typePopCorn }</div></td>
 									<td><div class="catalog__text">${popcorn.price }</div></td>
-									<td><div class="catalog__text">${popcorn.status }</div></td>
+									<td><div class="catalog__text">${popcorn.status == true ? 'Available' : 'Unavailable'}</div></td>
 									<td>
 										<div class="catalog__btns">
-											<a
-												href="${pageContext.request.contextPath}/admin/popcorns/edit?popcornID=${popcorn.popcornID}"
-												class="catalog__btn catalog__btn--edit"> <i
-												class="ti ti-edit"></i>
+											<a href="#" class="catalog__btn catalog__btn--edit"
+												data-bs-toggle="modal" data-bs-target="#modal-edit"
+												data-id="${popcorn.popcornID}"
+												data-type="${popcorn.typePopCorn}"
+												data-name="${popcorn.namePopCorn}"
+												data-price="${popcorn.price}"
+												data-status="${popcorn.status}"> <i class="ti ti-edit"></i>
 											</a>
 											<button type="button" data-bs-toggle="modal"
 												class="catalog__btn catalog__btn--delete"
@@ -187,8 +190,13 @@
 			<div class="col-12">
 				<div class="main__paginator">
 					<!-- amount -->
-					<span class="main__paginator-pages">${currentPage} of
-						${totalPages}</span>
+					<c:if test="${totalPages > 0}">
+						<span class="main__paginator-pages">${currentPage} of
+							${totalPages}</span>
+					</c:if>
+					<c:if test="${totalPages == 0}">
+						<span class="main__paginator-pages">0 of ${totalPages}</span>
+					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
 					<div class="page-size-selector">
@@ -196,7 +204,7 @@
 							style="background-color: #1a191f; color: #333; padding: 5px 10px; border-radius: 5px;">Page
 							Size: </label> <select id="pageSize" name="pageSize"
 							onchange="updatePageSize(this)"
-							style= "background-color : #222028 ;  border :#222028; color :white; ">
+							style="background-color: #222028; border: #222028; color: white;">
 							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
 							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
 							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
@@ -217,13 +225,16 @@
 								<i class="ti ti-chevron-left"></i>
 						</a></li>
 						<!-- Page numbers -->
-						<c:forEach var="i" begin="0" end="${totalPages - 1}">
-							<li class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
-								<a
-								href="${pageContext.request.contextPath}/admin/popcorns?pageNumber=${i + 1}&pageSize=${pageSize}">
-									${i + 1} </a>
-							</li>
-						</c:forEach>
+						<c:if test="${totalPages > 0}">
+							<c:forEach var="i" begin="0" end="${totalPages - 1}">
+								<li
+									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+									<a
+									href="${pageContext.request.contextPath}/admin/popcorns?pageNumber=${i + 1}&pageSize=${pageSize}">
+										${i + 1} </a>
+								</li>
+							</c:forEach>
+						</c:if>
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
 							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
@@ -281,8 +292,8 @@
 							<div class="sign__group">
 								<label class="sign__label" for="status">Status</label> <select
 									class="sign__selectjs" name="status" id="status" required>
-									<option value="Available">Available</option>
-									<option value="Unavailable">Unavailable</option>
+									<option value="1" ${popcorn.status == 1 ? 'selected' : ''}>Available</option>
+									<option value="0" ${popcorn.status == 0 ? 'selected' : ''}>Unavailable</option>
 								</select>
 							</div>
 						</div>
@@ -299,6 +310,74 @@
 	</div>
 </div>
 <!-- end user modal -->
+
+<!-- edit popcorn modal -->
+<div class="modal fade" id="modal-edit" tabindex="-1"
+	aria-labelledby="modal-user" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal__content">
+				<form
+					action="${pageContext.request.contextPath}/admin/popcorns/update"
+					method="post" class="modal__form" id="edit-popcorn-form">
+					<h4 class="modal__title">Edit PopCorn</h4>
+					<div class="row">
+						<div class="col-12">
+							<input type="hidden" class="sign__input" name="popcornID-edit"
+								id="popcornID-edit">
+							<div class="sign__group">
+								<label class="sign__label" for="namePopCorn">PopCorn
+									Name</label> <input type="text" class="sign__input" name="namePopCorn"
+									id="namePopCorn" placeholder="Popcorn Combo Name" required>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="price">Price</label> <input
+									type="number" class="sign__input" name="price" id="price"
+									placeholder="Price" required>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="typePopCorn">Type</label> <select
+									class="sign__selectjs" name="typePopCorn" id="typePopCorn"
+									required "
+									style="color: white; font-weight: bold;">
+									<option value="Small" style="color: white; font-weight: bold;">Small</option>
+									<option value="Regular"
+										style="color: white; font-weight: bold;">Regular</option>
+									<option value="Large" style="color: white; font-weight: bold;">Large</option>
+									<option value="Extra Large"
+										style="color: white; font-weight: bold;">Extra Large</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="status">Status</label> <select
+									class="sign__selectjs" name="status" id="status" required
+									style="color: white; font-weight: bold;">
+									<option value="true" style="color: white; font-weight: bold;">Available</option>
+									<option value="false" style="color: white; font-weight: bold;">Unavailable</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<button type="submit" class="sign__btn sign__btn--small">
+								<span>Update</span>
+							</button>
+						</div>
+					</div>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- delete modal -->
 <div class="modal fade" id="modal-delete" tabindex="-1"
@@ -361,4 +440,61 @@
 	        });
 	    });
 	});
+	
+	//edit user modal
+	document.addEventListener('DOMContentLoaded', function () {
+	    var form = document.getElementById('edit-popcorn-form');
+	    var popcornIDField = document.getElementById('popcornID-edit');
+
+	    form.addEventListener('submit', function (event) {
+	        // Lấy giá trị của popcornID
+	        var popcornID = popcornIDField.value;
+	        
+	        const baseFormAction = form.getAttribute("action"); // URL ban đầu của form
+            const link = baseFormAction+'?popcornID='+popcornID;
+	        // Gán giá trị vào URL của action
+	        form.action = link
+	        console.log("url : " + form.action )
+	    });
+	});
+	
+	
+	
+	document.addEventListener('DOMContentLoaded', function () {
+	    // Lắng nghe sự kiện khi modal được hiển thị
+	    var editModal = document.getElementById('modal-edit');
+	    editModal.addEventListener('show.bs.modal', function (event) {
+	        // Nút kích hoạt modal
+	        var button = event.relatedTarget;
+	        
+	        // Lấy thông tin từ data-attribute
+	        var popcornID = button.getAttribute('data-id');
+	        var popcornType = button.getAttribute('data-type');
+	        var popcornName = button.getAttribute('data-name');
+	        var popcornPrice = button.getAttribute('data-price');
+	        var popcornStatus = button.getAttribute('data-status');
+	        
+	        // Điền thông tin vào các trường trong modal
+	        var modalPopcornType = editModal.querySelector('#typePopCorn');
+	        var modalPopcornPrice = editModal.querySelector('#price');
+	        var modalPopcornName = editModal.querySelector('#namePopCorn');
+	        var modalPopcornStatus = editModal.querySelector('#status');
+	        var modalPopcornID = editModal.querySelector('#popcornID-edit');
+	        
+	        modalPopcornID.value = popcornID;
+	        modalPopcornType.value = popcornType;
+	        modalPopcornPrice.value = popcornPrice;
+	        modalPopcornName.value = popcornName;
+	        modalPopcornStatus.value = popcornStatus;
+	      console.log("popcornID" + popcornID);
+	      console.log("popcornType" + popcornType);
+	      console.log("popcornName" + popcornName);
+	      console.log("popcornPrice" + popcornPrice);
+	      console.log("popcornStatus" + popcornStatus);
+	      
+	      
+
+	    });
+	});
+
 </script>

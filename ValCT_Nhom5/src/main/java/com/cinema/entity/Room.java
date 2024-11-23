@@ -29,7 +29,7 @@ public class Room {
     
     private Integer chairNumber;
     
-    @Column(name = "status", nullable = false, columnDefinition = "BIT")
+    @Column(name = "status", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status; // New field for cinema status using bit, named "status"
     
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)

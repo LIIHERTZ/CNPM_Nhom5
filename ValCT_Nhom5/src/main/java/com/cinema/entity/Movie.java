@@ -33,10 +33,7 @@ public class Movie {
     @Column(nullable = false)
     private Date releaseDay;
 
-    @Column(nullable = false)
-    private float rating;
-
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 
     @OneToMany(mappedBy = "movie")
@@ -93,6 +90,22 @@ public class Movie {
 		this.movieDuration = movieDuration;
 	}
 
+	public Date getReleaseDay() {
+		return releaseDay;
+	}
+
+	public void setReleaseDay(Date releaseDay) {
+		this.releaseDay = releaseDay;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public List<MovieScreenings> getMovieScreenings() {
 		return movieScreenings;
 	}
@@ -109,6 +122,6 @@ public class Movie {
 		this.reviews = reviews;
 	}
 
-    // Getters and setters
+	
     
 }

@@ -8,4 +8,8 @@ public interface IPaymentDAO {
 
 	List<Object[]> getPopCornStatisticsByDate(String dateValue, String dateType);
 
+	List<Object[]> getCinemaRevenuesByMovieID(String movieID);
+
+	List<Object[]> getCustomerAmountAllCinema();
+
 }

@@ -16,4 +16,13 @@ public class PaymentServiceImpl implements IPaymentService{
 	public List<Object[]> getPopCornStatisticsByDate(String dateValue,String dateType){
 		return payDao.getPopCornStatisticsByDate(dateValue, dateType);
 	}
+	
+	@Override
+	public List<Object[]> getCinemaRevenuesByMovieID(String movieID){
+		return payDao.getCinemaRevenuesByMovieID(movieID);
+	}
+	@Override
+	public List<Object[]> getCustomerAmountAllCinema(){
+		return payDao.getCustomerAmountAllCinema();
+	}
 }

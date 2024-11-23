@@ -41,17 +41,10 @@
 	<%@ include file="/common/admin/footer.jsp"%>
 
 	<!-- JS -->
-<<<<<<< HEAD
-	<script src="${pageContext.request.contextPath}/assets2/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets2/js/slimselect.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets2/js/smooth-scrollbar.js"></script>
-	<script src="${pageContext.request.contextPath}/assets2/js/admin.js"></script>
-=======
 	<script src=" ${pageContext.request.contextPath}/assets2/js/bootstrap.bundle.min.js"></script>
 	<script src=" ${pageContext.request.contextPath}/assets2/js/slimselect.min.js"></script>
 	<script src=" ${pageContext.request.contextPath}/assets2/js/smooth-scrollbar.js"></script>
 	<script src=" ${pageContext.request.contextPath}/assets2/js/admin.js"></script>
->>>>>>> Thao
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:36 GMT -->

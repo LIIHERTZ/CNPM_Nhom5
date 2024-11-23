@@ -41,7 +41,7 @@
               borderRadius: 5,
               borderRadiusApplication: 'end', // 'around', 'end'
               borderRadiusWhenStacked: 'last', // 'all', 'last'
-              columnWidth: '20px'
+              columnWidth: '60px'
             }
           },
           dataLabels: {

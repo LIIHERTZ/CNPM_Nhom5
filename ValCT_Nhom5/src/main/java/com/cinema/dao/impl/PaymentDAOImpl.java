@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import com.cinema.configs.JPAConfig;
@@ -14,6 +15,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 	public List<Object[]> getMovieStatisticsByDate(String dateValue,String dateType) {
 		EntityManager em = JPAConfig.getEntityManager();
 		String jpql ="";
+		 List<Object[]> results = new ArrayList<>();
 		if("day".equals(dateType))
 		{
 			jpql ="SELECT m.movieName, SUM(t.priceTicket) AS tong,SUM(t.priceTicket - (t.priceTicket * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu, COUNT(t.ticketID) AS SLVe "
@@ -52,20 +54,28 @@ public class PaymentDAOImpl implements IPaymentDAO{
                      "GROUP BY m.movieName";
 		}
         
+		try {
+			  // Tạo truy vấn
+			  TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+		        Date sqlDate = Date.valueOf(dateValue);
+		        query.setParameter("dateValue", sqlDate );
+	        // Thực thi truy vấn và trả về kết quả
+		        results = query.getResultList();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			em.close();
+		}
+    
+      return results;
 
-        // Tạo truy vấn
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
-        Date sqlDate = Date.valueOf(dateValue);
-        query.setParameter("dateValue", sqlDate );
-
-        // Thực thi truy vấn và trả về kết quả
-        return query.getResultList();
     }
 	
 	@Override
 	public List<Object[]> getPopCornStatisticsByDate(String dateValue,String dateType) {
 		EntityManager em = JPAConfig.getEntityManager();
 		String jpql ="";
+		 List<Object[]> results = new ArrayList<>();
 		if("day".equals(dateType))
 		{
 			jpql ="SELECT pc.namePopCorn,SUM(pc.price * pp.quantity)  AS tong,SUM(pc.price * pp.quantity - (pc.price * pp.quantity * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu ,COUNT(pc.popcornID) AS SL "
@@ -98,13 +108,20 @@ public class PaymentDAOImpl implements IPaymentDAO{
 					+ "GROUP BY pc.popcornID,pc.namePopCorn";
 		}
         
-
-        // Tạo truy vấn
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
-        Date sqlDate = Date.valueOf(dateValue);
-        query.setParameter("dateValue", sqlDate );
-        // Thực thi truy vấn và trả về kết quả
-        return query.getResultList();
+		try {
+			  // Tạo truy vấn
+	        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+	        Date sqlDate = Date.valueOf(dateValue);
+	        query.setParameter("dateValue", sqlDate );
+	        results= query.getResultList();
+	        // Thực thi truy vấn và trả về kết quả
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			em.close();
+		}
+      
+        return results;
     }
 	
 	
@@ -130,4 +147,68 @@ public class PaymentDAOImpl implements IPaymentDAO{
         
         return count;
 	}
+	
+	
+	@Override
+	public List<Object[]> getCinemaRevenuesByMovieID(String movieID) {
+		EntityManager em = JPAConfig.getEntityManager();
+		 List<Object[]> results = new ArrayList<>();
+		String jpql = "SELECT c.cinemaName, SUM(t.priceTicket) AS doanhThu , m.movieName  " +
+	              "FROM Movie m " +
+	              "JOIN m.movieScreenings ms " +
+	              "JOIN ms.tickets t " +
+	              "JOIN t.detailTickets tp " +
+	              "JOIN ms.room r " +
+	              "JOIN r.cinema c " +
+	              "WHERE m.movieID = :movieID " +
+	              "GROUP BY c.cinemaID, c.cinemaName, m.movieName ";
+		
+		try {
+			  // Tạo truy vấn
+			  // Tạo truy vấn
+	        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+	        	query.setParameter("movieID", movieID );
+	        	  results= query.getResultList();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			em.close();
+		}
+  
+    return results;
+
+     
+    }
+	
+
+	@Override
+	public List<Object[]> getCustomerAmountAllCinema() {
+		EntityManager em = JPAConfig.getEntityManager();
+		 List<Object[]> results = new ArrayList<>();
+		String jpql = "SELECT c.cinemaID, c.cinemaName, COUNT(DISTINCT per.perID) as SLKhach  " +
+	              "FROM Person per " +
+	              "JOIN per.payments p " +
+	              "JOIN p.TicketPayments  tp " +
+	              "JOIN tp.ticket t  " +
+	              "JOIN t.movieScreenings ms " +
+	              "JOIN ms.room r " +
+	              "JOIN r.cinema c " +
+	              "GROUP BY c.cinemaName, c.cinemaID ";
+		
+		try {
+			  // Tạo truy vấn
+			  // Tạo truy vấn
+	        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+	        	  results= query.getResultList();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			em.close();
+		}
+  
+    return results;
+
+     
+    }
+	
 }

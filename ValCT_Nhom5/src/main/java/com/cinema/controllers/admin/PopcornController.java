@@ -86,7 +86,7 @@ public class PopcornController extends HttpServlet{
 		popcorn.setNamePopCorn(request.getParameter("namePopCorn"));
 		popcorn.setPrice(Double.parseDouble(request.getParameter("price")));
 		popcorn.setTypePopCorn(request.getParameter("typePopCorn"));
-		popcorn.setStatus(request.getParameter("status"));
+		popcorn.setStatus(Boolean.parseBoolean(request.getParameter("status")));
 		popcornService.insertPopCorn(popcorn);
 		response.sendRedirect(request.getContextPath() + "/admin/popcorns");
 	}
@@ -99,7 +99,7 @@ public class PopcornController extends HttpServlet{
 			popcorn.setNamePopCorn(request.getParameter("namePopCorn"));
 			popcorn.setPrice(Double.parseDouble(request.getParameter("price")));
 			popcorn.setTypePopCorn(request.getParameter("typePopCorn"));
-			popcorn.setStatus(request.getParameter("status"));
+			popcorn.setStatus(Boolean.parseBoolean(request.getParameter("status")));
 			popcornService.updatePopCorn(popcorn);
 		}
 

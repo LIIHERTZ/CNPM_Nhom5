@@ -28,7 +28,7 @@ public class PopCorn {
     private double price;
 
     @Column(nullable = false)
-    private String status;
+    private boolean  status;
 
     @OneToMany(mappedBy = "popcorn")
     private List<PopCornPayment> detailPopCorns;
@@ -65,11 +65,11 @@ public class PopCorn {
 		this.price = price;
 	}
 
-	public String getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 

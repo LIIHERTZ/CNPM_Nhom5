@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
 
 <!-- sidebar -->
@@ -164,10 +164,14 @@
 									<td><div class="catalog__text">${endDateFormatted }</div></td>
 									<td>
 										<div class="catalog__btns">
-											<a
-												href="${pageContext.request.contextPath}/admin/coupons/edit?couponID=${coupon.couponID}"
-												class="catalog__btn catalog__btn--edit"> <i
-												class="ti ti-edit"></i>
+											<a href="#" class="catalog__btn catalog__btn--edit"
+												data-bs-toggle="modal" data-bs-target="#modal-edit"
+												data-id="${coupon.couponID}"
+												data-name="${coupon.couponName}"
+												data-type="${coupon.couponType}"
+												data-value="${coupon.couponValue}"
+												data-startDate="${coupon.startDate}"
+												data-endDate="${coupon.endDate}"> <i class="ti ti-edit"></i>
 											</a>
 											<button type="button" data-bs-toggle="modal"
 												class="catalog__btn catalog__btn--delete"
@@ -191,20 +195,28 @@
 			<div class="col-12">
 				<div class="main__paginator">
 					<!-- amount -->
-					<span class="main__paginator-pages">${currentPage} of
-						${totalPages}</span>
+					<c:if test="${totalPages > 0}">
+						<span class="main__paginator-pages">${currentPage} of
+							${totalPages}</span>
+					</c:if>
+					<c:if test="${totalPages == 0}">
+						<span class="main__paginator-pages">0 of ${totalPages}</span>
+					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector main__paginator-pages"  >
-						<label for="pageSize"
-							style= color: #333; padding: 5px 10px; border-radius: 5px;>Page
-							Size  :   </label> <select id="pageSize" name="pageSize"
+					<div class="page-size-selector main__paginator-pages">
+						<label for="pageSize" style="color: #333;"padding: 5px 10px; border-radius: 5px;>Page
+							Size : </label> <select id="pageSize" name="pageSize"
 							onchange="updatePageSize(this)"
-							style= "background-color : #222028 ;  border :#222028; color :white; ">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>> 5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>> 10</option>
-							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>> 15</option>
-							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>> 20</option>
+							style="background-color: #222028; border: #222028; color: white;">
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>
+								5</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>
+								10</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>
+								15</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>
+								20</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -221,13 +233,16 @@
 								<i class="ti ti-chevron-left"></i>
 						</a></li>
 						<!-- Page numbers -->
-						<c:forEach var="i" begin="0" end="${totalPages - 1}">
-							<li class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
-								<a
-								href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}">
-									${i + 1} </a>
-							</li>
-						</c:forEach>
+						<c:if test="${totalPages > 0}">
+							<c:forEach var="i" begin="0" end="${totalPages - 1}">
+								<li
+									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+									<a
+									href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}">
+										${i + 1} </a>
+								</li>
+							</c:forEach>
+						</c:if>
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
 							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
@@ -265,7 +280,7 @@
 							<div class="sign__group">
 								<label class="sign__label" for="couponType">Type</label> <select
 									class="sign__selectjs" name="couponType" id="couponType"
-									required>
+									required style="color: white;">
 									<option value="Coupon 1">Coupon 1</option>
 									<option value="Coupon 2">Coupon 2</option>
 									<option value="Coupon 3">Coupon 3</option>
@@ -276,8 +291,9 @@
 						<div class="col-12">
 							<div class="sign__group">
 								<label class="sign__label" for="couponValue">Coupon
-									Value</label> <input type="number" class="sign__input" name="couponValue"
-									id="couponValue" placeholder="Coupon Value" required>
+									Value</label> <input type="number" class="sign__input"
+									name="couponValue" id="couponValue" placeholder="Coupon Value"
+									required>
 							</div>
 						</div>
 						<div class="col-12">
@@ -307,7 +323,79 @@
 	</div>
 </div>
 <!-- end user modal -->
+<!-- edit coupon modal -->
+<div class="modal fade" id="modal-edit" tabindex="-1"
+	aria-labelledby="modal-user" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal__content">
+				<form
+					action="${pageContext.request.contextPath}/admin/coupons/update"
+					method="post" class="modal__form" id="edit-coupon-form">
+					<h4 class="modal__title">Edit Coupon</h4>
 
+					<div class="row">
+						<div class="col-12">
+							<div class="sign__group">
+								<input type="hidden" class="sign__input" name="couponID-edit"
+									id="couponID-edit"> <label class="sign__label"
+									for="couponName">Coupon Name</label> <input type="text"
+									class="sign__input" name="couponName" id="couponName"
+									placeholder="Coupon Name" required
+									value="${coupon.couponName }">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="couponType">Type</label> <select
+									class="sign__selectjs" name="couponType" id="couponType"
+									required value="${coupon.couponType }" style="color: white;">
+									<option value="Coupon 1">Coupon 1</option>
+									<option value="Coupon 2">Coupon 2</option>
+									<option value="Coupon 3">Coupon 3</option>
+									<option value="Coupon 4 ">Coupon 4</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="couponValue">Coupon
+									Value</label> <input type="text" class="sign__input" name="couponValue"
+									id="couponValue" placeholder="Coupon Value" required
+									value="${coupon.couponValue }">
+							</div>
+							<!-- Định dạng ngày sử dụng JSTL -->
+							<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd"
+								var="formattedDate" />
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="startDate">Start Date</label> <input
+									type="Date" class="sign__input" name="startDate" id="startDate"
+									required value="${formattedDate}">
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="sign__group">
+								<label class="sign__label" for="endDate">End Date</label> <input
+									type="Date" class="sign__input" name="endDate" id="endDate"
+									required>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<button type="submit" class="sign__btn sign__btn--small">
+								<span>Update</span>
+							</button>
+						</div>
+					</div>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+</div>
 <!-- delete modal -->
 <div class="modal fade" id="modal-delete" tabindex="-1"
 	aria-labelledby="modal-delete" aria-hidden="true">
@@ -369,4 +457,64 @@
 	        });
 	    });
 	});
+	
+	
+	//edit coupon modal
+	document.addEventListener('DOMContentLoaded', function () {
+	    var form = document.getElementById('edit-coupon-form');
+	    var popcornIDField = document.getElementById('couponID-edit');
+
+	    form.addEventListener('submit', function (event) {
+	        // Lấy giá trị của popcornID
+	        var couponID = popcornIDField.value;
+	        
+	        const baseFormAction = form.getAttribute("action"); // URL ban đầu của form
+            const link = baseFormAction+'?couponID='+couponID;
+	        // Gán giá trị vào URL của action
+	        form.action = link
+	        console.log("url : " + form.action )
+	    });
+	});
+	
+	
+	
+	document.addEventListener('DOMContentLoaded', function () {
+	    // Lắng nghe sự kiện khi modal được hiển thị
+	    var editModal = document.getElementById('modal-edit');
+	    editModal.addEventListener('show.bs.modal', function (event) {
+	        // Nút kích hoạt modal
+	        var button = event.relatedTarget;
+	        // Lấy thông tin từ data-attribute
+	        var couponID = button.getAttribute('data-id');
+	        var couponType = button.getAttribute('data-type');
+	        var couponName = button.getAttribute('data-name');
+	        var couponValue = button.getAttribute('data-value');
+	        var startDate = button.getAttribute('data-startDate');
+	        var endDate = button.getAttribute('data-endDate');
+	        
+	        // Điền thông tin vào các trường trong modal
+	        var modalCouponID = editModal.querySelector('#couponID-edit');
+	        var modalCouponType = editModal.querySelector('#couponType');
+	        var modalCouponValue = editModal.querySelector('#couponValue');
+	        var modalCouponName = editModal.querySelector('#couponName');
+	        var modalStartDate = editModal.querySelector('#startDate');
+	        var modalEndDate = editModal.querySelector('#endDate');
+	        
+	        modalCouponID.value = couponID
+	        modalCouponType.value = couponType;
+	        modalCouponValue.value = couponValue;
+	        modalCouponName.value = couponName;
+	        // Chuyển định dạng ngày trước khi gán
+	        modalStartDate.value =formatDateToInput(startDate);
+	        modalEndDate.value = formatDateToInput(endDate);
+	        console.log("startDate : " + formatDateToInput(startDate));
+	        console.log("endDate : " + formatDateToInput(endDate));
+	    });
+	});
+	
+	// Hàm định dạng ngày
+	function formatDateToInput(dateString) {
+		const datePart = dateString.split(' ')[0];
+	    return datePart; // Trả về phần ngày (yyyy-MM-dd)
+	}
 </script>
