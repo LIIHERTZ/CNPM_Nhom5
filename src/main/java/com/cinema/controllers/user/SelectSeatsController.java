@@ -85,14 +85,35 @@ public class SelectSeatsController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Lấy dữ liệu từ form
+		HttpSession session = request.getSession();
 		String selectedSeats = request.getParameter("selectedSeats");
 		String totalPrice = request.getParameter("totalPrice");
-
+		String amountPayable = (String) session.getAttribute("amountPayable");
+		String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
+		
+		// Kiểm tra và gán mặc định nếu null
+		if (totalPrice == null || totalPrice.isEmpty()) {
+		    totalPrice = "0";
+		}
+		if (foodAndBeverageTotal != null) {
+		    foodAndBeverageTotal = foodAndBeverageTotal.replaceAll("[^\\d]", ""); // Loại bỏ tất cả ký tự không phải số
+		} else {
+		    foodAndBeverageTotal = "0"; // Gán mặc định nếu null
+		}
+		
+		// Chuyển đổi và tính toán
+		int totalPriceInt = Integer.parseInt(totalPrice);
+		int foodAndBeverageTotalInt = Integer.parseInt(foodAndBeverageTotal);
+		int amountPayableInt = totalPriceInt + foodAndBeverageTotalInt;
+		
+		// Chuyển lại thành String
+		amountPayable = String.valueOf(amountPayableInt);
+		
 
 		// Lưu vào session
-		HttpSession session = request.getSession();
 		session.setAttribute("selectedSeats", selectedSeats);
 		session.setAttribute("totalPrice", totalPrice);
+		session.setAttribute("amountPayable", amountPayable);
 
 		response.sendRedirect("movieCheckout");
 	}

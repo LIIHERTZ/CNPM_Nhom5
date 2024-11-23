@@ -61,7 +61,6 @@ public class MovieCheckoutController extends HttpServlet{
 	    String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
 	    String amountPayable = (String) session.getAttribute("amountPayable");
 	    
-
 	    
 		
 //		Map<String, List<Integer>> products = new HashMap<>();
