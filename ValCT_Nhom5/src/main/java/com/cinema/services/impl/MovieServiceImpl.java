@@ -57,4 +57,25 @@ public class MovieServiceImpl implements IMovieService{
 		return movieDao.getNoOfSearchResults(keyword);
 	}
 	
+    @Override
+    public List<Movie> searchMovies(String keyword, String category, int offset, int limit) {
+        return movieDao.searchMovies(keyword, category, offset, limit);
+    }
+
+    @Override
+    public int getNoOfSearchResults(String keyword, String category) {
+        return movieDao.getNoOfSearchResults(keyword, category);
+    }
+
+	@Override
+	public List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit) {
+		return movieDao.searchMovies(keyword, categories, offset, limit);
+	}
+
+	@Override
+	public int getNoOfSearchResults(String keyword, String[] categories) {
+		return movieDao.getNoOfSearchResults(keyword, categories);
+	}
+
+	
 }

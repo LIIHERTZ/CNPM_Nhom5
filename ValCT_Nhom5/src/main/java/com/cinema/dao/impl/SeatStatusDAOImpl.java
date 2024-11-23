@@ -7,6 +7,8 @@ import com.cinema.entity.SeatStatus;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
 import java.util.List;
 
 public class SeatStatusDAOImpl implements ISeatStatusDAO {
@@ -66,5 +68,30 @@ public class SeatStatusDAOImpl implements ISeatStatusDAO {
             em.close();
         }
     }
+    
+    public List<SeatStatus> getSeatStatusesByScreeningAndRoom(int screeningId, int roomId) {
+        EntityManager em = JPAConfig.getEntityManager();
+        List<SeatStatus> seatStatuses = null;
+        try {
+            // Tạo truy vấn với TypedQuery để lấy các SeatStatus
+            TypedQuery<SeatStatus> query = em.createQuery(
+                "SELECT ss FROM SeatStatus ss " +
+                "WHERE ss.screening.msID = :screeningId AND ss.seat.room.roomID = :roomId", 
+                SeatStatus.class
+            );
+            // Set các tham số vào truy vấn
+            query.setParameter("screeningId", screeningId);
+            query.setParameter("roomId", roomId);
+
+            // Lấy kết quả từ truy vấn
+            seatStatuses = query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Error loading seat statuses: " + e.getMessage());
+        } finally {
+            em.close(); // Đảm bảo đóng EntityManager để giải phóng tài nguyên
+        }
+        return seatStatuses;
+    }
+
 	
 }

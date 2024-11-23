@@ -22,7 +22,9 @@ public class Seat {
 	    private List<SeatStatus> seatStatuses;
 
 	    @Column(name = "isCouple", nullable = false)
-	    private boolean isCouple = false;
+	    private Boolean isCouple = false;  // Dùng Boolean thay vì boolean
+//	    @Column(name = "isCouple", nullable = false)
+//	    private int isCouple;  // 1 cho ghế đôi, 0 cho ghế đơn
 
 	    // Getters and Setters
 	    public int getSeatID() {
@@ -60,8 +62,24 @@ public class Seat {
 	    public boolean isCouple() {
 	        return isCouple;
 	    }
-
-	    public void setCouple(boolean isCouple) {
+	    public int getCouple() {
+	        return isCouple ? 1 : 0; // Trả về 1 nếu là ghế đôi, ngược lại trả về 0
+	    }
+	    	public void setCouple(boolean isCouple) {
 	        this.isCouple = isCouple;
 	    }
+	        // Thêm setter kiểu int để xử lý giá trị 0/1 từ cơ sở dữ liệu
+	        public void setCouple(int isCouple) {
+	            // Chuyển đổi giá trị int thành boolean (1 -> true, 0 -> false)
+	            this.isCouple = (isCouple == 1);
+	        }
+	    
+//	 // Getters and Setters
+//	    public int getIsCouple() {
+//	        return isCouple;
+//	    }
+//
+//	    public void setIsCouple(int isCouple) {
+//	        this.isCouple = isCouple;
+//	    }
 }

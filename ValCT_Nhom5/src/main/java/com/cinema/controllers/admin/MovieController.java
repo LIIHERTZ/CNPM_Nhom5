@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
@@ -119,7 +120,7 @@ public class MovieController extends HttpServlet {
 
         Movie Movie = new Movie();
         Movie.setMovieName(name);
-        Movie.setCategory(category);
+        Movie.setCategory(category);  // Gán chuỗi thể loại đã nối vào
         Movie.setMovieDuration(movieDuration); // Gán giá trị location
         Movie.setDescription(description);
         Movie.setStatus(status);
@@ -212,28 +213,68 @@ public class MovieController extends HttpServlet {
         }
     }
 
+
+//    private void searchMovies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String keyword = req.getParameter("keyword");
+//        String category = req.getParameter("category");
+//        int page = 1;
+//        int recordsPerPage = 4;
+//        
+//        // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
+//        if (req.getParameter("page") != null) {
+//            page = Integer.parseInt(req.getParameter("page"));
+//        }
+//        
+//        // Tìm kiếm các Movies với từ khóa, thể loại và phân trang
+//        List<Movie> movies = movieService.searchMovies(keyword, category, (page - 1) * recordsPerPage, recordsPerPage);
+//        
+//        // Lấy tổng số records để tính số trang
+//        int noOfRecords = movieService.getNoOfSearchResults(keyword, category);
+//        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+//
+//        // Đặt các thuộc tính vào request để truyền đến JSP
+//        req.setAttribute("movies", movies);
+//        req.setAttribute("noOfPages", noOfPages);
+//        req.setAttribute("currentPage", page);
+//        req.setAttribute("keyword", keyword);  // Để giữ lại từ khóa tìm kiếm
+//        req.setAttribute("category", category); // Để giữ lại thể loại tìm kiếm
+//        req.setAttribute("noOfRecords", noOfRecords); // Thêm thuộc tính này để hiển thị tổng số bản ghi
+//
+//        // Chuyển tiếp đến trang Movie.jsp
+//        RequestDispatcher rd = req.getRequestDispatcher("/views/admin/Movie.jsp");
+//        rd.forward(req, resp);
+//    }
+
     private void searchMovies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
+        String[] categories = req.getParameterValues("category");  // Lấy danh sách các thể loại từ request
         int page = 1;
-        int recordsPerPage = 5;
-        
+        int recordsPerPage = 4;
+
         // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
-        
-        // Tìm kiếm các Movies với từ khóa và phân trang
-        List<Movie> Movies = movieService.searchMovies(keyword, (page - 1) * recordsPerPage, recordsPerPage);
-        
-        // Lấy tổng số records để tính số trang
-        int noOfRecords = movieService.getNoOfSearchResults(keyword);
+
+        // Nếu categories không được chọn (null hoặc chỉ có 'All'), tìm kiếm tất cả
+        List<Movie> movies;
+        int noOfRecords;
+        if (categories == null || Arrays.asList(categories).contains("All")) {
+            movies = movieService.searchMovies(keyword, (page - 1) * recordsPerPage, recordsPerPage);
+            noOfRecords = movieService.getNoOfSearchResults(keyword);
+        } else {
+            movies = movieService.searchMovies(keyword, categories, (page - 1) * recordsPerPage, recordsPerPage);
+            noOfRecords = movieService.getNoOfSearchResults(keyword, categories);
+        }
+
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
         // Đặt các thuộc tính vào request để truyền đến JSP
-        req.setAttribute("Movies", Movies);
+        req.setAttribute("movies", movies);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
         req.setAttribute("keyword", keyword);  // Để giữ lại từ khóa tìm kiếm
+        req.setAttribute("category", categories != null ? String.join(",", categories) : "All");  // Để giữ lại thể loại tìm kiếm
         req.setAttribute("noOfRecords", noOfRecords); // Thêm thuộc tính này để hiển thị tổng số bản ghi
 
         // Chuyển tiếp đến trang Movie.jsp
@@ -241,6 +282,9 @@ public class MovieController extends HttpServlet {
         rd.forward(req, resp);
     }
 
+
+    
+    
     private void listMovies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int page = 1;
         int recordsPerPage = 4;
@@ -258,7 +302,7 @@ public class MovieController extends HttpServlet {
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
         // Đặt các thuộc tính vào request để truyền đến JSP
-        req.setAttribute("Movies", Movies);
+        req.setAttribute("movies", Movies);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
         req.setAttribute("noOfRecords", noOfRecords); // Thêm thuộc tính này để hiển thị tổng số bản ghi

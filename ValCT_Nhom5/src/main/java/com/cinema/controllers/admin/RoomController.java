@@ -419,8 +419,10 @@ private void addRoom(HttpServletRequest req, HttpServletResponse resp) throws IO
                         // Hàng D và E có thuộc tính isCouple = true
                         if (row == 'D' || row == 'E') {
                             seat.setCouple(true);
+                        //	seat.setIsCouple(1);
                         } else {
                             seat.setCouple(false);
+                        //	seat.setIsCouple(0);
                         }
 
                         // Gọi service để thêm ghế

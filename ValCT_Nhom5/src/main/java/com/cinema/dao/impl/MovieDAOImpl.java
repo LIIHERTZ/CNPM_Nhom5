@@ -177,47 +177,244 @@ public class MovieDAOImpl implements IMovieDAO {
 	@Override
 	public List<Movie> searchMovies(String keyword, int offset, int limit) {
 	    EntityManager em = JPAConfig.getEntityManager();
-	    List<Movie> listMovies = new ArrayList<>();
+	    List<Movie> movies;
+
 	    try {
-	        // Truy vấn với LIKE để tìm kiếm theo từ khóa trong movieName và áp dụng LIMIT/OFFSET để phân trang
-	        String jpql = "SELECT m FROM Movie m WHERE m.movieName LIKE :keyword";
-	        TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
-	        query.setParameter("keyword", "%" + keyword + "%");
+	        // Xây dựng câu truy vấn tìm kiếm
+	        StringBuilder queryStr = new StringBuilder("SELECT m FROM Movie m WHERE 1=1");
 
-	        // Áp dụng phân trang
-	        query.setFirstResult(offset); // offset: bắt đầu từ đâu
-	        query.setMaxResults(limit);   // limit: số bản ghi trả về
+	        // Thêm điều kiện nếu từ khóa không rỗng
+	        if (keyword != null && !keyword.trim().isEmpty()) {
+	            queryStr.append(" AND LOWER(m.movieName) LIKE :keyword");
+	        }
 
-	        listMovies = query.getResultList();
-	    } catch (Exception e) {
-	        System.err.println("Error searching movies: " + e.getMessage());
+	        TypedQuery<Movie> query = em.createQuery(queryStr.toString(), Movie.class);
+
+	        // Set tham số cho từ khóa nếu có
+	        if (keyword != null && !keyword.trim().isEmpty()) {
+	            query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+	        }
+
+	        // Thiết lập phân trang
+	        query.setFirstResult(offset);
+	        query.setMaxResults(limit);
+
+	        // Lấy kết quả
+	        movies = query.getResultList();
 	    } finally {
 	        em.close();
 	    }
-	    return listMovies;
+
+	    return movies;
 	}
+
 
 
 	@Override
 	public int getNoOfSearchResults(String keyword) {
 	    EntityManager em = JPAConfig.getEntityManager();
-	    int noOfRecords = 0;
+	    Long noOfRecords;
 
 	    try {
-	        // Truy vấn đếm số lượng bản ghi phù hợp với từ khóa
-	        String jpql = "SELECT COUNT(m) FROM Movie m WHERE m.name LIKE :keyword";
-	        TypedQuery<Long> query = em.createQuery(jpql, Long.class);
-	        query.setParameter("keyword", "%" + keyword + "%");
+	        // Xây dựng câu truy vấn đếm số lượng kết quả tìm kiếm
+	        StringBuilder queryStr = new StringBuilder("SELECT COUNT(m) FROM Movie m WHERE 1=1");
 
-	        // Lấy kết quả đếm và chuyển đổi sang int
-	        noOfRecords = query.getSingleResult().intValue();
-	    } catch (Exception e) {
-	        System.err.println("Error counting search results: " + e.getMessage());
+	        // Thêm điều kiện nếu từ khóa không rỗng
+	        if (keyword != null && !keyword.trim().isEmpty()) {
+	            queryStr.append(" AND LOWER(m.movieName) LIKE :keyword");
+	        }
+
+	        TypedQuery<Long> query = em.createQuery(queryStr.toString(), Long.class);
+
+	        // Set tham số cho từ khóa nếu có
+	        if (keyword != null && !keyword.trim().isEmpty()) {
+	            query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+	        }
+
+	        // Lấy kết quả đếm
+	        noOfRecords = query.getSingleResult();
 	    } finally {
-	        em.close(); // Đảm bảo đóng EntityManager
+	        em.close();
 	    }
 
-	    return noOfRecords;
+	    return noOfRecords.intValue();
 	}
+
+	
+	  @Override
+	    public List<Movie> searchMovies(String keyword, String category, int offset, int limit) {
+	        EntityManager em = JPAConfig.getEntityManager();
+	        List<Movie> movies;
+
+	        try {
+	            StringBuilder queryStr = new StringBuilder("SELECT m FROM Movie m WHERE 1=1");
+
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                queryStr.append(" AND LOWER(m.movieName) LIKE :keyword");
+	            }
+
+	            if (category != null && !"All".equalsIgnoreCase(category)) {
+	                queryStr.append(" AND LOWER(m.category) LIKE :category");
+	            }
+
+	            TypedQuery<Movie> query = em.createQuery(queryStr.toString(), Movie.class);
+
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+	            }
+
+	            if (category != null && !"All".equalsIgnoreCase(category)) {
+	                query.setParameter("category", "%" + category.toLowerCase() + "%");
+	            }
+
+	            query.setFirstResult(offset);
+	            query.setMaxResults(limit);
+
+	            movies = query.getResultList();
+	        } finally {
+	            em.close();
+	        }
+
+	        return movies;
+	    }
+
+	    @Override
+	    public int getNoOfSearchResults(String keyword, String category) {
+	        EntityManager em = JPAConfig.getEntityManager();
+	        int count = 0;
+
+	        try {
+	            StringBuilder queryStr = new StringBuilder("SELECT COUNT(m) FROM Movie m WHERE 1=1");
+
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                queryStr.append(" AND LOWER(m.movieName) LIKE :keyword");
+	            }
+
+	            if (category != null && !"All".equalsIgnoreCase(category)) {
+	                queryStr.append(" AND LOWER(m.category) LIKE :category");
+	            }
+
+	            TypedQuery<Long> query = em.createQuery(queryStr.toString(), Long.class);
+
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+	            }
+
+	            if (category != null && !"All".equalsIgnoreCase(category)) {
+	                query.setParameter("category", "%" + category.toLowerCase() + "%");
+	            }
+
+	            count = query.getSingleResult().intValue();
+	        } finally {
+	            em.close();
+	        }
+
+	        return count;
+	    }
+	    
+	    @Override
+	    public List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit) {
+	        EntityManager em = JPAConfig.getEntityManager();
+	        List<Movie> movies;
+
+	        try {
+	            StringBuilder queryStr = new StringBuilder("SELECT m FROM Movie m WHERE 1=1");
+
+	            // Thêm điều kiện cho từ khóa tìm kiếm
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                queryStr.append(" AND LOWER(m.movieName) LIKE :keyword");
+	            }
+
+	            // Thêm điều kiện cho danh sách thể loại
+	            if (categories != null && categories.length > 0 && !categories[0].equalsIgnoreCase("All")) {
+	                queryStr.append(" AND (");
+	                for (int i = 0; i < categories.length; i++) {
+	                    queryStr.append("LOWER(m.category) LIKE :category").append(i);
+	                    if (i < categories.length - 1) {
+	                        queryStr.append(" OR ");
+	                    }
+	                }
+	                queryStr.append(")");
+	            }
+
+	            // Tạo TypedQuery từ chuỗi truy vấn
+	            TypedQuery<Movie> query = em.createQuery(queryStr.toString(), Movie.class);
+
+	            // Gán giá trị cho từ khóa tìm kiếm
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+	            }
+
+	            // Gán giá trị cho các thể loại
+	            if (categories != null && categories.length > 0 && !categories[0].equalsIgnoreCase("All")) {
+	                for (int i = 0; i < categories.length; i++) {
+	                    query.setParameter("category" + i, "%" + categories[i].toLowerCase() + "%");
+	                }
+	            }
+
+	            // Thiết lập phân trang
+	            query.setFirstResult(offset);
+	            query.setMaxResults(limit);
+
+	            // Lấy danh sách kết quả
+	            movies = query.getResultList();
+	        } finally {
+	            em.close();
+	        }
+
+	        return movies;
+	    }
+	    
+	    
+	    @Override
+	    public int getNoOfSearchResults(String keyword, String[] categories) {
+	        EntityManager em = JPAConfig.getEntityManager();
+	        int noOfRecords;
+
+	        try {
+	            StringBuilder queryStr = new StringBuilder("SELECT COUNT(m) FROM Movie m WHERE 1=1");
+
+	            // Điều kiện tìm kiếm từ khóa
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                queryStr.append(" AND LOWER(m.movieName) LIKE :keyword");
+	            }
+
+	            // Điều kiện tìm kiếm theo danh sách thể loại
+	            if (categories != null && categories.length > 0 && !categories[0].equalsIgnoreCase("All")) {
+	                queryStr.append(" AND (");
+	                for (int i = 0; i < categories.length; i++) {
+	                    queryStr.append("LOWER(m.category) LIKE :category").append(i);
+	                    if (i < categories.length - 1) {
+	                        queryStr.append(" OR ");
+	                    }
+	                }
+	                queryStr.append(")");
+	            }
+
+	            // Tạo TypedQuery từ chuỗi truy vấn
+	            TypedQuery<Long> query = em.createQuery(queryStr.toString(), Long.class);
+
+	            // Gán giá trị cho từ khóa tìm kiếm
+	            if (keyword != null && !keyword.trim().isEmpty()) {
+	                query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+	            }
+
+	            // Gán giá trị cho các thể loại
+	            if (categories != null && categories.length > 0 && !categories[0].equalsIgnoreCase("All")) {
+	                for (int i = 0; i < categories.length; i++) {
+	                    query.setParameter("category" + i, "%" + categories[i].toLowerCase() + "%");
+	                }
+	            }
+
+	            // Lấy tổng số bản ghi phù hợp
+	            noOfRecords = query.getSingleResult().intValue();
+	        } finally {
+	            em.close();
+	        }
+
+	        return noOfRecords;
+	    }
+
+	
 	
 }

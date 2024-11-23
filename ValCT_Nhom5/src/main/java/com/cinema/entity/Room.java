@@ -21,11 +21,11 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomID;
 
-    @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
+
     @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
     private String roomName;
 
-    @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
+
     @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
     private String screenType;
     

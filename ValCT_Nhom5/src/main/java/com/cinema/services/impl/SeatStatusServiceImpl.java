@@ -27,5 +27,8 @@ public class SeatStatusServiceImpl implements ISeatStatusService {
         return seatStatusDAO.deleteSeatStatusByScreeningId(screeningID);
     }
 
-	
+    @Override
+    public List<SeatStatus> getSeatStatusesByScreeningAndRoom(int msID, int roomID) {
+        return seatStatusDAO.getSeatStatusesByScreeningAndRoom(msID, roomID);
+    }
 }

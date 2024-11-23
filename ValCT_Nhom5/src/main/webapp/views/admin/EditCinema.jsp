@@ -15,6 +15,7 @@
                         <h2>Edit Cinema</h2>
                          
                     </div>
+                    
                 </div>
                 <!-- end main title -->
 
@@ -61,7 +62,8 @@
                             </div>
 
 							<div class="col-12 d-flex justify-content-start align-items-center" style="gap: 15px;">
-							    <a href="${pageContext.request.contextPath}/admin/cinemas" class="sign__btn sign__btn--small sign__btn--outline"><span>Back to List</span></a>							    
+							                                               <a href="${pageContext.request.contextPath}/admin/cinemas" class="sign__btn sign__btn--small sign__btn--outline"><span>Back to List</span></a>							    
+							    
 							    <button type="submit" class="sign__btn sign__btn--small"><span>Apply Changes</span></button>
 							</div>
 

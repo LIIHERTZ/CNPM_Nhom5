@@ -10,4 +10,6 @@ public interface ISeatStatusService {
     List<SeatStatus> getSeatStatusByScreeningId(int screeningID);
     boolean deleteSeatStatusByScreeningId(int screeningID);
 	
+    List<SeatStatus> getSeatStatusesByScreeningAndRoom(int msID, int roomID);
+
 }
