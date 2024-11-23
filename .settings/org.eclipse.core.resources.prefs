@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/decorators/admin.jsp=UTF-8
+encoding//src/main/webapp/views/admin/coupon/coupon-edit.jsp=UTF-8
+encoding//src/main/webapp/views/admin/coupon/coupon-list.jsp=UTF-8
+encoding//src/main/webapp/views/admin/popcorn/popcorn-edit.jsp=UTF-8
+encoding//src/main/webapp/views/admin/popcorn/popcorn-list.jsp=UTF-8
+encoding//src/main/webapp/views/admin/revenues/revenue-statics.jsp=UTF-8
+encoding//src/main/webapp/views/admin/user-add.jsp=UTF-8
+encoding//src/main/webapp/views/admin/user-edit.jsp=UTF-8
+encoding//src/main/webapp/views/admin/user-list.jsp=UTF-8
+encoding//src/main/webapp/views/user/bookTickets.jsp=UTF-8
+encoding//src/main/webapp/views/user/movie-seat-plan.jsp=UTF-8
