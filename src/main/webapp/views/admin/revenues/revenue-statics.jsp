@@ -95,6 +95,7 @@
 				<li class="sidebar__nav-item"><a href="settings.html"
 					class="sidebar__nav-link"><i class="ti ti-settings"></i> <span>Settings</span></a>
 				</li>
+				
 				<!-- dropdown -->
 				<li class="sidebar__nav-item"><a class="sidebar__nav-link"
 					href="#" role="button" data-bs-toggle="dropdown"
@@ -167,7 +168,8 @@
 
 			<div class="row">
 				<div id="Time" class="time-container">
-					<select id="time-option" class="form-select  time-group sign__select" 
+					<select id="time-option"
+						class="form-select  time-group sign__select"
 						style="display: none;">
 						<option value="">Select Time</option>
 						<option value="day" ${dateType == 'day' ? 'selected' : ''}>Day</option>
@@ -183,7 +185,8 @@
 					<div class="form-select-table  time-group"
 						style="display: none; backgroud-color: #222028;">
 						<!-- Table  Doanh thu cua tab "Time"-->
-						<h2 style="text-align: center; color: white;">Doanh Thu Theo Bo phim</h2>
+						<h2 style="text-align: center; color: white;">Doanh Thu Theo
+							Bo phim</h2>
 						<table>
 							<thead>
 								<tr>
@@ -199,11 +202,9 @@
 								<c:forEach var="movieRevenue" items="${movieRevenues}">
 									<tr>
 										<td>${movieRevenue[0]}</td>
-										<td><fmt:formatNumber
-												value="${movieRevenue[1]}"
+										<td><fmt:formatNumber value="${movieRevenue[1]}"
 												type="number" maxFractionDigits="2" /></td>
-										<td><fmt:formatNumber
-												value="${movieRevenue[2]}"
+										<td><fmt:formatNumber value="${movieRevenue[2]}"
 												type="number" maxFractionDigits="2" /></td>
 										<td>${movieRevenue[3]}</td>
 										<td><fmt:formatNumber
@@ -232,11 +233,9 @@
 								<c:forEach var="popcornRevenue" items="${popcornRevenues}">
 									<tr>
 										<td>${popcornRevenue[0]}</td>
-										<td><fmt:formatNumber
-												value="${popcornRevenue[1]}"
+										<td><fmt:formatNumber value="${popcornRevenue[1]}"
 												type="number" maxFractionDigits="2" /></td>
-										<td><fmt:formatNumber
-												value="${popcornRevenue[2]}"
+										<td><fmt:formatNumber value="${popcornRevenue[2]}"
 												type="number" maxFractionDigits="2" /></td>
 										<td>${popcornRevenue[3]}</td>
 										<td><fmt:formatNumber
@@ -284,7 +283,8 @@
 
 			<div class="row">
 				<div id="Movie">
-					<select id="movie-option" class="form-select movie-group sign__select" 
+					<select id="movie-option"
+						class="form-select movie-group sign__select"
 						style="display: none; backgroud-color: #222028;">
 						<option value="">Select Movie</option>
 						<c:forEach var="movie" items="${movies}">
@@ -300,8 +300,8 @@
 					<div class="form-select-table  movie-group"
 						style="display: none; backgroud-color: #222028;">
 						<!-- Table  Doanh thu cua tab "Time"-->
-						<h2 style="text-align: center; color: white;">Doanh Thu Bo Phim
-							${CinemaRevenuesByMovieID[0][2]}</h2>
+						<h2 style="text-align: center; color: white;">Doanh Thu Bo
+							Phim ${CinemaRevenuesByMovieID[0][2]}</h2>
 						<table>
 							<thead>
 								<tr>
@@ -329,7 +329,8 @@
 									<div class="mb-1">
 										<div class="block-legend">
 											<div class="dot t3"></div>
-											<div class="text-tiny" style="color: white; font-size: 30px;">Doanh Thu Bo Phim </div>
+											<div class="text-tiny" style="color: white; font-size: 30px;">Doanh
+												Thu Bo Phim</div>
 										</div>
 									</div>
 								</div>
@@ -387,7 +388,8 @@
 											<div class="block-legend">
 												<div class="dot t3"></div>
 												<div class="text-tiny"
-													style="color: white; font-size: 30px;">So Luong Khach Theo Rap</div>
+													style="color: white; font-size: 30px;">So Luong Khach
+													Theo Rap</div>
 											</div>
 										</div>
 									</div>
