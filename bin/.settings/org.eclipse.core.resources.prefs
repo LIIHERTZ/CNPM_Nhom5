@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding//src/main/webapp/common/admin/sidebar.jsp=UTF-8
+encoding//src/main/webapp/views/admin/Cinema.jsp=UTF-8
+encoding//src/main/webapp/views/admin/EditCinema.jsp=UTF-8
+encoding//src/main/webapp/views/admin/EditMovieScreening.jsp=UTF-8
+encoding//src/main/webapp/views/admin/EditRoom.jsp=UTF-8
+encoding//src/main/webapp/views/admin/ManageUserSeat.jsp=UTF-8
+encoding//src/main/webapp/views/admin/Movie.jsp=UTF-8
+encoding//src/main/webapp/views/admin/MovieScreening.jsp=UTF-8
+encoding//src/main/webapp/views/admin/Room.jsp=UTF-8
+encoding//src/main/webapp/views/admin/user-list.jsp=UTF-8
+encoding//src/main/webapp/views/user/bookTickets.jsp=UTF-8
+encoding//src/main/webapp/views/user/movie-seat-plan.jsp=UTF-8
