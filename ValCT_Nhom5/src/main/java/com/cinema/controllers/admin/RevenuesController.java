@@ -23,7 +23,6 @@ public class RevenuesController  extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			String dateValue = request.getParameter("dateValue");
 			String dateType = request.getParameter("dateType");
-			System.out.println("loaddddddddddddddd");
 			IPaymentService payService = new PaymentServiceImpl();
 			if (dateValue != null && !dateValue.isEmpty() && dateType != null && !dateType.isEmpty())
 			{
