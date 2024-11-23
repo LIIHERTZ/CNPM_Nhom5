@@ -312,7 +312,7 @@
 						</div>
 
 						<div class="col-12">
-							<button type="submit" class="sign__btn sign__btn--small">
+							<button type="submit" class="sign__btn sign__btn--small"  style="width: 320px;">
 								<span>Save</span>
 							</button>
 						</div>
@@ -384,7 +384,7 @@
 						</div>
 
 						<div class="col-12">
-							<button type="submit" class="sign__btn sign__btn--small">
+							<button type="submit" class="sign__btn sign__btn--small" style="width: 320px;">
 								<span>Update</span>
 							</button>
 						</div>
