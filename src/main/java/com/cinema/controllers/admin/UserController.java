@@ -1,5 +1,8 @@
 package com.cinema.controllers.admin;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.cinema.services.*;
@@ -88,8 +91,19 @@ public class UserController extends HttpServlet{
 				user.setEmail(request.getParameter("email"));
 				user.setPassword(request.getParameter("password"));
 				user.setPhone(request.getParameter("phone"));
+				user.setGender(Integer.parseInt(request.getParameter("gender")));
 				String rights = request.getParameter("rights");
 				user.setRole(rights);
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		        Date birthDate;
+				try {
+					birthDate = formatter.parse(request.getParameter("birthDate"));
+					user.setBirthDate(birthDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				personService.insertPerson(user);
 				response.sendRedirect(request.getContextPath() + "/admin/users");
 			}
@@ -103,8 +117,19 @@ public class UserController extends HttpServlet{
 					user.setEmail(request.getParameter("email"));
 					user.setPassword(request.getParameter("password"));
 					user.setPhone(request.getParameter("phone"));
+					user.setGender(Integer.parseInt(request.getParameter("gender")));
 					String rights = request.getParameter("rights");
 					user.setRole(rights);
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			        Date birthDate;
+					try {
+						birthDate = formatter.parse(request.getParameter("birthDate"));
+						user.setBirthDate(birthDate);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					personService.updatePerson(user);
 				}
 

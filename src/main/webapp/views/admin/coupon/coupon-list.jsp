@@ -131,7 +131,7 @@
 					<ul class="paginator">
 						<!-- Prev button -->
 						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber - 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
 								<i class="ti ti-chevron-left"></i>
 						</a></li>
 						<!-- Page numbers -->
@@ -140,14 +140,14 @@
 								<li
 									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
 									<a
-									href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}">
+									href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
 										${i + 1} </a>
 								</li>
 							</c:forEach>
 						</c:if>
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
 								<i class="ti ti-chevron-right"></i>
 						</a></li>
 					</ul>
@@ -182,7 +182,7 @@
 							<div class="sign__group">
 								<label class="sign__label" for="couponType">Type</label> <select
 									class="sign__selectjs" name="couponType" id="couponType"
-									required style="color: white;">
+									required style="color: white; width: 320px;">
 									<option value="Coupon 1">Coupon 1</option>
 									<option value="Coupon 2">Coupon 2</option>
 									<option value="Coupon 3">Coupon 3</option>
@@ -251,7 +251,7 @@
 							<div class="sign__group">
 								<label class="sign__label" for="couponType">Type</label> <select
 									class="sign__selectjs" name="couponType" id="couponType"
-									required value="${coupon.couponType }" style="color: white;">
+									required value="${coupon.couponType }" style="color: white; width: 320px;">
 									<option value="Coupon 1">Coupon 1</option>
 									<option value="Coupon 2">Coupon 2</option>
 									<option value="Coupon 3">Coupon 3</option>

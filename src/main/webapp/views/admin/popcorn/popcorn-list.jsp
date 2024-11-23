@@ -124,7 +124,7 @@
 					<ul class="paginator">
 						<!-- Prev button -->
 						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber - 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
 								<i class="ti ti-chevron-left"></i>
 						</a></li>
 						<!-- Page numbers -->
@@ -133,14 +133,14 @@
 								<li
 									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
 									<a
-									href="${pageContext.request.contextPath}/admin/popcorns?pageNumber=${i + 1}&pageSize=${pageSize}">
+									href="${pageContext.request.contextPath}/admin/popcorns?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
 										${i + 1} </a>
 								</li>
 							</c:forEach>
 						</c:if>
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
 								<i class="ti ti-chevron-right"></i>
 						</a></li>
 					</ul>
@@ -182,7 +182,7 @@
 							<div class="sign__group">
 								<label class="sign__label" for="typePopCorn">Type</label> <select
 									class="sign__selectjs" name="typePopCorn" id="typePopCorn"
-									required>
+									required style="color: white; width: 320px;">
 									<option value="Small">Small</option>
 									<option value="Regular">Regular</option>
 									<option value="Large">Large</option>
@@ -194,7 +194,7 @@
 						<div class="col-12">
 							<div class="sign__group">
 								<label class="sign__label" for="status">Status</label> <select
-									class="sign__selectjs" name="status" id="status" required>
+									class="sign__selectjs" name="status" id="status" required style="color: white; width: 320px;">
 									<option value="1" ${popcorn.status == 1 ? 'selected' : ''}>Available</option>
 									<option value="0" ${popcorn.status == 0 ? 'selected' : ''}>Unavailable</option>
 								</select>
@@ -246,7 +246,7 @@
 								<label class="sign__label" for="typePopCorn">Type</label> <select
 									class="sign__selectjs" name="typePopCorn" id="typePopCorn"
 									required "
-									style="color: white; font-weight: bold;">
+									style="color: white; font-weight: bold; width: 320px;">
 									<option value="Small" style="color: white; font-weight: bold;">Small</option>
 									<option value="Regular"
 										style="color: white; font-weight: bold;">Regular</option>
@@ -261,7 +261,7 @@
 							<div class="sign__group">
 								<label class="sign__label" for="status">Status</label> <select
 									class="sign__selectjs" name="status" id="status" required
-									style="color: white; font-weight: bold;">
+									style="color: white; font-weight: bold; width: 320px;">
 									<option value="true" style="color: white; font-weight: bold;">Available</option>
 									<option value="false" style="color: white; font-weight: bold;">Unavailable</option>
 								</select>

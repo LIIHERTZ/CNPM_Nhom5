@@ -43,6 +43,21 @@
 				</div>
 				<div class="col-12">
 					<div class="sign__group">
+						<label class="sign__label" for="birthDate">BirthDate</label> <input
+							id="birthDate" type="date" name="birthDate" class="sign__input">
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="sign__group">
+						<label class="sign__label" for="gender">Gender</label> <select
+							class="sign__select" id="gender" name="gender">
+							<option value="1">Male</option>
+							<option value="0">Female</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="sign__group">
 						<label class="sign__label" for="rights">Rights</label> <select
 							class="sign__select" id="rights" name="rights">
 							<option value="User">User</option>

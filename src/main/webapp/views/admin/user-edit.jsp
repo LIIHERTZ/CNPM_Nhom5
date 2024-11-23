@@ -5,12 +5,11 @@
 
 <main class="container-fluid">
 	<div class="container-fluid">
-
-
 		<!-- user modal -->
 		<form
 			action="${pageContext.request.contextPath}/admin/users/update?userId=${user.perID } "
 			method="post" class="modal__form">
+			
 			<h4 class="modal__title">Edit User</h4>
 
 			<div class="row">
@@ -43,20 +42,43 @@
 							placeholder="023812319376" value="${user.phone}">
 					</div>
 				</div>
+				<!-- Định dạng ngày sử dụng JSTL -->
+				<fmt:formatDate value="${user.birthDate}" pattern="yyyy-MM-dd"
+					var="formattedDate" />
+
+				<div class="col-12">
+					<div class="sign__group">
+						<label class="sign__label" for="birthDate">BirthDate</label> <input
+							id="birthDate" type="date" name="birthDate" class="sign__input"
+							value="${formattedDate}">
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="sign__group">
+						<label class="sign__label" for="gender">Gender</label> <select
+							class="sign__select" id="gender" name="gender"
+							value="${user.gender}">
+							<option value="1">Male</option>
+							<option value="0">Female</option>
+						</select>
+					</div>
+				</div>
 				<div class="col-12">
 					<div class="sign__group">
 						<label class="sign__label" for="rights">Rights</label> <select
-							class="sign__select" id="rights" name="rights"  value="${user.role}">
+							class="sign__select" id="rights" name="rights"
+							value="${user.role}">
 							<option value="User">User</option>
 							<option value="Admin">Admin</option>
 						</select>
 					</div>
 				</div>
-				<div class="col-12 col-lg-6 offset-lg-3">
-					<button type="submit" class="sign__btn sign__btn--modal">Update</button>
-				</div>
 			</div>
-		</form>
-		<!-- end user modal -->
+			<div class="col-12 col-lg-6 offset-lg-3">
+				<button type="submit" class="sign__btn sign__btn--modal">Update</button>
+			</div>
+	</div>
+	</form>
+	<!-- end user modal -->
 	</div>
 </main>

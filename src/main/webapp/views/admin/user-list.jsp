@@ -91,8 +91,13 @@
 			<div class="col-12">
 				<div class="main__paginator">
 					<!-- amount -->
-					<span class="main__paginator-pages">${currentPage} of
-						${totalPages}</span>
+					<c:if test="${totalPages > 0}">
+						<span class="main__paginator-pages">${currentPage} of
+							${totalPages}</span>
+					</c:if>
+					<c:if test="${totalPages == 0}">
+						<span class="main__paginator-pages">0 of ${totalPages}</span>
+					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
 					<div class="page-size-selector">
@@ -103,8 +108,8 @@
 							style= "background-color : #222028 ;  border :#222028; color :white; ">
 							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
 							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-							<option value="20" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-							<option value="50" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -117,20 +122,22 @@
 					<ul class="paginator">
 						<!-- Prev button -->
 						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber - 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
 								<i class="ti ti-chevron-left"></i>
 						</a></li>
 						<!-- Page numbers -->
+						<c:if test="${totalPages > 0}">
 						<c:forEach var="i" begin="0" end="${totalPages - 1}">
 							<li class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
 								<a
-								href="${pageContext.request.contextPath}/admin/users?pageNumber=${i + 1}&pageSize=${pageSize}">
+								href="${pageContext.request.contextPath}/admin/users?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
 									${i + 1} </a>
 							</li>
 						</c:forEach>
+						</c:if>
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber + 1}&pageSize=${pageSize}</c:if>">
+							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
 								<i class="ti ti-chevron-right"></i>
 						</a></li>
 					</ul>
