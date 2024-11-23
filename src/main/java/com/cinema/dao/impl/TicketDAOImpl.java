@@ -35,6 +35,8 @@ public class TicketDAOImpl implements ITicketDAO{
 
         return query.getResultList();
     }
+	
+	
 
 	@Override
 	public List<PopCornPayment> getPopCornAndQuantityByTicketId(int ticketId) {
@@ -62,6 +64,58 @@ public class TicketDAOImpl implements ITicketDAO{
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null;
+	    } finally {
+	        em.close();
+	    }
+	}
+
+
+
+	@Override
+	public List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize) {
+		EntityManager em = JPAConfig.getEntityManager();
+	    try {
+	        String jpql = "SELECT new com.cinema.dto.TicketHistoryDTO("
+	                + "t.ticketID, m.movieName, c.cinemaName, r.roomName, t.chairNumber, "
+	                + "ms.startHour, ms.endHour, t.priceTicket) "
+	                + "FROM Ticket t "
+	                + "JOIN t.movieScreenings ms "
+	                + "JOIN ms.movie m "
+	                + "JOIN ms.room r "
+	                + "JOIN r.cinema c "
+	                + "JOIN t.ticketPayments tp "
+	                + "JOIN tp.payment p "
+	                + "WHERE p.person.perID = :personId "
+	                + "ORDER BY ms.startHour DESC";
+
+	        TypedQuery<TicketHistoryDTO> query = em.createQuery(jpql, TicketHistoryDTO.class);
+	        query.setParameter("personId", personId);
+	        query.setFirstResult(page * pageSize); // Offset
+	        query.setMaxResults(pageSize); // Limit
+	        return query.getResultList();
+	    } finally {
+	        em.close();
+	    }
+	}
+
+
+
+	@Override
+	public int countTicketHistory(int personId) {
+		EntityManager em = JPAConfig.getEntityManager();
+	    try {
+	        String jpql = "SELECT COUNT(t) "
+	                + "FROM Ticket t "
+	                + "JOIN t.movieScreenings ms "
+	                + "JOIN ms.room r "
+	                + "JOIN r.cinema c "
+	                + "JOIN t.ticketPayments tp "
+	                + "JOIN tp.payment p "
+	                + "WHERE p.person.perID = :personId";
+
+	        TypedQuery<Long> query = em.createQuery(jpql, Long.class);
+	        query.setParameter("personId", personId);
+	        return query.getSingleResult().intValue();
 	    } finally {
 	        em.close();
 	    }

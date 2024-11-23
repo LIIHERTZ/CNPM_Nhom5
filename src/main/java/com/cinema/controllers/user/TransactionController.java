@@ -23,21 +23,31 @@ public class TransactionController extends HttpServlet{
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        
+		int personId = Integer.parseInt(request.getParameter("personId"));
+	    int page = 0;
+	    int pageSize = 5;
 
-//        if ("details".equals(action)) {
-//            int ticketID = Integer.parseInt(request.getParameter("ticketID"));
-//            List<PopCornPayment> popcornDetails = popCornPaymentService.getPopCornDetails(ticketID);
-//
-//            request.setAttribute("popcornDetails", popcornDetails);
-//            request.getRequestDispatcher("popcornDetails.jsp").forward(request, response);
-//        } else {
-            int personId = Integer.parseInt(request.getParameter("personId"));
-            List<TicketHistoryDTO> ticketHistory = ticketService.getTicketHistory(personId);
+	    // Lấy thông tin trang hiện tại từ request
+	    try {
+	        page = Integer.parseInt(request.getParameter("page"));
+	    } catch (NumberFormatException e) {
+	        // Nếu không có tham số page, mặc định là trang 0
+	    }
 
-            request.setAttribute("ticketHistory", ticketHistory);
-            request.getRequestDispatcher("/views/user/transactionhistory.jsp").forward(request, response);
-//        }
+	    // Lấy danh sách giao dịch phân trang
+	    List<TicketHistoryDTO> ticketHistory = ticketService.getPaginatedTicketHistory(personId, page, pageSize);
+
+	    // Tính tổng số trang
+	    int totalItems = ticketService.countTicketHistory(personId);
+	    int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+	    // Gửi dữ liệu đến JSP
+	    request.setAttribute("ticketHistory", ticketHistory);
+	    request.setAttribute("totalPages", totalPages);
+	    request.setAttribute("currentPage", page);
+	    request.setAttribute("personId", personId);
+
+	    // Chuyển tiếp đến JSP
+	    request.getRequestDispatcher("/views/user/transactionhistory.jsp").forward(request, response);
     }
 }

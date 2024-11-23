@@ -19,5 +19,13 @@ public class TicketServiceImpl implements ITicketService{
 	public List<PopCornPayment> getPopCornPaymentsByTicketId(int ticketId) {
 		return ticketDao.getPopCornAndQuantityByTicketId(ticketId);
 	}
+	@Override
+	public List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize) {
+		return ticketDao.getPaginatedTicketHistory(personId, page, pageSize);
+	}
+	@Override
+	public int countTicketHistory(int personId) {
+		return ticketDao.countTicketHistory(personId);
+	}
 
 }

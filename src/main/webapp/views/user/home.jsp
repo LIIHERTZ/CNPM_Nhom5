@@ -13,217 +13,173 @@
     <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
- <style>
-        /* Wrapper for the carousel */
-        .owl-carousel-wrapper {
-            position: relative;
-        }
+<style>
+    /* Wrapper for the carousel */
+    .owl-carousel-wrapper {
+        position: relative;
+    }
 
-        /* Owl navigation buttons */
-   
+    /* Navigation buttons */
+    .owl-controls .owl-buttons .owl-prev,
+    .owl-controls .owl-buttons .owl-next {
+        font-size: 50px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ffffff;
+        cursor: pointer;
+    }
 
-        .owl-controls .owl-buttons .owl-prev {
-            left: -50px;
-            top :250px;
-        }
+    .owl-controls .owl-buttons .owl-prev {
+        left: -50px;
+    }
 
-        .owl-controls .owl-buttons .owl-next {
-            right: -50px;
-               top :250px;
-        }
+    .owl-controls .owl-buttons .owl-next {
+        right: -50px;
+    }
 
-        /* Hover effects for navigation buttons */
-        .owl-controls .owl-buttons div:hover {
-            background-color: rgba(255, 0, 0, 0.8);
-        }
+    .owl-controls .owl-buttons .owl-prev:hover,
+    .owl-controls .owl-buttons .owl-next:hover {
+        color: #ff0000; /* Red hover effect */
+    }
 
-        /* Movie item styles */
-        .movie-item {
-            text-align: center;
-            padding: 10px;
-        }
-
-        .movie-item img {
-            width: 100%;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .movie-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .movie-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .movie-category,
-        .movie-duration {
-            font-size: 14px;
-            color: #555;
-        }
-   .owl-buttons .fa-caret-left {
-   font-size: 50px !important;
-    position: absolute;
-    top: 37%; /* Canh giữa theo chiều dọc */
-    left: -30px; /* Đẩy biểu tượng ra bên trái container */
-    transform: translateY(-50%); /* Căn chỉnh chính xác theo chiều dọc */
+    /* Movie item styles */
+  .movie-grid {
+    display: flex;
+    flex-direction: column;
+    background-color: #192a56; /* Màu nền của toàn bộ thẻ */
+    border-radius: 10px; /* Bo góc toàn bộ khung */
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+    padding: 0; /* Xóa khoảng cách bên trong */
+    margin: 0; /* Xóa khoảng cách bên ngoài */
+}
+   .movie-thumb {
+    width: 100%; /* Chiều rộng toàn bộ vùng chứa */
+    height: 300px; /* Đặt chiều cao của khung theo ý muốn (tùy chỉnh số này) */
+    overflow: hidden; /* Ẩn phần hình ảnh vượt ngoài khung */
 }
 
-.owl-buttons .fa-caret-right {
-	font-size: 50px !important;
-    position: absolute;
-    top: 40%; /* Canh giữa theo chiều dọc */
-    right: -30px; /* Đẩy biểu tượng ra bên phải container */
-    transform: translateY(-50%); /* Căn chỉnh chính xác theo chiều dọc */
-}
- .owl-buttons .fa-caret-left:hover,
-.owl-buttons .fa-caret-right:hover {
-    color: #ff0000; /* Màu đỏ khi hover */
-    background-color: rgba(0, 0, 0, 0.8); /* Nền đen đậm hơn khi hover */
-}
-/* Movies Showing Navigation */
-.movies-showing-prev {
-    position: absolute;
-    left: -50px;
-    top: 50%;
-    transform: translateY(-50%);
+.movie-thumb img {
+    width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng */
+    height: 100%; /* Hình ảnh chiếm toàn bộ chiều cao */
+    object-fit: cover; /* Lấp đầy khung mà không méo hình */
+    display: block; /* Loại bỏ khoảng trống không mong muốn dưới hình ảnh */
 }
 
-.movies-showing-next {
-    position: absolute;
-    right: -50px;
-    top: 50%;
-    transform: translateY(-50%);
+    .movie-thumb img:hover {
+        transform: scale(1.05);
+    }
+
+    .movie-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+         margin: 0; /* Loại bỏ khoảng cách bên ngoài */
+    padding: 0; /* Loại bỏ khoảng cách bên trong */
+    border-top-left-radius: 0; /* Không bo góc trên (nếu có) */
+    border-top-right-radius: 0; /* Không bo góc trên (nếu có) */
+    }
+
+    .movie-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .movie-category,
+    .movie-duration {
+        font-size: 14px;
+        color: #555;
+    }
+
+    /* Section header styles */
+    .section-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+        font-size: 32px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        position: relative;
+    }
+
+    .section-header h2::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background-color: #fbc531;
+        margin: 8px auto 0;
+        border-radius: 2px;
+    }
+  
+
+.movie-title {
+    text-transform: uppercase; /* Viết hoa tiêu đề */
+    letter-spacing: 1px; /* Giãn cách chữ để dễ đọc hơn */
 }
 
-/* Movies Coming Soon Navigation */
-.movies-coming-prev {
-    position: absolute;
-    left: -50px;
-    top: 50%;
-    transform: translateY(-50%);
+.movie-content span {
+    line-height: 1.5; /* Tăng chiều cao dòng để dễ đọc */
 }
+    
+</style>
 
-.movies-coming-next {
-    position: absolute;
-    right: -50px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-    </style>
 <section class="banner-section">
-        <div class="banner-bg bg_img bg-fixed" data-background="assets/images/banner/banner01.jpg"></div>
-        <div class="container">
-            <div class="banner-content">
-                <h1 class="title  cd-headline clip"><span class="d-block">book your</span> tickets for 
-                    <span class="color-theme cd-words-wrapper p-0 m-0">
-                        <b class="is-visible">Movie</b>
-                    </span>
-                </h1>
-                <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p>
-            </div>
+    <div class="banner-bg bg_img bg-fixed" data-background="assets/images/banner/banner01.jpg"></div>
+    <div class="container">
+        <div class="banner-content">
+            <h1 class="title cd-headline clip">
+                <span class="d-block">book your</span> tickets for
+                <span class="color-theme cd-words-wrapper p-0 m-0">
+                    <b class="is-visible">Movie</b>
+                </span>
+            </h1>
+            <p>Safe, secure, reliable ticketing. Your ticket to live entertainment!</p>
         </div>
-    </section>
+    </div>
+</section>
 
-
-    <section class="movie-section padding-top padding-bottom">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="title">Movies Showing</h2>
-            </div>
- 			<a class="view-all" href="${pageContext.request.contextPath}/userHome">View All</a>
-            <div class="owl-carousel-wrapper">
-                <!-- Movie list -->
-                <ul id="movies-showing-carousel" class="owl-carousel owl-theme">
-                     <c:forEach var="movie" items="${moviesShowing}">
-                        <div class="movie-grid">
-                            <div class="movie-thumb c-thumb">
-                                <a href="#0">
-                                    <c:if test="${movie.image != null}">
-                                        <c:choose>
-                                            <c:when test="${movie.image.substring(0, 5) == 'https'}">
-                                                <img src="${movie.image}" class="card-img-top" alt="${movie.movieName}">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
-                                                <img src="${movieImgUrl}" class="card-img-top" alt="${movie.movieName}">
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:if>
-                                </a>
-                            </div>
-                            <div class="movie-content bg-one">
-                                <h5 class="title m-0">
-                                    <a href="#0">${movie.movieName}</a>
-                                </h5>
-                                <ul class="movie-rating-percent">
-                                    <li>
-                                        <div class="thumb">
-                                            <img src="assets/images/movie/tomato.png" alt="rating">
-                                        </div>
-                                        <span class="content">Category: ${movie.category}</span>
-                                    </li>
-                                    <li>
-                                        <div class="thumb">
-                                            <img src="assets/images/movie/cake.png" alt="duration">
-                                        </div>
-                                        <span class="content">Duration: ${movie.movieDuration}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </ul>
-
-                <!-- Owl navigation -->
-                <div class="owl-controls clickable">
-                    <div class="owl-buttons">
-                  <div class="owl-prev movies-showing-prev"><i class="fa fa-caret-left"></i></div>
-        		<div class="owl-next movies-showing-next"><i class="fa fa-caret-right"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+<!-- Movies Showing Section -->
 <section class="movie-section padding-top padding-bottom">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="title">Movies Coming Soon</h2>
-            </div>
-            <div class="owl-carousel-wrapper">
-                <!-- Movie list -->
-                <ul id="movies-coming-carousel" class="owl-carousel owl-theme">
-                     <c:forEach var="movie" items="${moviesComingSoon}">
-                        <div class="movie-grid">
-                            <div class="movie-thumb c-thumb">
-                                <a href="#0">
-                                    <c:if test="${movie.image != null}">
-                                        <c:choose>
-                                            <c:when test="${movie.image.substring(0, 5) == 'https'}">
-                                                <img src="${movie.image}" class="card-img-top" alt="${movie.movieName}">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
-                                                <img src="${movieImgUrl}" class="card-img-top" alt="${movie.movieName}">
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:if>
-                                </a>
-                            </div>
-                            <div class="movie-content bg-one">
-                                <h5 class="title m-0">
-                                    <a href="#0">${movie.movieName}</a>
-                                </h5>
-                                <ul class="movie-rating-percent">
-                                    <li>
+    <div class="container">
+        <div class="section-header">
+            <h2 class="title">Movies Showing</h2>
+        </div>
+        <div class="owl-carousel-wrapper">
+            <ul id="movies-showing-carousel" class="owl-carousel owl-theme">
+                <c:forEach var="movie" items="${moviesShowing}">
+                    <div class="movie-grid">
+                        <div class="movie-thumb c-thumb">
+                            <a href="#0">
+                                <c:if test="${movie.image != null}">
+                                    <c:choose>
+                                        <c:when test="${movie.image.substring(0, 5) == 'https'}">
+                                            <img src="${movie.image}" class="card-img-top" alt="${movie.movieName}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
+                                            <img src="${movieImgUrl}" class="card-img-top" alt="${movie.movieName}">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                            </a>
+                        </div>
+                        <div class="movie-content bg-one">
+                            <h5 class="movie-title">
+                                <a href="#0">${movie.movieName}</a>
+                            </h5>
+                            <ul class="movie-rating-percent">
+                                 <li>
                                         <div class="thumb">
                                             <img src="assets/images/movie/tomato.png" alt="rating">
                                         </div>
@@ -235,29 +191,96 @@
                                         </div>
                                         <span class="content">Duration: ${movie.movieDuration}</span>
                                     </li>
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
-                    </c:forEach>
-                </ul>
-
-                <!-- Owl navigation -->
-                <div class="owl-controls clickable">
-                    <div class="owl-buttons">
-                    <div class="owl-prev movies-coming-prev"><i class="fa fa-caret-left"></i></div>
-        			<div class="owl-next movies-coming-next"><i class="fa fa-caret-right"></i></div>
                     </div>
+                </c:forEach>
+            </ul>
+            <div class="owl-controls clickable">
+                <div class="owl-buttons">
+                    <div class="owl-prev movies-showing-prev"><i class="fa fa-caret-left"></i></div>
+                    <div class="owl-next movies-showing-next"><i class="fa fa-caret-right"></i></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Owl Carousel JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script>
+<!-- Movies Coming Soon Section -->
+<section class="movie-section padding-top padding-bottom">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="title">Movies Coming Soon</h2>
+        </div>
+        <div class="owl-carousel-wrapper">
+            <ul id="movies-coming-carousel" class="owl-carousel owl-theme">
+                <c:forEach var="movie" items="${moviesComingSoon}">
+                    <div class="movie-grid">
+                        <div class="movie-thumb c-thumb">
+                            <a href="#0">
+                                <c:if test="${movie.image != null}">
+                                    <c:choose>
+                                        <c:when test="${movie.image.substring(0, 5) == 'https'}">
+                                            <img src="${movie.image}" class="card-img-top" alt="${movie.movieName}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
+                                            <img src="${movieImgUrl}" class="card-img-top" alt="${movie.movieName}">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                            </a>
+                        </div>
+                        <div class="movie-content bg-one">
+                            <h5 class="movie-title">
+                                <a href="#0">${movie.movieName}</a>
+                            </h5>
+                            <ul class="movie-rating-percent">
+                                <li>
+                                        <div class="thumb">
+                                            <img src="assets/images/movie/tomato.png" alt="rating">
+                                        </div>
+                                        <span class="content">Category: ${movie.category}</span>
+                                    </li>
+                                    <li>
+                                        <div class="thumb">
+                                            <img src="assets/images/movie/cake.png" alt="duration">
+                                        </div>
+                                        <span class="content">Duration: ${movie.movieDuration}</span>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:forEach>
+            </ul>
+            <div class="owl-controls clickable">
+                <div class="owl-buttons">
+                    <div class="owl-prev movies-coming-prev"><i class="fa fa-caret-left"></i></div>
+                    <div class="owl-next movies-coming-next"><i class="fa fa-caret-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    function setEqualHeight(container) {
+        let maxHeight = 0;
+        $(container).each(function() {
+            const thisHeight = $(this).outerHeight();
+            if (thisHeight > maxHeight) {
+                maxHeight = thisHeight;
+            }
+        });
+        $(container).height(maxHeight);
+    }
+
     $(document).ready(function() {
         // Movies Showing Carousel
+        
         $('#movies-showing-carousel').owlCarousel({
             items: 4,
             loop: true,
@@ -290,7 +313,11 @@
         $('.movies-coming-next').click(function() {
             $('#movies-coming-carousel').trigger('next.owl.carousel');
         });
+
+        // Set equal heights for movie grids
+        setEqualHeight('#movies-showing-carousel .movie-grid');
+        setEqualHeight('#movies-coming-carousel .movie-grid');
     });
-    </script>
+</script>
 </body>
 </html>

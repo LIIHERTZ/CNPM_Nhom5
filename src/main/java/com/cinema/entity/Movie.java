@@ -39,6 +39,10 @@ public class Movie {
     @Column(nullable = false)
     private Date releaseDay;
     
+    @Column(nullable = false)
+    private Boolean status; // 0 là unactive và 1 là active
+    
+	
 	public Date getReleaseDay() {
 		return releaseDay;
 	}
