@@ -13,11 +13,7 @@
             <div class="footer-top">
                 <div class="logo">
                     <a href="index-1.html">
-<<<<<<< HEAD
                         <img src="/ValCT_Nhom5/assets/images/footer/footer-logo.png" alt="footer">
-=======
-                        <img src="assets/images/footer/footer-logo.png" alt="footer">
->>>>>>> 7492db4024a1a50bf9a34bcca9bd36229f64b9dc
                     </a>
                 </div>
                 <ul class="social-icons">
