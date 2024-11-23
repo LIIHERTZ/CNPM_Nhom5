@@ -1,5 +1,6 @@
 package com.cinema.entity;
 
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -23,7 +24,7 @@ public class Ticket {
     private double priceTicket;
 
     @Column(nullable = false)
-    private String date;
+    private Date date;
 
     @Column(nullable = false)
     private String placeName;
@@ -39,7 +40,73 @@ public class Ticket {
     private MovieScreenings movieScreenings;
 
     @OneToMany(mappedBy = "ticket")
-    private List<DetailTicket> detailTickets;
+    private List<TicketPayment> detailTickets;
+
+	public int getTicketID() {
+		return ticketID;
+	}
+
+	public void setTicketID(int ticketID) {
+		this.ticketID = ticketID;
+	}
+
+	public double getPriceTicket() {
+		return priceTicket;
+	}
+
+	public void setPriceTicket(double priceTicket) {
+		this.priceTicket = priceTicket;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getPlaceName() {
+		return placeName;
+	}
+
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
+
+	public String getVersionName() {
+		return versionName;
+	}
+
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
+	}
+
+	public String getChairNumber() {
+		return chairNumber;
+	}
+
+	public void setChairNumber(String chairNumber) {
+		this.chairNumber = chairNumber;
+	}
+
+	public MovieScreenings getMovieScreenings() {
+		return movieScreenings;
+	}
+
+	public void setMovieScreenings(MovieScreenings movieScreenings) {
+		this.movieScreenings = movieScreenings;
+	}
+
+	public List<TicketPayment> getDetailTickets() {
+		return detailTickets;
+	}
+
+	public void setDetailTickets(List<TicketPayment> detailTickets) {
+		this.detailTickets = detailTickets;
+	}
 
     // Getters and setters
+    
+    
 }

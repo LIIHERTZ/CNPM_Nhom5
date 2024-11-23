@@ -20,7 +20,11 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
+<<<<<<< HEAD
                     <a href="/ValCT_Nhom5/home">
+=======
+                    <a href="index.html">
+>>>>>>> 7492db4024a1a50bf9a34bcca9bd36229f64b9dc
                         <img src="assets/images/logo/logo.png" alt="logo">
                     </a>
                 </div>

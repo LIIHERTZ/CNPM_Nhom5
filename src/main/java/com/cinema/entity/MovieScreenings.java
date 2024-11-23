@@ -20,7 +20,7 @@ public class MovieScreenings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int msID;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "DATE") 
     private Date screeningDate; // New column for the screening date
     
     @Column(nullable = false)
@@ -37,7 +37,7 @@ public class MovieScreenings {
 	@Column(nullable = false)
     private Date endHour;
 
-    @Column(name = "status", nullable = false, columnDefinition = "BIT")
+    @Column(name = "status", nullable = false,  columnDefinition = "BIT DEFAULT 1")
     private boolean status; // New field for cinema status using bit, named "status"
     
     @ManyToOne
