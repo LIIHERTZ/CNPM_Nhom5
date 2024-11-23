@@ -48,6 +48,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
 
+
     // Getters and setters
 
     public int getMovieID() {

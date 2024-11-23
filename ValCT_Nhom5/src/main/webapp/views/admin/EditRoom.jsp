@@ -15,6 +15,7 @@
                     <div class="main__title">
                         <h2>Edit Room</h2>
                     </div>
+                    
                 </div>
                 <!-- end main title -->
 
@@ -38,7 +39,7 @@
     <div class="col-12">
         <label class="sign__label" for="seating_capacity">Number of Seats</label>
         <div class="sign__group">
-            <input type="number" class="sign__input" name="seating_capacity" value="${room.chairNumber}" placeholder="Seating Capacity" required>
+            <input type="number" class="sign__input" name="seating_capacity" value="${room.chairNumber}" placeholder="Seating Capacity" readonly>
         </div>
     </div>
 
@@ -63,9 +64,12 @@
         </div>
     </div>
 
-    <div class="col-12">
-        <button type="submit" class="sign__btn sign__btn--small"><span>Apply Changes</span></button>
-    </div>
+    <div class="col-12 d-flex justify-content-start align-items-center" style="gap: 15px;">
+     <a href="${pageContext.request.contextPath}/admin/rooms?id=${room.cinema.cinemaID}" class="sign__btn sign__btn--small sign__btn--outline"><span>Back to List</span></a>
+    <button type="submit" class="sign__btn sign__btn--small"><span>Apply Changes</span></button>
+	</div>
+
+
 </form>
 
                 <!-- end form -->

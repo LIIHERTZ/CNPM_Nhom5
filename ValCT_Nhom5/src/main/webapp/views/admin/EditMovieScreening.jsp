@@ -24,6 +24,7 @@
                     <form action="${pageContext.request.contextPath}/admin/editMovieScreening" method="POST" class="sign__form sign__form--add">
                         <input type="hidden" name="msID" value="${movieScreening.msID}">
     					<input type="hidden" name="roomID" value="${movieScreening.room.roomID}">
+    					<input type="hidden" name="cinemaId" value="${movieScreening.room.cinema.cinemaID}">
                         <div class="row">
 						<div class="sign__group">
 						    <label class="sign__label" for="movieID">Movie</label>
@@ -86,7 +87,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 d-flex justify-content-start align-items-center" style="gap: 15px;">
+                            	<a href="${pageContext.request.contextPath}/admin/moviescreenings?id=${movieScreening.room.roomID}&cinemaId=${movieScreening.room.cinema.cinemaID}
+                            	" class="sign__btn sign__btn--small sign__btn--outline"><span>Back to List</span></a>
                                 <button type="submit" class="sign__btn sign__btn--small"><span>Apply Changes</span></button>
                             </div>
                         </div>

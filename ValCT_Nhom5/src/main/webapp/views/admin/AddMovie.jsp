@@ -17,10 +17,7 @@
 				</div>
 			</div>
 
-			<div class="col-12">
-				<a href="${pageContext.request.contextPath}/admin/movies"
-					class="sign__btn sign__btn--small"><span>Back to Movie</span></a>
-			</div>
+			
 			<!-- end main title -->
 
 			<!-- form -->
@@ -34,11 +31,29 @@
 							<input type="text" class="sign__input" name="movie_name"
 								value="${movie_name}" placeholder="Movie Name" required>
 						</div>
-						<label class="sign__label" for="movie_name">Category</label>
-						<div class="sign__group">
-							<input type="text" class="sign__input" name="category"
-								placeholder="Category" required>
+						<div class="col-12">
+						    <div class="sign__group">
+						        <label class="sign__label" for="category">Category</label>
+						        <select class="sign__selectjs" name="category" id="sign__genre" multiple required>
+						            <option value="Action">Action</option>
+						            <option value="Animation">Animation</option>
+						            <option value="Comedy">Comedy</option>
+						            <option value="Crime">Crime</option>
+						            <option value="Drama">Drama</option>
+						            <option value="Fantasy">Fantasy</option>
+						            <option value="Historical">Historical</option>
+						            <option value="Horror">Horror</option>
+						            <option value="Romance">Romance</option>
+						            <option value="Science-fiction">Science-fiction</option>
+						            <option value="Thriller">Thriller</option>
+						            <option value="Western">Western</option>
+						            <option value="Other">Other</option>
+						        </select>
+						    </div>
 						</div>
+
+
+					
 
 						<label class="sign__label" for="movie_name">Movie Duration</label>
 						<div class="sign__group">
@@ -94,10 +109,14 @@
 								style="display: none; width: 300px; height: 300px;" />
 						</div>
 					</div>
+					<div class="col-12 d-flex justify-content-start align-items-center" style="gap: 15px;">
+									<a href="${pageContext.request.contextPath}/admin/movies"
+					class="sign__btn sign__btn--small"><span>Back to List</span></a>
 					<button type="submit" class="sign__btn sign__btn--small">
+						
 						<span>Save</span>
 					</button>
-
+						</div>
 				</form>
 			</div>
 			<!-- end form -->
@@ -137,6 +156,28 @@
 			// Định dạng ngày theo chuẩn "yyyy-mm-dd" và gán vào input
 			dateInput.value = `${year}-${month}-${day}`;
 		});
+		
+		
+		document.querySelector('.sign__form').addEventListener('submit', function (e) {
+		    // Lấy giá trị từ thẻ select category
+		    const selectElement = document.getElementById('sign__genre');
+		    const selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.value);
+		    const concatenatedCategories = selectedOptions.join(", "); // Nối các thể loại đã chọn bằng dấu phẩy
+
+		    // Tạo input ẩn để lưu chuỗi thể loại đã nối
+		    const hiddenInput = document.createElement('input');
+		    hiddenInput.type = 'hidden';
+		    hiddenInput.name = 'category'; // Tên này phải khớp với tên trường trong Controller
+		    hiddenInput.value = concatenatedCategories;
+
+		    // Thêm input ẩn vào form
+		    this.appendChild(hiddenInput);
+
+		    // Vô hiệu hóa thẻ select để không gửi thông tin của nó
+		    selectElement.disabled = true;
+		});
+
+
 	</script>
 
 	<!-- JS -->

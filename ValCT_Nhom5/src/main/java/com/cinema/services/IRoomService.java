@@ -13,4 +13,8 @@ public interface IRoomService {
     boolean deleteRoomById(int roomId);
     Room getRoomByNameAndCinemaId(String roomName, int cinemaID);
     
+    
+    List<Room> searchRoomsByScreenType(String screenType);
+    List<Room> searchRoomsByScreenTypeAndCinemaId(String screenType, int cinemaId);
+    
 }

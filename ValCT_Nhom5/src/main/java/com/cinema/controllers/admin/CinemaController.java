@@ -188,27 +188,43 @@ public class CinemaController extends HttpServlet {
 //        rd.forward(req, resp);
 //    }
     private void searchCinemas(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String keyword = req.getParameter("keyword");
+        String location  = req.getParameter("location");
+        System.out.println("Location from request: " + location);
+
         int page = 1;
-        int recordsPerPage = 5;
+        int recordsPerPage = 10;
         
         // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
         
-        // Tìm kiếm các cinemas với từ khóa và phân trang
-        List<Cinema> cinemas = cinemaService.searchCinemas(keyword, (page - 1) * recordsPerPage, recordsPerPage);
+//        // Tìm kiếm các cinemas với từ khóa và phân trang
+//        List<Cinema> cinemas = cinemaService.searchCinemas(location , (page - 1) * recordsPerPage, recordsPerPage);
+//        
+//        // Lấy tổng số records để tính số trang
+//        int noOfRecords = cinemaService.getNoOfSearchResults(location );
         
-        // Lấy tổng số records để tính số trang
-        int noOfRecords = cinemaService.getNoOfSearchResults(keyword);
+        List<Cinema> cinemas;
+        int noOfRecords;
+
+        // Nếu location là "All" hoặc không có giá trị, tìm kiếm tất cả các rạp
+        if (location == null || location.equals("All")) {
+            cinemas = cinemaService.getAllCinemas((page - 1) * recordsPerPage, recordsPerPage);
+            noOfRecords = cinemaService.getTotalNumberOfCinemas();
+        } else {
+            // Tìm kiếm các cinemas với vị trí cụ thể và phân trang
+            cinemas = cinemaService.searchCinemasByLocation(location, (page - 1) * recordsPerPage, recordsPerPage);
+            noOfRecords = cinemaService.getNoOfSearchResults(location);
+        }
+        
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
         // Đặt các thuộc tính vào request để truyền đến JSP
         req.setAttribute("cinemas", cinemas);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
-        req.setAttribute("keyword", keyword);  // Để giữ lại từ khóa tìm kiếm
+        req.setAttribute("location", location );  // Để giữ lại từ khóa tìm kiếm
         req.setAttribute("noOfRecords", noOfRecords); // Thêm thuộc tính này để hiển thị tổng số bản ghi
 
         // Chuyển tiếp đến trang Cinema.jsp
@@ -218,7 +234,7 @@ public class CinemaController extends HttpServlet {
 
     private void listCinemas(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int page = 1;
-        int recordsPerPage = 5;
+        int recordsPerPage = 10;
         
         // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
         if (req.getParameter("page") != null) {

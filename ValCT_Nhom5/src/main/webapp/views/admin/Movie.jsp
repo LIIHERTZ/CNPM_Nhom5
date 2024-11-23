@@ -2,9 +2,11 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <body>
-
+	
 	<!-- main content -->
 	<main class="container-fluid">
 		<div class="container-fluid">
@@ -16,24 +18,44 @@
 
 						<span class="main__title-stat">Total Movies :
 							${noOfRecords}</span>
-
-						<div class="main__title-wrap">
+						<div class="main__title-wrap">		
+							<!-- search -->
 							<a
 							href="${pageContext.request.contextPath}/admin/addMovie"
 							class="main__title-link main__title-link--wrap">Add Movie</a>
 
-							<!-- search -->
-							<form
-								action="${pageContext.request.contextPath}/admin/searchMovie"
-								method="get" class="main__title-form">
-								<input type="text" name="keyword"
-									placeholder="Find Movie by name..">
-								<button type="submit">
-									<i class="ti ti-search"></i>
-								</button>
-							</form>
-							<!-- end search -->
-						</div>
+
+						</div>			
+					
+						<div class="main__title">
+						
+						
+							<form action="${pageContext.request.contextPath}/admin/searchMovie" method="get" class="main__title-form">
+						    <input type="text" class="search__keyword" name="keyword" placeholder="Find Movie by name.............." value="${keyword != null ? keyword : ''}">
+						    <select name="category" class="sign__selectjs" id="sign__genre" multiple>
+						        <option value="All" <c:if test="${fn:contains(category, 'All') || empty category}">selected</c:if>>All Categories</option>
+						        <option value="Action" <c:if test="${fn:contains(category, 'Action')}">selected</c:if>>Action</option>
+						        <option value="Animation" <c:if test="${fn:contains(category, 'Animation')}">selected</c:if>>Animation</option>
+						        <option value="Comedy" <c:if test="${fn:contains(category, 'Comedy')}">selected</c:if>>Comedy</option>
+						        <option value="Crime" <c:if test="${fn:contains(category, 'Crime')}">selected</c:if>>Crime</option>
+						        <option value="Drama" <c:if test="${fn:contains(category, 'Drama')}">selected</c:if>>Drama</option>
+						        <option value="Fantasy" <c:if test="${fn:contains(category, 'Fantasy')}">selected</c:if>>Fantasy</option>
+						        <option value="Historical" <c:if test="${fn:contains(category, 'Historical')}">selected</c:if>>Historical</option>
+						        <option value="Horror" <c:if test="${fn:contains(category, 'Horror')}">selected</c:if>>Horror</option>
+						        <option value="Romance" <c:if test="${fn:contains(category, 'Romance')}">selected</c:if>>Romance</option>
+						        <option value="Science-fiction" <c:if test="${fn:contains(category, 'Science-fiction')}">selected</c:if>>Science-fiction</option>
+						        <option value="Thriller" <c:if test="${fn:contains(category, 'Thriller')}">selected</c:if>>Thriller</option>
+						        <option value="Western" <c:if test="${fn:contains(category, 'Western')}">selected</c:if>>Western</option>
+						        <option value="Other" <c:if test="${fn:contains(category, 'Other')}">selected</c:if>>Other</option>
+						    </select>
+						    
+						    <button type="submit">
+						        <i class="ti ti-search"></i>
+						    </button>
+						</form>
+						 	 </div>
+						
+						
 					</div>
 				</div>
 				<!-- end main title -->
@@ -50,12 +72,13 @@
 									<th>Image</th>
 									<th>MovieDuration</th>
 									<th>Rating</th>
-									<th>Release</th>
+									<th>Release Date</th>
 									<th>Status</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="movie" items="${Movies}">
+								<c:forEach var="movie" items="${movies}">
 									<tr>
 										<td><div class="catalog__text">${movie.movieID}</div></td>
 										<td><div class="catalog__text">${movie.movieName}</div></td>
@@ -74,9 +97,14 @@
 											</div></td>
 										<td><div class="catalog__text">${movie.movieDuration}</div></td>
 										<td><div class="catalog__text">${movie.rating}</div></td>
-										<td><div class="catalog__text">${movie.releaseDay}</div></td>
+										<td>
+    										<div class="catalog__text">
+										        <fmt:formatDate value="${movie.releaseDay}" pattern="MM-dd-yyyy"/>
+										    </div>
+										</td>
+										
 										<td><div
-												class="catalog__text ${movie.status ? 'catalog__text--green' : 'catalog__text--red'}">${moive.status ? 'Active' : 'Inactive'}</div></td>
+												class="catalog__text ${movie.status ? 'catalog__text--green' : 'catalog__text--red'}">${movie.status ? 'Active' : 'Inactive'}</div></td>
 
 
 
@@ -104,63 +132,143 @@
 				</div>
 				<!-- end items -->
 
-				<!-- pagination -->
-				<div class="col-12">
-					<div class="main__paginator">
-						<!-- amount -->
-						<span class="main__paginator-pages">${currentPage} of
-							${noOfPages}</span>
-						<!-- end amount -->
+<!-- pagination -->
+<div class="col-12">
+    <div class="main__paginator">
+        <!-- amount -->
+        <span class="main__paginator-pages">${currentPage} of ${noOfPages}</span>
+        <!-- end amount -->
 
-						<ul class="main__paginator-list">
-							<!-- Previous Page Link -->
-							<li><a
-								href="<c:url value='/admin/movies'>
-                                        <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
-                                    </c:url>">
-									<i class="ti ti-chevron-left"></i> <span>Prev</span>
-							</a></li>
+        <ul class="main__paginator-list">
+            <!-- Previous Page Link -->
+            <li>
+                <c:choose>
+                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
+                        <a href="<c:url value='/admin/searchMovie'>
+                            <c:param name='keyword' value='${keyword}'/>
+                            <c:forEach var="cat" items="${category}">
+                                <c:param name="category" value="${cat}"/>
+                            </c:forEach>
+                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
+                        </c:url>">
+                            <i class="ti ti-chevron-left"></i>
+                            <span>Prev</span>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='/admin/movies'>
+                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
+                        </c:url>">
+                            <i class="ti ti-chevron-left"></i>
+                            <span>Prev</span>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </li>
 
-							<!-- Next Page Link -->
-							<li><a
-								href="<c:url value='/admin/movies'>
-                                        <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
-                                    </c:url>">
-									<span>Next</span> <i class="ti ti-chevron-right"></i>
-							</a></li>
-						</ul>
+            <!-- Next Page Link -->
+            <li>
+                <c:choose>
+                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
+                        <a href="<c:url value='/admin/searchMovie'>
+                            <c:param name='keyword' value='${keyword}'/>
+                            <c:forEach var="cat" items="${category}">
+                                <c:param name="category" value="${cat}"/>
+                            </c:forEach>
+                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
+                        </c:url>">
+                            <span>Next</span>
+                            <i class="ti ti-chevron-right"></i>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='/admin/movies'>
+                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
+                        </c:url>">
+                            <span>Next</span>
+                            <i class="ti ti-chevron-right"></i>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </li>
+        </ul>
 
-						<ul class="paginator">
-							<!-- Previous Page Link -->
-							<li class="paginator__item paginator__item--prev"><a
-								href="<c:url value='/admin/movies'>
-                                        <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
-                                    </c:url>">
-									<i class="ti ti-chevron-left"></i>
-							</a></li>
+        <ul class="paginator">
+            <!-- Previous Page Link -->
+            <li class="paginator__item paginator__item--prev">
+                <c:choose>
+                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
+                        <a href="<c:url value='/admin/searchMovie'>
+                            <c:param name='keyword' value='${keyword}'/>
+                            <c:forEach var="cat" items="${category}">
+                                <c:param name="category" value="${cat}"/>
+                            </c:forEach>
+                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
+                        </c:url>">
+                            <i class="ti ti-chevron-left"></i>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='/admin/movies'>
+                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
+                        </c:url>">
+                            <i class="ti ti-chevron-left"></i>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </li>
 
-							<!-- Page Numbers -->
-							<c:forEach begin="1" end="${noOfPages}" var="pageNumber">
-								<li
-									class="paginator__item ${pageNumber == currentPage ? 'paginator__item--active' : ''}">
-									<a
-									href="<c:url value='/admin/movies'>
-                                            <c:param name='page' value='${pageNumber}'/>
-                                        </c:url>">${pageNumber}</a>
-								</li>
-							</c:forEach>
+            <!-- Page Numbers -->
+            <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
+                <li class="paginator__item ${pageNumber == currentPage ? 'paginator__item--active' : ''}">
+                    <c:choose>
+                        <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
+                            <a href="<c:url value='/admin/searchMovie'>
+                                <c:param name='keyword' value='${keyword}'/>
+                                <c:forEach var="cat" items="${category}">
+                                    <c:param name="category" value="${cat}"/>
+                                </c:forEach>
+                                <c:param name='page' value='${pageNumber}'/>
+                            </c:url>">${pageNumber}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="<c:url value='/admin/movies'>
+                                <c:param name='page' value='${pageNumber}'/>
+                            </c:url>">${pageNumber}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </c:forEach>
 
-							<!-- Next Page Link -->
-							<li class="paginator__item paginator__item--next"><a
-								href="<c:url value='/admin/movies'>
-                                        <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
-                                    </c:url>">
-									<i class="ti ti-chevron-right"></i>
-							</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- end pagination -->
+            <!-- Next Page Link -->
+            <li class="paginator__item paginator__item--next">
+                <c:choose>
+                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
+                        <a href="<c:url value='/admin/searchMovie'>
+                            <c:param name='keyword' value='${keyword}'/>
+                            <c:forEach var="cat" items="${category}">
+                                <c:param name="category" value="${cat}"/>
+                            </c:forEach>
+                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
+                        </c:url>">
+                            <i class="ti ti-chevron-right"></i>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='/admin/movies'>
+                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
+                        </c:url>">
+                            <i class="ti ti-chevron-right"></i>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- end pagination -->
+
+
 			</div>
 			<!-- end items -->
 		</div>
@@ -290,6 +398,25 @@
             document.getElementById('deleteMovieId').value = movieId;
         });
     });
-</script>
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<style>
+	
+	
+	.sign__selectjs {
+    width: 110%;  /* Đảm bảo thẻ select chiếm đủ không gian của container */
+    max-width: 477px; /* Bạn có thể điều chỉnh max-width để thẻ rộng hơn */
+}
+	.search__keyword {
+	width: 150%;
+    max-width: 450px; /* Thay đổi giá trị này để điều chỉnh độ dài */
+}
+			
+	
+	</style>
 
+
+
+
+}
 </body>

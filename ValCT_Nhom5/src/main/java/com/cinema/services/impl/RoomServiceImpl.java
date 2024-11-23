@@ -48,4 +48,14 @@ public class RoomServiceImpl implements IRoomService {
 		    public Room getRoomByNameAndCinemaId(String roomName, int cinemaID) {
 		        return roomDAO.getRoomByNameAndCinemaId(roomName, cinemaID);
 		    }
+
+		@Override
+		public List<Room> searchRoomsByScreenType(String screenType) {
+			return roomDAO.searchRoomsByScreenType(screenType);
+		}
+
+		@Override
+		public List<Room> searchRoomsByScreenTypeAndCinemaId(String screenType, int cinemaId) {
+			return roomDAO.searchRoomsByScreenTypeAndCinemaId(screenType, cinemaId);
+		}
 }

@@ -17,4 +17,8 @@ public interface IMovieDAO {
 	int getNoOfRecords();
 	List<Movie> searchMovies(String keyword, int i, int recordsPerPage);
 	int getNoOfSearchResults(String keyword);
+	List<Movie> searchMovies(String keyword, String category, int offset, int limit);
+	int getNoOfSearchResults(String keyword, String category);
+	List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit);   
+	int getNoOfSearchResults(String keyword, String[] categories);
 }
