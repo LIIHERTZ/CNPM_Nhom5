@@ -19,4 +19,8 @@ public interface ICinemaDAO {
     //List<Cinema> searchCinemas(String keyword);
     List<Cinema> searchCinemas(String keyword, int offset, int limit);
     int getNoOfSearchResults(String keyword);
+    
+    List<Cinema> getAllCinemas(int offset, int recordsPerPage);
+    int getTotalNumberOfCinemas();
+    List<Cinema> searchCinemasByLocation(String location, int offset, int recordsPerPage);
 }

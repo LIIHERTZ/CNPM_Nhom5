@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.cinema.entity.Movie;
 import com.cinema.entity.MovieScreenings;
+import com.cinema.entity.Seat;
+import com.cinema.entity.SeatStatus;
 import com.cinema.services.*;
 import com.cinema.services.impl.*;
 
@@ -30,6 +32,9 @@ public class MovieScreeningController extends HttpServlet {
 	 	private IMovieScreeningsService movieScreeningService = new MovieScreeningsServiceImpl();
 	    private IRoomService roomService = new RoomServiceImpl();
 	    private IMovieService movieService = new MovieServiceImpl();
+	    
+	    private ISeatService seatService = new SeatServiceImpl();
+	    private ISeatStatusService seatStatusService = new SeatStatusServiceImpl();
 
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,7 +86,7 @@ public class MovieScreeningController extends HttpServlet {
 	                int roomID = Integer.parseInt(roomIdParam);
 	                int cinemaId = Integer.parseInt(cinemaIdParam);
 	                int page = 1;
-	                int recordsPerPage = 5;
+	                int recordsPerPage = 10;
 
 	                // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
 	                if (req.getParameter("page") != null) {
@@ -127,44 +132,17 @@ public class MovieScreeningController extends HttpServlet {
 	            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=missingRoomId");
 	        }
 	    }
-
-
-
-//	    private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//	        try {
-//	            String msIDParam = req.getParameter("msID");
-//	            if (msIDParam != null && !msIDParam.isEmpty()) {
-//	                int msID = Integer.parseInt(msIDParam);
-//	                MovieScreenings movieScreening = movieScreeningService.getMovieScreeningById(msID);
-//	                if (movieScreening != null) {
-//	                    req.setAttribute("movieScreening", movieScreening);
-//	                    List<Movie> movies = movieService.getAllMovie(); // Thêm danh sách phim vào để hiển thị trong form
-//	                    req.setAttribute("movies", movies);
-//	                    RequestDispatcher dispatcher = req.getRequestDispatcher("/views/admin/EditMovieScreening.jsp");
-//	                    dispatcher.forward(req, resp);
-//	                } else {
-//	                    resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=notfound");
-//	                }
-//	            } else {
-//	                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=invalidId");
-//	            }
-//	        } catch (NumberFormatException e) {
-//	            e.printStackTrace();
-//	            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=invalidId");
-//	        } catch (Exception e) {
-//	            e.printStackTrace();
-//	            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=unexpected");
-//	        }
-//	    }
 	    
 	    private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	        try {
 	            String msIDParam = req.getParameter("msID");
 	            String roomIDParam = req.getParameter("roomID");
+	            String cinemaIDParam = req.getParameter("cinemaId");
 	            
 	            if (msIDParam != null && !msIDParam.isEmpty() && roomIDParam != null && !roomIDParam.isEmpty()) {
 	                int msID = Integer.parseInt(msIDParam);
 	                int roomID = Integer.parseInt(roomIDParam);
+	                int cinemaID = Integer.parseInt(cinemaIDParam);
 
 	                MovieScreenings movieScreening = movieScreeningService.getMovieScreeningById(msID);
 	                if (movieScreening != null) {
@@ -183,6 +161,7 @@ public class MovieScreeningController extends HttpServlet {
 	                    req.setAttribute("formattedStartHour", formattedStartHour);
 	                    req.setAttribute("formattedEndHour", formattedEndHour);
 	                    req.setAttribute("roomID", roomID);
+	                    req.setAttribute("cinemaId", cinemaID);
 
 	                    List<Movie> movies = movieService.getAllMovie(); // Thêm danh sách phim vào để hiển thị trong form
 	                    req.setAttribute("movies", movies);
@@ -211,6 +190,7 @@ public class MovieScreeningController extends HttpServlet {
         // Lấy giá trị từ request
         int roomID = Integer.parseInt(req.getParameter("roomID"));
         int movieID = Integer.parseInt(req.getParameter("movieID"));
+        int cinemaID = Integer.parseInt(req.getParameter("cinemaId")); // Lấy cinemaID từ request
 
         // Lấy giá trị từ input dateScreening và chuyển thành java.sql.Date
         String dateScreeningParam = req.getParameter("dateScreening");
@@ -241,15 +221,32 @@ public class MovieScreeningController extends HttpServlet {
 
         // Thêm vào cơ sở dữ liệu
         if (movieScreeningService.addMovieScreening(movieScreening)) {
+        	
+        	// Thêm SeatStatus cho tất cả các ghế trong phòng
+            
+            List<Seat> seats = seatService.getSeatsByRoomId(roomID); // Lấy tất cả ghế trong phòng
+            
+
+            for (Seat seat : seats) {
+                SeatStatus seatStatus = new SeatStatus();
+                seatStatus.setSeat(seat);
+                seatStatus.setScreening(movieScreening);
+                seatStatus.setStatus(false); // Mặc định tất cả ghế đều trống
+
+                seatStatusService.addSeatStatus(seatStatus);
+            }
+        	
             // Chuyển hướng đến trang danh sách với roomID và page hiện tại
             String currentPage = req.getParameter("page");
             if (currentPage == null || currentPage.isEmpty()) {
                 currentPage = "1"; // Mặc định là trang 1 nếu không có thông tin page
             }
             // Đảm bảo chuyển hướng về đúng URL với roomID và page
-            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&page=" + currentPage + "&success=added");
+            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&cinemaId=" + cinemaID + "&page=" + currentPage + "&success=added");
+
         } else {
-            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&error=addfailed");
+        	resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&cinemaId=" + cinemaID + "&error=addfailed");
+
         }
     } catch (Exception e) {
         e.printStackTrace();
@@ -262,6 +259,7 @@ public class MovieScreeningController extends HttpServlet {
 		        int msID = Integer.parseInt(req.getParameter("msID"));
 		        int roomID = Integer.parseInt(req.getParameter("roomID"));
 		        int movieID = Integer.parseInt(req.getParameter("movieID")); // Lấy movieID từ form
+		        int cinemaID = Integer.parseInt(req.getParameter("cinemaId")); // Lấy cinemaID từ form
 
 
 		        MovieScreenings movieScreening = movieScreeningService.getMovieScreeningById(msID);
@@ -295,9 +293,10 @@ public class MovieScreeningController extends HttpServlet {
 
 		            if (movieScreeningService.updateMovieScreening(movieScreening)) {
 		                // Điều hướng về lại trang danh sách movie screenings của phòng hiện tại
-		                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&success=updated");
+		            	resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&cinemaId=" + cinemaID + "&success=updated");
 		            } else {
-		                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&error=updatefailed");
+		            	resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&cinemaId=" + cinemaID + "&error=updatefailed");
+
 		            }
 		        } else {
 		            resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=notfound");
@@ -314,6 +313,7 @@ public class MovieScreeningController extends HttpServlet {
 	            // Lấy giá trị msID và roomID từ yêu cầu
 	            String msIdParam = req.getParameter("id");
 	            String roomIdParam = req.getParameter("roomID");
+	            String cinemaIdParam = req.getParameter("cinemaID");
 
 	            if (msIdParam == null || msIdParam.isEmpty() || roomIdParam == null || roomIdParam.isEmpty()) {
 	                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?error=missingRoomIdOrMsId");
@@ -322,12 +322,13 @@ public class MovieScreeningController extends HttpServlet {
 
 	            int msID = Integer.parseInt(msIdParam);
 	            int roomID = Integer.parseInt(roomIdParam);
+	            int cinemaID = Integer.parseInt(cinemaIdParam);
 
 	            // Xóa MovieScreening và chuyển hướng
-	            if (movieScreeningService.deleteMovieScreening(msID)) {
-	                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&success=deleted");
+	            if (movieScreeningService.deleteMovieScreening(msID)) { 
+	                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&cinemaId=" + cinemaID + "&success=deleted");
 	            } else {
-	                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&error=deletefailed");
+	                resp.sendRedirect(req.getContextPath() + "/admin/moviescreenings?id=" + roomID + "&cinemaId=" + cinemaID + "&error=deletefailed");
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();

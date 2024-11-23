@@ -75,6 +75,20 @@ public class CinemaServiceImpl implements ICinemaService {
         return cinemaDao.getNoOfSearchResults(keyword);
     }
 
+    @Override
+    public List<Cinema> getAllCinemas(int offset, int recordsPerPage) {
+        return cinemaDao.getAllCinemas(offset, recordsPerPage);
+    }
+
+    @Override
+    public int getTotalNumberOfCinemas() {
+        return cinemaDao.getTotalNumberOfCinemas();
+    }
+
+    @Override
+    public List<Cinema> searchCinemasByLocation(String location, int offset, int recordsPerPage) {
+        return cinemaDao.searchCinemasByLocation(location, offset, recordsPerPage);
+    }
 
 
 	

@@ -7,6 +7,7 @@ import com.cinema.entity.Room;
 
 	import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 	import java.util.ArrayList;
@@ -143,30 +144,34 @@ public class RoomDAOImpl implements IRoomDAO {
 		
 		@Override
 		public boolean deleteRoomById(int roomId) {
-		    EntityManager em = JPAConfig.getEntityManager();
-		    EntityTransaction transaction = null;
-		    boolean isDeleted = false;
+			 EntityManager em = JPAConfig.getEntityManager();
+			    EntityTransaction transaction = em.getTransaction();
+			    try {
+			        transaction.begin();
+			        
+			        // Tìm Room bằng roomID
+			        Room room = em.find(Room.class, roomId);
+			        if (room != null) {
+			            // Trước khi xóa Room, xóa toàn bộ ghế liên quan
+			            Query deleteSeatsQuery = em.createQuery("DELETE FROM Seat s WHERE s.room.roomID = :roomID");
+			            deleteSeatsQuery.setParameter("roomID", roomId);
+			            deleteSeatsQuery.executeUpdate();
 
-		    try {
-		        transaction = em.getTransaction();
-		        transaction.begin();
-
-		        Room room = em.find(Room.class, roomId);
-		        if (room != null) {
-		            em.remove(room);
-		            isDeleted = true;
-		        }
-
-		        transaction.commit();
-		    } catch (Exception e) {
-		        if (transaction != null) {
-		            transaction.rollback();
-		        }
-		        e.printStackTrace();
-		    } finally {
-		        em.close();
-		    }
-		    return isDeleted;
+			            // Sau khi xóa các ghế, xóa Room
+			            em.remove(room);
+			            transaction.commit();
+			            return true;
+			        }
+			        return false;
+			    } catch (Exception e) {
+			        if (transaction.isActive()) {
+			            transaction.rollback();
+			        }
+			        e.printStackTrace();
+			        return false;
+			    } finally {
+			        em.close();
+			    }
 		}
 		
 		
@@ -188,9 +193,39 @@ public class RoomDAOImpl implements IRoomDAO {
 		            em.close();
 		        }
 		    }
+		 
+		 @Override
+		 public List<Room> searchRoomsByScreenType(String screenType) {
+			    EntityManager em = JPAConfig.getEntityManager();
+			    try {
+			        String jpql = "SELECT r FROM Room r WHERE r.screenType = :screenType";
+			        return em.createQuery(jpql, Room.class)
+			                .setParameter("screenType", screenType)
+			                .getResultList();
+			    } finally {
+			        em.close();
+			    }
+			}
+		 
+		 @Override
+		 public List<Room> searchRoomsByScreenTypeAndCinemaId(String screenType, int cinemaId) 
+		 {
+			    EntityManager em = JPAConfig.getEntityManager();
+			    try {
+			        String jpql = "SELECT r FROM Room r WHERE r.cinema.cinemaID = :cinemaId AND r.screenType = :screenType";
+			        return em.createQuery(jpql, Room.class)
+			                 .setParameter("cinemaId", cinemaId)
+			                 .setParameter("screenType", screenType)
+			                 .getResultList();
+			    } finally {
+			        em.close();
+			    }
+
+		 
 		
 
 		}
+}
 
 		
 

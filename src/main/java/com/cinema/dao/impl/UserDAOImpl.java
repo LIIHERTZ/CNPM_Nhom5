@@ -1,5 +1,4 @@
 package com.cinema.dao.impl;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +74,5 @@ public class UserDAOImpl  implements IUserDAO{
 	    }
 
 
-	    
-	    
-	    
+
 }

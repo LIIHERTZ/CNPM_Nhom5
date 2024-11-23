@@ -78,25 +78,60 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
         }
     }
 
+//    @Override
+//    public boolean deleteMovieScreening(int msID) {
+//        EntityManager em = JPAConfig.getEntityManager();
+//        try {
+//            em.getTransaction().begin();
+//            MovieScreenings ms = em.find(MovieScreenings.class, msID);
+//            if (ms != null) {
+//                em.remove(ms);
+//                em.getTransaction().commit();
+//                return true;
+//            }
+//            return false;
+//        } catch (Exception e) {
+//            em.getTransaction().rollback();
+//            return false;
+//        } finally {
+//            em.close();
+//        }
+//    }
+    
     @Override
     public boolean deleteMovieScreening(int msID) {
         EntityManager em = JPAConfig.getEntityManager();
         try {
             em.getTransaction().begin();
+
+            // Lấy đối tượng MovieScreenings cần xóa
             MovieScreenings ms = em.find(MovieScreenings.class, msID);
             if (ms != null) {
+                // Trước tiên xóa tất cả các SeatStatus liên quan đến MovieScreenings này
+                String jpql = "DELETE FROM SeatStatus ss WHERE ss.screening.msID = :msID";
+                int deletedCount = em.createQuery(jpql)
+                                     .setParameter("msID", msID)
+                                     .executeUpdate();
+
+                System.out.println("Deleted SeatStatus count: " + deletedCount);
+
+                // Sau đó xóa MovieScreenings
                 em.remove(ms);
                 em.getTransaction().commit();
                 return true;
             }
             return false;
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
             return false;
         } finally {
             em.close();
         }
     }
+
     
     
     @Override

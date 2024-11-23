@@ -7,18 +7,17 @@
 <title>ValCT</title>
 </head>
 <body>
-<p> ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
 	<!-- header -->
 	<header class="header">
 		<div class="header__content">
 			<!-- header logo -->
-			<a href="assets2/index.html" class="header__logo">
-				<img src="assets2/img/logo.svg" alt="">
+			<a href="/ValCT_Nhom5/adminHome" class="header__logo">
+				<img src="/ValCT_Nhom5/assets2/img/logo.png" alt="" width="200" height="200">
 			</a>
 			<!-- end header logo -->
 
 			<!-- header menu btn -->
-			<button class="header__btn" type="button">
+			<button class="header__btn" type="button">	
 				<span></span>
 				<span></span>
 				<span></span>

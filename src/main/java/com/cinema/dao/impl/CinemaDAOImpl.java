@@ -215,6 +215,47 @@ public class CinemaDAOImpl implements ICinemaDAO {
         }
         return count;
     }
+    
+    
+    @Override
+    public List<Cinema> getAllCinemas(int offset, int recordsPerPage) {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            String jpql = "SELECT c FROM Cinema c";
+            return em.createQuery(jpql, Cinema.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(recordsPerPage)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public int getTotalNumberOfCinemas() {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            String jpql = "SELECT COUNT(c) FROM Cinema c";
+            Long count = em.createQuery(jpql, Long.class).getSingleResult();
+            return count.intValue();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Cinema> searchCinemasByLocation(String location, int offset, int limit) {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            String jpql = "SELECT c FROM Cinema c WHERE c.location = :location";
+            return em.createQuery(jpql, Cinema.class)
+                     .setParameter("location", location)
+                     .setFirstResult(offset)
+                     .setMaxResults(limit)
+                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
 
 

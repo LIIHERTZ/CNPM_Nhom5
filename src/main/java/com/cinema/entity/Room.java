@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +21,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomID;
 
+
     @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
     private String roomName;
+
 
     @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
     private String screenType;
@@ -32,8 +35,6 @@ public class Room {
     @Column(name = "status", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status; // New field for cinema status using bit, named "status"
     
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    private List<Chair> chair;
 
     @ManyToOne
     @JoinColumn(name = "cinemaID", nullable = false)
@@ -79,13 +80,6 @@ public class Room {
 		this.status = status;
 	}
 
-	public List<Chair> getChair() {
-		return chair;
-	}
-
-	public void setChair(List<Chair> chair) {
-		this.chair = chair;
-	}
 
 	public Cinema getCinema() {
 		return cinema;

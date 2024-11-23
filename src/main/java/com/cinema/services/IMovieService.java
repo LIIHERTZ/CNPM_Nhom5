@@ -9,6 +9,15 @@ public interface IMovieService {
 	Movie getOneMovie(int id); 
 	boolean insertMovie(Movie Movie); 
 	boolean updateMovie(Movie Movie); 
-	boolean deleteMovie(Movie movie); 
+	boolean deleteMovie(int movieID); 
 	Movie getMovieById(int movieID);  // Thêm phương thức getMovieById
+	List<Movie> getMovies(int offset, int noOfRecords) ;
+	int getNoOfRecords();
+	List<Movie> searchMovies(String keyword, int i, int recordsPerPage);
+	int getNoOfSearchResults(String keyword);
+	List<Movie> searchMovies(String keyword, String category, int offset, int limit);
+	int getNoOfSearchResults(String keyword, String category);
+	List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit);
+	int getNoOfSearchResults(String keyword, String[] categories);
+
 }

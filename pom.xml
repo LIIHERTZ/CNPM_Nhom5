@@ -6,7 +6,6 @@
 	<artifactId>ValCT_Nhom5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>com.cinema</name>
 	<properties>
 		<servlet.api.version>4.0.1</servlet.api.version>
 		<jsp.api.version>2.3.3</jsp.api.version>

@@ -1,4 +1,4 @@
-	package com.cinema.entity;
+package com.cinema.entity;
 
 import java.util.Date;
 import java.util.List;
