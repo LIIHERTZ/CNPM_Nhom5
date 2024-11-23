@@ -30,9 +30,13 @@ public class UserHomeController extends HttpServlet {
 	            return;
 	        }
 
-	        // Lấy danh sách movies từ service
-	        List<Movie> movies = movieService.getAllMovie();
-	        req.setAttribute("movies", movies);
+	        // Lấy danh sách phim đang chiếu
+	        List<Movie> moviesShowing = movieService.getMoviesShowing();
+	        req.setAttribute("moviesShowing", moviesShowing);
+
+	        // Lấy danh sách phim sắp chiếu
+	        List<Movie> moviesComingSoon = movieService.getMoviesComingSoon();
+	        req.setAttribute("moviesComingSoon", moviesComingSoon);
 
 	        // Chuyển tiếp đến trang home.jsp
 	        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/home.jsp");

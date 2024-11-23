@@ -1,5 +1,6 @@
 package com.cinema.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -34,7 +35,10 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
-
+    
+    @Column(nullable = false)
+    private Date dateOfMovie;
+    
 	public int getMovieID() {
 		return movieID;
 	}

@@ -11,4 +11,6 @@ public interface IMovieService {
 	boolean updateMovie(Movie Movie); 
 	boolean deleteMovie(Movie movie); 
 	List<Movie> searchMoviesByName(String movieName);
+	 List<Movie> getMoviesShowing();
+	    List<Movie> getMoviesComingSoon();
 }

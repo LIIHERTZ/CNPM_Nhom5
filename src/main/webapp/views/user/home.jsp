@@ -9,104 +9,139 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Movie Home</title>
-    <!-- Add Owl Carousel CSS -->
+    <title>Movie List</title>
+    <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <style>
-        .movie-slider-container {
+</head>
+<body>
+ <style>
+        /* Wrapper for the carousel */
+        .owl-carousel-wrapper {
             position: relative;
-            width: 100%;
-            overflow: hidden;
         }
 
-        /* Nút Prev/Next */
-        .carousel-btn {
-            position: absolute;
-            top: 50%; /* Canh giữa theo chiều dọc */
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.6); /* Màu nền */
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            width: 50px; /* Kích thước nút */
-            height: 50px;
-            line-height: 50px; /* Căn giữa nội dung */
+        /* Owl navigation buttons */
+   
+
+        .owl-controls .owl-buttons .owl-prev {
+            left: -50px;
+            top :250px;
+        }
+
+        .owl-controls .owl-buttons .owl-next {
+            right: -50px;
+               top :250px;
+        }
+
+        /* Hover effects for navigation buttons */
+        .owl-controls .owl-buttons div:hover {
+            background-color: rgba(255, 0, 0, 0.8);
+        }
+
+        /* Movie item styles */
+        .movie-item {
             text-align: center;
-            border-radius: 50%; /* Hình tròn */
-            cursor: pointer;
-            z-index: 10;
-            user-select: none; /* Ngăn chọn text */
+            padding: 10px;
         }
 
-        .prev-btn {
-            left: 0; /* Đưa nút Prev ra sát bên trái */
-        }
-
-        .next-btn {
-            right: 0; /* Đưa nút Next ra sát bên phải */
-        }
-
-        .movie-slider {
-            display: flex;
-            gap: 15px;
-            overflow: hidden;
-            scroll-behavior: smooth;
-        }
-
-        .movie-grid {
-            min-width: 300px;
-            text-align: center;
-        }
-
-        .movie-thumb img {
+        .movie-item img {
             width: 100%;
-            height: auto;
             border-radius: 10px;
+            transition: transform 0.3s ease;
         }
 
-        .movie-content {
+        .movie-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .movie-title {
+            font-size: 16px;
+            font-weight: bold;
             margin-top: 10px;
         }
 
-        .movie-content h5 {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 10px 0;
+        .movie-category,
+        .movie-duration {
+            font-size: 14px;
+            color: #555;
         }
+   .owl-buttons .fa-caret-left {
+   font-size: 50px !important;
+    position: absolute;
+    top: 37%; /* Canh giữa theo chiều dọc */
+    left: -30px; /* Đẩy biểu tượng ra bên trái container */
+    transform: translateY(-50%); /* Căn chỉnh chính xác theo chiều dọc */
+}
 
-        .movie-content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+.owl-buttons .fa-caret-right {
+	font-size: 50px !important;
+    position: absolute;
+    top: 40%; /* Canh giữa theo chiều dọc */
+    right: -30px; /* Đẩy biểu tượng ra bên phải container */
+    transform: translateY(-50%); /* Căn chỉnh chính xác theo chiều dọc */
+}
+ .owl-buttons .fa-caret-left:hover,
+.owl-buttons .fa-caret-right:hover {
+    color: #ff0000; /* Màu đỏ khi hover */
+    background-color: rgba(0, 0, 0, 0.8); /* Nền đen đậm hơn khi hover */
+}
+/* Movies Showing Navigation */
+.movies-showing-prev {
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
-        .movie-content ul li {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 5px;
-        }
+.movies-showing-next {
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
-        .movie-content ul li img {
-            margin-right: 5px;
-        }
+/* Movies Coming Soon Navigation */
+.movies-coming-prev {
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.movies-coming-next {
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
     </style>
-</head>
-<body>
-    <section class="movie-section padding-top padding-bottom bg-two">
+<section class="banner-section">
+        <div class="banner-bg bg_img bg-fixed" data-background="assets/images/banner/banner01.jpg"></div>
         <div class="container">
-            <div class="section-header-1">
-                <h2 class="title">Latest Movies</h2>
-                <a class="view-all" href="${pageContext.request.contextPath}/userHome">View All</a>
+            <div class="banner-content">
+                <h1 class="title  cd-headline clip"><span class="d-block">book your</span> tickets for 
+                    <span class="color-theme cd-words-wrapper p-0 m-0">
+                        <b class="is-visible">Movie</b>
+                    </span>
+                </h1>
+                <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p>
             </div>
-            <div class="movie-slider-container">
-                <!-- Nút Prev -->
-                <span class="carousel-btn prev-btn">&lt;&lt;</span>
+        </div>
+    </section>
 
-                <!-- Slider -->
-                <div class="movie-slider owl-carousel owl-theme">
-                    <c:forEach var="movie" items="${movies}">
+
+    <section class="movie-section padding-top padding-bottom">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="title">Movies Showing</h2>
+            </div>
+ 			<a class="view-all" href="${pageContext.request.contextPath}/userHome">View All</a>
+            <div class="owl-carousel-wrapper">
+                <!-- Movie list -->
+                <ul id="movies-showing-carousel" class="owl-carousel owl-theme">
+                     <c:forEach var="movie" items="${moviesShowing}">
                         <div class="movie-grid">
                             <div class="movie-thumb c-thumb">
                                 <a href="#0">
@@ -144,41 +179,118 @@
                             </div>
                         </div>
                     </c:forEach>
-                </div>
+                </ul>
 
-                <!-- Nút Next -->
-                <span class="carousel-btn next-btn">&gt;&gt;</span>
+                <!-- Owl navigation -->
+                <div class="owl-controls clickable">
+                    <div class="owl-buttons">
+                  <div class="owl-prev movies-showing-prev"><i class="fa fa-caret-left"></i></div>
+        		<div class="owl-next movies-showing-next"><i class="fa fa-caret-right"></i></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Add jQuery and Owl Carousel JS -->
+
+<section class="movie-section padding-top padding-bottom">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="title">Movies Coming Soon</h2>
+            </div>
+            <div class="owl-carousel-wrapper">
+                <!-- Movie list -->
+                <ul id="movies-coming-carousel" class="owl-carousel owl-theme">
+                     <c:forEach var="movie" items="${moviesComingSoon}">
+                        <div class="movie-grid">
+                            <div class="movie-thumb c-thumb">
+                                <a href="#0">
+                                    <c:if test="${movie.image != null}">
+                                        <c:choose>
+                                            <c:when test="${movie.image.substring(0, 5) == 'https'}">
+                                                <img src="${movie.image}" class="card-img-top" alt="${movie.movieName}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
+                                                <img src="${movieImgUrl}" class="card-img-top" alt="${movie.movieName}">
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </a>
+                            </div>
+                            <div class="movie-content bg-one">
+                                <h5 class="title m-0">
+                                    <a href="#0">${movie.movieName}</a>
+                                </h5>
+                                <ul class="movie-rating-percent">
+                                    <li>
+                                        <div class="thumb">
+                                            <img src="assets/images/movie/tomato.png" alt="rating">
+                                        </div>
+                                        <span class="content">Category: ${movie.category}</span>
+                                    </li>
+                                    <li>
+                                        <div class="thumb">
+                                            <img src="assets/images/movie/cake.png" alt="duration">
+                                        </div>
+                                        <span class="content">Duration: ${movie.movieDuration}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </ul>
+
+                <!-- Owl navigation -->
+                <div class="owl-controls clickable">
+                    <div class="owl-buttons">
+                    <div class="owl-prev movies-coming-prev"><i class="fa fa-caret-left"></i></div>
+        			<div class="owl-next movies-coming-next"><i class="fa fa-caret-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Owl Carousel JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.movie-slider').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: false, // Không dùng nav mặc định
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 2 },
-                    1000: { items: 3 },
-                    1600: { items: 4 }
-                }
-            });
-
-            // Xử lý nút Prev/Next
-            $('.prev-btn').click(function () {
-                $('.movie-slider').trigger('prev.owl.carousel');
-            });
-
-            $('.next-btn').click(function () {
-                $('.movie-slider').trigger('next.owl.carousel');
-            });
+    $(document).ready(function() {
+        // Movies Showing Carousel
+        $('#movies-showing-carousel').owlCarousel({
+            items: 4,
+            loop: true,
+            margin: 20,
+            nav: false,
+            dots: false
         });
+
+        $('.movies-showing-prev').click(function() {
+            $('#movies-showing-carousel').trigger('prev.owl.carousel');
+        });
+
+        $('.movies-showing-next').click(function() {
+            $('#movies-showing-carousel').trigger('next.owl.carousel');
+        });
+
+        // Movies Coming Soon Carousel
+        $('#movies-coming-carousel').owlCarousel({
+            items: 4,
+            loop: true,
+            margin: 20,
+            nav: false,
+            dots: false
+        });
+
+        $('.movies-coming-prev').click(function() {
+            $('#movies-coming-carousel').trigger('prev.owl.carousel');
+        });
+
+        $('.movies-coming-next').click(function() {
+            $('#movies-coming-carousel').trigger('next.owl.carousel');
+        });
+    });
     </script>
 </body>
 </html>
-
