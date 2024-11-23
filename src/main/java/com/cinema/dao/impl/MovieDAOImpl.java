@@ -80,7 +80,7 @@ public class MovieDAOImpl implements IMovieDAO {
 	public List<Movie> getMoviesShowing() {
 		EntityManager em = JPAConfig.getEntityManager(); // Kết nối EntityManager từ cấu hình JPA
 	    try {
-	        String jpql = "SELECT m FROM Movie m WHERE m.dateOfMovie BETWEEN CURRENT_DATE AND CURRENT_DATE + 1 MONTH";
+	        String jpql = "SELECT m FROM Movie m WHERE m.releaseDay BETWEEN CURRENT_DATE AND CURRENT_DATE + 1 MONTH";
 	        TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
 	        List<Movie> movies = query.getResultList();
 	        System.out.println("Currently Showing Movies Size: " + movies.size()); // Log kích thước danh sách
@@ -96,7 +96,7 @@ public class MovieDAOImpl implements IMovieDAO {
 	public List<Movie> getMoviesComingSoon() {
 		EntityManager em = JPAConfig.getEntityManager(); // Kết nối EntityManager từ cấu hình JPA
 	    try {
-	        String jpql = "SELECT m FROM Movie m WHERE m.dateOfMovie > CURRENT_DATE + 1 MONTH";
+	        String jpql = "SELECT m FROM Movie m WHERE m.releaseDay > CURRENT_DATE + 1 MONTH";
 	        TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
 	        List<Movie> movies = query.getResultList();
 	        System.out.println("Coming Soon Movies Size: " + movies.size()); // Log kích thước danh sách

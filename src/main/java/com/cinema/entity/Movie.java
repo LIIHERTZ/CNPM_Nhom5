@@ -37,8 +37,16 @@ public class Movie {
     private List<Review> reviews;
     
     @Column(nullable = false)
-    private Date dateOfMovie;
+    private Date releaseDay;
     
+	public Date getReleaseDay() {
+		return releaseDay;
+	}
+
+	public void setReleaseDay(Date releaseDay) {
+		this.releaseDay = releaseDay;
+	}
+
 	public int getMovieID() {
 		return movieID;
 	}
