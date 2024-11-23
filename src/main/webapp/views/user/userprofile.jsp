@@ -15,13 +15,19 @@
                     <div class="sidebar">
                         <h2 style="visibility: hidden;">dhsau</h2>
                         <h2>Account</h2>
-                        <ul class="nav flex-column">
-                            <li><a href="#" onclick="showContent('account-details'); return false;">Account Details</a></li>
-                            <li><a href="#" onclick="showContent('vouchers'); return false;">Vouchers</a></li>
-                            <li><a href="#" onclick="showContent('coupons'); return false;">Coupons</a></li>
-                            <li><a href="#" onclick="showContent('transaction-history'); return false;">Transaction History</a></li>
-                        </ul>
-                    </div>
+						<ul class="nav flex-column">
+							<li><a href="#"
+								onclick="showContent('account-details'); return false;">Account
+									Details</a></li>
+							<li><a href="#"
+								onclick="showContent('vouchers'); return false;">Vouchers</a></li>
+							<li><a href="#"
+								onclick="showContent('coupons'); return false;">Coupons</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/userTransaction?personId=${person.perID}">
+									Transaction History </a></li>
+						</ul>
+					</div>
                 </div>
 
                 <!-- Main Content Area -->
@@ -93,46 +99,11 @@
 
                     <!-- Transaction History Content -->
                     <div id="transaction-history" class="content-section">
-                        <h3>Transaction History</h3>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Ticket ID</th>
-                                    <th>Movie Name</th>
-                                    <th>Cinema</th>
-                                    <th>Seat(s)</th>
-                                    <th>Date & Time</th>
-                                    <th>Total Price</th>
-                                </tr>
-                            </thead>
-                            <tbody id="transaction-history-body">
-                                <tr>
-                                    <td>#12345</td>
-                                    <td>Avengers: Endgame</td>
-                                    <td>CGV Landmark</td>
-                                    <td>A1, A2</td>
-                                    <td>2024-11-08 19:00</td>
-                                    <td>$20.00</td>
-                                </tr>
-                                <tr>
-                                    <td>#12346</td>
-                                    <td>Spider-Man: No Way Home</td>
-                                    <td>CGV Royal City</td>
-                                    <td>B3, B4</td>
-                                    <td>2024-10-25 21:00</td>
-                                    <td>$25.00</td>
-                                </tr>
-                                <tr>
-                                    <td>#12347</td>
-                                    <td>Frozen II</td>
-                                    <td>CGV Times City</td>
-                                    <td>C5, C6</td>
-                                    <td>2024-09-15 16:30</td>
-                                    <td>$18.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p id="no-transaction-message" class="text-muted" style="display: none;">No transaction history found.</p>
+                        <c:if test="${param.action == 'transaction'}">
+                            <li><a
+								href="${pageContext.request.contextPath}/userTransaction">Booking History</a>
+							</li>
+                        </c:if>
                     </div>
 
                 </div>

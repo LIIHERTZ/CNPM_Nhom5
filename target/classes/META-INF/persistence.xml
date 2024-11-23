@@ -23,6 +23,7 @@
 		<class>com.cinema.entity.Conversation</class>
 		<class>com.cinema.entity.Message</class>
 		<class>com.cinema.entity.NewsOrDiscount</class>
+		<class>com.cinema.entity.TicketHistory</class>
 
 		<properties>
 
@@ -37,7 +38,7 @@
 
 			<property name="jakarta.persistence.jdbc.user" value="sa" />
 
-
+			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
 			<property name="jakarta.persistence.jdbc.password"
 				value="hoangtien" />
 

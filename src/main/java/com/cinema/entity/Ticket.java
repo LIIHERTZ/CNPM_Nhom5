@@ -39,7 +39,74 @@ public class Ticket {
     private MovieScreenings movieScreenings;
 
     @OneToMany(mappedBy = "ticket")
-    private List<DetailTicket> detailTickets;
+    private List<TicketPayment> ticketPayments;
 
+	public int getTicketID() {
+		return ticketID;
+	}
+
+	public void setTicketID(int ticketID) {
+		this.ticketID = ticketID;
+	}
+
+	public double getPriceTicket() {
+		return priceTicket;
+	}
+
+	public void setPriceTicket(double priceTicket) {
+		this.priceTicket = priceTicket;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getPlaceName() {
+		return placeName;
+	}
+
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
+
+	public String getVersionName() {
+		return versionName;
+	}
+
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
+	}
+
+	public String getChairNumber() {
+		return chairNumber;
+	}
+
+	public void setChairNumber(String chairNumber) {
+		this.chairNumber = chairNumber;
+	}
+
+	public MovieScreenings getMovieScreenings() {
+		return movieScreenings;
+	}
+
+	public void setMovieScreenings(MovieScreenings movieScreenings) {
+		this.movieScreenings = movieScreenings;
+	}
+
+	public List<TicketPayment> getTicketPayments() {
+		return ticketPayments;
+	}
+
+	public void setTicketPayments(List<TicketPayment> ticketPayments) {
+		this.ticketPayments = ticketPayments;
+	}
+
+	
+    
+    
     // Getters and setters
 }

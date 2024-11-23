@@ -40,5 +40,61 @@ public class Room {
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<MovieScreenings> movieScreenings;
 
+	public int getRoomID() {
+		return roomID;
+	}
+
+	public void setRoomID(int roomID) {
+		this.roomID = roomID;
+	}
+
+	public String getRoomName() {
+		return roomName;
+	}
+
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+
+	public String getScreenType() {
+		return screenType;
+	}
+
+	public void setScreenType(String screenType) {
+		this.screenType = screenType;
+	}
+
+	public Integer getChairNumber() {
+		return chairNumber;
+	}
+
+	public void setChairNumber(Integer chairNumber) {
+		this.chairNumber = chairNumber;
+	}
+
+	public List<Chair> getChair() {
+		return chair;
+	}
+
+	public void setChair(List<Chair> chair) {
+		this.chair = chair;
+	}
+
+	public Cinema getCinema() {
+		return cinema;
+	}
+
+	public void setCinema(Cinema cinema) {
+		this.cinema = cinema;
+	}
+
+	public List<MovieScreenings> getMovieScreenings() {
+		return movieScreenings;
+	}
+
+	public void setMovieScreenings(List<MovieScreenings> movieScreenings) {
+		this.movieScreenings = movieScreenings;
+	}
+
     // Getters and setters
 }

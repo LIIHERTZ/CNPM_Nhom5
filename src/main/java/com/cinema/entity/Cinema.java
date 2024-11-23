@@ -21,9 +21,51 @@ public class Cinema {
     private String cinemaName;
 
     private String address;
+    
+    private String location;
+    public String getLocation() {
+		return location;
+	}
 
-    @OneToMany(mappedBy = "cinema")
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	@OneToMany(mappedBy = "cinema")
     private List<Room> rooms;
 
+	public int getCinemaID() {
+		return cinemaID;
+	}
+
+	public void setCinemaID(int cinemaID) {
+		this.cinemaID = cinemaID;
+	}
+
+	public String getCinemaName() {
+		return cinemaName;
+	}
+
+	public void setCinemaName(String cinemaName) {
+		this.cinemaName = cinemaName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public List<Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
+	}
+
+    
     // Getters and setters
 }

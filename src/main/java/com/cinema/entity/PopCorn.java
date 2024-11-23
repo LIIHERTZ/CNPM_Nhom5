@@ -31,7 +31,71 @@ public class PopCorn {
     private String status;
 
     @OneToMany(mappedBy = "popcorn")
-    private List<DetailPopCorn> detailPopCorns;
+    private List<PopCornPayment> popcornPayments;
+    
+    
 
+	public PopCorn() {
+	}
+
+	public PopCorn(int popcornID, String namePopCorn, String typePopCorn, double price, String status,
+			List<PopCornPayment> popcornPayments) {
+		this.popcornID = popcornID;
+		this.namePopCorn = namePopCorn;
+		this.typePopCorn = typePopCorn;
+		this.price = price;
+		this.status = status;
+		this.popcornPayments = popcornPayments;
+	}
+
+	public int getPopcornID() {
+		return popcornID;
+	}
+
+	public void setPopcornID(int popcornID) {
+		this.popcornID = popcornID;
+	}
+
+	public String getNamePopCorn() {
+		return namePopCorn;
+	}
+
+	public void setNamePopCorn(String namePopCorn) {
+		this.namePopCorn = namePopCorn;
+	}
+
+	public String getTypePopCorn() {
+		return typePopCorn;
+	}
+
+	public void setTypePopCorn(String typePopCorn) {
+		this.typePopCorn = typePopCorn;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public List<PopCornPayment> getPopcornPayments() {
+		return popcornPayments;
+	}
+
+	public void setPopcornPayments(List<PopCornPayment> popcornPayments) {
+		this.popcornPayments = popcornPayments;
+	}
+
+    
     // Getters and setters
 }

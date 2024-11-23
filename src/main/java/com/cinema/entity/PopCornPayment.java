@@ -10,8 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 @Entity
-@Table(name = "DetailPopCorn")
-public class DetailPopCorn {
+@Table(name = "PopCornPayment")
+public class PopCornPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int detailPopCornID;
@@ -27,5 +27,39 @@ public class DetailPopCorn {
     @Column(nullable = false)
     private int quantity;
 
+	public int getDetailPopCornID() {
+		return detailPopCornID;
+	}
+
+	public void setDetailPopCornID(int detailPopCornID) {
+		this.detailPopCornID = detailPopCornID;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public PopCorn getPopcorn() {
+		return popcorn;
+	}
+
+	public void setPopcorn(PopCorn popcorn) {
+		this.popcorn = popcorn;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+    
+    
     // Getters and setters
 }
