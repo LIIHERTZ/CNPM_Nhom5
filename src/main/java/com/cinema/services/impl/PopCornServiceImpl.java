@@ -1,13 +1,14 @@
 package com.cinema.services.impl;
 
+import com.cinema.services.IPopCornService;
 import java.util.List;
 
 import com.cinema.dao.IPopCornDAO;
 import com.cinema.dao.impl.PopCornDAOImpl;
 import com.cinema.entity.PopCorn;
-import com.cinema.services.IPopCornService;
 
-public class PopCornServiceImpl  implements IPopCornService{
+public class PopCornServiceImpl implements IPopCornService{
+
 	IPopCornDAO popDao = new PopCornDAOImpl();
 
 	@Override
@@ -38,4 +39,13 @@ public class PopCornServiceImpl  implements IPopCornService{
 	public boolean deletePopCorn(PopCorn popcorn) {
 		return popDao.deletePopCorn(popcorn);
 	}
+	@Override
+	public List<PopCorn> getAllPopcorns() {
+		return popDao.findAll();
+	}
+	@Override
+	public List<PopCorn> getPopcornsByType(String type) {
+		 return popDao.findByType(type);
+	}
+
 }

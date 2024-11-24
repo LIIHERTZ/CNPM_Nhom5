@@ -36,8 +36,6 @@ public class Movie {
     @Column(nullable = false)
     private Date releaseDay;
 
-    @Column(nullable = false)
-    private float rating;
 
     @Column(nullable = false)
     private boolean status;
@@ -48,7 +46,6 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
 
-<<<<<<< HEAD
 
     // Getters and setters
 
@@ -124,13 +121,6 @@ public class Movie {
         this.releaseDay = releaseDay;
     }
 
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
 
     public boolean isStatus() {
         return status;
@@ -139,72 +129,5 @@ public class Movie {
     public void setStatus(boolean status) {
         this.status = status;
     }
-=======
-	public int getMovieID() {
-		return movieID;
-	}
 
-	public void setMovieID(int movieID) {
-		this.movieID = movieID;
-	}
-
-	public String getMovieName() {
-		return movieName;
-	}
-
-	public void setMovieName(String movieName) {
-		this.movieName = movieName;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String getMovieDuration() {
-		return movieDuration;
-	}
-
-	public void setMovieDuration(String movieDuration) {
-		this.movieDuration = movieDuration;
-	}
-
-	public List<MovieScreenings> getMovieScreenings() {
-		return movieScreenings;
-	}
-
-	public void setMovieScreenings(List<MovieScreenings> movieScreenings) {
-		this.movieScreenings = movieScreenings;
-	}
-
-	public List<Review> getReviews() {
-		return reviews;
-	}
-
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
-
-    // Getters and setters
-    
->>>>>>> HongPhuc
 }

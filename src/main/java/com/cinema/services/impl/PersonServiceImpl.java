@@ -80,7 +80,6 @@ public class PersonServiceImpl implements IPersonService {
 		return false;
 	}
 
-<<<<<<< HEAD
 	@Override
 	public void checkValidInfoPerson(String fullName, String email, String passSignUp, String passCheck,
 			String phone, String gender, String region, String dob) {
@@ -126,8 +125,7 @@ public class PersonServiceImpl implements IPersonService {
 		
 	}
 
-=======
->>>>>>> HongPhuc
+
 
 	
 	

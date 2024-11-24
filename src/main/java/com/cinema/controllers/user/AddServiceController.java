@@ -15,10 +15,10 @@ import com.cinema.entity.Movie;
 import com.cinema.entity.PopCorn;
 import com.cinema.entity.SeatStatus;
 import com.cinema.services.IMovieService;
-import com.cinema.services.IPopcornService;
+import com.cinema.services.IPopCornService;
 import com.cinema.services.ISeatService;
 import com.cinema.services.impl.MoviceServiceImpl;
-import com.cinema.services.impl.PopcornServiceImpl;
+import com.cinema.services.impl.PopCornServiceImpl;
 import com.cinema.services.impl.SeatServiceImpl;
 
 import jakarta.servlet.RequestDispatcher;
@@ -39,7 +39,7 @@ public class AddServiceController extends HttpServlet {
 
 	private IMovieService movieService = new MoviceServiceImpl();
 	private ISeatService seatService = new SeatServiceImpl();
-	private IPopcornService popcornService = new PopcornServiceImpl();
+	private IPopCornService popcornService = new PopCornServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

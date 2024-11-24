@@ -12,8 +12,7 @@ public class MoviceServiceImpl implements IMovieService{
 	IMovieDAO movieDao = new MovieDAOImpl();
 	@Override
 	public List<Movie> getAllMovie() {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.getAllMovie();
 	}
 
 	@Override
@@ -23,20 +22,59 @@ public class MoviceServiceImpl implements IMovieService{
 
 	@Override
 	public boolean insertMovie(Movie Movie) {
-		// TODO Auto-generated method stub
-		return false;
+		return movieDao.insertMovie(Movie);
 	}
 
 	@Override
 	public boolean updateMovie(Movie Movie) {
-		// TODO Auto-generated method stub
-		return false;
+		return movieDao.updateMovie(Movie);
 	}
 
 	@Override
-	public boolean deleteMovie(Movie Person) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteMovie(int movieID) {
+		return movieDao.deleteMovie(movieID);
+	}
+	@Override
+    public Movie getMovieById(int movieID) {
+        return movieDao.getMovieById(movieID);
+    }
+	public List<Movie> getMovies(int offset, int noOfRecords) {
+		return movieDao.getMovies( offset, noOfRecords);
+	}
+
+	@Override
+	public int getNoOfRecords() {
+		return movieDao.getNoOfRecords();
+	}
+
+	@Override
+	public List<Movie> searchMovies(String keyword, int i, int recordsPerPage) {
+		return movieDao.searchMovies(keyword,i,recordsPerPage);
+	}
+
+	@Override
+	public int getNoOfSearchResults(String keyword) {
+		return movieDao.getNoOfSearchResults(keyword);
+	}
+	
+    @Override
+    public List<Movie> searchMovies(String keyword, String category, int offset, int limit) {
+        return movieDao.searchMovies(keyword, category, offset, limit);
+    }
+
+    @Override
+    public int getNoOfSearchResults(String keyword, String category) {
+        return movieDao.getNoOfSearchResults(keyword, category);
+    }
+
+	@Override
+	public List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit) {
+		return movieDao.searchMovies(keyword, categories, offset, limit);
+	}
+
+	@Override
+	public int getNoOfSearchResults(String keyword, String[] categories) {
+		return movieDao.getNoOfSearchResults(keyword, categories);
 	}
 	
 }

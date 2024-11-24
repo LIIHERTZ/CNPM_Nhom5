@@ -119,7 +119,7 @@ int countdownMinutes = 5;
 									<div class="grid-inner">
 										<div class="grid-thumb">
 											<img
-												<%-- 											//dung xoa cai nay
+												<%-- //dung xoa cai nay
 												src="assets/images/movie/popcorn/pop${popcorn.popcornID}.png"
 												alt="${popcorn.namePopCorn}"> --%>
 																

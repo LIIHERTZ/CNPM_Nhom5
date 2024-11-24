@@ -40,9 +40,6 @@ public class MovieScreenings {
     
     @Column(name = "status", nullable = false, columnDefinition = "BIT")
     private boolean status; // New field for cinema status using bit, named "status"
-
-    @Column(name = "status", nullable = false,  columnDefinition = "BIT DEFAULT 1")
-    private boolean status; // New field for cinema status using bit, named "status"
     
     @ManyToOne
     @JoinColumn(name = "roomID", nullable = false)
@@ -107,14 +104,6 @@ public class MovieScreenings {
 
 	public List<Ticket> getTickets() {
 		return tickets;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
 	}
 
 	public void setTickets(List<Ticket> tickets) {

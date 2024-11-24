@@ -1,10 +1,6 @@
 package com.cinema.dao;
-
 import java.util.List;
-
-import com.cinema.entity.Person;
 import com.cinema.entity.PopCorn;
-
 public interface IPopCornDAO {
 	long countTotalPopCorns( String searchValue);
 
@@ -13,5 +9,7 @@ public interface IPopCornDAO {
 	PopCorn getOnePopCorn(int id); 
 	boolean insertPopCorn(PopCorn popcorn); 
 	boolean updatePopCorn(PopCorn popcorn); 
-	boolean deletePopCorn(PopCorn popcorn); 
+	boolean deletePopCorn(PopCorn popcorn);
+	List<PopCorn> findAll();
+	public List<PopCorn> findByType(String type);
 }

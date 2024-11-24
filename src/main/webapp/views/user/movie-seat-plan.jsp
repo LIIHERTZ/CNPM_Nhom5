@@ -58,29 +58,13 @@ int countdownMinutes = 5;
 	<section class="page-title bg-one">
 		<div class="container">
 			<div class="page-title-area">
-<<<<<<< HEAD
-=======
 				<!-- Nút quay lại -->
->>>>>>> HongPhuc
 				<div class="item md-order-1">
 					<a href="/ValCT_Nhom5/bookTickets"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
 				</div>
-<<<<<<< HEAD
-				<div class="item date-item">
-					<span class="date">MON, SEP 09 2020</span> <select
-						class="select-bar">
-						<option value="sc1">09:40</option>
-						<option value="sc2">13:45</option>
-						<option value="sc3">15:45</option>
-						<option value="sc4">19:50</option>
-					</select>
-				</div>
-				<div class="item">
-					<h5 class="title">05:00</h5>
-=======
 
 				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
@@ -94,295 +78,11 @@ int countdownMinutes = 5;
 				<!-- Đếm ngược thời gian -->
 				<div class="item">
 					<h5 class="title" id="countdown-timer">05:00</h5>
->>>>>>> HongPhuc
 					<p>Mins Left</p>
 				</div>
 			</div>
 		</div>
 	</section>
-<<<<<<< HEAD
-	<!-- ==========Page-Title========== -->
-
-	<!-- ==========Movie-Section========== -->
-	<div class="seat-plan-section padding-bottom padding-top">
-		<div class="container">
-			<div class="screen-area">
-				<h4 class="screen">screen</h4>
-				<div class="screen-thumb">
-					<img src="assets/images/movie/screen-thumb.png" alt="movie">
-				</div>
-				<h5 class="subtitle">silver plus</h5>
-				<div class="screen-wrapper">
-					<ul class="seat-area">
-						<li class="seat-line"><span>G</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-									</ul>
-								</li>
-							</ul> <span>G</span></li>
-						<li class="seat-line"><span>f</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat seat-free"><img
-											src="assets/images/movie/seat01-booked.png" alt="seat">
-											<span class="sit-num">f7</span></li>
-										<li class="single-seat seat-free"><img
-											src="assets/images/movie/seat01-booked.png" alt="seat">
-											<span class="sit-num">f8</span></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat seat-free"><img
-											src="assets/images/movie/seat01-booked.png" alt="seat">
-											<span class="sit-num">f9</span></li>
-										<li class="single-seat seat-free"><img
-											src="assets/images/movie/seat01-booked.png" alt="seat">
-											<span class="sit-num">f10</span></li>
-										<li class="single-seat seat-free"><img
-											src="assets/images/movie/seat01-booked.png" alt="seat">
-											<span class="sit-num">f11</span></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat01.png" alt="seat"></li>
-									</ul>
-								</li>
-							</ul> <span>f</span></li>
-					</ul>
-				</div>
-				<h5 class="subtitle">silver plus</h5>
-				<div class="screen-wrapper">
-					<ul class="seat-area couple">
-						<li class="seat-line"><span>e</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-							</ul> <span>e</span></li>
-						<li class="seat-line"><span>d</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-booked.png" alt="seat">
-											<span class="sit-num">D7 D8</span></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-							</ul> <span>d</span></li>
-						<li class="seat-line"><span>c</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">f11 f12</span></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-							</ul> <span>c</span></li>
-						<li class="seat-line"><span>b</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">b7 b8</span></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-										<li class="single-seat"><img
-											src="assets/images/movie/seat02.png" alt="seat"></li>
-									</ul>
-								</li>
-							</ul> <span>b</span></li>
-						<li class="seat-line"><span>a</span>
-							<ul class="seat--area">
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a1 a2</span></li>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a3 a4</span></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a5 a6</span></li>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a7 a8</span></li>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a9 a10</span></li>
-									</ul>
-								</li>
-								<li class="front-seat">
-									<ul>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a11</span></li>
-										<li class="single-seat seat-free-two"><img
-											src="assets/images/movie/seat02-free.png" alt="seat"> <span
-											class="sit-num">a12</span></li>
-									</ul>
-								</li>
-							</ul> <span>a</span></li>
-					</ul>
-				</div>
-			</div>
-			<div class="proceed-book bg_img"
-				data-background="assets/images/movie/movie-bg-proceed.jpg">
-				<div class="proceed-to-book">
-					<div class="book-item">
-						<span>You have Choosed Seat</span>
-						<h3 class="title">d9, d10</h3>
-					</div>
-					<div class="book-item">
-						<span>total price</span>
-						<h3 class="title">$150</h3>
-					</div>
-					<div class="book-item">
-						<a href="/ValCT_Nhom5/movieCheckout" class="custom-button">proceed</a>
-					</div>
-=======
 
 	<!-- ==========Page-Title========== -->
 
@@ -484,14 +184,10 @@ int countdownMinutes = 5;
 
 
 					</form>
->>>>>>> HongPhuc
 				</div>
 			</div>
 		</div>
 	</div>
-<<<<<<< HEAD
-	<!-- ==========Movie-Section========== -->
-=======
 
 
 
@@ -600,6 +296,5 @@ int countdownMinutes = 5;
 
 
 	</script>
->>>>>>> HongPhuc
 </body>
 </html>
