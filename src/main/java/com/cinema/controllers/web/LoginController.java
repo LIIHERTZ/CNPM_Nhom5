@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = { "/signin", "/waiting", "/logout" })
+@WebServlet(urlPatterns = { "/signin", "/waiting" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,8 +28,6 @@ public class LoginController extends HttpServlet {
 			showPageLogin(req, resp);
 		else if (url.contains("waiting"))
 			waiting(req, resp);
-		else if (url.contains("logout"))
-			logout(req, resp);
 	}
 
 	@Override
@@ -41,17 +39,25 @@ public class LoginController extends HttpServlet {
 
 	private void showPageLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
-		if (session != null && session.getAttribute("user") != null) {
+		if (session != null && session.getAttribute("person") != null) {
 			resp.sendRedirect(req.getContextPath() + "/waiting");
 			return;
 		}
-		/*
-		 * Cookie[] cookies = req.getCookies(); if (cookies != null) { for (Cookie
-		 * cookie : cookies) { if (cookie.getName().equals("userID")) { UserModel user =
-		 * cusService.getOneCustomer(Integer.parseInt(cookie.getValue())); session =
-		 * req.getSession(true); session.setAttribute("user",user);
-		 * resp.sendRedirect(req.getContextPath() + "/waiting"); return; } } }
-		 */
+
+		Cookie[] cookies = req.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("personID")) {
+					Person person = accService.getOnePerson(Integer.parseInt(cookie.getValue()));
+					String tmp = cookie.getValue();
+					session = req.getSession(true);
+					session.setAttribute("person", person);
+					resp.sendRedirect(req.getContextPath() + "/waiting");
+					return;
+				}
+			}
+		}
+
 		RequestDispatcher rd = req.getRequestDispatcher("/views/web/signin.jsp");
 		rd.forward(req, resp);
 	}
@@ -89,7 +95,7 @@ public class LoginController extends HttpServlet {
 
 			if (person.getRole().toLowerCase().contains("admin"))
 				url = "/adminHome";
-			else 
+			else
 				url = "/userHome";
 
 			resp.sendRedirect(req.getContextPath() + url);
@@ -101,24 +107,8 @@ public class LoginController extends HttpServlet {
 		resp.sendRedirect(req.getContextPath() + "/sginin");
 	}
 
-	private void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		session.removeAttribute("user");
-		Cookie[] cookies = req.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("userID")) {
-					cookie.setMaxAge(0);
-					resp.addCookie(cookie);
-					break;
-				}
-			}
-		}
-		resp.sendRedirect(req.getContextPath() + "/login");
-	}
-
-	private void saveRemeberMe(HttpServletResponse resp, int userID) {
-		Cookie cookie = new Cookie("userID", String.valueOf(userID));
+	private void saveRemeberMe(HttpServletResponse resp, int personID) {
+		Cookie cookie = new Cookie("personID", String.valueOf(personID));
 		cookie.setMaxAge(30 * 62);
 		resp.addCookie(cookie);
 

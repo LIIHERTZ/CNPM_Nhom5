@@ -11,4 +11,8 @@ public interface IMovieDAO {
 	boolean insertMovie(Movie Movie); 
 	boolean updateMovie(Movie Movie); 
 	boolean deleteMovie(Movie Movie); 
+	List<Movie> searchMoviesByName(String movieName);
+	
+	List<Movie> getMoviesShowing(); // Lấy danh sách phim đang chiếu
+    List<Movie> getMoviesComingSoon();
 }

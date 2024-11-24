@@ -24,5 +24,29 @@ public class TicketPayment {
     @JoinColumn(name = "ticketID", nullable = false)
     private Ticket ticket;
 
+	public int getDetailTicketID() {
+		return detailTicketID;
+	}
+
+	public void setDetailTicketID(int detailTicketID) {
+		this.detailTicketID = detailTicketID;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
+
     // Getters and setters
 }

@@ -12,8 +12,7 @@ public class MoviceServiceImpl implements IMovieService{
 	IMovieDAO movieDao = new MovieDAOImpl();
 	@Override
 	public List<Movie> getAllMovie() {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.getAllMovie();
 	}
 
 	@Override
@@ -37,6 +36,21 @@ public class MoviceServiceImpl implements IMovieService{
 	public boolean deleteMovie(Movie Person) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Movie> searchMoviesByName(String movieName) {
+		return movieDao.searchMoviesByName(movieName);
+	}
+
+	@Override
+	public List<Movie> getMoviesShowing() {
+		 return movieDao.getMoviesShowing();
+	}
+
+	@Override
+	public List<Movie> getMoviesComingSoon() {
+		return movieDao.getMoviesComingSoon();
 	}
 	
 }

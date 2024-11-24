@@ -1,5 +1,6 @@
 package com.cinema.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -34,6 +35,21 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
+    
+    @Column(nullable = false)
+    private Date releaseDay;
+    
+    @Column(nullable = false)
+    private Boolean status; // 0 là unactive và 1 là active
+    
+	
+	public Date getReleaseDay() {
+		return releaseDay;
+	}
+
+	public void setReleaseDay(Date releaseDay) {
+		this.releaseDay = releaseDay;
+	}
 
 	public int getMovieID() {
 		return movieID;
@@ -100,5 +116,4 @@ public class Movie {
 	}
 
     // Getters and setters
-    
 }

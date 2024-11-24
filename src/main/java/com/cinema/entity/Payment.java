@@ -33,10 +33,11 @@ public class Payment {
     private int status;
 
     @OneToMany(mappedBy = "payment")
-    private List<TicketPayment> detailTickets;
+    private List<TicketPayment> ticketPayments;
 
     @OneToMany(mappedBy = "payment")
-    private List<PopCornPayment> detailPopCorns;
+    private List<PopCornPayment> popcornPayments;
 
+	
     // Getters and setters
 }

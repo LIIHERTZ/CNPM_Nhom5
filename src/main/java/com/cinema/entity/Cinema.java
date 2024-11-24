@@ -23,8 +23,15 @@ public class Cinema {
     private String address;
     
     private String location;
+    public String getLocation() {
+		return location;
+	}
 
-    @OneToMany(mappedBy = "cinema")
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	@OneToMany(mappedBy = "cinema")
     private List<Room> rooms;
 
 	public int getCinemaID() {
@@ -51,14 +58,6 @@ public class Cinema {
 		this.address = address;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
 	public List<Room> getRooms() {
 		return rooms;
 	}
@@ -67,6 +66,6 @@ public class Cinema {
 		this.rooms = rooms;
 	}
 
-    // Getters and setters
     
+    // Getters and setters
 }

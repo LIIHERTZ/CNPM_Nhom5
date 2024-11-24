@@ -12,9 +12,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- CSS -->
-<link rel="stylesheet" href="assets2/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets2/css/slimselect.css">
-<link rel="stylesheet" href="assets2/css/admin.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets2/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets2/css/slimselect.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets2/css/admin.css">
 
 <!-- Icon font -->
 <link rel="stylesheet" href="assets2/webfont/tabler-icons.min.css">
@@ -28,10 +28,11 @@
 	content="Online Movies, TV Shows & Cinema HTML Template">
 <meta name="keywords" content="">
 <meta name="author" content="Dmitry Volkov">
-<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
+<title>ValCT – Online Cinema </title>
 </head>
 
 <body>
+
 	<%@ include file="/common/admin/header.jsp"%>
 
 	<div class="main">
@@ -43,10 +44,10 @@
 	<%@ include file="/common/admin/footer.jsp"%>
 
 	<!-- JS -->
-	<script src="assets2/js/bootstrap.bundle.min.js"></script>
-	<script src="assets2/js/slimselect.min.js"></script>
-	<script src="assets2/js/smooth-scrollbar.js"></script>
-	<script src="assets2/js/admin.js"></script>
+	<script src="${pageContext.request.contextPath}/assets2/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets2/js/slimselect.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets2/js/smooth-scrollbar.js"></script>
+	<script src="${pageContext.request.contextPath}/assets2/js/admin.js"></script>
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:36 GMT -->

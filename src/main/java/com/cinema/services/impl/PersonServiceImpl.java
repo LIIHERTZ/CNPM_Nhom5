@@ -1,11 +1,17 @@
 package com.cinema.services.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.cinema.dao.IPersonDAO;
 import com.cinema.dao.impl.PersonDAOImpl;
 import com.cinema.entity.Person;
 import com.cinema.services.IPersonService;
+
+import com.cinema.other.City;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 
 public class PersonServiceImpl implements IPersonService {
 
@@ -72,6 +78,51 @@ public class PersonServiceImpl implements IPersonService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void checkValidInfoPerson(String fullName, String email, String passSignUp, String passCheck,
+			String phone, String gender, String region, String dob) {
+		if (fullName == null || fullName.equals(""))
+			throw new IllegalArgumentException("Họ tên không hợp lệ");
+		if (passSignUp == null || passSignUp.equals(""))
+			throw new IllegalArgumentException("Mật khẩu không hợp lệ");
+		if (!gender.equals("1") && !gender.equals("0"))
+			throw new IllegalArgumentException("Giới tính không hợp lệ");
+		if (region == null || !City.getListCity().contains(region))
+			throw new IllegalArgumentException("Thành phố không hợp lệ");
+		if (phone == null || phone.length() != 10 || !phone.chars().allMatch(Character::isDigit))
+			throw new IllegalArgumentException("Số điện thoại không hợp lệ");
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			formatter.parse(dob);
+		} catch (ParseException e) {
+			throw new IllegalArgumentException("Ngày sinh không hợp lệ");
+		}
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			throw new IllegalArgumentException("Email không hợp lệ");
+		}
+		if (PersonDao.findByEmail(email).getPerID() != 0)
+			throw new IllegalArgumentException("Email đã tồn tại");
+		if (!passSignUp.equals(passCheck))
+			throw new IllegalArgumentException("Mật khẩu không trùng khớp");
+		
+	}
+
+	@Override
+	public void checkValidEmail(String email) {
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			throw new IllegalArgumentException("Email không hợp lệ");
+		}
+		if (PersonDao.findByEmail(email).getPerID() == 0)
+			throw new IllegalArgumentException("Email không tồn tại");
+		
 	}
 
 

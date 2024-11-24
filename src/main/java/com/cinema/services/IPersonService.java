@@ -16,4 +16,7 @@ public interface IPersonService {
 	Person login(String email,String password);
 	Person findByEmail(String email);
 	boolean checkPassword(int perID, String password);
+	void checkValidInfoPerson(String fullName, String email, String passSignUp, String passCheck,
+			String phone, String gender, String region, String dob);
+	void checkValidEmail(String email);
 }

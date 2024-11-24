@@ -14,4 +14,6 @@ public interface IPersonDAO {
 	Person findByEmailAndPass(String email,String password);
 	Person findByName(String username);
 	Person findByEmail(String email);
+	
+	
 }
