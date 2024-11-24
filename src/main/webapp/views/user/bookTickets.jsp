@@ -189,7 +189,7 @@
 									<c:forEach var="screening"
 										items="${cinemaScreeningsMap[cinema.cinemaID]}">
 										<div class="item" style="cursor: pointer;"
-											onclick="setScreeningData('${screening.startHour}', '${screening.msID}')">
+											onclick="setScreeningData('${screening.startHour}', '${screening.msID}', '${cinema.cinemaName}')">
 											<!-- Hiển thị giờ chiếu -->
 											<fmt:formatDate value="${screening.startHour}"
 												pattern="HH:mm" />
@@ -205,9 +205,21 @@
 	<!-- ==========Movie-Section========== -->
 	<script>
     // Hàm để cập nhật giá trị startHour và screeningId vào form
-    function setScreeningData(startHour, screeningId) {
+    function setScreeningData(startHour, screeningId, cinemaName) {
         document.getElementById('startHourInput').value = startHour; // Gán giá trị startHour
         document.getElementById('screeningIdInput').value = screeningId; // Gán giá trị screeningId
+        
+        
+     // Tạo hoặc cập nhật input ẩn cho cinemaName
+        let cinemaNameInput = document.getElementById('cinemaNameInput');
+        if (!cinemaNameInput) {
+            cinemaNameInput = document.createElement('input');
+            cinemaNameInput.type = 'hidden';
+            cinemaNameInput.id = 'cinemaNameInput';
+            cinemaNameInput.name = 'cinemaName';
+            document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]').appendChild(cinemaNameInput);
+        }
+        cinemaNameInput.value = cinemaName; // Gán giá trị cinemaName
     }
 
     // Hàm chuyển dữ liệu từ form tìm kiếm sang form cần submit

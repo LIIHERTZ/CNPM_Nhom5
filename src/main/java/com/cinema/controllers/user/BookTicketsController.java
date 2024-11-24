@@ -127,6 +127,7 @@ public class BookTicketsController extends HttpServlet {
 	    String selectedDate = req.getParameter("date");
 	    String experience = req.getParameter("experience");
 	    String version = req.getParameter("version");
+	    String cinemaName = req.getParameter("cinemaName");
 
 	    if (screeningId == null || screeningId.isEmpty()) {
 	        resp.sendRedirect("/ValCT_Nhom5/bookTickets");
@@ -143,6 +144,7 @@ public class BookTicketsController extends HttpServlet {
 	    session.setAttribute("selectedDate", selectedDate);
 	    session.setAttribute("experience", experience);
 	    session.setAttribute("version", version);
+	    session.setAttribute("cinemaName", cinemaName);
 
 	    // Chuyển hướng tới selectSeats
 	    resp.sendRedirect("selectSeats");

@@ -6,7 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%
-// Đặt thời gian đếm ngược (5 phút)
+// Äáº·t thá»i gian Äáº¿m ngÆ°á»£c (5 phÃºt)
 int countdownMinutes = 5;
 %>
 <!DOCTYPE html>
@@ -15,7 +15,10 @@ int countdownMinutes = 5;
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
+<link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/bootstrap.min.css">
+
 <body>
+
 
 	<!-- ==========Banner-Section========== -->
 	<section class="details-banner hero-area bg_img"
@@ -58,7 +61,7 @@ int countdownMinutes = 5;
 	<section class="page-title bg-one">
 		<div class="container">
 			<div class="page-title-area">
-				<!-- Nút quay lại -->
+				<!-- NÃºt quay láº¡i -->
 				<div class="item md-order-1">
 					<a href="/ValCT_Nhom5/selectSeats"
 						class="custom-button back-button"> <i
@@ -66,16 +69,16 @@ int countdownMinutes = 5;
 					</a>
 				</div>
 
-				<!-- Hiển thị ngày và giờ đã chọn -->
+				<!-- Hiá»n thá» ngÃ y vÃ  giá» ÄÃ£ chá»n -->
 				<div class="item date-item">
-					<!-- Hiển thị startHour theo định dạng HH:mm, dd/MM/yyyy -->
+					<!-- Hiá»n thá» startHour theo Äá»nh dáº¡ng HH:mm, dd/MM/yyyy -->
 					<c:if test="${not empty startHour}">
 						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
 					</c:if>
 				</div>
 
 
-				<!-- Đếm ngược thời gian -->
+				<!-- Äáº¿m ngÆ°á»£c thá»i gian -->
 				<div class="item">
 					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
@@ -121,10 +124,19 @@ int countdownMinutes = 5;
 						<h5 class="title">Promo Code</h5>
 						<form class="checkout-contact-form">
 							<div class="form-group">
-								<input type="text" placeholder="Please enter promo code">
+								<input type="text" placeholder="Please add promo code"
+									id="selectedCouponName" name="selectedCouponName" readonly
+									>
 							</div>
+							<!-- Input ẩn để lưu giá trị coupon -->
+							<input type="hidden" id="selectedCouponId"
+								name="selectedCouponId"> <input type="hidden"
+								id="selectedCouponValue" name="selectedCouponValue">
 							<div class="form-group">
-								<input type="submit" value="Verify" class="custom-button">
+								<!-- Nút để mở modal -->
+								<button type="button" data-bs-toggle="modal"
+									class="custom-button" data-bs-target="#modal-coupon"
+									style="width: 162px; height: 50px;">Add Coupon</button>
 							</div>
 						</form>
 					</div>
@@ -200,7 +212,8 @@ int countdownMinutes = 5;
 							</li>
 							<li>
 								<h6 class="subtitle mb-0">
-									<span>Tickets Price</span><span>${totalPrice} VND</span>
+									<span>Tickets Price</span><span id="ticketPrice">${totalPrice}
+										VND</span>
 								</h6>
 							</li>
 							<li>
@@ -212,19 +225,19 @@ int countdownMinutes = 5;
 						<ul class="side-shape">
 							<li>
 								<h6 class="subtitle">
-									<span>food & bevarage</span> <span> <!-- Hiển thị tổng tiền Food & Beverage -->
+									<span>food & bevarage</span> <span id="popcornValue"> <!-- Hiá»n thá» tá»ng tiá»n Food & Beverage -->
 										<c:choose>
 											<c:when test="${not empty foodAndBeverageTotal}">
                         ${foodAndBeverageTotal}
                     </c:when>
 											<c:otherwise>
-                    </c:otherwise>
+											</c:otherwise>
 										</c:choose>
 									</span>
-								</h6> <span class="info"> <!-- Hiển thị danh sách sản phẩm -->
+								</h6> <span class="info"> <!-- Hiá»n thá» danh sÃ¡ch sáº£n pháº©m -->
 									<c:if test="${not empty products}">
 										<c:forEach var="entry" items="${products}">
-											<span> ${entry.value[0]}  ${entry.key} 
+											<span> ${entry.value[0]} ${entry.key}
 												${entry.value[1]} VND </span>
 										</c:forEach>
 									</c:if>
@@ -232,7 +245,7 @@ int countdownMinutes = 5;
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>discount coupon</span><span>$0</span>
+									<span>discount coupon</span><span id="discountValue">$0</span>
 								</h6>
 							</li>
 						</ul>
@@ -242,7 +255,8 @@ int countdownMinutes = 5;
 					</div>
 					<div class="proceed-area  text-center">
 						<h6 class="subtitle">
-							<span>Amount Payable</span> <span> <c:choose>
+							<span>Amount Payable</span> <span id="amountPayableValue">
+								<c:choose>
 									<c:when test="${not empty amountPayable}">
                 ${amountPayable} VND
             </c:when>
@@ -261,8 +275,54 @@ int countdownMinutes = 5;
 	</div>
 	<!-- ==========Movie-Section========== -->
 
+	<!-- modal -->
+	<div class="modal fade" id="modal-coupon" tabindex="-1"
+		aria-labelledby="modal-user" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content"
+				style="border-radius: 20px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+				<div class="modal-header"
+					style="display: flex; justify-content: center;">
+					<h5 class="modal-title" style="color: black">Chon Coupon</h5>
+				</div>
+				<div class="modal-body">
+					<!-- Ô tìm kiếm -->
+					<input type="text" id="search-input"
+						placeholder="Tim kiem coupon..."
+						style="width: 100%; margin-bottom: 10px; padding: 5px; border: 1px solid #ccc; color: #007bff">
+
+					<!-- Danh sách coupon -->
+					<div
+						style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background-color: #f8f9fa;">
+						<ul class="list-group" id="coupon-list">
+							<!-- Danh sách các coupon -->
+							<c:forEach var="coupon" items="${coupons}">
+								<li class="list-group-item">
+									<button type="button" class="btn btn-link select-coupon"
+										data-coupon-id="${coupon.couponID}"
+										data-coupon-name="${coupon.couponName}"
+										data-coupon-value="${coupon.couponValue}">
+										${coupon.couponName} - ${coupon.couponValue}%</button>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer"
+					style="display: flex; justify-content: center;">
+					<button type="button" class="btn btn-secondary custom-button"
+						data-bs-dismiss="modal" style="width: 162px; height: 50px;">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- end modal -->
 	<script>
-		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
+		// Giáº£ sá»­ thá»i gian Äáº¿m ngÆ°á»£c lÃ  5 phÃºt (5 * 60 = 300 giÃ¢y)
 		var countdown = 300;
 		var countdownTimer = document.getElementById("countdown-timer");
 
@@ -275,10 +335,80 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "/ValCT_Nhom5/selectSeats";// Dừng đếm ngược khi hết thời gian
+				window.location.href = "/ValCT_Nhom5/selectSeats";// Dá»«ng Äáº¿m ngÆ°á»£c khi háº¿t thá»i gian
 			}
 		}, 1000);
 	</script>
 
+	<script>
+	//code thao
+	document.addEventListener("DOMContentLoaded", function () {
+    const couponButtons = document.querySelectorAll(".select-coupon");
+
+    couponButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            // Lấy thông tin coupon từ dataset
+            const couponId = this.getAttribute("data-coupon-id");
+            const couponName = this.getAttribute("data-coupon-name");
+            const couponValue = this.getAttribute("data-coupon-value");
+			console.log( this.getAttribute("data-coupon-value"));
+            // Gửi giá trị coupon đến input ẩn
+            document.getElementById("selectedCouponId").value = couponId;
+            document.getElementById("selectedCouponValue").value = couponValue;
+            document.getElementById("selectedCouponName").value = couponName;
+            //
+            // Lấy giá trị totalPrice hiện tại và loại bỏ khoảng trắng
+            const ticketPriceElement = document.getElementById("ticketPrice");
+            const ticketPriceText = ticketPriceElement.textContent.trim(); // Loại bỏ khoảng trắng thừa
+            const ticketPrice = parseFloat(ticketPriceText.replace(/[^0-9.-]+/g, "")) || 0; // Chỉ giữ lại số
+            
+            const popcornValueElement = document.getElementById("popcornValue");
+            const popcornValueText = popcornValueElement.textContent.trim(); // Loại bỏ khoảng trắng thừa
+            const popcornValue = parseFloat(popcornValueText.replace(/[^0-9.-]+/g, "")) || 0; // Chỉ giữ lại số
+            
+            
+            // Tính toán số tiền giảm giá và tổng tiền sau giảm giá
+            const discountAmount = ((ticketPrice+popcornValue) * couponValue) / 100; // Số tiền giảm
+            const updatedAmountPayable = (ticketPrice+popcornValue) - discountAmount; // Tổng tiền sau giảm
+
+         // Cập nhật số tiền giảm giá và tổng tiền hiển thị
+            const totalPriceElement = document.getElementById("amountPayableValue");
+            totalPriceElement.textContent = Math.round(updatedAmountPayable) + " VND";
+//
+			const discountValueElement = document.getElementById("discountValue");
+            discountValueElement.textContent = couponValue + "%"; // Cập nhật giá trị giảm giá
+            // Đóng modal (sử dụng jQuery
+            $('#modal-coupon').modal('hide');
+        });
+    });
+});
+
+
+</script>
+
+	<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-input");
+        const couponList = document.getElementById("coupon-list");
+        const coupons = couponList.querySelectorAll("li");
+
+        // Lắng nghe sự kiện nhập liệu
+        searchInput.addEventListener("input", function () {
+            const keyword = searchInput.value.toLowerCase();
+
+            // Lọc danh sách coupon
+            coupons.forEach(coupon => {
+                const text = coupon.textContent.toLowerCase();
+                if (text.includes(keyword)) {
+                    coupon.style.display = ""; // Hiển thị
+                } else {
+                    coupon.style.display = "none"; // Ẩn
+                }
+            });
+        });
+    });
+</script>
+
+	<script src="/ValCT_Nhom5/assets2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
