@@ -44,7 +44,12 @@
 					class="sidebar__nav-link"><i class="ti ti-news"></i> <span>News
 							And Discount</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="${pageContext.request.contextPath}/admin/users"
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/adminMessage"
+					class="sidebar__nav-link"><i class="ti ti-news"></i> <span>Chats</span></a></li>
+
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/admin/users"
 					class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a></li>
 
 

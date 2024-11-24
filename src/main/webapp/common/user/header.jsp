@@ -56,6 +56,9 @@
 							<li><a
 								href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsOrDiscount</a>
 							</li>
+							<li><a
+								href="${pageContext.request.contextPath}/userMessage">Chats</a>
+							</li>
 						</ul></li>
 					<li><a href="#0">My proflie</a>
 						<ul class="submenu">
