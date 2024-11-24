@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
@@ -95,7 +95,7 @@
 
 	<!-- sidebar copyright -->
 	<div class="sidebar__copyright">
-		© HOTFLIX, 2019—2024. <br>Create by <a
+		Â© HOTFLIX, 2019â2024. <br>Create by <a
 			href="https://themeforest.net/user/dmitryvolkov/portfolio"
 			target="_blank">Dmitry Volkov</a>
 	</div>

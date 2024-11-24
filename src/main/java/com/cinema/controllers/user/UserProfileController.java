@@ -66,7 +66,7 @@ public class UserProfileController extends HttpServlet{
 	    	            String birthDateParam = request.getParameter("birthDate");
 
 	    	            // Kiểm tra dữ liệu hợp lệ
-	    	            if (fullName == null || !fullName.matches("^[A-Za-z\\s]+$")) {
+	    	            if (fullName == null || !fullName.matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÛÝàáâãèéêìíòóôõùúûýĂẮẰẲẴẶăắằẳẵặĨĩŨũƠơƯưẠ-ỹ\s]+$")) {
 	    	                throw new IllegalArgumentException("Tên không được chứa số hoặc ký tự đặc biệt.");
 	    	            }
 	    	            if (email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {

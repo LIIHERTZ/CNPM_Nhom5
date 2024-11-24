@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
@@ -329,14 +329,14 @@
 	}
 	
 	
-	// Lắng nghe sự kiện khi mở Modal
+	// Láº¯ng nghe sá»± kiá»n khi má» Modal
 	document.addEventListener("DOMContentLoaded", function () {
-	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // Nút mở modal xóa
+	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // NÃºt má» modal xÃ³a
 	    const modalForm = document.querySelector(".modal__form_delete"); // Form trong modal
 	    deleteButtons.forEach(button => {
 	        button.addEventListener("click", function () {
-	            const popcornID = this.getAttribute("data-id"); // Lấy userId từ attribute
-	            const baseFormAction = modalForm.getAttribute("action"); // URL ban đầu của form
+	            const popcornID = this.getAttribute("data-id"); // Láº¥y userId tá»« attribute
+	            const baseFormAction = modalForm.getAttribute("action"); // URL ban Äáº§u cá»§a form
 	            const link = baseFormAction+'?popcornID='+popcornID;
 	            console.log("link : " + link);
 	            modalForm.setAttribute("action", link); 
@@ -350,12 +350,12 @@
 	    var popcornIDField = document.getElementById('popcornID-edit');
 
 	    form.addEventListener('submit', function (event) {
-	        // Lấy giá trị của popcornID
+	        // Láº¥y giÃ¡ trá» cá»§a popcornID
 	        var popcornID = popcornIDField.value;
 	        
-	        const baseFormAction = form.getAttribute("action"); // URL ban đầu của form
+	        const baseFormAction = form.getAttribute("action"); // URL ban Äáº§u cá»§a form
             const link = baseFormAction+'?popcornID='+popcornID;
-	        // Gán giá trị vào URL của action
+	        // GÃ¡n giÃ¡ trá» vÃ o URL cá»§a action
 	        form.action = link
 	        console.log("url : " + form.action )
 	    });
@@ -364,20 +364,20 @@
 	
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	    // Lắng nghe sự kiện khi modal được hiển thị
+	    // Láº¯ng nghe sá»± kiá»n khi modal ÄÆ°á»£c hiá»n thá»
 	    var editModal = document.getElementById('modal-edit');
 	    editModal.addEventListener('show.bs.modal', function (event) {
-	        // Nút kích hoạt modal
+	        // NÃºt kÃ­ch hoáº¡t modal
 	        var button = event.relatedTarget;
 	        
-	        // Lấy thông tin từ data-attribute
+	        // Láº¥y thÃ´ng tin tá»« data-attribute
 	        var popcornID = button.getAttribute('data-id');
 	        var popcornType = button.getAttribute('data-type');
 	        var popcornName = button.getAttribute('data-name');
 	        var popcornPrice = button.getAttribute('data-price');
 	        var popcornStatus = button.getAttribute('data-status');
 	        
-	        // Điền thông tin vào các trường trong modal
+	        // Äiá»n thÃ´ng tin vÃ o cÃ¡c trÆ°á»ng trong modal
 	        var modalPopcornType = editModal.querySelector('#typePopCorn');
 	        var modalPopcornPrice = editModal.querySelector('#price');
 	        var modalPopcornName = editModal.querySelector('#namePopCorn');

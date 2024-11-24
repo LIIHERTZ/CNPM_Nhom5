@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,37 +21,16 @@
 		<div class="container">
 			<div class="header-wrapper">
 				<div class="logo">
-					<a href="/ValCT_Nhom5/userHome"> <img src="/ValCT_Nhom5/assets/images/logo/logo.png"
-						alt="logo">
+					<a href="/ValCT_Nhom5/userHome"> <img
+						src="/ValCT_Nhom5/assets/images/logo/logo.png" alt="logo">
 					</a>
 				</div>
 				<ul class="menu">
 					<li><a href="/ValCT_Nhom5/userHome" class="active">Home</a></li>
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
-							<li><a href="movie-grid.html">Movie Grid</a></li>
 							<li><a href="movie-list.html">List Movie</a></li>
-							<li><a href="movie-details-2.html">Movie Details 2</a></li>
-							<li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
-							<li><a href="movie-seat-plan.html">Movie Seat Plan</a></li>
-							<li><a href="movie-checkout.html">Movie Checkout</a></li>
 							<li><a href="popcorn.html">Movie Food</a></li>
-						</ul></li>
-					<li><a href="#0">events</a>
-						<ul class="submenu">
-							<li><a href="events.html">Events</a></li>
-							<li><a href="event-details.html">Event Details</a></li>
-							<li><a href="event-speaker.html">Event Speaker</a></li>
-							<li><a href="event-ticket.html">Event Ticket</a></li>
-							<li><a href="event-checkout.html">Event Checkout</a></li>
-						</ul></li>
-					<li><a href="#0">pages</a>
-						<ul class="submenu">
-							<li><a href="about.html">About Us</a></li>
-							<li><a href="apps-download.html">Apps Download</a></li>
-							<li><a href="sign-in.html">Sign In</a></li>
-							<li><a href="sign-up.html">Sign Up</a></li>
-							<li><a href="404.html">404</a></li>
 						</ul></li>
 					<li><a href="#0">Others</a>
 						<ul class="submenu">
@@ -57,18 +38,17 @@
 								href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsOrDiscount</a>
 							</li>
 						</ul></li>
-					<li><a href="#0">My proflie</a>
+					<li><a href="#0">Welcome, ${person.fullName}</a>
 						<ul class="submenu">
+							<li><a href="${pageContext.request.contextPath}/userProfile">Profile
+									Information</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/userProfile">Profile Information</a>
-							</li>
-							<li><a
-								href="${pageContext.request.contextPath}/userTransaction?personId=${person.perID}">Booking History</a>
-							</li>
-							<li><a
-								href="${pageContext.request.contextPath}/logout">Log Out</a>
-							</li>
+								href="${pageContext.request.contextPath}/userTransaction?personId=${person.perID}">Booking
+									History</a></li>
+							<li><a href="${pageContext.request.contextPath}/logout">Log
+									Out</a></li>
 						</ul></li>
+
 					<li>
 					<li class="header-button pr-0"><a href="">Book Ticket</a></li>
 				</ul>

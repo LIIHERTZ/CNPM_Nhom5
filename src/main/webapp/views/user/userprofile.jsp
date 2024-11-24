@@ -241,7 +241,7 @@
 
             // Kiểm tra tên (không chứa số)
             const nameInput = document.getElementById('fullName');
-            const nameRegex = /^[A-Za-z\s]+$/; // Chỉ chứa chữ và khoảng trắng
+            const nameRegex = /^[\p{L}\s]+$/u; // Chỉ chứa chữ Unicode và khoảng trắng
             if (!nameRegex.test(nameInput.value)) {
                 alert("Tên không được chứa số hoặc ký tự đặc biệt.");
                 isValid = false;
