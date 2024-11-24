@@ -39,7 +39,7 @@ public class Ticket {
     private MovieScreenings movieScreenings;
 
     @OneToMany(mappedBy = "ticket")
-    private List<DetailTicket> detailTickets;
+    private List<TicketPayment> detailTickets;
 
     // Getters and setters
 }

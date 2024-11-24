@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -74,7 +76,27 @@
 						<img src="assets/images/ticket/date.png" alt="ticket">
 					</div>
 					<span class="type">date</span> <select class="select-bar"
-						name="date" onchange="this.form.submit()">
+						name="date" onchange="this.form.submit()"> 
+						<%-- <%
+						Calendar calendar = Calendar.getInstance();
+						int year = calendar.get(Calendar.YEAR);
+						int month = calendar.get(Calendar.MONTH); // Tháng hiện tại
+						int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay); // Đặt về ngày đầu tiên của tháng
+
+						while (calendar.get(Calendar.MONTH) == month) {
+							String date = sdf.format(calendar.getTime());
+						%> --%>
+						<%-- <option value="<%=date%>"
+							<%=(calendar.get(Calendar.DAY_OF_MONTH) == currentDay) ? "selected" : ""%>>
+							<%=date%>
+						</option> --%>
+						<%-- <%
+						calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày
+						}
+						%> name="date" onchange="this.form.submit()"> --%>
 						<%
 						// Lấy ngày hiện tại
 						Calendar calendar = Calendar.getInstance();

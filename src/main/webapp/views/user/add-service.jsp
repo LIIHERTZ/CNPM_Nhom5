@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Calendar"%>
+<%
+// Đặt thời gian đếm ngược (5 phút)
+int countdownMinutes = 5;
+%>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,14 +23,35 @@
 
 
 	<!-- ==========Banner-Section========== -->
-	<section class="details-banner hero-area bg_img seat-plan-banner"
-		data-background="assets/images/banner/banner04.jpg">
+	<section class="details-banner hero-area bg_img"
+		data-background="'assets/images/banner/banner03.jpg'">
 		<div class="container">
 			<div class="details-banner-wrapper">
-				<div class="details-banner-content style-two">
-					<h3 class="title">Venus</h3>
-					<div class="tags">
-						<a href="#0">City Walk</a> <a href="#0">English - 2D</a>
+				<div class="details-banner-content">
+					<!-- Display movie title -->
+					<h3 class="title">${movie.movieName}</h3>
+
+					<!-- Optional: Add additional movie information here -->
+					<div class="movie-info">
+						<!-- Example: Movie duration -->
+						<p>
+							<strong>Duration:</strong> ${movie.movieDuration}
+						</p>
+
+						<!-- Example: Movie release date -->
+						<p>
+							<strong>Category:</strong> ${movie.category}
+						</p>
+						<p>
+							<strong>Experience:</strong> ${experience}
+						</p>
+						<p>
+							<strong>version:</strong> ${version}
+						</p>
+						<p>
+							<strong>Location:</strong> ${selectedLocation}
+						</p>
+
 					</div>
 				</div>
 			</div>
@@ -29,22 +63,26 @@
 	<section class="page-title bg-one">
 		<div class="container">
 			<div class="page-title-area">
+				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/movieCheckout" class="custom-button back-button">
-						<i class="flaticon-double-right-arrows-angles"></i>back
+					<a href="/ValCT_Nhom5/movieCheckout"
+						class="custom-button back-button"> <i
+						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
 				</div>
+
+				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
-					<span class="date">MON, SEP 09 2020</span> <select
-						class="select-bar">
-						<option value="sc1">09:40</option>
-						<option value="sc2">13:45</option>
-						<option value="sc3">15:45</option>
-						<option value="sc4">19:50</option>
-					</select>
+					<!-- Hiển thị startHour theo định dạng HH:mm, dd/MM/yyyy -->
+					<c:if test="${not empty startHour}">
+						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
+					</c:if>
 				</div>
+
+
+				<!-- Đếm ngược thời gian -->
 				<div class="item">
-					<h5 class="title">05:00</h5>
+					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
 				</div>
 			</div>
@@ -66,110 +104,68 @@
 						<ul class="filter">
 							<li data-filter="*" class="active">all</li>
 							<li data-filter=".combos">combos</li>
-							<li data-filter=".bevarage">bevarage</li>
+							<li data-filter=".beverage">beverage</li>
 							<li data-filter=".popcorn">popcorn</li>
+
+							<!-- <li><a href="/addService?type=all" class="active">All</a></li>
+							<li><a href="/addService?type=combos">Combos</a></li>
+							<li><a href="/addService?type=bevarage">Beverage</a></li>
+							<li><a href="/addService?type=popcorn">Popcorn</a></li> -->
+
 						</ul>
 						<div class="grid-area">
-							<div class="grid-item combos popcorn">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop1.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
+							<c:forEach var="popcorn" items="${popcornList}">
+								<div class="grid-item ${popcorn.typePopCorn.toLowerCase()}">
+									<div class="grid-inner">
+										<div class="grid-thumb">
+											<img
+												<%-- 											//dung xoa cai nay
+												src="assets/images/movie/popcorn/pop${popcorn.popcornID}.png"
+												alt="${popcorn.namePopCorn}"> --%>
+																
+												src="assets/images/movie/popcorn/${popcorn.typePopCorn.toLowerCase()}.jpg"
+												alt="movie/popcorn">
+
+
+											<div class="offer-tag">
+												<fmt:formatNumber value="${popcorn.price}"
+													pattern="#,##0 VND" />
+											</div>
+											<div class="offer-remainder">
+												<h6 class="o-title mt-0">24%</h6>
+												<span>off</span>
+											</div>
+										</div>
+										<div class="grid-content">
+											<h5 class="subtitle">
+												<a href="#0">${popcorn.namePopCorn}</a>
+											</h5>
+											<form class="cart-button">
+												<div class="cart-plus-minus">
+													<input class="cart-plus-minus-box" type="text"
+														name="qtybutton" value="1">
+												</div>
+
+												<!-- 												//dung xoa
+												<form class="cart-button" method="post" action="/addToCart">
+												<div class="cart-plus-minus">
+													<input class="cart-plus-minus-box" type="text"
+														name="qtybutton" value="1">
+												</div> -->
+
+
+												<%-- 												//dung xoa cai nay
+												<input type="hidden" name="popcornID"
+													value="${popcorn.popcornID}"> --%>
+
+												<button type="button" class="custom-button"
+													onclick="addToBookingSummary('${popcorn.namePopCorn}', ${popcorn.price}, this)">
+													Add</button>
+											</form>
 										</div>
 									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> Muchaco, Crispy Taco, Bean Burrito </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
 								</div>
-							</div>
-							<div class="grid-item bevarage">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop2.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> Crispy Beef Taco, Beef Mucho Nachos </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="grid-item combos">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop3.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> Chicken Quesadilla Crispy Beef Taco </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="grid-item bevarage popcorn">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop4.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> MexiDips & Chips, Beef Muchaco </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -178,48 +174,63 @@
 						<h4 class="title">booking summery</h4>
 						<ul>
 							<li>
-								<h6 class="subtitle">Venus</h6> <span class="info">English-2d</span>
+								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
+									${version}</span>
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>City Walk</span><span>02</span>
+									<span>${selectedLocation}</span>
 								</h6>
 								<div class="info">
-									<span>10 SEP TUE, 11:00 PM</span> <span>Tickets</span>
+									<span><fmt:formatDate value="${startHour}"
+											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
 								</div>
 							</li>
 							<li>
 								<h6 class="subtitle mb-0">
-									<span>Tickets Price</span><span>$150</span>
+									<span>Tickets Price</span><span>${totalPrice} VND</span>
+								</h6>
+							</li>
+							<li>
+								<h6 class="subtitle mb-0">
+									<span>Seats</span><span>${selectedSeats}</span>
 								</h6>
 							</li>
 						</ul>
 						<ul class="side-shape">
 							<li>
 								<h6 class="subtitle">
-									<span>combos</span><span>$57</span>
-								</h6> <span class="info"><span>2 Nachos Combo</span></span>
+									<span>food & bevarage</span><span></span>
+								</h6> <span class="info"></span>
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>food & bevarage</span>
+									<span>discount coupon</span><span>$0</span>
 								</h6>
 							</li>
 						</ul>
-						<ul>
-							<li><span class="info"><span>price</span><span>$207</span></span>
-								<span class="info"><span>vat</span><span>$15</span></span></li>
-						</ul>
+						<%-- 						<ul>
+							<li><span class="info"><span>price</span><span>${totalPrice}
+										VND</span></span></li>
+						</ul> --%>
 					</div>
 					<div class="proceed-area  text-center">
 						<h6 class="subtitle">
-							<span>Amount Payable</span><span>$222</span>
+							<span>Amount Payable</span><span>${totalPrice} VND</span>
 						</h6>
-						<a href="/ValCT_Nhom5/movieCheckout" class="custom-button back-button">proceed</a>
+
+						<form id="proceedForm" action="/ValCT_Nhom5/addService"
+							method="post" onsubmit="prepareProceedForm()">
+							 <input type="hidden"
+								name="foodAndBeverageTotal" id="foodAndBeverageTotal" /> <input
+								type="hidden" name="amountPayable" id="amountPayable" />
+							<button type="submit" class="custom-button back-button">Proceed</button>
+						</form>
+
 					</div>
 					<div class="note">
 						<h5 class="title">Note :</h5>
-						<p>Please give us 15 minutes for F& B preparation once you're
+						<p>Please give us 15 minutes for ValCT preparation once you're
 							at the cinema</p>
 					</div>
 				</div>
@@ -227,5 +238,141 @@
 		</div>
 	</div>
 	<!-- ==========Movie-Section========== -->
+
+	<script>
+		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
+		var countdown = 300;
+		var countdownTimer = document.getElementById("countdown-timer");
+
+		setInterval(function() {
+			var minutes = Math.floor(countdown / 60);
+			var seconds = countdown % 60;
+			countdownTimer.textContent = minutes + ":"
+					+ (seconds < 10 ? "0" : "") + seconds;
+			countdown--;
+
+			if (countdown < 0) {
+				clearInterval(countdownInterval);
+				window.location.href = "/ValCT_Nhom5/movieCheckout";// Dừng đếm ngược khi hết thời gian
+			}
+		}, 1000);
+		
+		
+		
+		// Biến lưu danh sách sản phẩm trong Booking Summary
+	    let bookingSummary = [];
+			
+	    let initialTotalPrice = parseInt("${totalPrice}".replace(/\D/g, "")); // Tổng tiền ban đầu (tickets price)
+	    let currentTotalPrice = initialTotalPrice; // Giá trị hiện tại của tổng tiền
+	    
+
+	    function addToBookingSummary(name, price, button) {
+	        const qtyInput = button.parentElement.querySelector(".cart-plus-minus-box");
+	        const quantity = parseInt(qtyInput.value);
+
+	        // Tìm xem sản phẩm đã có trong bookingSummary chưa
+	        const existingProduct = bookingSummary.find(item => item.name === name);
+
+	        if (existingProduct) {
+	            // Nếu sản phẩm đã tồn tại, tăng số lượng
+	            existingProduct.quantity += quantity;
+	            existingProduct.totalPrice += price * quantity;
+	        } else {
+	            // Nếu sản phẩm chưa tồn tại, thêm mới vào danh sách
+	            bookingSummary.push({
+	                name: name,
+	                price: price,
+	                quantity: quantity,
+	                totalPrice: price * quantity,
+	            });
+	        }
+
+	        // Cập nhật tổng tiền
+	        currentTotalPrice += price * quantity;
+
+	        // Cập nhật lại giao diện
+	        updateBookingSummary();
+	    }
+
+	    function updateBookingSummary() {
+	    	const bookingListElement = document.querySelector(".side-shape .info"); 
+	        const totalAmountElement = document.querySelector(".proceed-area .subtitle span:last-child");
+	        
+	        const foodAndBeverageTotalElement = document.querySelector(".side-shape .subtitle span:nth-child(2)"); // Phần tử chứa tổng tiền food & beverage
+	        
+	        
+	        let dynamicContent = "";
+	        
+	        let foodAndBeverageTotal = 0;
+
+	        // Render các sản phẩm trong bookingSummary
+	         bookingSummary.forEach(item => {
+        dynamicContent += 
+            '<span>' + item.quantity +' '+ item.name +' '+ item.totalPrice + ' VND</span>';
+        foodAndBeverageTotal += item.totalPrice;
+    });
+	        
+	      // Thay thế nội dung động trong phần info
+	         bookingListElement.innerHTML = dynamicContent;
+	      
+	      // Cập nhật tổng tiền food & beverage
+	         foodAndBeverageTotalElement.textContent = foodAndBeverageTotal + " VND";
+
+	        // Cập nhật tổng tiền
+	        totalAmountElement.textContent = currentTotalPrice + " VND";
+	    }
+		
+		
+	    function prepareProceedForm() {
+	        const form = document.getElementById("proceedForm");
+
+
+	        // Lặp qua danh sách sản phẩm (bookingSummary) và thêm input ẩn
+	        bookingSummary.forEach((item, index) => {
+	        		        	        	            
+	        	// Input cho tên sản phẩm
+	            const nameInput = document.createElement("input");
+	            nameInput.type = "hidden";
+	            nameInput.name = 'product[' + index + '].name';
+	            nameInput.value = item.name;
+	            nameInput.classList.add("product-input");
+	            form.appendChild(nameInput);
+
+	            // Input cho số lượng sản phẩm
+	            const quantityInput = document.createElement("input");
+	            quantityInput.type = "hidden";
+	            quantityInput.name = 'product[' + index + '].quantity';
+	            quantityInput.value = item.quantity;
+	            quantityInput.classList.add("product-input");
+	            form.appendChild(quantityInput);
+
+	            // Input cho tổng tiền sản phẩm
+	            const totalPriceInput = document.createElement("input");
+	            totalPriceInput.type = "hidden";
+	            totalPriceInput.name = 'product[' + index + '].totalPrice';
+	            totalPriceInput.value = item.totalPrice;
+	            totalPriceInput.classList.add("product-input");
+	            form.appendChild(totalPriceInput);
+	        });
+
+	        // Input cho tổng tiền Food & Beverage
+	        const foodAndBeverageTotalInput = document.getElementById("foodAndBeverageTotal");
+	        const foodAndBeverageTotal = document.querySelector(".side-shape .subtitle span:nth-child(2)").textContent.trim();
+	        foodAndBeverageTotalInput.value = foodAndBeverageTotal;
+
+	        // Input cho tổng tiền chung
+	        const amountPayableInput = document.getElementById("amountPayable");
+	        amountPayableInput.value = currentTotalPrice;
+	    }
+
+		
+		
+		
+		
+	</script>
+
+
+
+
 </body>
 </html>

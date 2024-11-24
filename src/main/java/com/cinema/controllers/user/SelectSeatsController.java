@@ -41,18 +41,18 @@ public class SelectSeatsController extends HttpServlet {
 		String experience = (String) session.getAttribute("experience");
 		String version = (String) session.getAttribute("version");
 		String startHourStr = (String) session.getAttribute("startHour");
-		Movie movie = (Movie)  session.getAttribute("movie");
+		Movie movie = (Movie) session.getAttribute("movie");
 
-	    // Chuyển đổi startHour từ String sang Date
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng của startHour
-	    Date startHour = null;
-	    try {
-	        if (startHourStr != null) {
-	            startHour = sdf.parse(startHourStr);
-	        }
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	    }
+		// Chuyển đổi startHour từ String sang Date
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng của startHour
+		Date startHour = null;
+		try {
+			if (startHourStr != null) {
+				startHour = sdf.parse(startHourStr);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		if (screeningIdStr == null || screeningIdStr.isEmpty()) {
 			resp.sendRedirect("/ValCT_Nhom5/bookTickets");
 			return;
@@ -65,7 +65,7 @@ public class SelectSeatsController extends HttpServlet {
 
 		// Nhóm ghế theo hàng (row)
 		Map<String, List<SeatStatus>> seatStatusesGroupedByRow = seatStatuses.stream()
-				.collect(Collectors.groupingBy(seat -> seat.getSeat().getSeatNumber().substring(0, 1))); 
+				.collect(Collectors.groupingBy(seat -> seat.getSeat().getSeatNumber().substring(0, 1)));
 
 		// Gán thông tin vào request để truyền tới JSP
 		req.setAttribute("movie", movie);
@@ -79,6 +79,43 @@ public class SelectSeatsController extends HttpServlet {
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/movie-seat-plan.jsp");
 		dispatcher.forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// Lấy dữ liệu từ form
+		HttpSession session = request.getSession();
+		String selectedSeats = request.getParameter("selectedSeats");
+		String totalPrice = request.getParameter("totalPrice");
+		String amountPayable = (String) session.getAttribute("amountPayable");
+		String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
+		
+		// Kiểm tra và gán mặc định nếu null
+		if (totalPrice == null || totalPrice.isEmpty()) {
+		    totalPrice = "0";
+		}
+		if (foodAndBeverageTotal != null) {
+		    foodAndBeverageTotal = foodAndBeverageTotal.replaceAll("[^\\d]", ""); // Loại bỏ tất cả ký tự không phải số
+		} else {
+		    foodAndBeverageTotal = "0"; // Gán mặc định nếu null
+		}
+		
+		// Chuyển đổi và tính toán
+		int totalPriceInt = Integer.parseInt(totalPrice);
+		int foodAndBeverageTotalInt = Integer.parseInt(foodAndBeverageTotal);
+		int amountPayableInt = totalPriceInt + foodAndBeverageTotalInt;
+		
+		// Chuyển lại thành String
+		amountPayable = String.valueOf(amountPayableInt);
+		
+
+		// Lưu vào session
+		session.setAttribute("selectedSeats", selectedSeats);
+		session.setAttribute("totalPrice", totalPrice);
+		session.setAttribute("amountPayable", amountPayable);
+
+		response.sendRedirect("movieCheckout");
 	}
 
 }

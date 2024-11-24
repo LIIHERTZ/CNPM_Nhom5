@@ -88,73 +88,106 @@ int countdownMinutes = 5;
 
 	<!-- ==========Movie-Section========== -->
 	<style>
-    /* Ẩn checkbox */
-    .seat-checkbox {
-        display: none;
-    }
+/* Ẩn checkbox */
+.seat-checkbox {
+	display: none;
+}
 
-    /* Tạo hiệu ứng tích bằng cách sử dụng label */
-    .seat-label {
-        cursor: pointer;
-    }
+/* Tạo hiệu ứng tích bằng cách sử dụng label */
+.seat-label {
+	cursor: pointer;
+}
 
-    /* Thay đổi hình ảnh ghế khi checkbox được chọn */
-    .seat-checkbox:checked + img {
-        content: url("assets/images/movie/seat01-booked.png"); /* Hình ảnh ghế thường đang chọn */
-    }
-    .seat-checkbox.couple:checked + img {
-        content: url("assets/images/movie/seat02-booked.png"); /* Hình ảnh ghế đôi đang chọn */
-    }
+/* Thay đổi hình ảnh ghế khi checkbox được chọn */
+.seat-checkbox:checked+img {
+	content: url("assets/images/movie/seat01-booked.png");
+	/* Hình ảnh ghế thường đang chọn */
+}
+
+.seat-checkbox.couple:checked+img {
+	content: url("assets/images/movie/seat02-booked.png");
+	/* Hình ảnh ghế đôi đang chọn */
+}
 </style>
 
-<div class="seat-plan-section padding-bottom padding-top">
-    <div class="container">
-        <div class="screen-area">
-            <h4 class="screen">Screen</h4>
-            <div class="screen-thumb">
-                <img src="assets/images/movie/screen-thumb.png" alt="screen">
-            </div>
-            <h5 class="subtitle">silver plus</h5>
-            <div class="screen-wrapper">
-                <form action="/ValCT_Nhom5/movieCheckout" method="get">
-                    <input type="hidden" name="screeningId" value="${screeningId}">
-                    <ul class="seat-area">
-                        <!-- Duyệt qua từng hàng -->
-                        <c:forEach var="rowEntry" items="${seatStatusesGroupedByRow}">
-                            <li class="seat-line">
-                                <span>${rowEntry.key}</span> <!-- Hiển thị tên hàng -->
-                                <ul class="seat--area">
-                                    <!-- Duyệt qua từng ghế trong hàng -->
-                                    <c:forEach var="seatStatus" items="${rowEntry.value}">
-                                        <li class="single-seat">
-                                            <label class="seat-label">
-                                                <!-- Checkbox cho ghế -->
-                                                <input type="checkbox" 
-                                                       class="seat-checkbox ${seatStatus.seat.isCouple() ? 'couple' : ''}" 
-                                                       name="selectedSeats"  data-status="free"
-                                                       value="${seatStatus.seat.seatID}"
-                                                       ${seatStatus.status ? 'disabled' : ''}>
-                                                <!-- Hình ảnh dựa trên trạng thái và loại ghế -->
-                                                <img src="assets/images/movie/${
+	<div class="seat-plan-section padding-bottom padding-top">
+		<div class="container">
+			<div class="screen-area">
+				<h4 class="screen">Screen</h4>
+				<div class="screen-thumb">
+					<img src="assets/images/movie/screen-thumb.png" alt="screen">
+				</div>
+				<h5 class="subtitle">silver plus</h5>
+				<div class="screen-wrapper">
+					<form action="/ValCT_Nhom5/selectSeats" method="post">
+
+						<input type="hidden" name="selectedSeats" id="hiddenSelectedSeats"
+							value=""> <input type="hidden" name="totalPrice"
+							id="hiddenTotalPrice" value=""> 
+							
+							
+							<input type="hidden"
+							name="screeningId" value="${screeningId}">
+						<ul class="seat-area">
+							<!-- Duyệt qua từng hàng -->
+							<c:forEach var="rowEntry" items="${seatStatusesGroupedByRow}">
+								<li class="seat-line"><span>${rowEntry.key}</span> <!-- Hiển thị tên hàng -->
+									<ul class="seat--area">
+										<!-- Duyệt qua từng ghế trong hàng -->
+										<c:forEach var="seatStatus" items="${rowEntry.value}">
+											<li class="single-seat"><label class="seat-label">
+													<!-- Checkbox cho ghế --> <input type="checkbox"
+													class="seat-checkbox ${seatStatus.seat.isCouple() ? 'couple' : ''}"
+													name="selectedSeats" data-status="free"
+													data-seat-number="${seatStatus.seat.seatNumber}"
+													data-couple="${seatStatus.seat.isCouple()}"
+													value="${seatStatus.seat.seatID}"
+													${seatStatus.status ? 'disabled' : ''}> <!-- Hình ảnh dựa trên trạng thái và loại ghế -->
+													<img
+													src="assets/images/movie/${
                                                     seatStatus.seat.isCouple() 
                                                     ? (seatStatus.status ? 'seat02-free.png' : 'seat02.png') 
                                                     : (seatStatus.status ? 'seat01-free.png' : 'seat01.png')
-                                                }" alt="seat">
-                                                <span>${seatStatus.seat.seatNumber}</span>
-                                            </label>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                                <span>${rowEntry.key}</span> <!-- Tên hàng ở cuối -->
-                            </li>
-                        </c:forEach>
-                    </ul>
-                    <button type="submit" class="custom-button">Confirm</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                                                }"
+													alt="seat"> <span>${seatStatus.seat.seatNumber}</span>
+											</label></li>
+										</c:forEach>
+									</ul> <span>${rowEntry.key}</span> <!-- Tên hàng ở cuối --></li>
+							</c:forEach>
+						</ul>
+
+
+						<div class="proceed-book bg_img"
+							data-background="assets/images/movie/movie-bg-proceed.jpg">
+							<div class="proceed-to-book">
+								<div class="book-item">
+									<span>You have Choosed Seat</span>
+									<h3 class="title selected-seats">No seats selected</h3>
+									<!-- Giữ nguyên style -->
+								</div>
+								<div class="book-item">
+									<span>Total Price</span>
+									<h3 class="title total-price">0 VND</h3>
+									<!-- Giữ nguyên style -->
+								</div>
+								<div class="book-item">
+								
+									<button type="submit" class="custom-button">Proceed</button>																		
+									
+									<!-- Giữ nguyên style -->
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -172,37 +205,96 @@ int countdownMinutes = 5;
 			countdown--;
 
 			if (countdown < 0) {
-				clearInterval(countdownInterval); // Dừng đếm ngược khi hết thời gian
+				clearInterval(countdownInterval); 
+				window.location.href = "/ValCT_Nhom5/bookTickets";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
-		document.querySelectorAll(".single-seat input[type='checkbox']").forEach(function (checkbox) {
-		    checkbox.addEventListener("change", function () {
-		        const img = this.closest("label").querySelector("img");
+		document
+				.querySelectorAll(".single-seat input[type='checkbox']")
+				.forEach(
+						function(checkbox) {
+							checkbox
+									.addEventListener(
+											"change",
+											function() {
+												const img = this.closest(
+														"label").querySelector(
+														"img");
 
-		        // Khi checkbox được chọn
-		        if (this.checked) {
-		            img.src = this.classList.contains("couple")
-		                ? "assets/images/movie/seat02-booked.png" // Hình ảnh ghế đôi đang chọn
-		                : "assets/images/movie/seat01-booked.png"; // Hình ảnh ghế đơn đang chọn
-		        }
-		        // Khi checkbox bị bỏ chọn
-		        else {
-		            const isCouple = this.classList.contains("couple");
-		            const isBooked = this.dataset.status === "booked";
+												// Khi checkbox được chọn
+												if (this.checked) {
+													img.src = this.classList
+															.contains("couple") ? "assets/images/movie/seat02-booked.png" // Hình ảnh ghế đôi đang chọn
+															: "assets/images/movie/seat01-booked.png"; // Hình ảnh ghế đơn đang chọn
+												}
+												// Khi checkbox bị bỏ chọn
+												else {
+													const isCouple = this.classList
+															.contains("couple");
+													const isBooked = this.dataset.status === "booked";
 
-		            // Kiểm tra trạng thái ban đầu
-		            if (isBooked) {
-		                img.src = isCouple
-		                    ? "assets/images/movie/seat02-booked.png" // Ghế đôi đã đặt
-		                    : "assets/images/movie/seat01-booked.png"; // Ghế đơn đã đặt
+													// Kiểm tra trạng thái ban đầu
+													if (isBooked) {
+														img.src = isCouple ? "assets/images/movie/seat02-booked.png" // Ghế đôi đã đặt
+																: "assets/images/movie/seat01-booked.png"; // Ghế đơn đã đặt
+													} else {
+														img.src = isCouple ? "assets/images/movie/seat02.png" // Ghế đôi trống
+																: "assets/images/movie/seat01.png"; // Ghế đơn trống
+													}
+												}
+											});
+						});
+		
+		
+		
+		
+		
+		
+		document.addEventListener("DOMContentLoaded", function () {
+		    const checkboxes = document.querySelectorAll(".seat-checkbox");
+		    const selectedSeatsElement = document.querySelector(".selected-seats");
+		    const totalPriceElement = document.querySelector(".total-price");
+
+		    let selectedSeats = [];
+		    let totalPrice = 0;
+
+		    checkboxes.forEach((checkbox) => {
+		        checkbox.addEventListener("change", function () {
+		            const seatNumber = this.dataset.seatNumber; // Lấy số ghế
+		            const isCouple = this.dataset.couple === "true"; // Kiểm tra ghế đôi
+
+		            if (this.checked) {
+		                // Thêm ghế vào danh sách đã chọn
+		                selectedSeats.push(seatNumber);
+		                totalPrice += isCouple ? 150000 : 90000; // Giá ghế đôi: 150k, đơn: 90k
 		            } else {
-		                img.src = isCouple
-		                    ? "assets/images/movie/seat02.png" // Ghế đôi trống
-		                    : "assets/images/movie/seat01.png"; // Ghế đơn trống
+		                // Xóa ghế khỏi danh sách
+		                selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+		                totalPrice -= isCouple ? 150000 : 90000;
 		            }
-		        }
+
+		            // Cập nhật giao diện
+		            selectedSeatsElement.textContent = selectedSeats.length > 0 
+		                ? selectedSeats.join(", ") 
+		                : "No seats selected";
+		            totalPriceElement.textContent = totalPrice > 0 
+		                ? totalPrice + " VND" // Sử dụng backticks ở đây
+		                : "0 VND";
+		        });
 		    });
+		    
+		 // Cập nhật hidden input khi submit form
+		    document.querySelector("form").addEventListener("submit", function () {
+		        const hiddenSeatsInput = document.getElementById("hiddenSelectedSeats");
+		        const hiddenPriceInput = document.getElementById("hiddenTotalPrice");
+
+		        hiddenSeatsInput.value = selectedSeats.join(","); // Danh sách ghế đã chọn
+		        hiddenPriceInput.value = totalPrice; // Tổng giá
+		    });
+		    
 		});
+
+
 	</script>
 </body>
 </html>
