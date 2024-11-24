@@ -192,6 +192,7 @@
         document.getElementById('screeningIdInput').value = screeningId; // Gán giá trị screeningId
     }
 
+
     // Hàm chuyển dữ liệu từ form tìm kiếm sang form cần submit
     function transferDataAndSubmit() {
         const formToSubmit = document.querySelector('form[action="${pageContext.request.contextPath}/bookTickets"]'); // Form chính
@@ -204,6 +205,17 @@
             alert('Please select a showtime before proceeding.');
             return false;
         }
+		// Tạo hoặc cập nhật input ẩn cho cinemaName
+		let cinemaNameInput = document.getElementById('cinemaNameInput');
+		if (!cinemaNameInput) {
+			cinemaNameInput = document.createElement('input');
+			cinemaNameInput.type = 'hidden';
+			cinemaNameInput.id = 'cinemaNameInput';
+			cinemaNameInput.name = 'cinemaName';
+			document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]').appendChild(cinemaNameInput);
+		}
+		cinemaNameInput.value = cinemaName; // Gán giá trị cinemaName
+	}
 
         // Lấy dữ liệu từ form tìm kiếm
         const data = {
