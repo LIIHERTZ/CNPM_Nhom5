@@ -104,112 +104,6 @@ int countdownMinutes = 5;
 						<ul class="filter">
 							<li data-filter="*" class="active">all</li>
 							<li data-filter=".combos">combos</li>
-<<<<<<< HEAD
-							<li data-filter=".bevarage">bevarage</li>
-							<li data-filter=".popcorn">popcorn</li>
-						</ul>
-						<div class="grid-area">
-							<div class="grid-item combos popcorn">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop1.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> Muchaco, Crispy Taco, Bean Burrito </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="grid-item bevarage">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop2.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> Crispy Beef Taco, Beef Mucho Nachos </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="grid-item combos">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop3.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> Chicken Quesadilla Crispy Beef Taco </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="grid-item bevarage popcorn">
-								<div class="grid-inner">
-									<div class="grid-thumb">
-										<img src="assets/images/movie/popcorn/pop4.png"
-											alt="movie/popcorn">
-										<div class="offer-tag">$57</div>
-										<div class="offer-remainder">
-											<h6 class="o-title mt-0">24%</h6>
-											<span>off</span>
-										</div>
-									</div>
-									<div class="grid-content">
-										<h5 class="subtitle">
-											<a href="#0"> MexiDips & Chips, Beef Muchaco </a>
-										</h5>
-										<form class="cart-button">
-											<div class="cart-plus-minus">
-												<input class="cart-plus-minus-box" type="text"
-													name="qtybutton" value="2">
-											</div>
-											<button type="submit" class="custom-button">add</button>
-										</form>
-									</div>
-								</div>
-							</div>
-=======
 							<li data-filter=".beverage">beverage</li>
 							<li data-filter=".popcorn">popcorn</li>
 
@@ -272,7 +166,6 @@ int countdownMinutes = 5;
 									</div>
 								</div>
 							</c:forEach>
->>>>>>> HongPhuc
 						</div>
 					</div>
 				</div>
@@ -281,16 +174,6 @@ int countdownMinutes = 5;
 						<h4 class="title">booking summery</h4>
 						<ul>
 							<li>
-<<<<<<< HEAD
-								<h6 class="subtitle">Venus</h6> <span class="info">English-2d</span>
-							</li>
-							<li>
-								<h6 class="subtitle">
-									<span>City Walk</span><span>02</span>
-								</h6>
-								<div class="info">
-									<span>10 SEP TUE, 11:00 PM</span> <span>Tickets</span>
-=======
 								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
 									${version}</span>
 							</li>
@@ -301,52 +184,22 @@ int countdownMinutes = 5;
 								<div class="info">
 									<span><fmt:formatDate value="${startHour}"
 											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
->>>>>>> HongPhuc
 								</div>
 							</li>
 							<li>
 								<h6 class="subtitle mb-0">
-<<<<<<< HEAD
-									<span>Tickets Price</span><span>$150</span>
-=======
 									<span>Tickets Price</span><span>${totalPrice} VND</span>
 								</h6>
 							</li>
 							<li>
 								<h6 class="subtitle mb-0">
 									<span>Seats</span><span>${selectedSeats}</span>
->>>>>>> HongPhuc
 								</h6>
 							</li>
 						</ul>
 						<ul class="side-shape">
 							<li>
 								<h6 class="subtitle">
-<<<<<<< HEAD
-									<span>combos</span><span>$57</span>
-								</h6> <span class="info"><span>2 Nachos Combo</span></span>
-							</li>
-							<li>
-								<h6 class="subtitle">
-									<span>food & bevarage</span>
-								</h6>
-							</li>
-						</ul>
-						<ul>
-							<li><span class="info"><span>price</span><span>$207</span></span>
-								<span class="info"><span>vat</span><span>$15</span></span></li>
-						</ul>
-					</div>
-					<div class="proceed-area  text-center">
-						<h6 class="subtitle">
-							<span>Amount Payable</span><span>$222</span>
-						</h6>
-						<a href="/ValCT_Nhom5/movieCheckout" class="custom-button back-button">proceed</a>
-					</div>
-					<div class="note">
-						<h5 class="title">Note :</h5>
-						<p>Please give us 15 minutes for F& B preparation once you're
-=======
 									<span>food & bevarage</span><span></span>
 								</h6> <span class="info"></span>
 							</li>
@@ -378,7 +231,6 @@ int countdownMinutes = 5;
 					<div class="note">
 						<h5 class="title">Note :</h5>
 						<p>Please give us 15 minutes for ValCT preparation once you're
->>>>>>> HongPhuc
 							at the cinema</p>
 					</div>
 				</div>
@@ -386,8 +238,6 @@ int countdownMinutes = 5;
 		</div>
 	</div>
 	<!-- ==========Movie-Section========== -->
-<<<<<<< HEAD
-=======
 
 	<script>
 		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
@@ -524,6 +374,5 @@ int countdownMinutes = 5;
 
 
 
->>>>>>> HongPhuc
 </body>
 </html>
