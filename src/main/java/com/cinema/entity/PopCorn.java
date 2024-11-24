@@ -65,7 +65,11 @@ public class PopCorn {
 		this.price = price;
 	}
 
+<<<<<<< HEAD
 	public boolean getStatus() {
+=======
+	public boolean isStatus() {
+>>>>>>> HongPhuc
 		return status;
 	}
 
@@ -73,6 +77,7 @@ public class PopCorn {
 		this.status = status;
 	}
 
+<<<<<<< HEAD
 	public List<PopCornPayment> getDetailPopCorns() {
 		return detailPopCorns;
 	}
@@ -84,4 +89,9 @@ public class PopCorn {
     // Getters and setters
     
     
+=======
+	
+
+    // Getters and setters
+>>>>>>> HongPhuc
 }

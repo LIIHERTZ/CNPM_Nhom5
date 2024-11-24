@@ -1,5 +1,4 @@
 package com.cinema.configs;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 public class Test {

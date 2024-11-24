@@ -1,5 +1,6 @@
 package com.cinema.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class MovieScreenings {
 
 	@Column(nullable = false)
     private Date endHour;
+    
+    @Column(name = "status", nullable = false, columnDefinition = "BIT")
+    private boolean status; // New field for cinema status using bit, named "status"
 
     @Column(name = "status", nullable = false,  columnDefinition = "BIT DEFAULT 1")
     private boolean status; // New field for cinema status using bit, named "status"
@@ -47,8 +51,21 @@ public class MovieScreenings {
     @ManyToOne
     @JoinColumn(name = "movieID", nullable = false)
     private Movie movie;
+    
+    @OneToMany(mappedBy = "screening")
+    private List<SeatStatus> seatStatus;
+    
+    
+    
+    public List<SeatStatus> getSeatStatus() {
+		return seatStatus;
+	}
 
-    public int getMsID() {
+	public void setSeatStatus(List<SeatStatus> seatStatus) {
+		this.seatStatus = seatStatus;
+	}
+
+	public int getMsID() {
 		return msID;
 	}
 
@@ -106,6 +123,14 @@ public class MovieScreenings {
 
 	@OneToMany(mappedBy = "movieScreenings")
     private List<Ticket> tickets;
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
     // Getters and setters
 }

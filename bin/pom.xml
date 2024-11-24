@@ -117,8 +117,13 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.13.0</version>
 					<configuration>
+<<<<<<<< HEAD:bin/pom.xml
 						<source>21</source>
 						<target>21</target>
+========
+						<source>20</source>
+						<target>20</target>
+>>>>>>>> HongPhuc:pom.xml
 					</configuration>
 				</plugin>
 				<plugin>

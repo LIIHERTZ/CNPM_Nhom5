@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Calendar"%>
+<%
+// Đặt thời gian đếm ngược (5 phút)
+int countdownMinutes = 5;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,14 +18,35 @@
 <body>
 
 	<!-- ==========Banner-Section========== -->
-	<section class="details-banner hero-area bg_img seat-plan-banner"
-		data-background="assets/images/banner/banner04.jpg">
+	<section class="details-banner hero-area bg_img"
+		data-background="'assets/images/banner/banner03.jpg'">
 		<div class="container">
 			<div class="details-banner-wrapper">
-				<div class="details-banner-content style-two">
-					<h3 class="title">Venus</h3>
-					<div class="tags">
-						<a href="#0">City Walk</a> <a href="#0">English - 2D</a>
+				<div class="details-banner-content">
+					<!-- Display movie title -->
+					<h3 class="title">${movie.movieName}</h3>
+
+					<!-- Optional: Add additional movie information here -->
+					<div class="movie-info">
+						<!-- Example: Movie duration -->
+						<p>
+							<strong>Duration:</strong> ${movie.movieDuration}
+						</p>
+
+						<!-- Example: Movie release date -->
+						<p>
+							<strong>Category:</strong> ${movie.category}
+						</p>
+						<p>
+							<strong>Experience:</strong> ${experience}
+						</p>
+						<p>
+							<strong>version:</strong> ${version}
+						</p>
+						<p>
+							<strong>Location:</strong> ${selectedLocation}
+						</p>
+
 					</div>
 				</div>
 			</div>
@@ -28,22 +58,26 @@
 	<section class="page-title bg-one">
 		<div class="container">
 			<div class="page-title-area">
+				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/selectSeats" class="custom-button back-button">
-						<i class="flaticon-double-right-arrows-angles"></i>back
+					<a href="/ValCT_Nhom5/selectSeats"
+						class="custom-button back-button"> <i
+						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
 				</div>
+
+				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
-					<span class="date">MON, SEP 09 2020</span> <select
-						class="select-bar">
-						<option value="sc1">09:40</option>
-						<option value="sc2">13:45</option>
-						<option value="sc3">15:45</option>
-						<option value="sc4">19:50</option>
-					</select>
+					<!-- Hiển thị startHour theo định dạng HH:mm, dd/MM/yyyy -->
+					<c:if test="${not empty startHour}">
+						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
+					</c:if>
 				</div>
+
+
+				<!-- Đếm ngược thời gian -->
 				<div class="item">
-					<h5 class="title">05:00</h5>
+					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
 				</div>
 			</div>
@@ -62,8 +96,8 @@
 							<h5 class="title">Already a Boleto Member?</h5>
 							<p>Sign in to earn points and make booking easier!</p>
 						</div>
-						<a href="/ValCT_Nhom5/signin" class="sign-in-area"> <i class="fas fa-user"></i><span>Sign
-								in</span>
+						<a href="/ValCT_Nhom5/signin" class="sign-in-area"> <i
+							class="fas fa-user"></i><span>Sign in</span>
 						</a>
 					</div>
 					<div class="checkout-widget checkout-contact">
@@ -152,50 +186,99 @@
 						<h4 class="title">booking summery</h4>
 						<ul>
 							<li>
-								<h6 class="subtitle">Venus</h6> <span class="info">English-2d</span>
+								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
+									${version}</span>
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>City Walk</span><span>02</span>
+									<span>${selectedLocation}</span>
 								</h6>
 								<div class="info">
-									<span>10 SEP TUE, 11:00 PM</span> <span>Tickets</span>
+									<span><fmt:formatDate value="${startHour}"
+											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
 								</div>
 							</li>
 							<li>
 								<h6 class="subtitle mb-0">
-									<span>Tickets Price</span><span>$150</span>
+									<span>Tickets Price</span><span>${totalPrice} VND</span>
+								</h6>
+							</li>
+							<li>
+								<h6 class="subtitle mb-0">
+									<span>Seats</span><span>${selectedSeats}</span>
 								</h6>
 							</li>
 						</ul>
 						<ul class="side-shape">
 							<li>
 								<h6 class="subtitle">
-									<span>combos</span><span>$57</span>
-								</h6> <span class="info"><span>2 Nachos Combo</span></span>
+									<span>food & bevarage</span> <span> <!-- Hiển thị tổng tiền Food & Beverage -->
+										<c:choose>
+											<c:when test="${not empty foodAndBeverageTotal}">
+                        ${foodAndBeverageTotal}
+                    </c:when>
+											<c:otherwise>
+                    </c:otherwise>
+										</c:choose>
+									</span>
+								</h6> <span class="info"> <!-- Hiển thị danh sách sản phẩm -->
+									<c:if test="${not empty products}">
+										<c:forEach var="entry" items="${products}">
+											<span> ${entry.value[0]}  ${entry.key} 
+												${entry.value[1]} VND </span>
+										</c:forEach>
+									</c:if>
+							</span>
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>food & bevarage</span>
+									<span>discount coupon</span><span>$0</span>
 								</h6>
 							</li>
 						</ul>
-						<ul>
-							<li><span class="info"><span>price</span><span>$207</span></span>
-								<span class="info"><span>vat</span><span>$15</span></span></li>
-						</ul>
+						<%-- <ul>
+							<li><span class="info"><span>price</span><span>${totalPrice} VND</span></span></li>
+						</ul> --%>
 					</div>
 					<div class="proceed-area  text-center">
 						<h6 class="subtitle">
-							<span>Amount Payable</span><span>$222</span>
+							<span>Amount Payable</span> <span> <c:choose>
+									<c:when test="${not empty amountPayable}">
+                ${amountPayable} VND
+            </c:when>
+									<c:otherwise>
+                ${totalPrice} VND
+            </c:otherwise>
+								</c:choose>
+							</span>
 						</h6>
-						<a href="/ValCT_Nhom5/addService" class="custom-button back-button">Add-Service</a>
+						<a href="/ValCT_Nhom5/addService"
+							class="custom-button back-button">Add-Service</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- ==========Movie-Section========== -->
+
+	<script>
+		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
+		var countdown = 300;
+		var countdownTimer = document.getElementById("countdown-timer");
+
+		setInterval(function() {
+			var minutes = Math.floor(countdown / 60);
+			var seconds = countdown % 60;
+			countdownTimer.textContent = minutes + ":"
+					+ (seconds < 10 ? "0" : "") + seconds;
+			countdown--;
+
+			if (countdown < 0) {
+				clearInterval(countdownInterval);
+				window.location.href = "/ValCT_Nhom5/selectSeats";// Dừng đếm ngược khi hết thời gian
+			}
+		}, 1000);
+	</script>
 
 </body>
 </html>

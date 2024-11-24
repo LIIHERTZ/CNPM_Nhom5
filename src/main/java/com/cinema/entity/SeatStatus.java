@@ -53,5 +53,8 @@ public class SeatStatus {
     public void setStatus(boolean status) {
         this.status = status;
     }
+<<<<<<< HEAD
 	
+=======
+>>>>>>> HongPhuc
 }
