@@ -1,6 +1,5 @@
 package com.cinema.entity;
 
-import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -24,7 +23,7 @@ public class Ticket {
     private double priceTicket;
 
     @Column(nullable = false)
-    private Date date;
+    private String date;
 
     @Column(nullable = false)
     private String placeName;
@@ -40,7 +39,7 @@ public class Ticket {
     private MovieScreenings movieScreenings;
 
     @OneToMany(mappedBy = "ticket")
-    private List<TicketPayment> detailTickets;
+    private List<TicketPayment> ticketPayments;
 
 	public int getTicketID() {
 		return ticketID;
@@ -58,11 +57,11 @@ public class Ticket {
 		this.priceTicket = priceTicket;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -98,15 +97,16 @@ public class Ticket {
 		this.movieScreenings = movieScreenings;
 	}
 
-	public List<TicketPayment> getDetailTickets() {
-		return detailTickets;
+	public List<TicketPayment> getTicketPayments() {
+		return ticketPayments;
 	}
 
-	public void setDetailTickets(List<TicketPayment> detailTickets) {
-		this.detailTickets = detailTickets;
+	public void setTicketPayments(List<TicketPayment> ticketPayments) {
+		this.ticketPayments = ticketPayments;
 	}
 
+	
+    
+    
     // Getters and setters
-    
-    
 }

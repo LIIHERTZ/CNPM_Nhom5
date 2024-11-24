@@ -19,7 +19,7 @@ public class PersonDAOImpl implements IPersonDAO {
 	@Override
 	public List<Person> getAllPerson() {
 		EntityManager em = JPAConfig.getEntityManager();
-		String sql = "SELECT * FROM PERSON";
+		String sql = "SELECT p FROM Person p";
 		List<Person> listPerson = new ArrayList<>();
 		try {
 			TypedQuery<Person> query = em.createQuery(sql, Person.class);

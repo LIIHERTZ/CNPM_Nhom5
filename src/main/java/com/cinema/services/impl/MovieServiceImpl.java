@@ -78,4 +78,18 @@ public class MovieServiceImpl implements IMovieService{
 	}
 
 	
+	@Override
+	public List<Movie> searchMoviesByName(String movieName) {
+		return movieDao.searchMoviesByName(movieName);
+	}
+
+	@Override
+	public List<Movie> getMoviesShowing() {
+		 return movieDao.getMoviesShowing();
+	}
+
+	@Override
+	public List<Movie> getMoviesComingSoon() {
+		return movieDao.getMoviesComingSoon();
+	}
 }

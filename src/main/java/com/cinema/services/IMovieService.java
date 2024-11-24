@@ -20,4 +20,7 @@ public interface IMovieService {
 	List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit);
 	int getNoOfSearchResults(String keyword, String[] categories);
 
+	List<Movie> searchMoviesByName(String movieName);
+	 List<Movie> getMoviesShowing();
+	    List<Movie> getMoviesComingSoon();
 }

@@ -3,7 +3,6 @@ package com.cinema.controllers.admin;
 import java.io.IOException;
 import java.util.List;
 
-import com.cinema.entity.Person;
 import com.cinema.services.IPopCornService;
 import com.cinema.services.impl.PopCornServiceImpl;
 

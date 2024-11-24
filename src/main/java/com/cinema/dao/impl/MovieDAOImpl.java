@@ -414,7 +414,51 @@ public class MovieDAOImpl implements IMovieDAO {
 
 	        return noOfRecords;
 	    }
-
+	
+		@Override
+		public List<Movie> searchMoviesByName(String movieName) {
+			 EntityManager em = JPAConfig.getEntityManager();
+				try {
+					String jpql = "SELECT m FROM Movie m WHERE m.movieName LIKE :movieName";
+					TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
+					query.setParameter("movieName", "%" + movieName + "%");
+					return query.getResultList();
+				} finally {
+					em.close();
+				}
+		}
+	
+	
+	
+		@Override
+		public List<Movie> getMoviesShowing() {
+			EntityManager em = JPAConfig.getEntityManager(); // Kết nối EntityManager từ cấu hình JPA
+			try {
+				String jpql = "SELECT m FROM Movie m WHERE m.releaseDay BETWEEN CURRENT_DATE AND CURRENT_DATE + 1 MONTH";
+				TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
+				List<Movie> movies = query.getResultList();
+				System.out.println("Currently Showing Movies Size: " + movies.size()); // Log kích thước danh sách
+				return movies;
+			} finally {
+				em.close(); // Đóng EntityManager sau khi truy vấn
+			}
+		}
+	
+	
+	
+		@Override
+		public List<Movie> getMoviesComingSoon() {
+			EntityManager em = JPAConfig.getEntityManager(); // Kết nối EntityManager từ cấu hình JPA
+			try {
+				String jpql = "SELECT m FROM Movie m WHERE m.releaseDay > CURRENT_DATE + 1 MONTH";
+				TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
+				List<Movie> movies = query.getResultList();
+				System.out.println("Coming Soon Movies Size: " + movies.size()); // Log kích thước danh sách
+				return movies;
+			} finally {
+				em.close(); // Đóng EntityManager sau khi truy vấn
+			}
+		}
 	
 	
 }

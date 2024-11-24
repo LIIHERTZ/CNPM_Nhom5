@@ -63,7 +63,7 @@
 								href="${pageContext.request.contextPath}/userProfile">Profile Information</a>
 							</li>
 							<li><a
-								href="${pageContext.request.contextPath}/userBookingHistory">Booking History</a>
+								href="${pageContext.request.contextPath}/userTransaction?personId=${person.perID}">Booking History</a>
 							</li>
 							<li><a
 								href="${pageContext.request.contextPath}/logout">Log Out</a>

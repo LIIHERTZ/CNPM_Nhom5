@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Book Ticket</title>
 </head>
 <body>
 
@@ -22,12 +22,19 @@
 			<div class="thumb">
 				<img src="assets/images/movie/seat-plan.png" alt="movie">
 			</div>
-			<a href="/ValCT_Nhom5/selectSeats"
-				class="custom-button seatPlanButton">Seat Plans<i
-				class="fas fa-angle-right"></i>
-			</a>
+			<!-- Form với phương thức POST -->
+			<form action="/ValCT_Nhom5/bookTickets" method="post"
+				onsubmit="transferDataAndSubmit(); return false;">
+				<input type="hidden" id="startHourInput" name="startHour" value="">
+				<button type="submit" class="custom-button seatPlanButton">
+					Seat Plans <i class="fas fa-angle-right"></i>
+				</button>
+			</form>
+
+
 		</div>
 	</section>
+
 	<!-- ==========Window-Warning-Section========== -->
 
 	<!-- ==========Banner-Section========== -->
@@ -67,7 +74,8 @@
 					<div class="thumb">
 						<img src="assets/images/ticket/date.png" alt="ticket">
 					</div>
-					<span class="type">date</span> <select class="select-bar">
+					<span class="type">date</span> <select class="select-bar"
+						name="date">
 						<%
 						Calendar calendar = Calendar.getInstance();
 						int year = calendar.get(Calendar.YEAR);
@@ -96,7 +104,10 @@
 					</div>
 					<span class="type">location</span> <select class="select-bar"
 						name="location" onchange="this.form.submit()">
-						<option value="">Select Location</option>
+						<!-- Chỉ hiển thị "Select Location" nếu chưa chọn giá trị -->
+						<c:if test="${empty selectedLocation}">
+							<option value="">Select Location</option>
+						</c:if>
 						<c:forEach var="location" items="${locations}">
 							<option value="${location}"
 								${location == selectedLocation ? "selected" : ""}>
@@ -109,32 +120,27 @@
 					<div class="thumb">
 						<img src="assets/images/ticket/exp.png" alt="ticket">
 					</div>
-					<span class="type">Experience</span> <select class="select-bar">
-						<option value="English-2D">English-2D</option>
-						<option value="English-3D">English-3D</option>
-						<option value="Hindi-2D">Hindi-2D</option>
-						<option value="Hindi-3D">Hindi-3D</option>
-						<option value="Telegu-2D">Telegu-2D</option>
-						<option value="Telegu-3D">Telegu-3D</option>
+					<span class="type">Experience</span> <select class="select-bar"
+						name="experience">
+						<option value="2D">2D</option>
+						<option value="3D">3D</option>
+						<option value="Imax">Imax</option>
 					</select>
 				</div>
 				<div class="form-group">
 					<div class="thumb">
 						<img src="assets/images/ticket/cinema.png" alt="ticket">
 					</div>
-					<span class="type">version</span> <select class="select-bar">
-						<option value="Awaken">Awaken</option>
-						<option value="Venus">Venus</option>
-						<option value="wanted">wanted</option>
-						<option value="joker">joker</option>
-						<option value="fid">fid</option>
-						<option value="kidio">kidio</option>
-						<option value="mottus">mottus</option>
+					<span class="type">version</span> <select class="select-bar"
+						name="version">
+						<option value="Vietsub">Vietsub</option>
+						<option value="Voiceover">Voiceover</option>
 					</select>
 				</div>
 			</form>
 		</div>
 	</section>
+
 	<!-- ==========Book-Section========== -->
 
 	<!-- ==========Movie-Section========== -->
@@ -155,12 +161,15 @@
 									</div>
 								</div>
 								<div class="movie-schedule">
-									<!-- Lấy danh sách suất chiếu từ cinemaScreeningsMap -->
 									<c:forEach var="screening"
 										items="${cinemaScreeningsMap[cinema.cinemaID]}">
 										<div class="item">
-											<fmt:formatDate value="${screening.startHour}"
-												pattern="HH:mm" />
+											<!-- Khi người dùng bấm chọn, giá trị startHour sẽ được gắn vào form -->
+											<button type="button" class="custom-button"
+												onclick="setStartHour('${screening.startHour}')">
+												<fmt:formatDate value="${screening.startHour}"
+													pattern="HH:mm" />
+											</button>
 										</div>
 									</c:forEach>
 								</div>
@@ -171,5 +180,49 @@
 		</div>
 	</div>
 	<!-- ==========Movie-Section========== -->
+	<script>
+	 // Hàm để cập nhật giá trị startHour vào form
+    function setStartHour(startHour) {
+        const startHourInput = document.getElementById('startHourInput');
+        startHourInput.value = startHour; // Gán giá trị startHour vào input ẩn
+    }
+    function transferDataAndSubmit() {
+        // Lấy form cần submit
+        const formToSubmit = document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]');
+        const searchForm = document.querySelector('form.ticket-search-form');
+        const startHourInput = document.getElementById('startHourInput');
+
+        if (!startHourInput.value) {
+            alert('Please select a showtime before proceeding.');
+            return false; // Ngăn form submit nếu chưa chọn startHour
+        }
+
+
+        // Lấy dữ liệu từ form search
+        const date = searchForm.querySelector('select[name="date"]').value;
+        const location = searchForm.querySelector('select[name="location"]').value;
+        const experience = searchForm.querySelector('select[name="experience"]').value;
+        const version = searchForm.querySelector('select[name="version"]').value;
+
+        // Tạo các input ẩn để thêm dữ liệu vào form cần submit
+        const inputs = [
+            { name: 'date', value: date },
+            { name: 'location', value: location },
+            { name: 'experience', value: experience },
+            { name: 'version', value: version },
+        ];
+
+        inputs.forEach(inputData => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = inputData.name;
+            input.value = inputData.value;
+            formToSubmit.appendChild(input);
+        });
+
+        // Nếu có giá trị startHour, submit form
+        document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]').submit();
+    }
+</script>
 </body>
 </html>

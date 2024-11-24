@@ -21,4 +21,8 @@ public interface IMovieDAO {
 	int getNoOfSearchResults(String keyword, String category);
 	List<Movie> searchMovies(String keyword, String[] categories, int offset, int limit);   
 	int getNoOfSearchResults(String keyword, String[] categories);
+	List<Movie> searchMoviesByName(String movieName);
+	
+	List<Movie> getMoviesShowing(); // Lấy danh sách phim đang chiếu
+    List<Movie> getMoviesComingSoon();
 }
