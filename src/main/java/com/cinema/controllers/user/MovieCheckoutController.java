@@ -12,12 +12,15 @@ import java.util.stream.Collectors;
 
 import org.hibernate.validator.constraints.URL;
 
+import com.cinema.entity.Coupon;
 import com.cinema.entity.Movie;
 import com.cinema.entity.SeatStatus;
 import com.cinema.services.IMovieService;
 import com.cinema.services.ISeatService;
 import com.cinema.services.impl.MoviceServiceImpl;
 import com.cinema.services.impl.SeatServiceImpl;
+import com.cinema.services.impl.CouponServiceImpl;
+import com.cinema.services.ICouponService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -37,6 +40,7 @@ public class MovieCheckoutController extends HttpServlet{
 	
 	private IMovieService movieService = new MoviceServiceImpl();
 	private ISeatService seatService = new SeatServiceImpl();
+	private ICouponService couponService = new CouponServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -93,9 +97,12 @@ public class MovieCheckoutController extends HttpServlet{
 		Map<String, List<SeatStatus>> seatStatusesGroupedByRow = seatStatuses.stream()
 				.collect(Collectors.groupingBy(seat -> seat.getSeat().getSeatNumber().substring(0, 1)));
 
+		
+		//lay danh sach coupon
+		List<Coupon> coupons = couponService.getAllCouponsValid();
 		// Gán thông tin vào request để truyền tới JSP
 		
-		
+		req.setAttribute("coupons", coupons);
 		req.setAttribute("movie", movie);
 		req.setAttribute("seatStatusesGroupedByRow", seatStatusesGroupedByRow);
 		req.setAttribute("screeningId", screeningId);

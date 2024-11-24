@@ -12,5 +12,7 @@ public interface ICouponDAO {
 	Coupon getOneCoupon(int id); 
 	boolean insertCoupon(Coupon coupon); 
 	boolean updateCoupon(Coupon coupon); 
-	boolean deleteCoupon(Coupon coupon); 
+	boolean deleteCoupon(Coupon coupon);
+
+	List<Coupon> getAllCouponsValid(); 
 }
