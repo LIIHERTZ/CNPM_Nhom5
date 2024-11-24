@@ -1,7 +1,8 @@
 package com.cinema.entity;
 
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ public class Payment {
     private int paymentID;
 
     @ManyToOne
-    @JoinColumn(name = "perID", nullable = false)
+    @JoinColumn(name = "perID")
     private Person person;
 
     @ManyToOne
@@ -38,6 +39,68 @@ public class Payment {
     @OneToMany(mappedBy = "payment")
     private List<PopCornPayment> popcornPayments;
 
-	
-    // Getters and setters
+	public int getPaymentID() {
+		return paymentID;
+	}
+
+	public void setPaymentID(int paymentID) {
+		this.paymentID = paymentID;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Coupon getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public List<TicketPayment> getTicketPayments() {
+		return ticketPayments;
+	}
+
+	public void setTicketPayments(List<TicketPayment> ticketPayments) {
+		this.ticketPayments = ticketPayments;
+	}
+
+	public List<PopCornPayment> getPopcornPayments() {
+		return popcornPayments;
+	}
+
+	public void setPopcornPayments(List<PopCornPayment> popcornPayments) {
+		this.popcornPayments = popcornPayments;
+	}
+
 }

@@ -16,8 +16,8 @@ import javax.crypto.spec.SecretKeySpec;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class PaymentConfig {
-	 public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-	    public static String vnp_ReturnUrl = "http://localhost:8080/ValCT_Nhom5/paymentstatus";
+	 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+	    public static String vnp_ReturnUrl = "http://localhost:8080/paymentReturn";
 	    public static String vnp_TmnCode = "WOOCTULF";
 	    public static String secretKey = "BAW7UH5B141VLACTG8YGC75JOJ3UYUUY";
 	    public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

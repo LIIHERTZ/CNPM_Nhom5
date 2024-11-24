@@ -20,13 +20,13 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
-                    <a href="/ValCT_Nhom5/home">
+                    <a href="${pageContext.request.contextPath}/home">
                         <img src="assets/images/logo/logo.png" alt="logo">
                     </a>
                 </div>
                 <ul class="menu">
                     <li>
-                        <a href="/ValCT_Nhom5/home" class="active">Home</a>
+                        <a href="${pageContext.request.contextPath}/home" class="active">Home</a>
                     </li>
                     <li>
                         <a href="#0">movies</a>
@@ -109,7 +109,7 @@
                         <a href="contact.html">contact</a>
                     </li>
                     <li class="header-button pr-0">
-                        <a href="/ValCT_Nhom5/signin">Sign In</a>
+                        <a href="${pageContext.request.contextPath}/signin">Sign In</a>
                     </li>
                 </ul>
                 <div class="header-bar d-lg-none">

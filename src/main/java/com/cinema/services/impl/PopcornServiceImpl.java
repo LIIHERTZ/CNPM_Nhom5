@@ -19,4 +19,9 @@ public class PopcornServiceImpl implements IPopcornService{
 		 return popcornDAO.findByType(type);
 	}
 
+	@Override
+	public PopCorn getPopcornByName(String name) {
+		return popcornDAO.findByName(name);
+	}
+
 }

@@ -60,7 +60,7 @@ int countdownMinutes = 5;
 			<div class="page-title-area">
 				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/bookTickets"
+					<a href="${pageContext.request.contextPath}/bookTickets"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
@@ -119,7 +119,7 @@ int countdownMinutes = 5;
 				</div>
 				<h5 class="subtitle">silver plus</h5>
 				<div class="screen-wrapper">
-					<form action="/ValCT_Nhom5/selectSeats" method="post">
+					<form action="${pageContext.request.contextPath}/selectSeats" method="post">
 
 						<input type="hidden" name="selectedSeats" id="hiddenSelectedSeats"
 							value=""> <input type="hidden" name="totalPrice"
@@ -206,7 +206,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval); 
-				window.location.href = "/ValCT_Nhom5/bookTickets";// Dừng đếm ngược khi hết thời gian
+				window.location.href = "${pageContext.request.contextPath}/bookTickets";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
 		document

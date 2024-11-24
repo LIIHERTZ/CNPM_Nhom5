@@ -38,9 +38,13 @@ public class BookTicketsController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String movieId = "2"; // ID phim cố định
+		String movieId = req.getParameter("movieId");
 		String selectedLocation = req.getParameter("location");
 		String selectedDate = req.getParameter("date");
+		
+		if (selectedLocation == null) {
+			selectedLocation = "District 1";
+		}
 
 		// Lấy ngày hiện tại nếu chưa chọn
 		if (selectedDate == null || selectedDate.isEmpty()) {
@@ -120,7 +124,7 @@ public class BookTicketsController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    String movieId = "2";
+		String movieId = req.getParameter("movieId");
 	    String screeningId = req.getParameter("screeningId");
 	    String startHour = req.getParameter("startHour");
 	    String selectedLocation = req.getParameter("location");

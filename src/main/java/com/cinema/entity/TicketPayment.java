@@ -14,22 +14,24 @@ import jakarta.persistence.Table;
 public class TicketPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int detailTicketID;
+    private int paymentTicketID;
 
     @ManyToOne
-    @JoinColumn(name = "paymentID", nullable = false)
+    @JoinColumn(name = "paymentID")
     private Payment payment;
 
     @ManyToOne
-    @JoinColumn(name = "ticketID", nullable = false)
+    @JoinColumn(name = "ticketID")
     private Ticket ticket;
 
-	public int getDetailTicketID() {
-		return detailTicketID;
+    
+
+	public int getPaymentTicketID() {
+		return paymentTicketID;
 	}
 
-	public void setDetailTicketID(int detailTicketID) {
-		this.detailTicketID = detailTicketID;
+	public void setPaymentTicketID(int paymentTicketID) {
+		this.paymentTicketID = paymentTicketID;
 	}
 
 	public Payment getPayment() {

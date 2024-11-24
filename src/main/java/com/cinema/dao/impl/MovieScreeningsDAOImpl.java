@@ -5,6 +5,7 @@ import java.util.List;
 import com.cinema.configs.JPAConfig;
 import com.cinema.dao.IMovieScreeningsDAO;
 import com.cinema.entity.MovieScreenings;
+import com.cinema.entity.Person;
 
 import jakarta.persistence.EntityManager;
 
@@ -30,5 +31,19 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
 		String jpql = "SELECT DISTINCT FUNCTION('DATE_FORMAT', s.startTime, '%Y-%m-%d') "
 				+ "FROM MovieScreenings s WHERE s.movieID= :movieId";
 		return entityManager.createQuery(jpql, String.class).setParameter("movieId", movieId).getResultList();
+	}
+
+	@Override
+	public MovieScreenings findById(int msID) {
+		EntityManager em = JPAConfig.getEntityManager();
+		MovieScreenings movie = new MovieScreenings();
+		try {
+			movie = em.find(MovieScreenings.class, msID);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			em.close();
+		}
+		return movie;
 	}
 }

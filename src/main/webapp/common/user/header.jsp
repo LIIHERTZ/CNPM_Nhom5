@@ -19,12 +19,12 @@
 		<div class="container">
 			<div class="header-wrapper">
 				<div class="logo">
-					<a href="/ValCT_Nhom5/userHome"> <img src="assets/images/logo/logo.png"
+					<a href="${pageContext.request.contextPath}/userHome"> <img src="assets/images/logo/logo.png"
 						alt="logo">
 					</a>
 				</div>
 				<ul class="menu">
-					<li><a href="/ValCT_Nhom5/userHome" class="active">Home</a></li>
+					<li><a href="${pageContext.request.contextPath}/userHome" class="active">Home</a></li>
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
 							<li><a href="movie-grid.html">Movie Grid</a></li>

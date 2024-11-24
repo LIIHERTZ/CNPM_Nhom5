@@ -70,7 +70,6 @@ public class PersonDAOImpl implements IPersonDAO {
 		} finally {
 			em.close();
 		}
-
 	}
 
 	@Override

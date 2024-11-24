@@ -60,7 +60,7 @@ int countdownMinutes = 5;
 			<div class="page-title-area">
 				<!-- NÃºt quay láº¡i -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/selectSeats"
+					<a href="${pageContext.request.contextPath}/selectSeats"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
@@ -96,7 +96,7 @@ int countdownMinutes = 5;
 							<h5 class="title">Already a Boleto Member?</h5>
 							<p>Sign in to earn points and make booking easier!</p>
 						</div>
-						<a href="/ValCT_Nhom5/signin" class="sign-in-area"> <i
+						<a href="${pageContext.request.contextPath}/signin" class="sign-in-area"> <i
 							class="fas fa-user"></i><span>Sign in</span>
 						</a>
 					</div>
@@ -136,7 +136,7 @@ int countdownMinutes = 5;
 										Card</span>
 							</a></li>
 						</ul>
-						<form action="/ValCT_Nhom5/movieCheckout" method="post"
+						<form action="${pageContext.request.contextPath}/movieCheckout" method="post"
 							class="payment-card-form">
 							<input type="hidden" name="amountPayable" value="${amountPayable != null ? amountPayable : totalPrice}">
     						<div class="form-group">
@@ -222,7 +222,7 @@ int countdownMinutes = 5;
 								</c:choose>
 							</span>
 						</h6>
-						<a href="/ValCT_Nhom5/addService"
+						<a href="${pageContext.request.contextPath}/addService"
 							class="custom-button back-button">Add-Service</a>
 					</div>
 				</div>
@@ -245,7 +245,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "/ValCT_Nhom5/selectSeats";// Dá»«ng Äáº¿m ngÆ°á»£c khi háº¿t thá»i gian
+				window.location.href = "${pageContext.request.contextPath}/selectSeats";// Dá»«ng Äáº¿m ngÆ°á»£c khi háº¿t thá»i gian
 			}
 		}, 1000);
 	</script>

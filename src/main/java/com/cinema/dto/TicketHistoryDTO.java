@@ -10,10 +10,11 @@
 	    private Date startHour;
 	    private Date endHour;
 	    private double priceTicket;
+		private int paymentId;
 	
 	    // Constructor
 	    public TicketHistoryDTO(int ticketID, String movieName, String cinemaName, String roomName, String chairNumber,
-	                            Date startHour, Date endHour, double priceTicket) {
+	                            Date startHour, Date endHour, double priceTicket, int paymentId) {
 	        this.ticketID = ticketID;
 	        this.movieName = movieName;
 	        this.cinemaName = cinemaName;
@@ -22,6 +23,7 @@
 	        this.startHour = startHour;
 	        this.endHour = endHour;
 	        this.priceTicket = priceTicket;
+			this.paymentId = paymentId;
 	    }
 	
 	    // Getters and setters

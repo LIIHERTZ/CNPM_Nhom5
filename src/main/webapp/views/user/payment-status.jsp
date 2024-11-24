@@ -78,7 +78,7 @@
       <p class="payment-description">Thank you so much.</p>
       <p> Have a Good day! </p>
       <div class="payment-button-container">
-        <a href="/ValCT_Nhom5/home" class="payment-button">
+        <a href="${pageContext.request.contextPath}/home" class="payment-button">
           Go Back
         </a>
       </div>

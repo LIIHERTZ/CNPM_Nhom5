@@ -25,8 +25,9 @@
 				<img src="assets/images/movie/seat-plan.png" alt="movie">
 			</div>
 			<!-- Form với phương thức POST -->
-			<form action="/ValCT_Nhom5/bookTickets" method="post"
+			<form action="${pageContext.request.contextPath}/bookTickets" method="post"
 				onsubmit="transferDataAndSubmit(); return false;">
+				<input type = "hidden" name = "movieId" value = "${movie.movieID}">
 				<input type="hidden" id="startHourInput" name="startHour" value="">
 				<input type="hidden" id="screeningIdInput" name="screeningId"
 					value="">
@@ -71,32 +72,13 @@
 	<section class="book-section bg-one">
 		<div class="container">
 			<form class="ticket-search-form two">
+			<input type = "hidden" name = "movieId" value = "${movie.movieID}">
 				<div class="form-group">
 					<div class="thumb">
 						<img src="assets/images/ticket/date.png" alt="ticket">
 					</div>
 					<span class="type">date</span> <select class="select-bar"
 						name="date" onchange="this.form.submit()"> 
-						<%-- <%
-						Calendar calendar = Calendar.getInstance();
-						int year = calendar.get(Calendar.YEAR);
-						int month = calendar.get(Calendar.MONTH); // Tháng hiện tại
-						int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-						calendar.set(Calendar.DAY_OF_MONTH, currentDay); // Đặt về ngày đầu tiên của tháng
-
-						while (calendar.get(Calendar.MONTH) == month) {
-							String date = sdf.format(calendar.getTime());
-						%> --%>
-						<%-- <option value="<%=date%>"
-							<%=(calendar.get(Calendar.DAY_OF_MONTH) == currentDay) ? "selected" : ""%>>
-							<%=date%>
-						</option> --%>
-						<%-- <%
-						calendar.add(Calendar.DAY_OF_MONTH, 1); // Tăng thêm một ngày
-						}
-						%> name="date" onchange="this.form.submit()"> --%>
 						<%
 						// Lấy ngày hiện tại
 						Calendar calendar = Calendar.getInstance();
@@ -212,7 +194,7 @@
 
     // Hàm chuyển dữ liệu từ form tìm kiếm sang form cần submit
     function transferDataAndSubmit() {
-        const formToSubmit = document.querySelector('form[action="/ValCT_Nhom5/bookTickets"]'); // Form chính
+        const formToSubmit = document.querySelector('form[action="${pageContext.request.contextPath}/bookTickets"]'); // Form chính
         const searchForm = document.querySelector('form.ticket-search-form'); // Form tìm kiếm
         const startHourInput = document.getElementById('startHourInput');
         const screeningIdInput = document.getElementById('screeningIdInput');

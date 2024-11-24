@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class PopCornPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int detailPopCornID;
+    private int paymentPopCornID;
 
     @ManyToOne
     @JoinColumn(name = "paymentID", nullable = false)
@@ -27,5 +27,41 @@ public class PopCornPayment {
     @Column(nullable = false)
     private int quantity;
 
+
+    
+
+	public int getPaymentPopCornID() {
+		return paymentPopCornID;
+	}
+
+	public void setPaymentPopCornID(int paymentPopCornID) {
+		this.paymentPopCornID = paymentPopCornID;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public PopCorn getPopcorn() {
+		return popcorn;
+	}
+
+	public void setPopcorn(PopCorn popcorn) {
+		this.popcorn = popcorn;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
     // Getters and setters
+    
 }

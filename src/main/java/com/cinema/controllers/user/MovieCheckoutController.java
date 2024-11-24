@@ -131,7 +131,7 @@ public class MovieCheckoutController extends HttpServlet{
             String vnp_Command = "pay";
             String vnp_OrderInfo = "Thanh toan ve xem phim";
             String orderType = "billpayment";
-            String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
+            String vnp_TxnRef = PaymentConfig.getRandomNumber(4);
             String vnp_IpAddr = PaymentConfig.getIpAddress(req);
             String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
             String price = req.getParameter("amountPayable");

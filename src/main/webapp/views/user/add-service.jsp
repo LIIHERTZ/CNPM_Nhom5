@@ -65,7 +65,7 @@ int countdownMinutes = 5;
 			<div class="page-title-area">
 				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/movieCheckout"
+					<a href="${pageContext.request.contextPath}/movieCheckout"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
@@ -219,7 +219,7 @@ int countdownMinutes = 5;
 							<span>Amount Payable</span><span>${totalPrice} VND</span>
 						</h6>
 
-						<form id="proceedForm" action="/ValCT_Nhom5/addService"
+						<form id="proceedForm" action="${pageContext.request.contextPath}/addService"
 							method="post" onsubmit="prepareProceedForm()">
 							 <input type="hidden"
 								name="foodAndBeverageTotal" id="foodAndBeverageTotal" /> <input
@@ -253,7 +253,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "/ValCT_Nhom5/movieCheckout";// Dừng đếm ngược khi hết thời gian
+				window.location.href = "${pageContext.request.contextPath}/movieCheckout";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
 		

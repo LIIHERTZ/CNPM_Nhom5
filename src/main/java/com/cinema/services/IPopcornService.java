@@ -4,4 +4,5 @@ import com.cinema.entity.PopCorn;
 public interface IPopcornService {
 	List<PopCorn> getAllPopcorns();
 	List<PopCorn> getPopcornsByType(String type);
+	PopCorn getPopcornByName(String name);
 }

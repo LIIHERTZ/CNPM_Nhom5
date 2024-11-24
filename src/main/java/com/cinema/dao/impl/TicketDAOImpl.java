@@ -6,8 +6,10 @@ import com.cinema.configs.JPAConfig;
 import com.cinema.dao.ITicketDAO;
 import com.cinema.dto.TicketHistoryDTO;
 import com.cinema.entity.PopCornPayment;
+import com.cinema.entity.Ticket;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 public class TicketDAOImpl implements ITicketDAO{
@@ -77,7 +79,7 @@ public class TicketDAOImpl implements ITicketDAO{
 	    try {
 	        String jpql = "SELECT new com.cinema.dto.TicketHistoryDTO("
 	                + "t.ticketID, m.movieName, c.cinemaName, r.roomName, t.chairNumber, "
-	                + "ms.startHour, ms.endHour, t.priceTicket) "
+	                + "ms.startHour, ms.endHour, t.priceTicket, p.paymentID) "
 	                + "FROM Ticket t "
 	                + "JOIN t.movieScreenings ms "
 	                + "JOIN ms.movie m "
@@ -119,6 +121,32 @@ public class TicketDAOImpl implements ITicketDAO{
 	    } finally {
 	        em.close();
 	    }
+	}
+
+
+
+	@Override
+	public Ticket saveTicket(Ticket ticket) {
+		EntityManager em = JPAConfig.getEntityManager();
+		EntityTransaction transaction = null;
+		try {
+
+			transaction = em.getTransaction();
+			transaction.begin();
+			em.persist(ticket);
+			transaction.commit();
+			return ticket;
+
+		} catch (Exception e) {
+			if (transaction != null && transaction.isActive()) {
+				transaction.rollback(); // Rollback nếu có lỗi
+			}
+			System.out.println(e);
+
+		} finally {
+			em.close();
+		}
+		return null;
 	}
 
 }

@@ -4,4 +4,6 @@ import com.cinema.entity.PopCorn;
 public interface IPopcornDAO {
 	List<PopCorn> findAll();
 	public List<PopCorn> findByType(String type);
+	PopCorn findByID(int id);
+	PopCorn findByName(String name);
 }

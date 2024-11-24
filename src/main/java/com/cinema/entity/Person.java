@@ -49,6 +49,7 @@ public class Person {
 
     @OneToMany(mappedBy = "person")
     private List<Message> messages;
+    
 
     public int getPerID() {
         return perID;

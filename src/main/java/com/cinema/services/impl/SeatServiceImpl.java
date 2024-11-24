@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cinema.dao.ISeatDAO;
 import com.cinema.dao.impl.SeatDAOImpl;
+import com.cinema.entity.Seat;
 import com.cinema.entity.SeatStatus;
 import com.cinema.services.ISeatService;
 
@@ -17,8 +18,13 @@ public class SeatServiceImpl implements ISeatService {
 	}
 
 	@Override
-	public void updateSeatStatuses(String[] selectedSeats, int screeningId) {
+	public void updateSeatStatuses(String selectedSeats, int screeningId) {
 		seatDao.updateSeatStatuses(selectedSeats, screeningId);
+	}
+
+	@Override
+	public Integer findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {
+		return seatDao.findSeatIdBySeatNumberAndScreeningId(seatNumber, screeningId);
 	}
 
 }

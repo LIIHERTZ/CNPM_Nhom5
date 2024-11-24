@@ -9,4 +9,6 @@ public interface IMovieScreeningsDAO {
 	List<MovieScreenings> getScreeningsByMovieIdAndCinemaId(int movieId, int cinemaId);
 
 	List<String> findAvailableDatesByMovieId(Long movieId);
+	
+	MovieScreenings findById(int msID);
 }

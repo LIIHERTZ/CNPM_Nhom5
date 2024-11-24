@@ -31,7 +31,7 @@ public class Room {
     
     
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    private List<Seat> chair;
+    private List<Seat> seat;
 
     @ManyToOne
     @JoinColumn(name = "cinemaID", nullable = false)
@@ -39,6 +39,15 @@ public class Room {
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<MovieScreenings> movieScreenings;
+
+    
+	public List<Seat> getSeat() {
+		return seat;
+	}
+
+	public void setSeat(List<Seat> seat) {
+		this.seat = seat;
+	}
 
 	public int getRoomID() {
 		return roomID;
@@ -70,14 +79,6 @@ public class Room {
 
 	public void setChairNumber(Integer chairNumber) {
 		this.chairNumber = chairNumber;
-	}
-
-	public List<Chair> getChair() {
-		return chair;
-	}
-
-	public void setChair(List<Chair> chair) {
-		this.chair = chair;
 	}
 
 	public Cinema getCinema() {
