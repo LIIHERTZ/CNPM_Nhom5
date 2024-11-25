@@ -49,12 +49,17 @@
 						<span>Or</span>
 					</div>
 					<ul class="social-icons">
-						<li><a href="#0"> <i class="fab fa-facebook-f"></i>
-						</a></li>
-						<li><a href="#0" class="active"> <i
-								class="fab fa-twitter"></i>
-						</a></li>
-						<li><a href="#0"> <i class="fab fa-google"></i>
+						<li><a
+							href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
+
+							&redirect_uri=http://localhost:8080/ValCT_Nhom5/loginwithgoogle
+							
+							&response_type=code
+							
+							&client_id=762099077141-pflm03291tjlku0h3t5bqfbrvkb3rsto.apps.googleusercontent.com
+							
+							&approval_prompt=force">
+								<i class="fab fa-google"></i>
 						</a></li>
 					</ul>
 				</div>

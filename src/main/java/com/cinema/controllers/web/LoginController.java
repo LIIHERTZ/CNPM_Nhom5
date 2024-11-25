@@ -2,9 +2,17 @@ package com.cinema.controllers.web;
 
 import java.io.IOException;
 
+import org.apache.http.client.ClientProtocolException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
+
 import com.cinema.entity.Person;
+import com.cinema.entity.GoogleAccount;
 import com.cinema.services.IPersonService;
 import com.cinema.services.impl.PersonServiceImpl;
+import com.cinema.other.Constants;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = { "/signin", "/waiting" })
+@WebServlet(urlPatterns = { "/signin", "/waiting", "/loginwithgoogle" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,9 +34,80 @@ public class LoginController extends HttpServlet {
 		String url = req.getRequestURI().toString();
 		if (url.contains("signin"))
 			showPageLogin(req, resp);
+		else if (url.contains("loginwithgoogle"))
+			showGoogleLogin(req, resp);
 		else if (url.contains("waiting"))
 			waiting(req, resp);
 	}
+
+	private void showGoogleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
+		String code = req.getParameter("code");
+		String accessToken = getToken(code);
+		GoogleAccount acc = getUserInfo(accessToken);
+		String email = acc.getEmail();
+		HttpSession session = req.getSession();
+		
+		Person per = accService.findByEmail(email);
+		if (per.getEmail() != null) {
+			session.setAttribute("person", per);
+			resp.sendRedirect(req.getContextPath() + "/waiting");
+		} else {
+			Person person= new Person();
+			person.setFullName(acc.getName());
+			person.setEmail(acc.getEmail());
+			person.setRole("User");
+			person.setPassword("123");
+			accService.insertPerson(person);
+			session.setAttribute("person", person);
+			resp.sendRedirect(req.getContextPath() + "/waiting");
+		}
+		
+	}
+	public static String getToken(String code) throws ClientProtocolException, IOException {
+
+        String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
+
+                .bodyForm(
+
+                        Form.form()
+
+       .add("client_id", Constants.GOOGLE_CLIENT_ID)
+
+                        .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
+
+                        .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI)
+
+                        .add("code", code)
+
+                        .add("grant_type", Constants.GOOGLE_GRANT_TYPE)
+
+                        .build()
+
+                )
+
+                .execute().returnContent().asString();
+
+
+
+        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
+
+        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
+
+        return accessToken;
+
+    }
+	public static GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+
+        String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
+
+        String response = Request.Get(link).execute().returnContent().asString();
+
+        GoogleAccount googlePojo = new Gson().fromJson(response, GoogleAccount.class);
+
+        return googlePojo;
+
+    }
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

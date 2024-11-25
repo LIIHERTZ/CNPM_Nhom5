@@ -19,7 +19,7 @@
 		<div class="container">
 			<div class="header-wrapper">
 				<div class="logo">
-					<a href="/ValCT_Nhom5/userHome"> <img src="/ValCT_Nhom5/assets/images/logo/logo.png"
+					<a href="/ValCT_Nhom5/userHome"> <img src="assets/images/logo/logo.png"
 						alt="logo">
 					</a>
 				</div>

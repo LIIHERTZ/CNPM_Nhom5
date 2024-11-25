@@ -17,28 +17,28 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int perID;
 
-    @Column(nullable = false, columnDefinition = "nvarchar(50)")
+    @Column(columnDefinition = "nvarchar(50)", nullable = true) // Cho phép null
     protected String fullName;
 
-    @Column(nullable = false, unique = true, columnDefinition = "nvarchar(50)")
+    @Column(nullable = false, unique = true, columnDefinition = "nvarchar(50)") // email vẫn không cho phép null
     protected String email;
 
-    @Column(nullable = false, columnDefinition = "nvarchar(50)")
+    @Column(nullable = false, columnDefinition = "nvarchar(50)") // password vẫn không cho phép null
     protected String password;
 
-    @Column(columnDefinition = "nvarchar(15)")
+    @Column(columnDefinition = "nvarchar(15)", nullable = true) // Cho phép null
     protected String phone;
 
-    @Column(columnDefinition = "nvarchar(20)")
+    @Column(columnDefinition = "nvarchar(20)", nullable = true) // Cho phép null
     protected String role;
 
-    @Column(nullable = false)
-    protected int gender;  // 0 for female, 1 for male
+    @Column(nullable = true) // Cho phép null
+    protected Integer gender; // Sử dụng Integer thay vì int để cho phép null
 
-    @Column(nullable = false)
+    @Column(nullable = true) // Cho phép null
     protected Date birthDate;
 
-    @Column(columnDefinition = "nvarchar(50)")
+    @Column(columnDefinition = "nvarchar(50)", nullable = true) // Cho phép null
     protected String region;
 
     @OneToMany(mappedBy = "person")
@@ -50,6 +50,7 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private List<Message> messages;
 
+    // Getters và Setters
     public int getPerID() {
         return perID;
     }
@@ -98,11 +99,11 @@ public class Person {
         this.role = role;
     }
 
-    public int getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

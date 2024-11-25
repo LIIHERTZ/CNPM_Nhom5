@@ -22,6 +22,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/bookTickets")
 public class BookTicketsController extends HttpServlet {
@@ -96,8 +97,27 @@ public class BookTicketsController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		String movieId = "2";
+	    String selectedLocation = req.getParameter("location");
+	    String date = req.getParameter("date");
+	    String experience = req.getParameter("experience");
+	    String version = req.getParameter("version");
+	    String startHour = req.getParameter("startHour");
+
+	    // Lấy thông tin movie
+	    Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));
+
+	    // Lưu dữ liệu vào session
+	    HttpSession session = req.getSession();
+	    session.setAttribute("selectedLocation", selectedLocation);
+	    session.setAttribute("selectedStartHour", startHour);
+	    session.setAttribute("selectedTime", date);
+	    session.setAttribute("experience", experience);
+	    session.setAttribute("version", version);
+	    session.setAttribute("movie", movie);
+
+	    // Chuyển hướng đến controller xử lý chọn ghế
+	    resp.sendRedirect("selectSeats");
 	}
 
 }

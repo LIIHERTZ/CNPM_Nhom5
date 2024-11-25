@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
@@ -93,7 +95,7 @@
 
 	<!-- sidebar copyright -->
 	<div class="sidebar__copyright">
-		© HOTFLIX, 2019—2024. <br>Create by <a
+		Â© HOTFLIX, 2019â2024. <br>Create by <a
 			href="https://themeforest.net/user/dmitryvolkov/portfolio"
 			target="_blank">Dmitry Volkov</a>
 	</div>
@@ -136,7 +138,7 @@
 							id="couponValue" placeholder="Coupon Value" required
 							value="${coupon.couponValue }">
 					</div>
-					<!-- Định dạng ngày sử dụng JSTL -->
+					<!-- Äá»nh dáº¡ng ngÃ y sá»­ dá»¥ng JSTL -->
 					<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd"
 						var="formattedDate" />
 				</div>
@@ -147,7 +149,7 @@
 							required value="${formattedDate}">
 					</div>
 				</div>
-				<!-- Định dạng ngày sử dụng JSTL -->
+				<!-- Äá»nh dáº¡ng ngÃ y sá»­ dá»¥ng JSTL -->
 				<fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd"
 					var="formattedDate" />
 				<div class="col-12">
