@@ -11,4 +11,8 @@ public interface IPaymentService {
             String experience, String version, String startHour, Movie movie,
             String selectedSeats, String totalPrice, String payDate, Map<String, List<Integer>> products,
             Person person) throws Exception;
+    List<Object[]> getMovieStatisticsByDate(String dateValue, String dateType);
+    List<Object[]> getPopCornStatisticsByDate(String dateValue, String dateType);
+    List<Object[]> getCinemaRevenuesByMovieID(String movieID);
+    List<Object[]> getCustomerAmountAllCinema();
 }

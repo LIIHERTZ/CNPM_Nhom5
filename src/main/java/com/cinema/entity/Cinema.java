@@ -2,6 +2,7 @@ package com.cinema.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,21 +18,20 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cinemaID;
 
-    @Column(nullable = false)
+    @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
     private String cinemaName;
-
+    @Column(columnDefinition = "NVARCHAR(500)")
     private String address;
-    
+    @Column(columnDefinition = "NVARCHAR(500)")
     private String location;
-    public String getLocation() {
-		return location;
-	}
+    
+    @Column(name = "status", nullable = false, columnDefinition = "BIT")
+    private boolean status; // New field for cinema status using bit, named "status"
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	@OneToMany(mappedBy = "cinema")
+    @Column(nullable = false)
+    private int roomCount; // New field for the number of rooms
+    
+    @OneToMany(mappedBy = "cinema" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
 	public int getCinemaID() {
@@ -58,6 +58,14 @@ public class Cinema {
 		this.address = address;
 	}
 
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public List<Room> getRooms() {
 		return rooms;
 	}
@@ -65,7 +73,23 @@ public class Cinema {
 	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
+	
+    public boolean isStatus() {
+        return status;
+    }
 
-    
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getRoomCount() {
+        return roomCount;
+    }
+
+    public void setRoomCount(int roomCount) {
+        this.roomCount = roomCount;
+    }
+
     // Getters and setters
+    
 }

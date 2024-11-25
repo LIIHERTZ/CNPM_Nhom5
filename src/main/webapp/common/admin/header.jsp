@@ -12,7 +12,7 @@
 		<div class="header__content">
 			<!-- header logo -->
 			<a href="/ValCT_Nhom5/adminHome" class="header__logo">
-				<img src="assets2/img/logo.png" alt="" width="200" height="200">
+				<img src="/ValCT_Nhom5/assets2/img/logo.png" alt="" width="200" height="200">
 			</a>
 			<!-- end header logo -->
 

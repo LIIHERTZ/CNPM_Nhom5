@@ -1,15 +1,9 @@
 package com.cinema.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Coupon")
@@ -33,8 +27,16 @@ public class Coupon {
     @Column(nullable = false)
     private Date endDate;
 
-    @OneToMany(mappedBy = "coupon")
+    @OneToMany(mappedBy = "coupon", orphanRemoval = false)
     private List<Payment> payments;
+
+	@PreRemove
+	private void preRemove() {
+		// Hủy liên kết với tất cả các Payment trước khi xóa Coupon
+		for (Payment payment : payments) {
+			payment.setCoupon(null);
+		}
+	}
 
 	public int getCouponID() {
 		return couponID;
@@ -93,4 +95,6 @@ public class Coupon {
 	}
 
     // Getters and setters
+    
+    
 }

@@ -9,4 +9,8 @@ public interface ISeatService {
 	List<SeatStatus> getSeatStatusesByScreeningId(int screeningId);
     void updateSeatStatuses(String selectedSeats, int screeningId);
     Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId);
+    boolean addSeat(Seat seat);
+    Seat getSeatById(int seatID);
+    List<Seat> getSeatsByRoomId(int roomID);
+    boolean deleteSeat(int seatID);
 }

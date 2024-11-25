@@ -86,7 +86,7 @@ public class SignupController extends HttpServlet {
 			person.setGender(Integer.parseInt(req.getParameter("gender")));
 			person.setRegion(req.getParameter("region"));
 			person.setBirthDate(formatter.parse(req.getParameter("dob")));
-			person.setRole("customer");
+			person.setRole("User");
 
 			HttpSession session = req.getSession();
 			session.setAttribute("newperson", person);

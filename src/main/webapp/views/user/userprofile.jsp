@@ -133,7 +133,7 @@
 
                     <!-- Display Success or Error Message -->
                     <c:if test="${not empty sessionScope.successMessage}">
-                        <div class="alert alert-success" role="alert">u
+                        <div class="alert alert-success" role="alert">
                             ${sessionScope.successMessage}
                         </div>
                         <c:remove var="successMessage" scope="session" />
@@ -240,12 +240,12 @@
             let isValid = true;
 
             // Kiểm tra tên (không chứa số)
-          const nameInput = document.getElementById('fullName');
-const nameRegex = /^[\p{L}\s]+$/u; // Chỉ chứa chữ Unicode và khoảng trắng
-if (!nameRegex.test(nameInput.value)) {
-    alert("Tên không được chứa số hoặc ký tự đặc biệt.");
-    isValid = false;
-}
+            const nameInput = document.getElementById('fullName');
+            const nameRegex = /^[\p{L}\s]+$/u; // Chỉ chứa chữ Unicode và khoảng trắng
+            if (!nameRegex.test(nameInput.value)) {
+                alert("Tên không được chứa số hoặc ký tự đặc biệt.");
+                isValid = false;
+            }
 
             // Kiểm tra email (phải có ký tự '@')
             const emailInput = document.getElementById('email');

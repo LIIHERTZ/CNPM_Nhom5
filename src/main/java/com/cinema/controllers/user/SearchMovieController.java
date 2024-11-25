@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.cinema.entity.Movie;
 import com.cinema.services.IMovieService;
-import com.cinema.services.impl.MoviceServiceImpl;
+import com.cinema.services.impl.MovieServiceImpl;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/searchMovies")
 public class SearchMovieController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	IMovieService movieService = new MoviceServiceImpl();
+	IMovieService movieService = new MovieServiceImpl();
 	
 	 @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -47,11 +47,11 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-area">
                     <div class="left">
-                        <p>Copyright © 2020.All Rights Reserved By <a href="#0">ValCT </a></p>
+                        <p>Copyright © 2020.All Rights Reserved By <a href="#0">Công nghệ phần mềm Nhóm 5 </a></p>
                     </div>
                     <ul class="links">
                         <li>
-                            <a href="#0">About</a>
+                            <a href="#">About</a>
                         </li>
                         <li>
                             <a href="#0">Terms Of Use</a>

@@ -20,7 +20,7 @@ public class PaymentServiceImpl implements IPaymentService{
     private ITicketDAO ticketDAO = new TicketDAOImpl();
     private IPopcornPaymentDAO popcornPaymentDAO = new PopcornPaymentDAOImpl();
     private IMovieScreeningsDAO movieScreeningsDAO = new MovieScreeningsDAOImpl();
-    private IPopcornDAO popcornDAO = new PopcornDAOImpl();
+    private IPopCornDAO popcornDAO = new PopCornDAOImpl();
     private ITicketPaymentService ticketPaymentService = new TicketPaymentServiceImpl();
     private ISeatService seatService = new SeatServiceImpl();
 	@Override
@@ -103,5 +103,22 @@ public class PaymentServiceImpl implements IPaymentService{
         } finally {
             em.close(); // Đóng EntityManager
         }
+    }
+    @Override
+    public List<Object[]> getMovieStatisticsByDate(String dateValue,String dateType){
+        return paymentDAO.getMovieStatisticsByDate(dateValue, dateType);
+    }
+    @Override
+    public List<Object[]> getPopCornStatisticsByDate(String dateValue,String dateType){
+        return paymentDAO.getPopCornStatisticsByDate(dateValue, dateType);
+    }
+
+    @Override
+    public List<Object[]> getCinemaRevenuesByMovieID(String movieID){
+        return paymentDAO.getCinemaRevenuesByMovieID(movieID);
+    }
+    @Override
+    public List<Object[]> getCustomerAmountAllCinema(){
+        return paymentDAO.getCustomerAmountAllCinema();
     }
 }

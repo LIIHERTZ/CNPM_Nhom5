@@ -1,7 +1,6 @@
 package com.cinema.entity;
 
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class Payment {
     private int paymentID;
 
     @ManyToOne
-    @JoinColumn(name = "perID")
+    @JoinColumn(name = "perID", nullable = false)
     private Person person;
 
     @ManyToOne
@@ -37,7 +36,7 @@ public class Payment {
     private List<TicketPayment> ticketPayments;
 
     @OneToMany(mappedBy = "payment")
-    private List<PopCornPayment> popcornPayments;
+    private List<PopCornPayment> popCornPayments;
 
 	public int getPaymentID() {
 		return paymentID;
@@ -87,20 +86,19 @@ public class Payment {
 		this.status = status;
 	}
 
-	public List<TicketPayment> getTicketPayments() {
-		return ticketPayments;
-	}
+    public List<TicketPayment> getTicketPayments() {
+        return ticketPayments;
+    }
 
-	public void setTicketPayments(List<TicketPayment> ticketPayments) {
-		this.ticketPayments = ticketPayments;
-	}
+    public void setTicketPayments(List<TicketPayment> ticketPayments) {
+        this.ticketPayments = ticketPayments;
+    }
 
-	public List<PopCornPayment> getPopcornPayments() {
-		return popcornPayments;
-	}
+    public List<PopCornPayment> getPopCornPayments() {
+        return popCornPayments;
+    }
 
-	public void setPopcornPayments(List<PopCornPayment> popcornPayments) {
-		this.popcornPayments = popcornPayments;
-	}
-
+    public void setPopCornPayments(List<PopCornPayment> popCornPayments) {
+        this.popCornPayments = popCornPayments;
+    }
 }

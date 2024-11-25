@@ -11,14 +11,15 @@
 	<div class="sidebar">
 		<!-- sidebar logo -->
 		<a href="/ValCT_Nhom5/adminHome" class="sidebar__logo"> <img
-			src="assets2/img/logo.png" alt="" width="300" height="300">
+			src="/ValCT_Nhom5/assets2/img/logo.png" alt="" width="300"
+			height="300">
 		</a>
 		<!-- end sidebar logo -->
 
 		<!-- sidebar user -->
 		<div class="sidebar__user">
 			<div class="sidebar__user-img">
-				<img src="assets2/img/user.svg" alt="">
+				<img src="/ValCT_Nhom5/assets2/img/user.svg" alt="">
 			</div>
 
 			<div class="sidebar__user-title">
@@ -31,45 +32,32 @@
 		<!-- sidebar nav -->
 		<div class="sidebar__nav-wrap">
 			<ul class="sidebar__nav">
-				<li class="sidebar__nav-item"><a href="/ValCT_Nhom5/adminHome"
-					class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a></li>
-
-				<li class="sidebar__nav-item"><a href="catalog.html"
-					class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Catalog</span></a></li>
 
 				<li class="sidebar__nav-item"><a
+					href="/ValCT_Nhom5/admin/cinemas" class="sidebar__nav-link"><i
+						class="ti ti-door"></i> <span>Cinema</span></a></li>
+				<li class="sidebar__nav-item"><a
+					href="/ValCT_Nhom5/admin/movies" class="sidebar__nav-link"><i
+						class="ti ti-movie"></i> <span>Movie</span></a></li>
+				<li class="sidebar__nav-item"><a
 					href="${pageContext.request.contextPath}/adminnewsOrDiscounts"
-					class="sidebar__nav-link"><i class="ti ti-notification"></i> <span>News
+					class="sidebar__nav-link"><i class="ti ti-news"></i> <span>News
 							And Discount</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="users.html"
+				<li class="sidebar__nav-item"><a href="${pageContext.request.contextPath}/admin/users"
 					class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="comments.html"
-					class="sidebar__nav-link"><i class="ti ti-message"></i> <span>Comments</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="reviews.html"
-					class="sidebar__nav-link"><i class="ti ti-star-half-filled"></i>
-						<span>Reviews</span></a></li>
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/admin/coupons"
+					class="sidebar__nav-link"><i class="ti ti-ticket"></i> <span>Coupon</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="settings.html"
-					class="sidebar__nav-link"><i class="ti ti-settings"></i> <span>Settings</span></a></li>
-
-				<!-- dropdown -->
-				<li class="sidebar__nav-item"><a class="sidebar__nav-link"
-					href="#" role="button" data-bs-toggle="dropdown"
-					aria-expanded="false"><i class="ti ti-files"></i> <span>Pages</span>
-						<i class="ti ti-chevron-down"></i></a>
-
-					<ul class="dropdown-menu sidebar__dropdown-menu">
-						<li><a href="add-item.html">Add item</a></li>
-						<li><a href="edit-user.html">Edit user</a></li>
-						<li><a href="signin.html">Sign In</a></li>
-						<li><a href="signup.html">Sign Up</a></li>
-						<li><a href="forgot.html">Forgot password</a></li>
-						<li><a href="404.html">404 Page</a></li>
-					</ul></li>
-				<!-- end dropdown -->
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/admin/popcorns"
+					class="sidebar__nav-link"><i class="ti ti-baby-bottle"></i> <span>Popcorn</span></a></li>
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/admin/revenues-statics"
+					class="sidebar__nav-link"><i class="ti ti-presentation"></i> <span>Revenue</span></a></li>
 
 				<li class="sidebar__nav-item"><a href="/ValCT_Nhom5/logout"
 					class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back

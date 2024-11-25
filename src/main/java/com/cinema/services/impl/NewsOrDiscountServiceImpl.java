@@ -21,8 +21,8 @@ public class NewsOrDiscountServiceImpl implements INewsOrDiscountService {
 	}
 
 	@Override
-	public List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName) {
-		return newsOrDiscountDao.findByNewsOrDiscountname(newsOrDiscountName);
+	public List<NewsOrDiscount> findByNewsOrDiscountname(String newsOrDiscountName, int page, int pageSize) {
+		return newsOrDiscountDao.findByNewsOrDiscountname(newsOrDiscountName, page, pageSize);
 	}
 
 	@Override
@@ -50,5 +50,11 @@ public class NewsOrDiscountServiceImpl implements INewsOrDiscountService {
 	public void insert(NewsOrDiscount NewsOrDiscount) {
 		newsOrDiscountDao.insert(NewsOrDiscount);
 	}
+
+	@Override
+	public int countBySearch(String searchKeyword) {
+		return newsOrDiscountDao.countBySearch(searchKeyword);
+	}
+
 
 }
