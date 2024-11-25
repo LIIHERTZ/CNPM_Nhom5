@@ -182,7 +182,10 @@
                 <fmt:formatDate value="${movie.releaseDay}" pattern="dd/MM/yyyy" />
             </p>
             <div class="btn-group">
-                <button class="btn-buy">🎟️ Buy Ticket</button>
+                <button
+                        class="btn-buy"
+                        onclick="location.href='${pageContext.request.contextPath}/bookTickets?movieId=${movie.movieID}'">🎟️ Buy Ticket
+                </button>
                 <a href="${pageContext.request.contextPath}/movieDetail?id=${movie.movieID}" class="btn-detail">🔍 Detail</a>
             </div>
         </div>
