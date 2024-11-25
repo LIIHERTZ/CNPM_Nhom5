@@ -7,6 +7,33 @@
 <body>
 	<style>
 	
+	.main__paginator-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    gap: 0px;
+}
+
+.main__paginator-list li {
+    padding: 0px 0px;
+    
+    
+    background: #1a191f;
+    cursor: pointer;
+}
+
+.main__paginator-list li.paginator__item--active {
+    background: #1a191f;
+    color: #fff;
+}
+
+.main__paginator-list li:hover {
+    background: #1a191f;
+}
+	
+	
 	
 	.sign__selectjs {
     width: 716%;  /* Đảm bảo thẻ select chiếm đủ không gian của container */
@@ -45,40 +72,44 @@
 
 					</div>
 				</div>
-							<div class="container-fluid">
-						    <div class="row">
-						    
-							<form action="${pageContext.request.contextPath}/admin/searchMovie" method="get"  >
-							
-							<div class="main__title-form"  >
-							<input type="text" class="sign__selectjs" name="keyword" placeholder="Find Movie by name.............." value="${keyword != null ? keyword : ''}">
-							<button type="submit" >
-						        <i class="ti ti-search"></i>
-						    </button>		   	
-						    		
-							</div>
+				<div class="container-fluid">
+				    <div class="row">
+				        <!-- Form tìm kiếm -->
+					<form action="${pageContext.request.contextPath}/admin/searchMovie" method="get">
+					    <!-- Nhập từ khóa tìm kiếm -->
+					    <div class="main__title-form">
+					        <input type="text" class="sign__selectjs" name="keyword" 
+					               placeholder="Find Movie by name.............." 
+					               value="${keyword != null ? keyword : ''}">
+					        <button type="submit">
+					            <i class="ti ti-search"></i>
+					        </button>
+					    </div>
+					
+					    <!-- Chọn danh mục (multiple) -->
+					    <select name="category" class="sign__selectjs" id="sign__genre" multiple>
+					        <option value="All" <c:if test="${fn:contains(category, 'All') || empty category}">selected</c:if>>All Categories</option>
+					        <option value="Action" <c:if test="${fn:contains(category, 'Action')}">selected</c:if>>Action</option>
+					        <option value="Animation" <c:if test="${fn:contains(category, 'Animation')}">selected</c:if>>Animation</option>
+					        <option value="Comedy" <c:if test="${fn:contains(category, 'Comedy')}">selected</c:if>>Comedy</option>
+					        <option value="Crime" <c:if test="${fn:contains(category, 'Crime')}">selected</c:if>>Crime</option>
+					        <option value="Drama" <c:if test="${fn:contains(category, 'Drama')}">selected</c:if>>Drama</option>
+					        <option value="Fantasy" <c:if test="${fn:contains(category, 'Fantasy')}">selected</c:if>>Fantasy</option>
+					        <option value="Historical" <c:if test="${fn:contains(category, 'Historical')}">selected</c:if>>Historical</option>
+					        <option value="Horror" <c:if test="${fn:contains(category, 'Horror')}">selected</c:if>>Horror</option>
+					        <option value="Romance" <c:if test="${fn:contains(category, 'Romance')}">selected</c:if>>Romance</option>
+					        <option value="Science-fiction" <c:if test="${fn:contains(category, 'Science-fiction')}">selected</c:if>>Science-fiction</option>
+					        <option value="Thriller" <c:if test="${fn:contains(category, 'Thriller')}">selected</c:if>>Thriller</option>
+					        <option value="Western" <c:if test="${fn:contains(category, 'Western')}">selected</c:if>>Western</option>
+					        <option value="Other" <c:if test="${fn:contains(category, 'Other')}">selected</c:if>>Other</option>
+					    </select>
+					
+					    <!-- Duy trì giá trị recordsPerPage -->
+					     <input type="hidden" name="soluong" value="${recordsPerPage}" />
+					</form>
+				    </div>
+				</div>
 
-						    <select name="category" class="sign__selectjs" id="sign__genre" multiple>
-						        <option value="All" <c:if test="${fn:contains(category, 'All') || empty category}">selected</c:if>>All Categories</option>
-						        <option value="Action" <c:if test="${fn:contains(category, 'Action')}">selected</c:if>>Action</option>
-						        <option value="Animation" <c:if test="${fn:contains(category, 'Animation')}">selected</c:if>>Animation</option>
-						        <option value="Comedy" <c:if test="${fn:contains(category, 'Comedy')}">selected</c:if>>Comedy</option>
-						        <option value="Crime" <c:if test="${fn:contains(category, 'Crime')}">selected</c:if>>Crime</option>
-						        <option value="Drama" <c:if test="${fn:contains(category, 'Drama')}">selected</c:if>>Drama</option>
-						        <option value="Fantasy" <c:if test="${fn:contains(category, 'Fantasy')}">selected</c:if>>Fantasy</option>
-						        <option value="Historical" <c:if test="${fn:contains(category, 'Historical')}">selected</c:if>>Historical</option>
-						        <option value="Horror" <c:if test="${fn:contains(category, 'Horror')}">selected</c:if>>Horror</option>
-						        <option value="Romance" <c:if test="${fn:contains(category, 'Romance')}">selected</c:if>>Romance</option>
-						        <option value="Science-fiction" <c:if test="${fn:contains(category, 'Science-fiction')}">selected</c:if>>Science-fiction</option>
-						        <option value="Thriller" <c:if test="${fn:contains(category, 'Thriller')}">selected</c:if>>Thriller</option>
-						        <option value="Western" <c:if test="${fn:contains(category, 'Western')}">selected</c:if>>Western</option>
-						        <option value="Other" <c:if test="${fn:contains(category, 'Other')}">selected</c:if>>Other</option>						        
-						    </select>		
-
-						    </form>
-						    
-						 	</div>
-						 	</div>
 				<!-- end main title -->
 
 				<!-- items -->
@@ -117,7 +148,8 @@
 													height="150" />
 											</div></td>
 										<td><div class="catalog__text">${movie.movieDuration}</div></td>
-										<td><div class="catalog__text">${movie.rating}</div></td>
+										<td><div class="catalog__text catalog__text--rate">${movie.rating}</div></td>
+										
 										<td>
     										<div class="catalog__text">
 										        <fmt:formatDate value="${movie.releaseDay}" pattern="MM-dd-yyyy"/>
@@ -153,141 +185,113 @@
 				</div>
 				<!-- end items -->
 
-<!-- pagination -->
 <div class="col-12">
     <div class="main__paginator">
-        <!-- amount -->
-        <span class="main__paginator-pages">${currentPage} of ${noOfPages}</span>
-        <!-- end amount -->
+        <!-- Hiển thị số trang hiện tại và tổng số trang -->
+        <span class="main__paginator-pages">Page ${currentPage} of ${noOfPages}</span>
+        
+        <div class="col-1">
+            <div class="sign__group">
+                <label class="sign__label">Items Per Page</label>
+                <form action="${pageContext.request.contextPath}/admin/searchMovie" method="get">
+                    <!-- Select số lượng bản ghi -->
+                    <select class="sign__select" name="soluong" id="soluong" onchange="this.form.submit()">
+                        <option value="5" <c:if test="${recordsPerPage == 5}">selected</c:if>>5 items</option>
+                        <option value="10" <c:if test="${recordsPerPage == 10}">selected</c:if>>10 items</option>
+                        <option value="20" <c:if test="${recordsPerPage == 20}">selected</c:if>>20 items</option>
+                        <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50 items</option>
+                    </select>
+
+                    <!-- Hidden fields để giữ lại thông tin tìm kiếm -->
+                    <input type="hidden" name="keyword" value="${keyword}" />
+                    <c:forEach var="cat" items="${category}">
+                        <input type="hidden" name="category" value="${cat}" />
+                    </c:forEach>
+
+                    <!-- Hidden field để giữ giá trị trang hiện tại -->
+                    <input type="hidden" name="page" value="${currentPage}">
+                </form>
+            </div>
+        </div>
 
         <ul class="main__paginator-list">
-            <!-- Previous Page Link -->
-            <li>
-                <c:choose>
-                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
-                        <a href="<c:url value='/admin/searchMovie'>
-                            <c:param name='keyword' value='${keyword}'/>
-                            <c:forEach var="cat" items="${category}">
-                                <c:param name="category" value="${cat}"/>
-                            </c:forEach>
-                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
-                        </c:url>">
-                            <i class="ti ti-chevron-left"></i>
-                            <span>Prev</span>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='/admin/movies'>
-                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
-                        </c:url>">
-                            <i class="ti ti-chevron-left"></i>
-                            <span>Prev</span>
-                        </a>
-                    </c:otherwise>
-                </c:choose>
+            <!-- Nút Previous -->
+            <li class="paginator__item paginator__item--prev ${currentPage == 1 ? 'disabled' : ''}">
+                <a href="<c:url value='/admin/searchMovie'>
+                    <c:param name='keyword' value='${keyword}'/>
+                    <c:forEach var="cat" items="${category}">
+                        <c:param name="category" value="${cat}"/>
+                    </c:forEach>
+                    <c:param name="page" value="${currentPage > 1 ? currentPage - 1 : 1}"/>
+                    <c:param name="soluong" value="${recordsPerPage}"/>
+                </c:url>">
+                    <i class="ti ti-chevron-left"></i>
+                </a>
             </li>
 
-            <!-- Next Page Link -->
-            <li>
-                <c:choose>
-                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
-                        <a href="<c:url value='/admin/searchMovie'>
-                            <c:param name='keyword' value='${keyword}'/>
-                            <c:forEach var="cat" items="${category}">
-                                <c:param name="category" value="${cat}"/>
-                            </c:forEach>
-                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
-                        </c:url>">
-                            <span>Next</span>
-                            <i class="ti ti-chevron-right"></i>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='/admin/movies'>
-                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
-                        </c:url>">
-                            <span>Next</span>
-                            <i class="ti ti-chevron-right"></i>
-                        </a>
-                    </c:otherwise>
-                </c:choose>
-            </li>
-        </ul>
+            <!-- Hiển thị trang đầu nếu cần -->
+            <c:if test="${currentPage > 3}">
+                <li class="paginator__item">
+                    <a href="<c:url value='/admin/searchMovie'>
+                        <c:param name='keyword' value='${keyword}'/>
+                        <c:forEach var="cat" items="${category}">
+                            <c:param name="category" value="${cat}"/>
+                        </c:forEach>
+                        <c:param name='page' value='1'/>
+                        <c:param name='soluong' value='${recordsPerPage}'/>
+                    </c:url>">1</a>
+                </li>
+                <li class="paginator__item">...</li>
+            </c:if>
 
-        <ul class="paginator">
-            <!-- Previous Page Link -->
-            <li class="paginator__item paginator__item--prev">
-                <c:choose>
-                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
-                        <a href="<c:url value='/admin/searchMovie'>
-                            <c:param name='keyword' value='${keyword}'/>
-                            <c:forEach var="cat" items="${category}">
-                                <c:param name="category" value="${cat}"/>
-                            </c:forEach>
-                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
-                        </c:url>">
-                            <i class="ti ti-chevron-left"></i>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='/admin/movies'>
-                            <c:param name='page' value='${currentPage > 1 ? currentPage - 1 : 1}'/>
-                        </c:url>">
-                            <i class="ti ti-chevron-left"></i>
-                        </a>
-                    </c:otherwise>
-                </c:choose>
-            </li>
-
-            <!-- Page Numbers -->
-            <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
+            <!-- Các trang xung quanh trang hiện tại -->
+            <c:set var="startPage" value="${currentPage - 2 > 1 ? currentPage - 2 : 1}" />
+            <c:set var="endPage" value="${currentPage + 2 < noOfPages ? currentPage + 2 : noOfPages}" />
+            <c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
                 <li class="paginator__item ${pageNumber == currentPage ? 'paginator__item--active' : ''}">
-                    <c:choose>
-                        <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
-                            <a href="<c:url value='/admin/searchMovie'>
-                                <c:param name='keyword' value='${keyword}'/>
-                                <c:forEach var="cat" items="${category}">
-                                    <c:param name="category" value="${cat}"/>
-                                </c:forEach>
-                                <c:param name='page' value='${pageNumber}'/>
-                            </c:url>">${pageNumber}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="<c:url value='/admin/movies'>
-                                <c:param name='page' value='${pageNumber}'/>
-                            </c:url>">${pageNumber}</a>
-                        </c:otherwise>
-                    </c:choose>
+                    <a href="<c:url value='/admin/searchMovie'>
+                        <c:param name='keyword' value='${keyword}'/>
+                        <c:forEach var="cat" items="${category}">
+                            <c:param name="category" value="${cat}"/>
+                        </c:forEach>
+                        <c:param name='page' value='${pageNumber}'/>
+                        <c:param name='soluong' value='${recordsPerPage}'/>
+                    </c:url>">${pageNumber}</a>
                 </li>
             </c:forEach>
 
-            <!-- Next Page Link -->
-            <li class="paginator__item paginator__item--next">
-                <c:choose>
-                    <c:when test="${not empty keyword || (not empty category && !fn:contains(category, 'All'))}">
-                        <a href="<c:url value='/admin/searchMovie'>
-                            <c:param name='keyword' value='${keyword}'/>
-                            <c:forEach var="cat" items="${category}">
-                                <c:param name="category" value="${cat}"/>
-                            </c:forEach>
-                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
-                        </c:url>">
-                            <i class="ti ti-chevron-right"></i>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='/admin/movies'>
-                            <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
-                        </c:url>">
-                            <i class="ti ti-chevron-right"></i>
-                        </a>
-                    </c:otherwise>
-                </c:choose>
+            <!-- Hiển thị trang cuối nếu cần -->
+            <c:if test="${currentPage < noOfPages - 2}">
+                <li class="paginator__item">...</li>
+                <li class="paginator__item">
+                    <a href="<c:url value='/admin/searchMovie'>
+                        <c:param name='keyword' value='${keyword}'/>
+                        <c:forEach var="cat" items="${category}">
+                            <c:param name="category" value="${cat}"/>
+                        </c:forEach>
+                        <c:param name='page' value='${noOfPages}'/>
+                        <c:param name='soluong' value='${recordsPerPage}'/>
+                    </c:url>">${noOfPages}</a>
+                </li>
+            </c:if>
+
+            <!-- Nút Next -->
+            <li class="paginator__item paginator__item--next ${currentPage == noOfPages ? 'disabled' : ''}">
+                <a href="<c:url value='/admin/searchMovie'>
+                    <c:param name='keyword' value='${keyword}'/>
+                    <c:forEach var="cat" items="${category}">
+                        <c:param name="category" value="${cat}"/>
+                    </c:forEach>
+                    <c:param name='page' value='${currentPage < noOfPages ? currentPage + 1 : noOfPages}'/>
+                    <c:param name='soluong' value='${recordsPerPage}'/>
+                </c:url>">
+                    <i class="ti ti-chevron-right"></i>
+                </a>
             </li>
         </ul>
     </div>
 </div>
-<!-- end pagination -->
+
 
 
 			</div>
@@ -419,6 +423,39 @@
             document.getElementById('deleteMovieId').value = movieId;
         });
     });
+    
+    function updatePageSize() {
+        const soluong = document.getElementById('soluong').value;
+        const url = new URL(window.location.href);
+
+        // Cập nhật tham số `soluong` trong URL
+        url.searchParams.set('soluong', soluong);
+        url.searchParams.set('page', 1); // Reset về trang 1 để tránh lỗi
+        window.location.href = url.toString();
+    }
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const categorySelect = document.getElementById("sign__genre");
+
+        // Thêm sự kiện cho phép nhấn Enter để gửi form
+        document.querySelector(".main__title-form input[name='keyword']").addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                e.target.form.submit();
+            }
+        });
+
+        // Làm nổi bật danh mục đã chọn
+        const selectedCategories = "${category}".split(",");
+        Array.from(categorySelect.options).forEach(option => {
+            if (selectedCategories.includes(option.value)) {
+                option.selected = true;
+            }
+        });
+    });
+    
+    
 	</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 	

@@ -144,35 +144,31 @@ public class RoomDAOImpl implements IRoomDAO {
 		
 		@Override
 		public boolean deleteRoomById(int roomId) {
-			 EntityManager em = JPAConfig.getEntityManager();
-			    EntityTransaction transaction = em.getTransaction();
-			    try {
-			        transaction.begin();
-			        
-			        // Tìm Room bằng roomID
-			        Room room = em.find(Room.class, roomId);
-			        if (room != null) {
-			            // Trước khi xóa Room, xóa toàn bộ ghế liên quan
-			            Query deleteSeatsQuery = em.createQuery("DELETE FROM Seat s WHERE s.room.roomID = :roomID");
-			            deleteSeatsQuery.setParameter("roomID", roomId);
-			            deleteSeatsQuery.executeUpdate();
+		    EntityManager em = JPAConfig.getEntityManager();
+		    EntityTransaction transaction = em.getTransaction();
+		    try {
+		        transaction.begin();
 
-			            // Sau khi xóa các ghế, xóa Room
-			            em.remove(room);
-			            transaction.commit();
-			            return true;
-			        }
-			        return false;
-			    } catch (Exception e) {
-			        if (transaction.isActive()) {
-			            transaction.rollback();
-			        }
-			        e.printStackTrace();
-			        return false;
-			    } finally {
-			        em.close();
-			    }
+		        // Tìm Room bằng roomID
+		        Room room = em.find(Room.class, roomId);
+		        if (room != null) {
+		            // Xóa Room (JPA sẽ tự động xóa Seat và MovieScreenings liên quan)
+		            em.remove(room);
+		            transaction.commit();
+		            return true;
+		        }
+		        return false;
+		    } catch (Exception e) {
+		        if (transaction.isActive()) {
+		            transaction.rollback();
+		        }
+		        e.printStackTrace();
+		        return false;
+		    } finally {
+		        em.close();
+		    }
 		}
+
 		
 		
 		 @Override

@@ -92,4 +92,12 @@ public class MovieServiceImpl implements IMovieService{
 	public List<Movie> getMoviesComingSoon() {
 		return movieDao.getMoviesComingSoon();
 	}
+	@Override
+	public List<Movie> getAllMovieActive() {
+			
+		return movieDao.getAllMovieActive();
+
+	}
+
+	
 }

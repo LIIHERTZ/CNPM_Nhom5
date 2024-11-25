@@ -410,6 +410,22 @@ public class MovieDAOImpl implements IMovieDAO {
 	}
 
 	@Override
+	public List<Movie> getAllMovieActive() {
+		EntityManager em = JPAConfig.getEntityManager();
+		List<Movie> movies = null;
+		try {
+			movies = em.createQuery("FROM Movie WHERE status = :status", Movie.class)
+					.setParameter("status", true) // Hoặc `1` nếu kiểu `bit`
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return movies;
+	}
+
+	@Override
 	public List<Movie> searchMoviesByName(String movieName) {
 		EntityManager em = JPAConfig.getEntityManager();
 		try {

@@ -2,6 +2,7 @@ package com.cinema.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Room {
     
     private Integer chairNumber;
     
-    @Column(name = "status", nullable = false, columnDefinition = "BIT DEFAULT 1")
+    @Column(name = "status", nullable = false, columnDefinition = "BIT")
     private boolean status; // New field for cinema status using bit, named "status"
     
 
@@ -97,8 +98,10 @@ public class Room {
 		this.movieScreenings = movieScreenings;
 	}
 
-	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieScreenings> movieScreenings;
-
+	
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seat> seat;
     // Getters and setters
 }

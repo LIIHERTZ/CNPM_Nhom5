@@ -107,15 +107,7 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
             // Lấy đối tượng MovieScreenings cần xóa
             MovieScreenings ms = em.find(MovieScreenings.class, msID);
             if (ms != null) {
-                // Trước tiên xóa tất cả các SeatStatus liên quan đến MovieScreenings này
-                String jpql = "DELETE FROM SeatStatus ss WHERE ss.screening.msID = :msID";
-                int deletedCount = em.createQuery(jpql)
-                                     .setParameter("msID", msID)
-                                     .executeUpdate();
-
-                System.out.println("Deleted SeatStatus count: " + deletedCount);
-
-                // Sau đó xóa MovieScreenings
+                // JPA sẽ tự động xóa các SeatStatus liên quan nhờ cascade và orphanRemoval
                 em.remove(ms);
                 em.getTransaction().commit();
                 return true;
@@ -131,6 +123,7 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
             em.close();
         }
     }
+
 
     
     

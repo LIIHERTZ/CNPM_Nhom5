@@ -3,6 +3,7 @@ package com.cinema.entity;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class MovieScreenings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int msID;
 
-    @Column(nullable = false,columnDefinition = "DATE") 
+    @Column(nullable = false)
     private Date screeningDate; // New column for the screening date
     
     @Column(nullable = false)
@@ -37,7 +38,7 @@ public class MovieScreenings {
 	@Column(nullable = false)
     private Date endHour;
 
-    @Column(name = "status", nullable = false,  columnDefinition = "BIT DEFAULT 1")
+    @Column(name = "status", nullable = false, columnDefinition = "BIT")
     private boolean status; // New field for cinema status using bit, named "status"
     
     @ManyToOne
@@ -47,6 +48,10 @@ public class MovieScreenings {
     @ManyToOne
     @JoinColumn(name = "movieID", nullable = false)
     private Movie movie;
+    
+    // One-to-Many relationship with SeatStatus
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SeatStatus> seatStatuses;
 
     public int getMsID() {
 		return msID;

@@ -2,6 +2,7 @@ package com.cinema.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Cinema {
     @Column(nullable = false)
     private int roomCount; // New field for the number of rooms
     
-    @OneToMany(mappedBy = "cinema")
+    @OneToMany(mappedBy = "cinema" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
 	public int getCinemaID() {

@@ -81,8 +81,8 @@
 
 						<label class="sign__label" for="status">Status</label>
 						<div class="sign__group">
-							<select class="sign__selectjs" name="status" id="sign__status"
-								required>
+                            <select class="sign__select" name="status" id="status" required>
+								
 								<option value="true" ${Movie.status ? 'selected' : ''}>Active</option>
 								<option value="false" ${!Movie.status ? 'selected' : ''}>Inactive</option>
 							</select>

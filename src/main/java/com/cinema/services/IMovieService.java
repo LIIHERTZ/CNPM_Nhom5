@@ -23,4 +23,5 @@ public interface IMovieService {
 	List<Movie> searchMoviesByName(String movieName);
 	 List<Movie> getMoviesShowing();
 	    List<Movie> getMoviesComingSoon();
+	List<Movie> getAllMovieActive();
 }
