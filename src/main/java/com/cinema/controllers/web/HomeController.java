@@ -25,6 +25,8 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(false);
+
         // Lấy danh sách phim đang chiếu
         List<Movie> moviesShowing = movieService.getMoviesShowing();
         req.setAttribute("moviesShowing", moviesShowing);
