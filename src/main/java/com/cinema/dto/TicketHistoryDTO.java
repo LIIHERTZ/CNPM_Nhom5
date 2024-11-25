@@ -1,4 +1,4 @@
-	package com.cinema.dto;
+package com.cinema.dto;
 	import java.util.Date;
 	
 	public class TicketHistoryDTO {
