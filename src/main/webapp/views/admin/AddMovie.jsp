@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,26 +33,16 @@
 							<input type="text" class="sign__input" name="movie_name"
 								value="${movie_name}" placeholder="Movie Name" required>
 						</div>
-						<div class="col-12">
-						    <div class="sign__group">
-						        <label class="sign__label" for="category">Category</label>
-						        <select class="sign__selectjs" name="category" id="sign__genre" multiple required>
-						            <option value="Action">Action</option>
-						            <option value="Animation">Animation</option>
-						            <option value="Comedy">Comedy</option>
-						            <option value="Crime">Crime</option>
-						            <option value="Drama">Drama</option>
-						            <option value="Fantasy">Fantasy</option>
-						            <option value="Historical">Historical</option>
-						            <option value="Horror">Horror</option>
-						            <option value="Romance">Romance</option>
-						            <option value="Science-fiction">Science-fiction</option>
-						            <option value="Thriller">Thriller</option>
-						            <option value="Western">Western</option>
-						            <option value="Other">Other</option>
-						        </select>
-						    </div>
-						</div>
+				<div class="col-12">
+				    <div class="sign__group">
+				        <label class="sign__label" for="category">Category</label>
+				        <select class="sign__selectjs" name="category" id="sign__genre" multiple required>
+				            <c:forEach var="category" items="${movieCategories}">
+				                <option value="${category}">${category}</option>
+				            </c:forEach>
+				        </select>
+				    </div>
+				</div>
 
 
 					

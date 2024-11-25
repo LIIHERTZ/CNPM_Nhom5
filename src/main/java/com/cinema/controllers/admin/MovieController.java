@@ -14,7 +14,7 @@ import java.util.Formatter;
 import java.util.List;
 
 import com.cinema.entity.Movie;
-import com.cinema.services.impl.CinemaServiceImpl;
+import com.cinema.other.MovieCategory;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -78,9 +78,18 @@ public class MovieController extends HttpServlet {
 
 
 	private void showAddMovieForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("/views/admin/AddMovie.jsp");
-		rd.forward(req, resp);
+	    // Lấy danh sách các thể loại phim từ MovieCategory enum
+	    List<String> movieCategories = MovieCategory.getListCategories();
+	    
+	    
+	    
+	    req.setAttribute("movieCategories", movieCategories);
+
+	    // Chuyển tiếp đến JSP
+	    RequestDispatcher rd = req.getRequestDispatcher("/views/admin/AddMovie.jsp");
+	    rd.forward(req, resp);
 	}
+
 
     private void showEditMovieForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String MovieIDParam = req.getParameter("id");
@@ -105,39 +114,45 @@ public class MovieController extends HttpServlet {
 
     private void addMovie(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("movie_name");
-        String category = req.getParameter("category");
+        String[] selectedCategories = req.getParameterValues("category"); // Lấy danh sách các thể loại được chọn
         String movieDuration = req.getParameter("movie_duration");
         String description = req.getParameter("description");
         String dateString = req.getParameter("release_day");
         boolean status = Boolean.parseBoolean(req.getParameter("status"));
-        
+
         Date date = null;
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-        Movie Movie = new Movie();
-        Movie.setMovieName(name);
-        Movie.setCategory(category);  // Gán chuỗi thể loại đã nối vào
-        Movie.setMovieDuration(movieDuration); // Gán giá trị location
-        Movie.setDescription(description);
-        Movie.setStatus(status);
-        Movie.setReleaseDay(date);
-
-        String oldFile = Movie.getImage();
-		handleImageUpload(req, Movie, uploadPath);
-		if (Movie.getImage() == null || Movie.getImage().isEmpty() || Movie.getImage().equals("https://thumbs.dreamstime.com/b/news-woodn-dice-depicting-letters-bundle-small-newspapers-leaning-left-dice-34802664.jpg")) {
-            Movie.setImage(oldFile);
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        boolean isAdded = movieService.insertMovie(Movie);
+
+        // Nối danh sách các thể loại được chọn thành chuỗi
+        String category = String.join(", ", selectedCategories);
+
+        Movie movie = new Movie();
+        movie.setMovieName(name);
+        movie.setCategory(category);  // Gán chuỗi thể loại đã nối vào
+        movie.setMovieDuration(movieDuration);
+        movie.setDescription(description);
+        movie.setStatus(status);
+        movie.setReleaseDay(date);
+
+        // Xử lý ảnh (nếu cần)
+        String oldFile = movie.getImage();
+        handleImageUpload(req, movie, uploadPath);
+        if (movie.getImage() == null || movie.getImage().isEmpty()) {
+            movie.setImage(oldFile);
+        }
+
+        boolean isAdded = movieService.insertMovie(movie);
         if (isAdded) {
             resp.sendRedirect(req.getContextPath() + "/admin/movies");
         } else {
             resp.sendRedirect(req.getContextPath() + "/admin/showAddMovie?error=true");
         }
     }
+
 
     private void editMovie(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String MovieIDParam = req.getParameter("movieID");
