@@ -24,6 +24,45 @@ public class Conversation {
 
     @OneToMany(mappedBy = "conversation")
     private List<Message> messages;
+    
+    @ManyToOne
+    @JoinColumn(name = "adminID", nullable = false)
+    private Person admin;
+
+
+	public int getConversationID() {
+		return conversationID;
+	}
+
+	public void setConversationID(int conversationID) {
+		this.conversationID = conversationID;
+	}
+
+	public Person getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Person customer) {
+		this.customer = customer;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public Person getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Person admin) {
+		this.admin = admin;
+	}
+    
+    
 
     // Getters and setters
 }

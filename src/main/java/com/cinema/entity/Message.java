@@ -33,6 +33,49 @@ public class Message {
     @Column(nullable = false)
     private Date date;
 
+	public int getMessageID() {
+		return messageID;
+	}
+
+	public void setMessageID(int messageID) {
+		this.messageID = messageID;
+	}
+
+	public Conversation getConversation() {
+		return conversation;
+	}
+
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+    
+    
+
     // Getters and setters
+    
 }
 
