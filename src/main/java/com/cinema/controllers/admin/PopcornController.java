@@ -45,7 +45,9 @@ public class PopcornController extends HttpServlet{
 		        // Lấy danh sách sản phẩm và tổng số trang
 		        List<PopCorn> popcorns = popcornService.getPopCorns(page, pageSize,searchValue);
 		        int totalPages = popcornService.getTotalPages(pageSize,searchValue);
+		        Long popcornTotal = popcornService.countTotalPopCorns(searchValue);
 		        // Đưa dữ liệu vào request để hiển thị ở JSP
+		        request.setAttribute("popcornTotal", popcornTotal);
 		        request.setAttribute("popcorns", popcorns);
 		        request.setAttribute("currentPage", page);
 		        request.setAttribute("totalPages", totalPages);

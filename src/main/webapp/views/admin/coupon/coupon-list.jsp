@@ -6,14 +6,14 @@
 
 
 <!-- main content -->
-<main class="container-fluid">
-	<div class="container-fluid">
+<main class="container-fluid"> 
+ 	<div class="container-fluid">
 		<div class="row">
 			<!-- main title -->
 			<div class="col-12">
 				<div class="main__title">
 					<h2>Coupons</h2>
-
+					<span class="main__title-stat">${couponTotal } Total</span>
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
 							class="main__title-link main__title-link--wrap"
@@ -85,8 +85,6 @@
 								</tr>
 							</c:forEach>
 
-
-
 						</tbody>
 					</table>
 				</div>
@@ -106,19 +104,14 @@
 					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector main__paginator-pages">
-						<label for="pageSize" style="color: #333;"padding: 5px 10px; border-radius: 5px;>Page
-							Size : </label> <select id="pageSize" name="pageSize"
-							onchange="updatePageSize(this)"
-							style="background-color: #222028; border: #222028; color: white;">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>
-								5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>
-								10</option>
-							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>
-								15</option>
-							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>
-								20</option>
+					<div class="col-1.02">
+						<label class="sign__label" for="pageSize" >Page Size: </label> 
+						<select  class="sign__select" id="pageSize" name="pageSize"
+							onchange="updatePageSize(this)">
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5 items</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10 items</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15 items</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20 items</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">

@@ -20,7 +20,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		{
 			jpql ="SELECT m.movieName, SUM(t.priceTicket) AS tong,SUM(t.priceTicket - (t.priceTicket * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu, COUNT(t.ticketID) AS SLVe "
 					+ "FROM Payment p "
-					+ "JOIN p.TicketPayments tp "
+					+ "JOIN p.ticketPayments tp "
 					+ "JOIN tp.ticket t "
 					+ "JOIN t.movieScreenings ms "
 					+ "JOIN ms.movie m "
@@ -32,7 +32,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		{
 			jpql = "SELECT m.movieName, SUM(t.priceTicket) AS tong, SUM(t.priceTicket - (t.priceTicket * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu,COUNT(t.ticketID) AS SLVe "
 					+ "FROM Payment p "
-					+ "JOIN p.TicketPayments tp "
+					+ "JOIN p.ticketPayments tp "
 					+ "JOIN tp.ticket t "
 					+ "JOIN t.movieScreenings ms "
 					+ "JOIN ms.movie m "
@@ -45,7 +45,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		{
 			 jpql = "SELECT m.movieName, SUM(t.priceTicket) AS tong, SUM(t.priceTicket - (t.priceTicket * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu,COUNT(t.ticketID) AS SLVe " +
                      "FROM Payment p " +
-                     "JOIN p.TicketPayments tp " +
+                     "JOIN p.ticketPayments tp " +
                      "JOIN tp.ticket t " +
                      "JOIN t.movieScreenings ms " +
                      "JOIN ms.movie m " +
@@ -80,7 +80,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		{
 			jpql ="SELECT pc.namePopCorn,SUM(pc.price * pp.quantity)  AS tong,SUM(pc.price * pp.quantity - (pc.price * pp.quantity * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu ,COUNT(pc.popcornID) AS SL "
 					+ "FROM Payment p "
-					+ "JOIN p.PopCornPayments pp "
+					+ "JOIN p.popCornPayments pp "
 					+ "JOIN pp.popcorn pc "
 					+"LEFT JOIN p.coupon c " 
 					+ "WHERE p.createdDate = :dateValue "
@@ -90,7 +90,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		{
 			jpql ="SELECT pc.namePopCorn,SUM(pc.price * pp.quantity)  AS tong,SUM(pc.price * pp.quantity - (pc.price * pp.quantity * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu ,COUNT(pc.popcornID) AS SL "
 					+ "FROM Payment p "
-					+ "JOIN p.PopCornPayments pp "
+					+ "JOIN p.popCornPayments pp "
 					+ "JOIN pp.popcorn pc "
 					+"LEFT JOIN p.coupon c " 
 					+ "WHERE FUNCTION('MONTH', p.createdDate) = FUNCTION('MONTH', :dateValue) "
@@ -101,7 +101,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		{
 			jpql ="SELECT pc.namePopCorn,SUM(pc.price * pp.quantity)  AS tong,SUM(pc.price * pp.quantity - (pc.price * pp.quantity * (COALESCE(c.couponValue, 0) / 100))) as DoanhThu ,COUNT(pc.popcornID) AS SL "
 					+ "FROM Payment p "
-					+ "JOIN p.PopCornPayments pp "
+					+ "JOIN p.popCornPayments pp "
 					+ "JOIN pp.popcorn pc "
 					+"LEFT JOIN p.coupon c " 
 					+ "WHERE  FUNCTION('YEAR',  p.createdDate) = FUNCTION('YEAR', :dateValue) "
@@ -157,7 +157,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 	              "FROM Movie m " +
 	              "JOIN m.movieScreenings ms " +
 	              "JOIN ms.tickets t " +
-	              "JOIN t.detailTickets tp " +
+	              "JOIN t.ticketPayments tp " +
 	              "JOIN ms.room r " +
 	              "JOIN r.cinema c " +
 	              "WHERE m.movieID = :movieID " +
@@ -188,7 +188,7 @@ public class PaymentDAOImpl implements IPaymentDAO{
 		String jpql = "SELECT c.cinemaID, c.cinemaName, COUNT(DISTINCT per.perID) as SLKhach  " +
 	              "FROM Person per " +
 	              "JOIN per.payments p " +
-	              "JOIN p.TicketPayments  tp " +
+	              "JOIN p.ticketPayments  tp " +
 	              "JOIN tp.ticket t  " +
 	              "JOIN t.movieScreenings ms " +
 	              "JOIN ms.room r " +

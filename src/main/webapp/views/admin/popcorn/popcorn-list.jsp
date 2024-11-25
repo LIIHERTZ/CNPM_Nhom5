@@ -14,8 +14,7 @@
 			<div class="col-12">
 				<div class="main__title">
 					<h2>Popcorns</h2>
-
-					<span class="main__title-stat">3,702 Total</span>
+					<span class="main__title-stat">${popcornTotal } Total</span>
 
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
@@ -102,16 +101,14 @@
 					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector">
-						<label for="pageSize"
-							style="background-color: #1a191f; color: #333; padding: 5px 10px; border-radius: 5px;">Page
-							Size: </label> <select id="pageSize" name="pageSize"
-							onchange="updatePageSize(this)"
-							style="background-color: #222028; border: #222028; color: white;">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+					<div class="col-1.02">
+						<label class="sign__label" for="pageSize" >Page Size: </label> 
+						<select  class="sign__select" id="pageSize" name="pageSize"
+							onchange="updatePageSize(this)">
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5 items</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10 items</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15 items</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20 items</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -194,7 +191,8 @@
 						<div class="col-12">
 							<div class="sign__group">
 								<label class="sign__label" for="status">Status</label> <select
-									class="sign__selectjs" name="status" id="status" required style="color: white; width: 320px;">
+									class="sign__selectjs" name="status" id="status" required
+									style="color: white; width: 320px;">
 									<option value="1" ${popcorn.status == 1 ? 'selected' : ''}>Available</option>
 									<option value="0" ${popcorn.status == 0 ? 'selected' : ''}>Unavailable</option>
 								</select>
@@ -202,7 +200,8 @@
 						</div>
 
 						<div class="col-12">
-							<button type="submit" class="sign__btn sign__btn--small" style="width: 320px;">
+							<button type="submit" class="sign__btn sign__btn--small"
+								style="width: 320px;">
 								<span>Save</span>
 							</button>
 						</div>
@@ -269,7 +268,8 @@
 						</div>
 
 						<div class="col-12">
-							<button type="submit" class="sign__btn sign__btn--small" style="width: 320px;">
+							<button type="submit" class="sign__btn sign__btn--small"
+								style="width: 320px;">
 								<span>Update</span>
 							</button>
 						</div>

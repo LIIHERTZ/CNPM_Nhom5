@@ -49,7 +49,9 @@ public class UserController extends HttpServlet{
 		        // Lấy danh sách sản phẩm và tổng số trang
 		        List<Person> users = userService.getUsers(page, pageSize,searchValue);
 		        int totalPages = userService.getTotalPages(pageSize,searchValue);
+		        Long userTotal = userService.countTotalUsers(searchValue);
 		        // Đưa dữ liệu vào request để hiển thị ở JSP
+		        request.setAttribute("userTotal", userTotal);
 		        request.setAttribute("users", users);
 		        request.setAttribute("currentPage", page);
 		        request.setAttribute("totalPages", totalPages);

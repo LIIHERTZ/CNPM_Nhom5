@@ -47,5 +47,9 @@ public class PopCornServiceImpl implements IPopCornService{
 	public List<PopCorn> getPopcornsByType(String type) {
 		 return popDao.findByType(type);
 	}
+	@Override
+	public long countTotalPopCorns(String searchValue) {
+		return popDao.countTotalPopCorns(searchValue);
+	}
 
 }

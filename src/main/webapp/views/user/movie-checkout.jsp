@@ -125,8 +125,7 @@ int countdownMinutes = 5;
 						<form class="checkout-contact-form">
 							<div class="form-group">
 								<input type="text" placeholder="Please add promo code"
-									id="selectedCouponName" name="selectedCouponName" readonly
-									class="form-control mt-2">
+									id="selectedCouponName" name="selectedCouponName" readonly >
 							</div>
 							<!-- Input ẩn để lưu giá trị coupon -->
 							<input type="hidden" id="selectedCouponId"
@@ -366,7 +365,7 @@ int countdownMinutes = 5;
 
             // Cập nhật số tiền giảm giá và tổng tiền hiển thị
             const totalPriceElement = document.getElementById("amountPayableValue");
-            totalPriceElement.textContent = updatedAmountPayable.toFixed(2) +" VND";
+			totalPriceElement.textContent = Math.round(updatedAmountPayable) + " VND";
 //
 			const discountValueElement = document.getElementById("discountValue");
             discountValueElement.textContent = couponValue + "%"; // Cập nhật giá trị giảm giá

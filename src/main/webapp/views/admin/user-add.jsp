@@ -5,49 +5,58 @@
 
 <main class="container-fluid">
 	<div class="container-fluid">
+		<div class="main__title">
 
+			<div class="main__title-wrap">
+				<!-- search -->
+				<!-- end search -->
+			</div>
+		</div>
+		<!-- end main title -->
 
 		<!-- user modal -->
 		<form action="${pageContext.request.contextPath}/admin/users/save "
-			method="post" class="modal__form">
+			method="post" class="modal__form" style="margin-top: 20px;">
 			<h4 class="modal__title">Add User</h4>
 
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="email2">Email</label> <input
 							id="email2" type="text" name="email" class="sign__input"
-							placeholder="email@email.com">
+							placeholder="email@email.com" required>
 					</div>
 				</div>
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="fname">Name</label> <input
 							id="fname" type="text" name="fname" class="sign__input"
-							placeholder="John Doe">
+							placeholder="Your name" required>
 					</div>
 				</div>
 
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="password">Password</label> <input
-							id="password" type="password" name="password" class="sign__input">
+							id="password" type="password" name="password" class="sign__input"
+							required>
 					</div>
 				</div>
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="phone">Phone</label> <input
-							id="phone" type="text" name="phone" class="sign__input"
-							placeholder="023812319376">
+							id="phone" type="number" name="phone" class="sign__input"
+							placeholder="Your phone"  required>
 					</div>
 				</div>
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="birthDate">BirthDate</label> <input
-							id="birthDate" type="date" name="birthDate" class="sign__input">
+							id="birthDate" type="date" name="birthDate" class="sign__input"
+							required>
 					</div>
 				</div>
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="gender">Gender</label> <select
 							class="sign__select" id="gender" name="gender">
@@ -56,18 +65,24 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-12">
+				<div class="col-12" style="width: 50%; margin: 0; text-align: left;">
 					<div class="sign__group">
 						<label class="sign__label" for="rights">Rights</label> <select
 							class="sign__select" id="rights" name="rights">
 							<option value="User">User</option>
-							<option value="Admin">Admin</option>
 						</select>
 					</div>
 				</div>
-				<div class="col-12 col-lg-6 offset-lg-3">
-					<button type="submit" class="sign__btn sign__btn--modal">Add</button>
-				</div>
+
+			</div>
+
+			<div class="col-12"
+				style="display: flex; justify-content: center; gap: 100px;">
+				<button type="submit" class="sign__btn sign__btn--modal"
+					style="width: 150px;">Add</button>
+				<a href="${pageContext.request.contextPath}/admin/users"
+					class="sign__btn sign__btn--modal"
+					style="width: 150px; height: 50px; font-size: 16px; text-align: center; display: flex; align-items: center; justify-content: center;">Back</a>
 			</div>
 		</form>
 		<!-- end user modal -->

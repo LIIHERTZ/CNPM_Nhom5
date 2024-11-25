@@ -15,4 +15,6 @@ public interface IPopCornService {
 	List<PopCorn> getPopCorns(int page, int pageSize, String searchValue);
 	List<PopCorn> getAllPopcorns();
 	List<PopCorn> getPopcornsByType(String type);
+
+	long countTotalPopCorns(String searchValue);
 }

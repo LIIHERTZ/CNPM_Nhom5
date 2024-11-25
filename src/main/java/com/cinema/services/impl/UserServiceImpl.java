@@ -17,4 +17,8 @@ public class UserServiceImpl implements IUserService{
         long totalUsers = userDao.countTotalUsers(searchValue);
         return (int) Math.ceil((double) totalUsers / pageSize);
     }
+    @Override
+	public long countTotalUsers(String searchValue) {
+    	return userDao.countTotalUsers(searchValue);
+    }
 }

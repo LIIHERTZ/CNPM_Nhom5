@@ -20,4 +20,6 @@ public interface ICouponService {
 
 	List<Coupon> getAllCouponsValid();
 
+	long countTotalCoupons(String searchValue);
+
 }

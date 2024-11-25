@@ -15,8 +15,9 @@
 
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
-							class="main__title-link main__title-link--wrap" 
-							onclick="window.location.href= '${pageContext.request.contextPath}/admin/users/add '">Add user</button>
+							class="main__title-link main__title-link--wrap"
+							onclick="window.location.href= '${pageContext.request.contextPath}/admin/users/add '">Add
+							user</button>
 						<!-- search -->
 						<form action=" ${pageContext.request.contextPath}/admin/users"
 							method="get" class="main__title-form">
@@ -65,7 +66,8 @@
 
 									<td>
 										<div class="catalog__btns">
-											<a href="${pageContext.request.contextPath}/admin/users/edit?userId=${user.perID}"
+											<a
+												href="${pageContext.request.contextPath}/admin/users/edit?userId=${user.perID}"
 												class="catalog__btn catalog__btn--edit"> <i
 												class="ti ti-edit"></i>
 											</a>
@@ -105,7 +107,7 @@
 							style="background-color: #1a191f; color: #333; padding: 5px 10px; border-radius: 5px;">Page
 							Size: </label> <select id="pageSize" name="pageSize"
 							onchange="updatePageSize(this)"
-							style= "background-color : #222028 ;  border :#222028; color :white; ">
+							style="background-color: #222028; border: #222028; color: white;">
 							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
 							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
 							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
@@ -127,14 +129,35 @@
 						</a></li>
 						<!-- Page numbers -->
 						<c:if test="${totalPages > 0}">
-						<c:forEach var="i" begin="0" end="${totalPages - 1}">
-							<li class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
-								<a
-								href="${pageContext.request.contextPath}/admin/users?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
-									${i + 1} </a>
-							</li>
-						</c:forEach>
+							<ul class="pagination">
+
+								<!-- Nút Previous -->
+								<li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+									<a class="page-link"
+									href="${currentPage > 1 ? pageContext.request.contextPath + '/admin/users?pageNumber=' + (currentPage - 1) + '&pageSize=' + pageSize + '&searchQuery=' + searchQuery : '#'}">&laquo;</a>
+								</li>
+
+								<c:if test="${totalPages > 0}">
+							<c:forEach var="i" begin="0" end="${totalPages - 1}">
+								<li
+									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+									<a
+									href="${pageContext.request.contextPath}/admin/users?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
+										${i + 1} </a>
+								</li>
+							</c:forEach>
 						</c:if>
+
+								<!-- Nút Next -->
+								<li
+									class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+									<a class="page-link"
+									href="${currentPage < totalPages ? pageContext.request.contextPath + '/admin/users?pageNumber=' + (currentPage + 1) + '&pageSize=' + pageSize + '&searchQuery=' + searchQuery : '#'}">&raquo;</a>
+								</li>
+
+							</ul>
+						</c:if>
+
 						<!-- Next button -->
 						<li class="paginator__item paginator__item--next"><a
 							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
@@ -156,8 +179,8 @@
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal__content">
-				<form action="${pageContext.request.contextPath}/admin/users/delete" method ="POST"
-					class="modal__form_delete">
+				<form action="${pageContext.request.contextPath}/admin/users/delete"
+					method="POST" class="modal__form_delete">
 					<h4 class="modal__title">User delete</h4>
 
 					<p class="modal__text">Are you sure to permanently delete this
@@ -198,17 +221,17 @@
 	}
 	
 	
-	// Lắng nghe sự kiện khi mở Modal
+	// Láº¯ng nghe sá»± kiá»n khi má» Modal
 	document.addEventListener("DOMContentLoaded", function () {
-	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // Nút mở modal xóa
+	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // NÃºt má» modal xÃ³a
 	    const modalForm = document.querySelector(".modal__form_delete"); // Form trong modal
 	    console.log("Action attribute: ", modalForm.getAttribute("action"));
 	    console.log("modalForm : " + modalForm);
 	    deleteButtons.forEach(button => {
 	        button.addEventListener("click", function () {
-	            const userId = this.getAttribute("data-id"); // Lấy userId từ attribute
+	            const userId = this.getAttribute("data-id"); // Láº¥y userId tá»« attribute
 	            console.log("userID : " + userId);
-	            const baseFormAction = modalForm.getAttribute("action"); // URL ban đầu của form
+	            const baseFormAction = modalForm.getAttribute("action"); // URL ban Äáº§u cá»§a form
 	            console.log("baseFormAction : " + baseFormAction);
 	            const link = baseFormAction+'?userId='+userId;
 	            console.log("link : " + link);

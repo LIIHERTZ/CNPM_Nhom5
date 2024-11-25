@@ -3,12 +3,14 @@ package com.cinema.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,9 +32,8 @@ public class PopCorn {
     @Column(nullable = false)
     private boolean  status;
 
-    @OneToMany(mappedBy = "popcorn")
-    private List<PopCornPayment> detailPopCorns;
-
+    @OneToMany(mappedBy = "popcorn", cascade =CascadeType.ALL )
+    private List<PopCornPayment> popcornPayments;
 	public int getPopcornID() {
 		return popcornID;
 	}
@@ -79,13 +80,15 @@ public class PopCorn {
 		this.status = status;
 	}
 
-	public List<PopCornPayment> getDetailPopCorns() {
-		return detailPopCorns;
+	public List<PopCornPayment> getPopcornPayments() {
+		return popcornPayments;
 	}
 
-	public void setDetailPopCorns(List<PopCornPayment> detailPopCorns) {
-		this.detailPopCorns = detailPopCorns;
+	public void setPopcornPayments(List<PopCornPayment> popcornPayments) {
+		this.popcornPayments = popcornPayments;
 	}
+
+
 
     // Getters and setters
     

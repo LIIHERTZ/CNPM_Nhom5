@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,8 +40,22 @@ public class Ticket {
     @JoinColumn(name = "msID")
     private MovieScreenings movieScreenings;
 
-    @OneToMany(mappedBy = "ticket")
-    private List<TicketPayment> detailTickets;
+    @OneToMany(mappedBy = "ticket",orphanRemoval = false)
+    private List<TicketPayment> ticketPayments;
+    @PreRemove
+    private void preRemove() {
+        // Hủy liên kết với tất cả các Payment trước khi xóa Coupon
+        for (TicketPayment ticketPayment : ticketPayments) {
+        	ticketPayment.setTicket(null);
+        }
+    }
+	public List<TicketPayment> getTicketPayments() {
+		return ticketPayments;
+	}
+
+	public void setTicketPayments(List<TicketPayment> ticketPayments) {
+		this.ticketPayments = ticketPayments;
+	}
 
 	public int getTicketID() {
 		return ticketID;
@@ -98,13 +113,6 @@ public class Ticket {
 		this.movieScreenings = movieScreenings;
 	}
 
-	public List<TicketPayment> getDetailTickets() {
-		return detailTickets;
-	}
-
-	public void setDetailTickets(List<TicketPayment> detailTickets) {
-		this.detailTickets = detailTickets;
-	}
 
     // Getters and setters
     

@@ -25,7 +25,7 @@ public class Payment {
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "couponID")
+    @JoinColumn(name = "couponID", nullable = true)
     private Coupon coupon;
 
     private double totalPrice;
@@ -33,13 +33,29 @@ public class Payment {
     private int status;
 
     @OneToMany(mappedBy = "payment")
-    private List<TicketPayment> TicketPayments;
+    private List<TicketPayment> ticketPayments;
 
     @OneToMany(mappedBy = "payment")
-    private List<PopCornPayment> PopCornPayments;
+    private List<PopCornPayment> popCornPayments;
 
 	public int getPaymentID() {
 		return paymentID;
+	}
+
+	public List<TicketPayment> getTicketPayments() {
+		return ticketPayments;
+	}
+
+	public void setTicketPayments(List<TicketPayment> ticketPayments) {
+		this.ticketPayments = ticketPayments;
+	}
+
+	public List<PopCornPayment> getPopCornPayments() {
+		return popCornPayments;
+	}
+
+	public void setPopCornPayments(List<PopCornPayment> popCornPayments) {
+		this.popCornPayments = popCornPayments;
 	}
 
 	public void setPaymentID(int paymentID) {
@@ -86,21 +102,7 @@ public class Payment {
 		this.status = status;
 	}
 
-	public List<TicketPayment> getTicketPayments() {
-		return TicketPayments;
-	}
 
-	public void setTicketPayments(List<TicketPayment> ticketPayments) {
-		TicketPayments = ticketPayments;
-	}
-
-	public List<PopCornPayment> getPopCornPayments() {
-		return PopCornPayments;
-	}
-
-	public void setPopCornPayments(List<PopCornPayment> popCornPayments) {
-		PopCornPayments = popCornPayments;
-	}
 
     // Getters and setters
     

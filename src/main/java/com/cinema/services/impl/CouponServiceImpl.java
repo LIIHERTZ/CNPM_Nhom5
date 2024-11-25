@@ -40,4 +40,8 @@ public class CouponServiceImpl implements ICouponService{
 	public List<Coupon> getAllCouponsValid() {
 		return couponDao.getAllCouponsValid();
 	}
+	@Override
+	public long countTotalCoupons(String searchValue) {
+		return couponDao.countTotalCoupons(searchValue);
+	}
 }

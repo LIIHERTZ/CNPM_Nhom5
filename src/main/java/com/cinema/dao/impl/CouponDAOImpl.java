@@ -8,7 +8,6 @@ import java.util.List;
 import com.cinema.configs.JPAConfig;
 import com.cinema.dao.ICouponDAO;
 import com.cinema.entity.Coupon;
-import com.cinema.entity.PopCorn;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
