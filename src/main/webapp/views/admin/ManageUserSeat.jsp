@@ -57,11 +57,11 @@
     <div class="container">
         <div class="item md-order-1 legend-container-right">
             <div class="cinema-info-area">
-                <img src="/ValCT_Nhom5/assets/images/movie/seat01.png" alt="Available Seat" class="legend-icon">
+                <img src="${pageContext.request.contextPath}/assets/images/movie/seat01.png" alt="Available Seat" class="legend-icon">
                 <span>Seat (Available)</span>
             </div>
             <div class="cinema-info-area">
-                <img src="/ValCT_Nhom5/assets/images/movie/seat01-free.png" alt="Booked Seat" class="legend-icon">
+                <img src="${pageContext.request.contextPath}/assets/images/movie/seat01-free.png" alt="Booked Seat" class="legend-icon">
                 <span>Seat (Booked)</span>
             </div>
         </div>
@@ -76,10 +76,10 @@
             <div class="screen-area">
                 <h4 class="screen">SCREEN</h4>
                 <div class="screen-thumb">
-                    <img src="/ValCT_Nhom5/assets/images/movie/screen-thumb.png" alt="screen">
+                    <img src="${pageContext.request.contextPath}/assets/images/movie/screen-thumb.png" alt="screen">
                 </div>
                 <div class="screen-wrapper">
-                    <form action="/ValCT_Nhom5/selectSeats" method="post">
+                    <form action="${pageContext.request.contextPath}/selectSeats" method="post">
                         <input type="hidden" name="selectedSeats" id="hiddenSelectedSeats" value="">
                         <input type="hidden" name="totalPrice" id="hiddenTotalPrice" value="">
                         <input type="hidden" name="screeningId" value="${screeningId}">
@@ -113,7 +113,7 @@
                                                                     Single Seat
                                                                 </c:otherwise>
                                                             </c:choose>">
-                                                        <img src="/ValCT_Nhom5/assets/images/movie/${seatCoupleMap[seatStatus.seat.seatID] == 1 
+                                                        <img src="${pageContext.request.contextPath}/assets/images/movie/${seatCoupleMap[seatStatus.seat.seatID] == 1 
                                                               ? (seatStatus.status ? 'seat02-free.png' : 'seat02.png') 
                                                               : (seatStatus.status ? 'seat01-free.png' : 'seat01.png')}" 
                                                              alt="seat" class="seat-img">

@@ -3,13 +3,7 @@ package com.cinema.entity;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PopCorn")
@@ -30,7 +24,7 @@ public class PopCorn {
     @Column(nullable = false)
     private Boolean status;
 
-    @OneToMany(mappedBy = "popcorn")
+    @OneToMany(mappedBy = "popcorn", cascade = CascadeType.ALL)
     private List<PopCornPayment> popcornPayments;
     
     

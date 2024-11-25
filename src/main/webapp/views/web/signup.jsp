@@ -23,7 +23,7 @@
 						<span class="cate">welcome</span>
 						<h2 class="title">to ValCT</h2>
 					</div>
-					<form action="/ValCT_Nhom5/signup" method="post"
+					<form action="${pageContext.request.contextPath}/signup" method="post"
 						class="account-form">
 						<c:if test="${exception != null}">
 							<label class="form-group">${exception}</label>

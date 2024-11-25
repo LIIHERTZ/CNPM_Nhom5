@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.cinema.entity.Movie;
 import com.cinema.services.IMovieService;
-import com.cinema.services.impl.MoviceServiceImpl;
+import com.cinema.services.impl.MovieServiceImpl;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/userMovieList")
 public class MovieListController extends HttpServlet{
-	IMovieService movieService = new MoviceServiceImpl();
+	IMovieService movieService = new MovieServiceImpl();
 	
 	/**
 	 * 

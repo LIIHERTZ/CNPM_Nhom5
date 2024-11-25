@@ -19,4 +19,5 @@ public interface ICouponService {
 	long getTotalPages(int pageSize, String searchValue);
     public List<Coupon> getAllCouponsValid();
 
+
 }

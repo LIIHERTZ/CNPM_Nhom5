@@ -53,7 +53,7 @@
 						<li><a
 							href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
 
-							&redirect_uri=http://localhost:8080/ValCT_Nhom5/loginwithgoogle
+							&redirect_uri=http://localhost:8080${pageContext.request.contextPath}/loginwithgoogle
 							
 							&response_type=code
 							

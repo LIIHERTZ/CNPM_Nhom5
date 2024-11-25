@@ -4,15 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "MovieScreenings")
@@ -21,7 +13,10 @@ public class MovieScreenings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int msID;
 
-    @Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "DATE")
+	private Date screeningDate; // New column for the screening date
+
+	@Column(nullable = false)
     private Date startHour;
 
     @Column(nullable = false)
@@ -38,12 +33,18 @@ public class MovieScreenings {
     @JoinColumn(name = "movieID", nullable = false)
     private Movie movie;
     
-    @OneToMany(mappedBy = "screening")
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL)
     private List<SeatStatus> seatStatus;
-    
-    
-    
-    public List<SeatStatus> getSeatStatus() {
+
+	public Date getScreeningDate() {
+		return screeningDate;
+	}
+
+	public void setScreeningDate(Date screeningDate) {
+		this.screeningDate = screeningDate;
+	}
+
+	public List<SeatStatus> getSeatStatus() {
 		return seatStatus;
 	}
 

@@ -53,7 +53,7 @@
 									<td>
 										<div class="catalog__user">
 											<div class="catalog__avatar">
-												<img src="/ValCT_Nhom5/assets2/img/user.svg" alt="">
+												<img src="${pageContext.request.contextPath}/assets2/img/user.svg" alt="">
 											</div>
 											<div class="catalog__meta">
 												<h3>${user.fullName }</h3>

@@ -9,7 +9,7 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
 import com.cinema.entity.Person;
-import com.cinema.entity.GoogleAccount;
+import com.cinema.dto.GoogleAccountDTO;
 import com.cinema.services.IPersonService;
 import com.cinema.services.impl.PersonServiceImpl;
 import com.cinema.other.Constants;
@@ -44,7 +44,7 @@ public class LoginController extends HttpServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		String code = req.getParameter("code");
 		String accessToken = getToken(code);
-		GoogleAccount acc = getUserInfo(accessToken);
+		GoogleAccountDTO acc = getUserInfo(accessToken);
 		String email = acc.getEmail();
 		HttpSession session = req.getSession();
 		
@@ -97,13 +97,13 @@ public class LoginController extends HttpServlet {
         return accessToken;
 
     }
-	public static GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+	public static GoogleAccountDTO getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
 
         String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
 
         String response = Request.Get(link).execute().returnContent().asString();
 
-        GoogleAccount googlePojo = new Gson().fromJson(response, GoogleAccount.class);
+        GoogleAccountDTO googlePojo = new Gson().fromJson(response, GoogleAccountDTO.class);
 
         return googlePojo;
 

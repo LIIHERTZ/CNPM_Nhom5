@@ -180,5 +180,22 @@ public class PopCornDAOImpl implements IPopCornDAO{
 		}
 		return null;
 	}
+	@Override
+	public List<PopCorn> findAll() {
+		EntityManager em = JPAConfig.getEntityManager();
+		String query = "SELECT p FROM PopCorn p WHERE p.status = True";
+		return em.createQuery(query, PopCorn.class).getResultList();
+	}
+
+	@Override
+	public List<PopCorn> findByType(String type) {
+		EntityManager em = JPAConfig.getEntityManager(); // Lấy EntityManager từ cấu hình
+		String query = "SELECT p FROM PopCorn p WHERE p.typePopCorn = :type AND p.status = True";
+
+		// Thực hiện truy vấn với tham số
+		return em.createQuery(query, PopCorn.class)
+				.setParameter("type", type)
+				.getResultList();
+	}
 
 }

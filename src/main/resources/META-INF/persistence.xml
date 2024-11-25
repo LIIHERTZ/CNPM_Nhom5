@@ -7,23 +7,6 @@
 
 	<persistence-unit name="DBSQLSERVER">
 
-
-		<class>com.cinema.entity.Person</class>
-		<class>com.cinema.entity.Cinema</class>
-		<class>com.cinema.entity.Room</class>
-		<class>com.cinema.entity.Movie</class>
-		<class>com.cinema.entity.MovieScreenings</class>
-		<class>com.cinema.entity.Review</class>
-		<class>com.cinema.entity.Coupon</class>
-		<class>com.cinema.entity.Payment</class>
-		<class>com.cinema.entity.PopCorn</class>
-		<class>com.cinema.entity.Ticket</class>
-		<class>com.cinema.entity.TicketPayment</class>
-		<class>com.cinema.entity.Conversation</class>
-		<class>com.cinema.entity.Message</class>
-		<class>com.cinema.entity.NewsOrDiscount</class>
-		<class>com.cinema.entity.PopCornPayment</class>
-
 		<properties>
 
 
