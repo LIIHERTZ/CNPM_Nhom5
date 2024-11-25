@@ -31,5 +31,46 @@ public class Review {
     @JoinColumn(name = "perID", nullable = false)
     private Person person;
 
+	public int getReviewID() {
+		return reviewID;
+	}
+
+	public void setReviewID(int reviewID) {
+		this.reviewID = reviewID;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getEvaluate() {
+		return evaluate;
+	}
+
+	public void setEvaluate(int evaluate) {
+		this.evaluate = evaluate;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
     // Getters and setters
+    
 }
