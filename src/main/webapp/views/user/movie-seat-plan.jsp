@@ -197,7 +197,7 @@ int countdownMinutes = 5;
 		var countdown = 300;
 		var countdownTimer = document.getElementById("countdown-timer");
 
-		setInterval(function() {
+		var countdownInterval = setInterval(function() {
 			var minutes = Math.floor(countdown / 60);
 			var seconds = countdown % 60;
 			countdownTimer.textContent = minutes + ":"
@@ -205,8 +205,8 @@ int countdownMinutes = 5;
 			countdown--;
 
 			if (countdown < 0) {
-				clearInterval(countdownInterval); 
-				window.location.href = "${pageContext.request.contextPath}/bookTickets";// Dừng đếm ngược khi hết thời gian
+				clearInterval(countdownInterval);
+				window.location.href = "${pageContext.request.contextPath}/bookTickets?movieId=${movie.movieID}";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
 		document

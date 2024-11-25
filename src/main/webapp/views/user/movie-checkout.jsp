@@ -278,11 +278,10 @@ int countdownMinutes = 5;
 
 	<!-- end modal -->
 	<script>
-		// Giáº£ sá»­ thá»i gian Äáº¿m ngÆ°á»£c lÃ  5 phÃºt (5 * 60 = 300 giÃ¢y)
 		var countdown = 300;
 		var countdownTimer = document.getElementById("countdown-timer");
 
-		setInterval(function() {
+		var countdownInterval = setInterval(function() {
 			var minutes = Math.floor(countdown / 60);
 			var seconds = countdown % 60;
 			countdownTimer.textContent = minutes + ":"
@@ -291,7 +290,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "${pageContext.request.contextPath}/selectSeats";// Dá»«ng Äáº¿m ngÆ°á»£c khi háº¿t thá»i gian
+				window.location.href = "${pageContext.request.contextPath}/selectSeats";
 			}
 		}, 1000);
 	</script>

@@ -245,7 +245,7 @@ int countdownMinutes = 5;
 		var countdown = 300;
 		var countdownTimer = document.getElementById("countdown-timer");
 
-		setInterval(function() {
+		var countdownInterval = setInterval(function() {
 			var minutes = Math.floor(countdown / 60);
 			var seconds = countdown % 60;
 			countdownTimer.textContent = minutes + ":"
