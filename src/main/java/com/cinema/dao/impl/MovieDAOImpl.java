@@ -19,6 +19,7 @@ import com.cinema.entity.NewsOrDiscount;
 import com.cinema.entity.Movie;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -73,23 +74,40 @@ public class MovieDAOImpl implements IMovieDAO {
 	}
 
 	@Override
-	public boolean updateMovie(Movie movie) {
-		EntityManager em = JPAConfig.getEntityManager();
-		try {
-			em.getTransaction().begin(); // Bắt đầu giao dịch
-			em.merge(movie); // Cập nhật bản ghi
-			em.getTransaction().commit(); // Commit giao dịch
-			return true; // Trả về true nếu thành công
-		} catch (Exception e) {
-			if (em.getTransaction().isActive()) {
-				em.getTransaction().rollback(); // Rollback nếu có lỗi
-			}
-			System.err.println("Error updating movie: " + e.getMessage());
-		} finally {
-			em.close(); // Đóng EntityManager
-		}
-		return false; // Trả về false nếu có lỗi
-	}
+    public boolean updateMovie(Movie movie) {
+        EntityManager em = JPAConfig.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+
+            // Kiểm tra nếu movie tồn tại
+            Movie existingMovie = em.find(Movie.class, movie.getMovieID());
+            if (existingMovie != null) {
+                // Cập nhật các trường cần thiết
+                existingMovie.setMovieName(movie.getMovieName());
+                existingMovie.setCategory(movie.getCategory());
+                existingMovie.setDescription(movie.getDescription());
+                existingMovie.setMovieDuration(movie.getMovieDuration());
+                existingMovie.setReleaseDay(movie.getReleaseDay());
+                existingMovie.setStatus(movie.isStatus());
+                existingMovie.setImage(movie.getImage());
+                em.merge(existingMovie); // Merge vào database
+            } else {
+                return false; // Không tìm thấy movie
+            }
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
 
 	@Override
 	public boolean deleteMovie(int movieID) {
