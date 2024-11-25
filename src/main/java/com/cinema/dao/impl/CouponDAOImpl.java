@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cinema.configs.JPAConfig;
+import com.cinema.dao.ICouponDAO;
 import com.cinema.entity.Coupon;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+
 
 public class CouponDAOImpl implements ICouponDAO {
 	

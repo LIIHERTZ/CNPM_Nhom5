@@ -27,11 +27,11 @@ public class TransactionDetailsController extends HttpServlet{
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 		 try {
-	            // Lấy ticketId từ request
-	            int ticketId = Integer.parseInt(request.getParameter("ticketId"));
+	            // Lấy paymentId từ request
+	            int paymentId = Integer.parseInt(request.getParameter("paymentId"));
 
 	            // Gọi service để lấy dữ liệu
-	            List<PopCornPayment> popcornDetails = ticketService.getPopCornPaymentsByTicketId(ticketId);
+	            List<PopCornPayment> popcornDetails = ticketService.getPopCornPaymentsByPaymentId(paymentId);
 
 	            // Log kiểm tra dữ liệu
 	            System.out.println("Controller PopcornDetails Size: " + popcornDetails.size());

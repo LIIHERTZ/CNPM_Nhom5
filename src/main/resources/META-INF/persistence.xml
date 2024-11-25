@@ -39,7 +39,7 @@
 
 			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
 			<property name="jakarta.persistence.jdbc.password"
-				value="123..231" />
+				value="123456" />
 
 
 			<property

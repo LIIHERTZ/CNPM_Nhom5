@@ -23,7 +23,7 @@ public class SeatServiceImpl implements ISeatService {
 	}
 
 	@Override
-	public Integer findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {
+	public Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {
 		return seatDao.findSeatIdBySeatNumberAndScreeningId(seatNumber, screeningId);
 	}
 

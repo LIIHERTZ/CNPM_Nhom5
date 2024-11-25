@@ -52,8 +52,14 @@ public class PaymentServiceImpl implements IPaymentService{
                 ticket.setPriceTicket(Double.parseDouble(totalPrice) / seats.length);
                 ticket.setVersionName(version);
                 ticket.setMovieScreenings(movieScreening);
-                Integer seatId = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
-                seatService.updateSeatStatuses(Integer.toString(seatId), Integer.parseInt(screeningId));
+                Seat tmp = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
+                seatService.updateSeatStatuses(Integer.toString(tmp.getSeatID()), Integer.parseInt(screeningId));
+                if (tmp.isCouple()) {
+                    ticket.setPriceTicket(150000);
+                }
+                else {
+                    ticket.setPriceTicket(90000);
+                }
                 Ticket savedTicket = ticketDAO.saveTicket(ticket); // Lưu Ticket
                 if (savedTicket == null) {
                     throw new RuntimeException("Không lưu được Ticket cho ghế: " + seat);

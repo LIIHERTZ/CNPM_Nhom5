@@ -1,9 +1,9 @@
 package com.cinema.dao;
 
-import java.util.List;
-
 import com.cinema.entity.Coupon;
 
+import java.util.List;
+
 public interface ICouponDAO {
-	public List<Coupon> getAllCouponsValid();
+    public List<Coupon> getAllCouponsValid();
 }

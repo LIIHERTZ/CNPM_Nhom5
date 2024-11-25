@@ -42,6 +42,7 @@ public class SelectSeatsController extends HttpServlet {
 		String version = (String) session.getAttribute("version");
 		String startHourStr = (String) session.getAttribute("startHour");
 		Movie movie = (Movie) session.getAttribute("movie");
+		String cinemaName = (String) session.getAttribute("cinemaName");
 
 		// Chuyển đổi startHour từ String sang Date
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng của startHour
@@ -76,6 +77,7 @@ public class SelectSeatsController extends HttpServlet {
 		req.setAttribute("experience", experience);
 		req.setAttribute("version", version);
 		req.setAttribute("startHour", startHour);
+		req.setAttribute("cinemaName", cinemaName);
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/movie-seat-plan.jsp");
 		dispatcher.forward(req, resp);

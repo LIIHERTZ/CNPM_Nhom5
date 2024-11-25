@@ -46,3 +46,6 @@ replay_pid*
 /.settings
 /sample
 /.idea
+/.project
+/target
+/.classpath

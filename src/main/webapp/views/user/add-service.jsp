@@ -222,7 +222,8 @@ int countdownMinutes = 5;
 						<form id="proceedForm" action="${pageContext.request.contextPath}/addService"
 							method="post" onsubmit="prepareProceedForm()">
 							 <input type="hidden"
-								name="foodAndBeverageTotal" id="foodAndBeverageTotal" /> <input
+								name="foodAndBeverageTotal" id="foodAndBeverageTotal" />
+							<input
 								type="hidden" name="amountPayable" id="amountPayable" />
 							<button type="submit" class="custom-button back-button">Proceed</button>
 						</form>

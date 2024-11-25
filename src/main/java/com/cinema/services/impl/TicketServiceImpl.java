@@ -12,12 +12,8 @@ import com.cinema.services.ITicketService;
 public class TicketServiceImpl implements ITicketService{
 	ITicketDAO ticketDao = new TicketDAOImpl();
 	@Override
-	public List<TicketHistoryDTO> getTicketHistory(int personId) {
-		return ticketDao.getTicketHistoryByPersonId(personId);
-	}
-	@Override
-	public List<PopCornPayment> getPopCornPaymentsByTicketId(int ticketId) {
-		return ticketDao.getPopCornAndQuantityByTicketId(ticketId);
+	public List<PopCornPayment> getPopCornPaymentsByPaymentId(int paymentId) {
+		return ticketDao.getPopCornAndQuantityByPaymentId(paymentId);
 	}
 	@Override
 	public List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize) {

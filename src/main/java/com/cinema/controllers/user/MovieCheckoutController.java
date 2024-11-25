@@ -17,11 +17,12 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import com.cinema.configs.PaymentConfig;
+import com.cinema.entity.Coupon;
 import com.cinema.entity.Movie;
 import com.cinema.entity.SeatStatus;
-import com.cinema.services.IMovieService;
+import com.cinema.services.ICouponService;
 import com.cinema.services.ISeatService;
-import com.cinema.services.impl.MoviceServiceImpl;
+import com.cinema.services.impl.CouponServiceImpl;
 import com.cinema.services.impl.SeatServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -36,13 +37,9 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/movieCheckout")
 public class MovieCheckoutController extends HttpServlet{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	private IMovieService movieService = new MoviceServiceImpl();
+
+    private ICouponService couponService = new CouponServiceImpl();
 	private ISeatService seatService = new SeatServiceImpl();
 	
 	@Override
@@ -67,13 +64,12 @@ public class MovieCheckoutController extends HttpServlet{
 	    Map<String, List<Integer>> products = (Map<String, List<Integer>>) session.getAttribute("products");
 	    String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
 	    String amountPayable = (String) session.getAttribute("amountPayable");
-	    
-	    
-		
-//		Map<String, List<Integer>> products = new HashMap<>();
-//		products.put("Popcorn", Arrays.asList(2, 20000)); // 2 sản phẩm giá 20000
-//		products.put("CocaCola", Arrays.asList(1, 15000)); // 1 sản phẩm giá 15000
 
+        //lay danh sach coupon
+        List<Coupon> coupons = couponService.getAllCouponsValid();
+        // Gán thông tin vào request để truyền tới JSP
+
+        req.setAttribute("coupons", coupons);
         
 
 		// Chuyển đổi startHour từ String sang Date
@@ -131,7 +127,7 @@ public class MovieCheckoutController extends HttpServlet{
             String vnp_Command = "pay";
             String vnp_OrderInfo = "Thanh toan ve xem phim";
             String orderType = "billpayment";
-            String vnp_TxnRef = PaymentConfig.getRandomNumber(4);
+            String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
             String vnp_IpAddr = PaymentConfig.getIpAddress(req);
             String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
             String price = req.getParameter("amountPayable");
@@ -143,20 +139,11 @@ public class MovieCheckoutController extends HttpServlet{
             vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
             vnp_Params.put("vnp_Amount", String.valueOf(amount));
             vnp_Params.put("vnp_CurrCode", "VND");
-            String bank_code = "NCB";
-            if (bank_code != null && !bank_code.isEmpty()) {
-                vnp_Params.put("vnp_BankCode", bank_code);
-            }
+//            vnp_Params.put("vnp_BankCode", "NCB");
             vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
             vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
             vnp_Params.put("vnp_OrderType", orderType);
             vnp_Params.put("vnp_Locale", "vn");
-//            String locate = req.getParameter("language");
-//            if (locate != null && !locate.isEmpty()) {
-//                vnp_Params.put("vnp_Locale", locate);
-//            } else {
-//                vnp_Params.put("vnp_Locale", "vn");
-//            }
             vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_ReturnUrl);
             vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
             Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -205,5 +192,4 @@ public class MovieCheckoutController extends HttpServlet{
 //            resp.getWriter().write(gson.toJson(job));
             resp.sendRedirect(paymentUrl);
 	}
-
 }

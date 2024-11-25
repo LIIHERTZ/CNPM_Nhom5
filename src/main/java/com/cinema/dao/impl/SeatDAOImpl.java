@@ -35,9 +35,9 @@ public class SeatDAOImpl implements ISeatDAO {
     }
 
     @Override
-    public Integer findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {
+    public Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {
         EntityManager em = JPAConfig.getEntityManager();
-        String jpql = "SELECT s.seatID " +
+        String jpql = "SELECT s " +
                 "FROM Seat s " +
                 "JOIN SeatStatus ss ON s.seatID = ss.seat.id " +
                 "WHERE s.seatNumber = :seatNumber AND ss.screening.id = :screeningId";
@@ -46,7 +46,8 @@ public class SeatDAOImpl implements ISeatDAO {
         query.setParameter("screeningId", screeningId);
 
         try {
-            return (Integer) query.getSingleResult();
+            Seat result = (Seat) query.getSingleResult();
+            return result;
         } catch (Exception e) {
             // Handle no result or multiple result exceptions
             e.printStackTrace();
