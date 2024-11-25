@@ -9,7 +9,7 @@ import com.cinema.entity.PopCornPayment;
 
 public interface ITicketService {
 	  List<TicketHistoryDTO> getTicketHistory(int personId);
-	  List<PopCornPayment> getPopCornPaymentsByTicketId(int ticketId);
+	  List<PopCornPayment> getPopCornAndQuantityByPaymentId(int paymentId);
 	  List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize);
 	  int countTicketHistory(int personId);
 

@@ -28,7 +28,9 @@
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
 							<li><a href="movie-grid.html">Movie Grid</a></li>
-							<li><a href="movie-list.html">List Movie</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/userMovieList">List Movie</a>
+							</li>
 							<li><a href="movie-details-2.html">Movie Details 2</a></li>
 							<li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
 							<li><a href="movie-seat-plan.html">Movie Seat Plan</a></li>

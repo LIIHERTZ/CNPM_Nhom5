@@ -39,25 +39,24 @@ public class TicketDAOImpl implements ITicketDAO{
 	
 
 	@Override
-	public List<PopCornPayment> getPopCornAndQuantityByTicketId(int ticketId) {
-		EntityManager em = JPAConfig.getEntityManager();
+	public List<PopCornPayment> getPopCornAndQuantityByPaymentId(int paymentId) {
+	    EntityManager em = JPAConfig.getEntityManager();
 	    try {
 	        String jpql = "SELECT pp "
 	                    + "FROM PopCornPayment pp "
 	                    + "JOIN pp.payment pay "
 	                    + "JOIN pay.ticketPayments tp "
-	                    + "WHERE tp.ticket.ticketID = :ticketId";
+	                    + "WHERE tp.payment.paymentID = :paymentId";
 
 	        TypedQuery<PopCornPayment> query = em.createQuery(jpql, PopCornPayment.class);
-	        query.setParameter("ticketId", ticketId);
+	        query.setParameter("paymentId", paymentId);
 
 	        List<PopCornPayment> result = query.getResultList();
 
-	        // Log kiểm tra kết quả
-	        System.out.println("PopcornPayment Size: " + result.size());
+	        // Tính tổng giá tiền và gán vào thuộc tính price
 	        for (PopCornPayment pp : result) {
-	            System.out.println("Popcorn Name: " + pp.getPopcorn().getNamePopCorn());
-	            System.out.println("Quantity: " + pp.getQuantity());
+	            double calculatedPrice = pp.getPopcorn().getPrice() * pp.getQuantity(); // Tính giá
+	            pp.getPopcorn().setPrice(calculatedPrice); // Gán lại giá trị cho thuộc tính price
 	        }
 
 	        return result;
@@ -71,31 +70,41 @@ public class TicketDAOImpl implements ITicketDAO{
 
 
 
+
+
 	@Override
 	public List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize) {
 		EntityManager em = JPAConfig.getEntityManager();
-	    try {
-	        String jpql = "SELECT new com.cinema.dto.TicketHistoryDTO("
-	                + "t.ticketID, m.movieName, c.cinemaName, r.roomName, t.chairNumber, "
-	                + "ms.startHour, ms.endHour, t.priceTicket) "
-	                + "FROM Ticket t "
-	                + "JOIN t.movieScreenings ms "
-	                + "JOIN ms.movie m "
-	                + "JOIN ms.room r "
-	                + "JOIN r.cinema c "
-	                + "JOIN t.ticketPayments tp "
-	                + "JOIN tp.payment p "
-	                + "WHERE p.person.perID = :personId "
-	                + "ORDER BY ms.startHour DESC";
+		try {
+			// Use GROUP_CONCAT to concatenate chair numbers for each PaymentId
+			String jpql = "SELECT new com.cinema.dto.TicketHistoryDTO(" +
+					"p.paymentID, " +
+					"m.movieName, " +
+					"c.cinemaName, " +
+					"r.roomName, " +
+					"t.chairNumber, " +
+					"ms.startHour, " +
+					"ms.endHour, " +
+					"p.totalPrice" +
+					")" +
+					"FROM Ticket t " +
+					"JOIN t.movieScreenings ms " +
+					"JOIN ms.movie m " +
+					"JOIN ms.room r " +
+					"JOIN r.cinema c " +
+					"JOIN t.ticketPayments tp " +
+					"JOIN tp.payment p " +
+					"WHERE p.person.perID = :personId " +
+					"ORDER BY p.paymentID DESC";
 
-	        TypedQuery<TicketHistoryDTO> query = em.createQuery(jpql, TicketHistoryDTO.class);
-	        query.setParameter("personId", personId);
-	        query.setFirstResult(page * pageSize); // Offset
-	        query.setMaxResults(pageSize); // Limit
-	        return query.getResultList();
-	    } finally {
-	        em.close();
-	    }
+			TypedQuery<TicketHistoryDTO> query = em.createQuery(jpql, TicketHistoryDTO.class);
+			query.setParameter("personId", personId);
+			query.setFirstResult(page * pageSize); // Offset
+			query.setMaxResults(pageSize); // Limit
+			return query.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 

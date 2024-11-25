@@ -36,7 +36,15 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
     
-    @Column(nullable = false)
+    public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	@Column(nullable = false)
     private Date releaseDay;
     
     @Column(nullable = false)

@@ -12,5 +12,5 @@ public interface ITicketDAO{
 	  List<TicketHistoryDTO> getTicketHistoryByPersonId(int personId);
 	  List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize);
 	  int countTicketHistory(int personId);
-	List<PopCornPayment> getPopCornAndQuantityByTicketId(int ticketId);
+	List<PopCornPayment> getPopCornAndQuantityByPaymentId(int paymentId);
 }
