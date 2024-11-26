@@ -175,12 +175,12 @@
                 </c:if>
             </c:url>">1</a>
 							</li>
-							<li class="paginator__item">...</li>
+							<li class="paginator__item" style = "color : white;">...</li>
 						</c:if>
 
 						<!-- Page numbers around current page -->
 						<c:set var="startPage"
-							value="${currentPage - 1 > 1 ? currentPage - 1 : 1}" />
+							value="${currentPage  > 1 ? currentPage  : 1}" />
 						<c:set var="endPage"
 							value="${currentPage + 1 < totalPages ? currentPage + 1 : totalPages}" />
 						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
@@ -199,7 +199,7 @@
 
 						<!-- Display last page and ellipsis if needed -->
 						<c:if test="${currentPage < totalPages - 2}">
-							<li class="paginator__item">...</li>
+							<li class="paginator__item" style = "color : white;">...</li>
 							<li class="paginator__item"><a
 								href="<c:url value='/admin/users'>
                 <c:param name='pageNumber' value='${totalPages}'/>

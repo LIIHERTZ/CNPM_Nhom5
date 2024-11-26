@@ -123,26 +123,97 @@
 					</ul>
 					<ul class="paginator">
 						<!-- Prev button -->
-						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-left"></i>
-						</a></li>
-						<!-- Page numbers -->
-						<c:if test="${totalPages > 0}">
-							<c:forEach var="i" begin="0" end="${totalPages - 1}">
-								<li
-									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+						<li
+							class="paginator__item paginator__item--prev ${currentPage == 1 ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage > 1}">
 									<a
-									href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
-										${i + 1} </a>
-								</li>
-							</c:forEach>
+										href="<c:url value='/admin/coupons'>
+                    <c:param name='pageNumber' value='${currentPage - 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-left"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-left"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+
+						<!-- Display first page and ellipsis if needed -->
+						<c:if test="${currentPage > 3}">
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/coupons'>
+                <c:param name='pageNumber' value='1'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">1</a>
+							</li>
+							<li class="paginator__item" style = "color : white;">...</li>
 						</c:if>
+
+						<!-- Page numbers around current page -->
+						<c:set var="startPage"
+							value="${currentPage   > 1 ? currentPage   : 1}" />
+						<c:set var="endPage"
+							value="${currentPage + 1 < totalPages ? currentPage + 1 : totalPages}" />
+						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+							<li
+								class="paginator__item ${pageNum == currentPage ? 'paginator__item--active' : ''}">
+								<a
+								href="<c:url value='/admin/coupons'>
+                <c:param name='pageNumber' value='${pageNum}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${pageNum}</a>
+							</li>
+						</c:forEach>
+
+						<!-- Display last page and ellipsis if needed -->
+						<c:if test="${currentPage < totalPages - 2}">
+							<li class="paginator__item" style = "color : white;">...</li>
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/coupons'>
+                <c:param name='pageNumber' value='${totalPages}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${totalPages}</a>
+							</li>
+						</c:if>
+
 						<!-- Next button -->
-						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-right"></i>
-						</a></li>
+						<li
+							class="paginator__item paginator__item--next ${currentPage == totalPages ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage < totalPages}">
+									<a
+										href="<c:url value='/admin/coupons'>
+                    <c:param name='pageNumber' value='${currentPage + 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-right"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
 					</ul>
 
 				</div>
