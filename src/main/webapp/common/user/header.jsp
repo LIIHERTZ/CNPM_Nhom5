@@ -30,7 +30,6 @@
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
 							<li><a href="${pageContext.request.contextPath}/userMovieList">List Movie</a></li>
-							<li><a href="popcorn.html">Movie Food</a></li>
 						</ul></li>
 					<li><a href="#0">Others</a>
 						<ul class="submenu">
@@ -50,7 +49,7 @@
 						</ul></li>
 
 					<li>
-					<li class="header-button pr-0"><a href="">Book Ticket</a></li>
+					<li class="header-button pr-0"><a href="${pageContext.request.contextPath}/userMovieList">Book Ticket</a></li>
 				</ul>
 				<div class="header-bar d-lg-none">
 					<span></span> <span></span> <span></span>

@@ -43,7 +43,7 @@ public class BookTicketsController extends HttpServlet {
 		String selectedDate = req.getParameter("date");
 		
 		if (selectedLocation == null) {
-			selectedLocation = "District 1";
+			selectedLocation = "Hồ Chí Minh";
 		}
 
 		// Lấy ngày hiện tại nếu chưa chọn

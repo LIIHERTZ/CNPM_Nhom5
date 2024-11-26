@@ -163,7 +163,7 @@
 													</c:otherwise>
 												</c:choose>
 												<a
-													href="${pageContext.request.contextPath}/bookTickets?movieId=${movie.movieID}">
+													href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}">
 													<img src="${imgUrl}" alt="${movie.movieName}"
 													class="movie-img">
 												</a>

@@ -110,7 +110,7 @@ public class SelectSeatsController extends HttpServlet {
 		
 		// Chuyển lại thành String
 		amountPayable = String.valueOf(amountPayableInt);
-		
+		seatService.updateSeatStatuses(selectedSeats, amountPayableInt);
 
 		// Lưu vào session
 		session.setAttribute("selectedSeats", selectedSeats);

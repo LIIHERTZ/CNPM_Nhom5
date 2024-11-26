@@ -11,5 +11,6 @@ public interface ISeatStatusService {
     boolean deleteSeatStatusByScreeningId(int screeningID);
 	
     List<SeatStatus> getSeatStatusesByScreeningAndRoom(int msID, int roomID);
+	void updateSeatStatusTmp(String selectedSeats, String screeningId);
 
 }

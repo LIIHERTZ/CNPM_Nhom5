@@ -28,7 +28,7 @@ public class TransactionController extends HttpServlet{
             throws ServletException, IOException {
 		int personId = Integer.parseInt(request.getParameter("personId"));
 	    int page = 0;
-	    int pageSize = 5;
+	    int pageSize = 70;
 
 	    // Lấy thông tin trang hiện tại từ request
 	    try {
