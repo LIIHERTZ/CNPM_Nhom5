@@ -21,8 +21,8 @@
 							Home </a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/usernewsOrDiscounts">News
-							Or Discount</a></li>
-					<li>blog single</li>
+							And Discount</a></li>
+					<li>Detail</li>
 				</ul>
 			</div>
 		</div>
