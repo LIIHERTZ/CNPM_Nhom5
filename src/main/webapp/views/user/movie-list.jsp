@@ -382,6 +382,7 @@ h1 {
 													<img src="${imgUrl}" alt="${movie.movieName}"
 													class="movie-img">
 												</a>
+												
 											</div>
 											<div class="movie-content bg-one">
 												<h5 class="title">
@@ -433,20 +434,23 @@ h1 {
 																</div> <span>Movie Detail</span>
 															</a>
 														</div>
+														<p>Movie Trailer: ${movie.movieTrailer}</p>
 														<div class="react-item">
-															<a href="#0" class="popup-video">
+															<a href="${movie.movieTrailer}" class="video-popup">
 																<div class="thumb">
 																	<img
 																		src="${pageContext.request.contextPath}/assets/images/icons/heart.png"
 																		alt="icons">
 																</div> <span>watch trailer</span>
 															</a>
+															
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</c:forEach>
+									
 								</div>
 							</div>
 						</div>
@@ -462,6 +466,7 @@ h1 {
 		</div>
 	</section>
 	<!-- ==========Movie-Section========== -->
+	
 
 
 

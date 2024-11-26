@@ -109,8 +109,12 @@ public class MovieController extends HttpServlet {
         String movieDuration = req.getParameter("movie_duration");
         String description = req.getParameter("description");
         String dateString = req.getParameter("release_day");
-        String trailer = req.getParameter("movie_trailer");
         boolean status = Boolean.parseBoolean(req.getParameter("status"));
+        String trailer = req.getParameter("movie_trailer");
+        if (!trailer.startsWith("https://www.youtube.com/embed/")) {
+            String videoID = trailer.split("v=")[1].split("&")[0];
+            trailer = "https://www.youtube.com/embed/" + videoID;
+        }
         
         Date date = null;
 		try {
@@ -152,6 +156,10 @@ public class MovieController extends HttpServlet {
                 String description = req.getParameter("description");
                 String dateString = req.getParameter("release_day");
                 String trailer = req.getParameter("movie_trailer");
+                if (!trailer.startsWith("https://www.youtube.com/embed/")) {
+                    String videoID = trailer.split("v=")[1].split("&")[0];
+                    trailer = "https://www.youtube.com/embed/" + videoID;
+                }
                 boolean status = Boolean.parseBoolean(req.getParameter("status"));
                 Date date = null;
         		try {
