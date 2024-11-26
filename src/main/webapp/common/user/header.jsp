@@ -35,7 +35,7 @@
 					<li><a href="#0">Others</a>
 						<ul class="submenu">
 							<li><a
-								href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsOrDiscount</a>
+								href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsAndDiscount</a>
 							</li>
 						</ul></li>
 					<li><a href="#0">Welcome, ${person.fullName}</a>
