@@ -39,27 +39,31 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="sign__group">
-										<input type="text" id="title" name="title" class="sign__input" placeholder="Title">
+										<label class="sign__label">Title</label>
+										<input type="text" id="title" name="title" class="sign__input" placeholder="Title" required>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="sign__group">
+										<label class="sign__label">Short Description</label>
 										<input type="text" id="description" name="description" class="sign__input"
-											placeholder="Short Description">
+											placeholder="Short Description" required>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="sign__group">
-										<input type="text" id="author" name="author" class="sign__input" placeholder="Author">
+										<label class="sign__label">Author</label>
+										<input type="text" id="author" name="author" class="sign__input" placeholder="Author" required>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="sign__group">
+										<label class="sign__label">Detail</label>
 										<textarea id="detail" name="detail" class="sign__textarea"
-											placeholder="Detail" style="width: 100%; height: 200px;"></textarea>
+											placeholder="Detail" style="width: 100%; height: 200px;" required></textarea>
 									</div>
 								</div>
 
@@ -75,7 +79,7 @@
 									<div class="col-8">
 										<div class="sign__group">
 											<input type="date" id="date" name="date" class="sign__input"
-												placeholder="Select date">
+												placeholder="Select date" required>
 										</div>
 									</div>
 								</div>
@@ -91,7 +95,7 @@
 										id="sign__gallery-upload" name="images"
 										class="sign__gallery-upload" type="file"
 										accept=".png, .jpg, .jpeg" style="display: none;"
-										onchange="chooseFile(this)">
+										onchange="chooseFile(this)"required>
 								</div>
 							</div>
 

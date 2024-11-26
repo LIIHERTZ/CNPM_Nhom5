@@ -161,45 +161,43 @@
 <!-- 								</ul> -->
 <!-- 							</div> -->
 <!-- 						</div> -->
-			<div class="col-12">
-				<div class="main__paginator">
-				 <span class="main__paginator-pages">${currentPage + 1}
-						of ${totalPages}</span>
-
-					<ul class="main__paginator-list">
-						<li><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
-								<i class="ti ti-chevron-left"></i> <span>Prev</span>
-						</a></li>
-						<li><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
-								<span>Next</span> <i class="ti ti-chevron-right"></i>
-						</a></li>
-					</ul>
-
-					<ul class="paginator">
-						<li class="paginator__item paginator__item--prev"><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
-								<i class="ti ti-chevron-left"></i>
-						</a></li>
-
-						<!-- Hiển thị các trang -->
-						<c:forEach begin="0" end="${totalPages - 1}" var="i">
-							<li
-								class="paginator__item ${i == currentPage ? 'paginator__item--active' : ''}">
-								<a
-								href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${i}&search=${param.search}">${i + 1}</a>
-							</li>
-						</c:forEach>
-
-						<li class="paginator__item paginator__item--next"><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
-								<i class="ti ti-chevron-right"></i>
-						</a></li>
-					</ul>
-				</div>
-			</div>
-
+            <!-- paginator -->
+            <div class="col-12">
+                <div class="main__paginator">
+                    <c:if test="${totalPages > 0}">
+                        <span class="main__paginator-pages">${currentPage + 1} of ${totalPages}</span>
+                        <ul class="main__paginator-list">
+                            <li><a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
+                                <i class="ti ti-chevron-left"></i> <span>Prev</span>
+                            </a></li>
+                            <li><a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
+                                <span>Next</span> <i class="ti ti-chevron-right"></i>
+                            </a></li>
+                        </ul>
+                        <ul class="paginator">
+                            <li class="paginator__item paginator__item--prev">
+                                <a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
+                                    <i class="ti ti-chevron-left"></i>
+                                </a>
+                            </li>
+                            <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                                <li class="paginator__item ${i == currentPage ? 'paginator__item--active' : ''}">
+                                    <a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${i}&search=${param.search}">${i + 1}</a>
+                                </li>
+                            </c:forEach>
+                            <li class="paginator__item paginator__item--next">
+                                <a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
+                                    <i class="ti ti-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${totalPages == 0}">
+                        <span class="main__paginator-pages">No pages available....</span>
+                    </c:if>
+                </div>
+            </div>
+            <!-- end paginator -->
 			<!-- end paginator -->
 		</div>
 	</div>

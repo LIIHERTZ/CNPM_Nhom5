@@ -48,7 +48,7 @@ public class ChatDaoImpl implements IChatDao {
              // Tìm admin mặc định
                 Person admin = em.createQuery(
                         "SELECT p FROM Person p WHERE p.role = :role", Person.class)
-                        .setParameter("role", "admin") // Thay "Admin" bằng role thực tế của bạn
+                        .setParameter("role", "admin")
                         .setMaxResults(1) // Chỉ lấy 1 admin
                         .getSingleResult();
 

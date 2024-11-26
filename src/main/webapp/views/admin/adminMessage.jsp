@@ -75,21 +75,21 @@ textarea:focus {
 			<!-- Sidebar -->
 			<div class="col-3">
 				<div class="main__title">
-					<h2>Danh Sách Khách hàng</h2>
+					<h2>List of customers</h2>
 				</div>
 				<ul class="list-group">
 					<%
 					if (customers != null && !customers.isEmpty()) {
 						for (Person customer : customers) {
 					%>
-					<li class="list-group-item">
+					<li class="sidebar__nav-item">
 						<form action="${pageContext.request.contextPath}/adminMessage" method="post"
 							style="margin: 0; padding: 0;">
 							<input type="hidden" id="customerId" name="customerId"
 								value="<%=customer.getPerID()%>">
 <!-- 							<input type="hidden" id="conversationId" name="conversationId"  -->
 <%-- 								value="<%= (messages != null && !messages.isEmpty()) ? messages.get(0).getConversation().getConversationID() : "" %>"> --%>
-							<button type="submit" class="btn btn-link">
+							<button type="submit" class="sign__btn">
 <%-- 							onclick="selectCustomer('<%=customer.getPerID()%>',  --%>
 <%-- 							    '<%= (messages != null && !messages.isEmpty()) ? messages.get(0).getConversation().getConversationID() : "" %>')"> --%>
 								<%=customer.getFullName()%>
@@ -120,21 +120,35 @@ textarea:focus {
 <%
     if (messages != null && !messages.isEmpty()) {
         for (Message message : messages) {
-            out.print(message.getPerson().getFullName() + ": " + message.getContent() + "\n");
+            out.print(message.getPerson().getFullName() + ": " + "\n" + message.getContent() + "\n");
         }
     } else {
-        out.print("Hãy chọn một người dùng để tiến hành giải đáp thắc mắc...");
+        out.print("Cuộc hội thoại chưa được chọn hoặc đang chưa có tin nhắn, hãy nhắn thứ gì đó...");
     }
 %>										
 							</textarea>
 					</div>
 
 					<!-- Input Message -->
-					<div class="col-12">
-						<input id="inputText" type="text" class="sign__input"
-							placeholder="Type your message..." onkeypress="checkEnter(event)">
-						<button id="sendButton" class="sign__btn sign__btn--small"
-							onclick="sendData()">Send</button>
+					<div class="row">
+					
+<!-- 						<div class = "col-8"><input id="inputText" type="text" class="sign__input" -->
+<!-- 							placeholder="Type your message..." onkeypress="checkEnter(event)"></div> -->
+<!-- 						<div class = "col-4"><button id="sendButton" class="sign__btn sign__btn--small" -->
+<!-- 							onclick="sendData()">Send</button></div>	 -->
+							<div class="col-8">
+							    <textarea id="inputText" class="sign__textarea"
+							        placeholder="Type your message..." rows="3" onkeypress="checkEnter(event)"></textarea>
+							</div>
+							<div class="col-4">
+							    <button id="sendButton" class="sign__btn sign__btn--small"
+							        onclick="sendData()">Send</button>
+							</div>
+
+<!-- 						<input id="inputText" type="text" class="sign__input" -->
+<!-- 							placeholder="Type your message..." onkeypress="checkEnter(event)"> -->
+<!-- 						<button id="sendButton" class="sign__btn sign__btn--small" -->
+<!-- 							onclick="sendData()">Send</button> -->
 					</div>
 				</div>
 			</div>
@@ -157,8 +171,8 @@ textarea:focus {
 		var websocket = new WebSocket("ws://localhost:8181");
 
 		websocket.onopen = function() {
-			addMessage("<--------------------------------------------------------------------Server connected!-------------------------------------------------------------------->", "other");
-			addMessage(username + " đã vào đoạn chat!", "other");
+			addMessage("Thông báo hệ thống server connected!", "other");
+			addMessage("Thông báo hệ thống " + username + " đã vào đoạn chat!", "other");
 			
 			// Gửi conversationId để server phân loại cuộc trò chuyện
 	        if (currentConversationId) {
@@ -209,22 +223,25 @@ textarea:focus {
 
 		function addMessage(text, type) {
 // 			const content = document.getElementById("content");
-// 			if (type === "user") {
-// 				content.value += text + "\n"; 
-// 			} else {
-// 				content.value += text + "\n"; 
-// 			}
-// 			content.scrollTop = content.scrollHeight; // Tự động cuộn xuống
+// 			content.value = content.value.trim() + "\n" + text.trim();
+// 			content.scrollTop = content.scrollHeight;
 			const content = document.getElementById("content");
-// 			content.value += text.trim() + "\n";
 
-// 			content.value = '${content.value.trim()}\n${text}';
-			content.value = content.value.trim() + "\n" + text.trim();
-			content.scrollTop = content.scrollHeight;
+		    // Tách tên người gửi và nội dung tin nhắn
+		    const lines = text.split(":");
+		    const sender = lines[0].trim(); // Lấy phần tên người gửi (trước dấu ":")
+		    const message = lines.slice(1).join(":").trim(); // Lấy phần nội dung tin nhắn (sau dấu ":")
+		
+		    // Tạo định dạng hiển thị với tên người gửi và nội dung tin nhắn trên dòng riêng
+		    const formattedText = sender + ":" + "\n" + message;
+		
+		    // Thêm tin nhắn vào nội dung hiện tại
+		    content.value = content.value.trim() + "\n" + formattedText.trim();
+		    content.scrollTop = content.scrollHeight; // Cuộn xuống cuối
 		}
 
 		function checkEnter(event) {
-			if (event.key === "Enter") {
+			if (event.key === "Enter" && !event.shiftKey) {
 				event.preventDefault();
 				sendData();
 			}

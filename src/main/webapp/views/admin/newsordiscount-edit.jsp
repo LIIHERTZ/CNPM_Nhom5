@@ -40,31 +40,36 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="sign__group">
-										<!-- 											<input type="text" class="sign__input" placeholder="Title"> -->
+										<!-- 
+																					<input type="text" class="sign__input" placeholder="Title"> -->
+										<label class="sign__label">Title</label>
 										<input type="text" name="title" class="sign__input"
-											placeholder="Title" value="${newsOrDiscount.title}">
+											placeholder="Title" value="${newsOrDiscount.title}" required>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="sign__group">
+										<label class="sign__label">Description</label>
 										<input type="text" name="description" class="sign__input"
 											placeholder="Short Description"
-											value="${newsOrDiscount.description}">
+											value="${newsOrDiscount.description}" required>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="sign__group">
+										<label class="sign__label">Author</label>
 										<input type="text" name="author" class="sign__input"
-											placeholder="Author" value="${newsOrDiscount.author}">
+											placeholder="Author" value="${newsOrDiscount.author}" required>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="sign__group">
+										<label class="sign__label">Detail</label>
 										<textarea name="detail" class="sign__textarea"
-											placeholder="Detail" style="width: 100%; height: 200px;">${newsOrDiscount.detail}</textarea>
+											placeholder="Detail" style="width: 100%; height: 200px;" required>${newsOrDiscount.detail}</textarea>
 									</div>
 								</div>
 
@@ -83,7 +88,7 @@
 												pattern="yyyy-MM-dd" var="formattedDate" />
 											<input type="date" id="publish-date" class="sign__input"
 												name="date" placeholder="Select date"
-												value="${formattedDate}">
+												value="${formattedDate}" required>
 
 										</div>
 									</div>
