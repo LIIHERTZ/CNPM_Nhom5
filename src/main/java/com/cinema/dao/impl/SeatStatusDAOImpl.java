@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SeatStatusDAOImpl implements ISeatStatusDAO {
@@ -93,5 +94,67 @@ public class SeatStatusDAOImpl implements ISeatStatusDAO {
         return seatStatuses;
     }
 
-	
+    @Override
+    public void updateSeatStatusesTrue(int seatId, int screeningId) {
+        EntityManager em = JPAConfig.getEntityManager();
+        em.getTransaction().begin();
+        String query = "UPDATE SeatStatus ss SET ss.status = TRUE, ss.bookingTime = :bookingTime WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
+        em.createQuery(query)
+                .setParameter("seatId", seatId)
+                .setParameter("screeningId", screeningId)
+                .setParameter("bookingTime", LocalDateTime.now())
+                .executeUpdate();
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public void updateSeatStatusesFalse(int seatId, int screeningId) {
+        EntityManager em = JPAConfig.getEntityManager();
+        em.getTransaction().begin();
+        String query = "UPDATE SeatStatus ss SET ss.status = FALSE, ss.bookingTime = :bookingTime WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
+        em.createQuery(query)
+                .setParameter("seatId", seatId)
+                .setParameter("screeningId", screeningId)
+                .setParameter("bookingTime", null)
+                .executeUpdate();
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public void resetExpiredSeats() {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            // Tìm các ghế đã đặt nhưng hết hạn (quá 5 phút) và không liên quan đến TicketPayment
+            List<SeatStatus> expiredSeats = em.createQuery(
+                            "SELECT s FROM SeatStatus s " +
+                                    "WHERE s.status = true " +
+                                    "AND s.bookingTime < :expirationTime " +
+                                    "AND NOT EXISTS (" +
+                                    "   SELECT tp FROM TicketPayment tp " +
+                                    "   JOIN tp.ticket t " +
+                                    "   WHERE t.movieScreenings.msID = s.screening.msID " +  // Liên kết qua MovieScreenings
+                                    "   AND t.chairNumber = s.seat.seatNumber" +  // Ghế phải khớp số ghế
+                                    ")", SeatStatus.class)
+                    .setParameter("expirationTime", LocalDateTime.now().minusMinutes(5))
+                    .getResultList();
+
+            // Reset trạng thái ghế
+            for (SeatStatus seat : expiredSeats) {
+                seat.setStatus(false); // Trả lại trạng thái
+                seat.setBookingTime(null); // Xóa thời gian đặt
+                em.merge(seat); // Lưu lại trạng thái ghế
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } finally {
+            em.close();
+        }
+    }
 }

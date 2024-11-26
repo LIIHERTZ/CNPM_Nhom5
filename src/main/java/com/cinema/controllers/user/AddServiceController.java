@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/addService")
+@WebServlet(urlPatterns = "/userAddService")
 public class AddServiceController extends HttpServlet {
 
 	/**
@@ -155,7 +155,7 @@ public class AddServiceController extends HttpServlet {
 		session.setAttribute("amountPayable", amountPayable);
 
 		// Chuyển hướng đến movieCheckout
-		response.sendRedirect("movieCheckout");
+		response.sendRedirect("userMovieCheckout");
 
 	}
 }

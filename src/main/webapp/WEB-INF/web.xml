@@ -11,6 +11,10 @@
 		<filter-name>sitemesh</filter-name>
 		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
 	</filter>
+	<listener>
+		<listener-class>com.cinema.controllers.JobScheduler</listener-class>
+	</listener>
+
 
 	<filter-mapping>
 		<filter-name>sitemesh</filter-name>

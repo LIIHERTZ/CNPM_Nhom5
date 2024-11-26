@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -11,15 +11,12 @@ int countdownMinutes = 5;
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
 <body>
 
 	<!-- ==========Banner-Section========== -->
+	<c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
 	<section class="details-banner hero-area bg_img"
-		data-background="'assets/images/banner/banner03.jpg'">
+		data-background="${movieImgUrl}" id = "data-background-MV">
 		<div class="container">
 			<div class="details-banner-wrapper">
 				<div class="details-banner-content">
@@ -60,7 +57,7 @@ int countdownMinutes = 5;
 			<div class="page-title-area">
 				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="${pageContext.request.contextPath}/bookTickets"
+					<a href="${pageContext.request.contextPath}/userBookTickets?movieId=${movie.movieID}"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
@@ -119,7 +116,7 @@ int countdownMinutes = 5;
 				</div>
 				<h5 class="subtitle">silver plus</h5>
 				<div class="screen-wrapper">
-					<form action="${pageContext.request.contextPath}/selectSeats" method="post">
+					<form action="${pageContext.request.contextPath}/userSelectSeats" method="post">
 
 						<input type="hidden" name="selectedSeats" id="hiddenSelectedSeats"
 							value=""> <input type="hidden" name="totalPrice"
@@ -152,7 +149,7 @@ int countdownMinutes = 5;
 													alt="seat"> <span>${seatStatus.seat.seatNumber}</span>
 											</label></li>
 										</c:forEach>
-									</ul> <span>${rowEntry.key}</span> <!-- Tên hàng ở cuối --></li>
+									</ul>  <!-- Tên hàng ở cuối --></li>
 							</c:forEach>
 						</ul>
 
@@ -206,7 +203,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "${pageContext.request.contextPath}/bookTickets?movieId=${movie.movieID}";// Dừng đếm ngược khi hết thời gian
+				window.location.href = "${pageContext.request.contextPath}/userBookTickets?movieId=${movie.movieID}";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
 		document
@@ -293,6 +290,20 @@ int countdownMinutes = 5;
 		    });
 		    
 		});
+		// Lấy phần tử bằng id
+		const element = document.getElementById('data-background-MV');
+
+		// Kiểm tra và gán background image nếu element tồn tại
+		if (element) {
+		    const bgImage = element.getAttribute('data-background');
+		    //const image = 'url('+ '"' + bgImage + '"' + ')';
+		    if (bgImage) {
+		        element.style.backgroundImage = 'url('+ '"' + bgImage + '"' + ')';;
+		        element.style.backgroundSize = 'cover'; // Phủ đầy
+		        element.style.backgroundPosition = 'center'; // Canh giữa
+		        element.style.backgroundRepeat = 'no-repeat'; // Không lặp lại
+		    }
+		}
 
 
 	</script>

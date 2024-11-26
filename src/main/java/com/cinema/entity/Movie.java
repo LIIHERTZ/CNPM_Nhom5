@@ -42,6 +42,10 @@ public class Movie {
 
     @Column(nullable = false)
     private boolean status;
+    
+    @Column(columnDefinition = "NVARCHAR(MAX)")
+    private String movieTrailer;
+    
 
     @OneToMany(mappedBy = "movie" ,cascade = CascadeType.ALL)
     private List<MovieScreenings> movieScreenings;
@@ -140,4 +144,14 @@ public class Movie {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+	public String getMovieTrailer() {
+		return movieTrailer;
+	}
+
+	public void setMovieTrailer(String movieTrailer) {
+		this.movieTrailer = movieTrailer;
+	}
+    
+    
 }

@@ -9,12 +9,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.cinema.entity.Movie;
+import com.cinema.entity.Seat;
 import com.cinema.entity.SeatStatus;
+import com.cinema.entity.Ticket;
 import com.cinema.services.IMovieService;
 import com.cinema.services.ISeatService;
+import com.cinema.services.ISeatStatusService;
 import com.cinema.services.impl.MovieServiceImpl;
 import com.cinema.services.impl.SeatServiceImpl;
 
+import com.cinema.services.impl.SeatStatusServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,12 +27,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/selectSeats")
+@WebServlet(urlPatterns = "/userSelectSeats")
 public class SelectSeatsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private IMovieService movieService = new MovieServiceImpl();
 	private ISeatService seatService = new SeatServiceImpl();
+	private ISeatStatusService seatStatusService = new SeatStatusServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,7 +60,7 @@ public class SelectSeatsController extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (screeningIdStr == null || screeningIdStr.isEmpty()) {
-			resp.sendRedirect("/ValCT_Nhom5/bookTickets");
+			resp.sendRedirect("/bookTickets");
 			return;
 		}
 
@@ -88,6 +93,7 @@ public class SelectSeatsController extends HttpServlet {
 			throws ServletException, IOException {
 		// Lấy dữ liệu từ form
 		HttpSession session = request.getSession();
+		String screeningId = (String) request.getParameter("screeningId");
 		String selectedSeats = request.getParameter("selectedSeats");
 		String totalPrice = request.getParameter("totalPrice");
 		String amountPayable = (String) session.getAttribute("amountPayable");
@@ -110,14 +116,17 @@ public class SelectSeatsController extends HttpServlet {
 		
 		// Chuyển lại thành String
 		amountPayable = String.valueOf(amountPayableInt);
-		
-
+		String[] seats = selectedSeats.split(",");
+		for (String seat : seats) {
+			Seat tmp = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
+			seatStatusService.updateSeatStatusesTrue(tmp.getSeatID(), Integer.parseInt(screeningId));
+		}
 		// Lưu vào session
 		session.setAttribute("selectedSeats", selectedSeats);
 		session.setAttribute("totalPrice", totalPrice);
 		session.setAttribute("amountPayable", amountPayable);
 
-		response.sendRedirect("movieCheckout");
+		response.sendRedirect("userMovieCheckout");
 	}
 
 }

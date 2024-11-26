@@ -109,11 +109,14 @@
 								style="display: none; width: 300px; height: 300px;" />
 						</div>
 					</div>
+					<label class="sign__label" for="address">Movie Trailer Link:</label>
+						<div class="sign__group">
+						 <input type="text" class="sign__input" name="movie_trailer" placeholder="Trailer Link" required>			
+						</div>
 					<div class="col-12 d-flex justify-content-start align-items-center" style="gap: 15px;">
 									<a href="${pageContext.request.contextPath}/admin/movies"
 					class="sign__btn sign__btn--small"><span>Back to List</span></a>
-					<button type="submit" class="sign__btn sign__btn--small">
-						
+					<button type="submit" class="sign__btn sign__btn--small">						
 						<span>Save</span>
 					</button>
 						</div>

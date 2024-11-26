@@ -6,6 +6,7 @@ import com.cinema.dao.impl.*;
 import com.cinema.entity.*;
 import com.cinema.services.IPaymentService;
 import com.cinema.services.ISeatService;
+import com.cinema.services.ISeatStatusService;
 import com.cinema.services.ITicketPaymentService;
 import jakarta.persistence.EntityManager;
 
@@ -18,11 +19,12 @@ import java.util.Map;
 public class PaymentServiceImpl implements IPaymentService{
     private IPaymentDAO paymentDAO = new PaymentDAOImpl();
     private ITicketDAO ticketDAO = new TicketDAOImpl();
-    private IPopcornPaymentDAO popcornPaymentDAO = new PopCornPaymentDAOImpl();
+    private IPopcornPaymentDAO popcornPaymentDAO = new PopcornPaymentDAOImpl();
     private IMovieScreeningsDAO movieScreeningsDAO = new MovieScreeningsDAOImpl();
     private IPopCornDAO popcornDAO = new PopCornDAOImpl();
     private ITicketPaymentService ticketPaymentService = new TicketPaymentServiceImpl();
     private ISeatService seatService = new SeatServiceImpl();
+    private ISeatStatusService seatStatusService = new SeatStatusServiceImpl();
 	@Override
 	public void processPayment(String screeningId, String selectedLocation, String selectedDate, String experience,
 			String version, String startHour, Movie movie, String selectedSeats, String totalPrice, String payDate,
@@ -53,7 +55,7 @@ public class PaymentServiceImpl implements IPaymentService{
                 ticket.setVersionName(version);
                 ticket.setMovieScreenings(movieScreening);
                 Seat tmp = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
-                seatService.updateSeatStatuses(Integer.toString(tmp.getSeatID()), Integer.parseInt(screeningId));
+                seatStatusService.updateSeatStatusesTrue(tmp.getSeatID(), Integer.parseInt(screeningId));
                 if (tmp.isCouple()) {
                     ticket.setPriceTicket(150000);
                 }

@@ -29,13 +29,12 @@
 					<li><a href="${pageContext.request.contextPath}/userHome" class="active">Home</a></li>
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
-							<li><a href="movie-list.html">List Movie</a></li>
-							<li><a href="popcorn.html">Movie Food</a></li>
+							<li><a href="${pageContext.request.contextPath}/userMovieList">List Movie</a></li>
 						</ul></li>
 					<li><a href="#0">Others</a>
 						<ul class="submenu">
 							<li><a
-								href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsOrDiscount</a>
+								href="${pageContext.request.contextPath}/usernewsOrDiscounts">NewsAndDiscount</a>
 							</li>
 						</ul></li>
 					<li><a href="#0">Welcome, ${person.fullName}</a>
@@ -50,7 +49,7 @@
 						</ul></li>
 
 					<li>
-					<li class="header-button pr-0"><a href="">Book Ticket</a></li>
+					<li class="header-button pr-0"><a href="${pageContext.request.contextPath}/userMovieList">Book Ticket</a></li>
 				</ul>
 				<div class="header-bar d-lg-none">
 					<span></span> <span></span> <span></span>

@@ -37,10 +37,6 @@ public class SeatServiceImpl implements ISeatService {
         return seatDao.getSeatStatusesByScreeningId(screeningId);
     }
 
-    @Override
-    public void updateSeatStatuses(String selectedSeats, int screeningId) {
-        seatDao.updateSeatStatuses(selectedSeats, screeningId);
-    }
 
     @Override
     public Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {

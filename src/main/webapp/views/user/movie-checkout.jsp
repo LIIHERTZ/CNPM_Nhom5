@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%
-// Äáº·t thá»i gian Äáº¿m ngÆ°á»£c (5 phÃºt)
+// ÃÂÃ¡ÂºÂ·t thÃ¡Â»Âi gian ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c (5 phÃÂºt)
 int countdownMinutes = 5;
 %>
 <!DOCTYPE html>
@@ -20,9 +20,10 @@ int countdownMinutes = 5;
 <body>
 
 
-	<!-- ==========Banner-Section========== -->
+<!-- ==========Banner-Section========== -->
+	<c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
 	<section class="details-banner hero-area bg_img"
-		data-background="'assets/images/banner/banner03.jpg'">
+		data-background="${movieImgUrl}" id = "data-background-MV">
 		<div class="container">
 			<div class="details-banner-wrapper">
 				<div class="details-banner-content">
@@ -61,24 +62,24 @@ int countdownMinutes = 5;
 	<section class="page-title bg-one">
 		<div class="container">
 			<div class="page-title-area">
-				<!-- NÃºt quay láº¡i -->
+				<!-- NÃÂºt quay lÃ¡ÂºÂ¡i -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/selectSeats"
+					<a href="/ValCT_Nhom5/userSelectSeats"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
 				</div>
 
-				<!-- Hiá»n thá» ngÃ y vÃ  giá» ÄÃ£ chá»n -->
+				<!-- HiÃ¡Â»Ân thÃ¡Â»Â ngÃ y vÃ  giÃ¡Â»Â ÃÂÃÂ£ chÃ¡Â»Ân -->	
 				<div class="item date-item">
-					<!-- Hiá»n thá» startHour theo Äá»nh dáº¡ng HH:mm, dd/MM/yyyy -->
+					<!-- HiÃ¡Â»Ân thÃ¡Â»Â startHour theo ÃÂÃ¡Â»Ânh dÃ¡ÂºÂ¡ng HH:mm, dd/MM/yyyy -->
 					<c:if test="${not empty startHour}">
 						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
 					</c:if>
 				</div>
 
 
-				<!-- Äáº¿m ngÆ°á»£c thá»i gian -->
+				<!-- ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c thÃ¡Â»Âi gian -->
 				<div class="item">
 					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
@@ -118,12 +119,12 @@ int countdownMinutes = 5;
 									id="selectedCouponName" name="selectedCouponName" readonly
 									>
 							</div>
-							<!-- Input ẩn để lưu giá trị coupon -->
+							<!-- Input áº©n Äá» lÆ°u giÃ¡ trá» coupon -->
 							<input type="hidden" id="selectedCouponId"
 								name="selectedCouponId"> <input type="hidden"
 								id="selectedCouponValue" name="selectedCouponValue">
 							<div class="form-group">
-								<!-- Nút để mở modal -->
+								<!-- NÃºt Äá» má» modal -->
 								<button type="button" data-bs-toggle="modal"
 									class="custom-button" data-bs-target="#modal-coupon"
 									style="width: 162px; height: 50px;">Add Coupon</button>
@@ -138,11 +139,11 @@ int countdownMinutes = 5;
 										Card</span>
 							</a></li>
 						</ul>
-						<form action="${pageContext.request.contextPath}/movieCheckout" method="post"
+						<form action="${pageContext.request.contextPath}/userMovieCheckout" method="post"
 							  class="payment-card-form">
 							<input type="hidden" id="amountPayable" name="amountPayable" value="${amountPayable != null ? amountPayable : totalPrice}">
 							<div class="form-group">
-								<!-- Nút submit sẽ gọi phương thức POST -->
+								<!-- NÃºt submit sáº½ gá»i phÆ°Æ¡ng thá»©c POST -->
 								<input type="submit" class="custom-button" value="Make Payment">
 							</div>
 						</form>
@@ -184,7 +185,7 @@ int countdownMinutes = 5;
 						<ul class="side-shape">
 							<li>
 								<h6 class="subtitle">
-									<span>food & bevarage</span> <span id="popcornValue"> <!-- Hiá»n thá» tá»ng tiá»n Food & Beverage -->
+									<span>food & bevarage</span> <span id="popcornValue"> <!-- HiÃ¡Â»Ân thÃ¡Â»Â tÃ¡Â»Âng tiÃ¡Â»Ân Food & Beverage -->
 										<c:choose>
 											<c:when test="${not empty foodAndBeverageTotal}">
                         ${foodAndBeverageTotal}
@@ -193,7 +194,7 @@ int countdownMinutes = 5;
 											</c:otherwise>
 										</c:choose>
 									</span>
-								</h6> <span class="info"> <!-- Hiá»n thá» danh sÃ¡ch sáº£n pháº©m -->
+								</h6> <span class="info"> <!-- HiÃ¡Â»Ân thÃ¡Â»Â danh sÃÂ¡ch sÃ¡ÂºÂ£n phÃ¡ÂºÂ©m -->
 									<c:if test="${not empty products}">
 										<c:forEach var="entry" items="${products}">
 											<span> ${entry.value[0]} ${entry.key}
@@ -222,7 +223,7 @@ int countdownMinutes = 5;
 								</c:choose>
 							</span>
 						</h6>
-						<a href="${pageContext.request.contextPath}/addService"
+						<a href="${pageContext.request.contextPath}/userAddService"
 							class="custom-button back-button">Add-Service</a>
 					</div>
 				</div>
@@ -242,16 +243,16 @@ int countdownMinutes = 5;
 					<h5 class="modal-title" style="color: black">Chon Coupon</h5>
 				</div>
 				<div class="modal-body">
-					<!-- Ô tìm kiếm -->
+					<!-- Ã tÃ¬m kiáº¿m -->
 					<input type="text" id="search-input"
 						placeholder="Tim kiem coupon..."
 						style="width: 100%; margin-bottom: 10px; padding: 5px; border: 1px solid #ccc; color: #007bff">
 
-					<!-- Danh sách coupon -->
+					<!-- Danh sÃ¡ch coupon -->
 					<div
 						style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background-color: #f8f9fa;">
 						<ul class="list-group" id="coupon-list">
-							<!-- Danh sách các coupon -->
+							<!-- Danh sÃ¡ch cÃ¡c coupon -->
 							<c:forEach var="coupon" items="${coupons}">
 								<li class="list-group-item">
 									<button type="button" class="btn btn-link select-coupon"
@@ -290,7 +291,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "${pageContext.request.contextPath}/selectSeats";
+				window.location.href = "${pageContext.request.contextPath}/userSelectSeats";
 			}
 		}, 1000);
 	</script>
@@ -302,31 +303,30 @@ int countdownMinutes = 5;
 
     couponButtons.forEach(button => {
         button.addEventListener("click", function () {
-            // Lấy thông tin coupon từ dataset
+            // Láº¥y thÃ´ng tin coupon tá»« dataset
             const couponId = this.getAttribute("data-coupon-id");
             const couponName = this.getAttribute("data-coupon-name");
             const couponValue = this.getAttribute("data-coupon-value");
 			console.log( this.getAttribute("data-coupon-value"));
-            // Gửi giá trị coupon đến input ẩn
+            // Gá»­i giÃ¡ trá» coupon Äáº¿n input áº©n
             document.getElementById("selectedCouponId").value = couponId;
             document.getElementById("selectedCouponValue").value = couponValue;
             document.getElementById("selectedCouponName").value = couponName;
-            //
-            // Lấy giá trị totalPrice hiện tại và loại bỏ khoảng trắng
+            // Láº¥y giÃ¡ trá» totalPrice hiá»n táº¡i vÃ  loáº¡i bá» khoáº£ng tráº¯ng
             const ticketPriceElement = document.getElementById("ticketPrice");
-            const ticketPriceText = ticketPriceElement.textContent.trim(); // Loại bỏ khoảng trắng thừa
-            const ticketPrice = parseFloat(ticketPriceText.replace(/[^0-9.-]+/g, "")) || 0; // Chỉ giữ lại số
+            const ticketPriceText = ticketPriceElement.textContent.trim(); // Loáº¡i bá» khoáº£ng tráº¯ng thá»«a
+            const ticketPrice = parseFloat(ticketPriceText.replace(/[^0-9.-]+/g, "")) || 0; // Chá» giá»¯ láº¡i sá»
             
             const popcornValueElement = document.getElementById("popcornValue");
-            const popcornValueText = popcornValueElement.textContent.trim(); // Loại bỏ khoảng trắng thừa
-            const popcornValue = parseFloat(popcornValueText.replace(/[^0-9.-]+/g, "")) || 0; // Chỉ giữ lại số
+            const popcornValueText = popcornValueElement.textContent.trim(); // Loáº¡i bá» khoáº£ng tráº¯ng thá»«a
+            const popcornValue = parseFloat(popcornValueText.replace(/[^0-9.-]+/g, "")) || 0; // Chá» giá»¯ láº¡i sá»
             
             
-            // Tính toán số tiền giảm giá và tổng tiền sau giảm giá
-            const discountAmount = ((ticketPrice+popcornValue) * couponValue) / 100; // Số tiền giảm
-            const updatedAmountPayable = (ticketPrice+popcornValue) - discountAmount; // Tổng tiền sau giảm
+            // TÃ­nh toÃ¡n sá» tiá»n giáº£m giÃ¡ vÃ  tá»ng tiá»n sau giáº£m giÃ¡
+            const discountAmount = ((ticketPrice+popcornValue) * couponValue) / 100; // Sá» tiá»n giáº£m
+            const updatedAmountPayable = (ticketPrice+popcornValue) - discountAmount; // Tá»ng tiá»n sau giáº£m
 
-         // Cập nhật số tiền giảm giá và tổng tiền hiển thị
+         // Cáº­p nháº­t sá» tiá»n giáº£m giÃ¡ vÃ  tá»ng tiá»n hiá»n thá»
             const totalPriceElement = document.getElementById("amountPayableValue");
             totalPriceElement.textContent = Math.round(updatedAmountPayable) + " VND";
 
@@ -335,8 +335,8 @@ int countdownMinutes = 5;
 			totalPrice.value = Math.round(updatedAmountPayable);
 //
 			const discountValueElement = document.getElementById("discountValue");
-            discountValueElement.textContent = couponValue + "%"; // Cập nhật giá trị giảm giá
-            // Đóng modal (sử dụng jQuery
+            discountValueElement.textContent = couponValue + "%"; // Cáº­p nháº­t giÃ¡ trá» giáº£m giÃ¡
+            // ÄÃ³ng modal (sá»­ dá»¥ng jQuery
             $('#modal-coupon').modal('hide');
         });
     });
@@ -351,22 +351,45 @@ int countdownMinutes = 5;
         const couponList = document.getElementById("coupon-list");
         const coupons = couponList.querySelectorAll("li");
 
-        // Lắng nghe sự kiện nhập liệu
+        // Láº¯ng nghe sá»± kiá»n nháº­p liá»u
         searchInput.addEventListener("input", function () {
             const keyword = searchInput.value.toLowerCase();
 
-            // Lọc danh sách coupon
+            // Lá»c danh sÃ¡ch coupon
             coupons.forEach(coupon => {
                 const text = coupon.textContent.toLowerCase();
                 if (text.includes(keyword)) {
-                    coupon.style.display = ""; // Hiển thị
+                    coupon.style.display = ""; // Hiá»n thá»
                 } else {
-                    coupon.style.display = "none"; // Ẩn
+                    coupon.style.display = "none"; // áº¨n
                 }
             });
         });
     });
-</script>
+ // Lấy phần tử bằng id
+	const element = document.getElementById('data-background-MV');
+
+	// Kiểm tra và gán background image nếu element tồn tại
+	if (element) {
+	    const bgImage = element.getAttribute('data-background');
+	    //const image = 'url('+ '"' + bgImage + '"' + ')';
+	    if (bgImage) {
+	        element.style.backgroundImage = 'url('+ '"' + bgImage + '"' + ')';;
+	        element.style.backgroundSize = 'cover'; // Phủ đầy
+	        element.style.backgroundPosition = 'center'; // Canh giữa
+	        element.style.backgroundRepeat = 'no-repeat'; // Không lặp lại
+	    }
+	}
+	// Khi người dùng rời trang, trả lại ghế chưa thanh toán
+	window.addEventListener("beforeunload", function () {
+		fetch('/releaseSeat', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `selectedSeats=${selectedSeats}&screeningId=${screeningId}`
+		});
+	});
+
+	</script>
 
 	<script src="${pageContext.request.contextPath}/assets2/js/bootstrap.bundle.min.js"></script>
 </body>

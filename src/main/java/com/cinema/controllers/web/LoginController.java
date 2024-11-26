@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = { "/signin", "/waiting", "/loginwithgoogle" })
+@WebServlet(urlPatterns = { "/signin", "/loginwithgoogle" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,17 +36,18 @@ public class LoginController extends HttpServlet {
 			showPageLogin(req, resp);
 		else if (url.contains("loginwithgoogle"))
 			showGoogleLogin(req, resp);
-		else if (url.contains("waiting"))
-			waiting(req, resp);
+		/*
+		 * else if (url.contains("waiting")) waiting(req, resp);
+		 */
 	}
 
 	private void showGoogleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
 		String code = req.getParameter("code");
-		String accessToken = getToken(code);
+		String accessToken = getToken(code,req);
 		GoogleAccountDTO acc = getUserInfo(accessToken);
 		String email = acc.getEmail();
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(true);
 		
 		Person per = accService.findByEmail(email);
 		if (per.getEmail() != null) {
@@ -64,7 +65,8 @@ public class LoginController extends HttpServlet {
 		}
 		
 	}
-	public static String getToken(String code) throws ClientProtocolException, IOException {
+	public static String getToken(String code, HttpServletRequest req) throws ClientProtocolException, IOException {
+		String url = "http://localhost:8080" + req.getContextPath() + "/loginwithgoogle";
 
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
 
@@ -76,7 +78,7 @@ public class LoginController extends HttpServlet {
 
                         .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
 
-                        .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI)
+                        .add("redirect_uri", url)
 
                         .add("code", code)
 
@@ -163,27 +165,22 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	private void waiting(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
-		HttpSession session = req.getSession();
-
-		if (session != null && session.getAttribute("person") != null) {
-			Person person = (Person) session.getAttribute("person");
-			String url = "/home";
-
-			if (person.getRole().toLowerCase().contains("admin"))
-				url = "/adminHome";
-			else
-				url = "/userHome";
-
-			resp.sendRedirect(req.getContextPath() + url);
-			return;
-		} else {
-			resp.sendRedirect(req.getContextPath() + "/signin");
-		}
-
-		resp.sendRedirect(req.getContextPath() + "/signin");
-	}
+	/*
+	 * private void waiting(HttpServletRequest req, HttpServletResponse resp) throws
+	 * ServletException, IOException { resp.setContentType("text/html"); HttpSession
+	 * session = req.getSession();
+	 * 
+	 * if (session != null && session.getAttribute("person") != null) { Person
+	 * person = (Person) session.getAttribute("person"); String url = "/home";
+	 * 
+	 * if (person.getRole().toLowerCase().contains("admin")) url = "/adminHome";
+	 * else url = "/userHome";
+	 * 
+	 * resp.sendRedirect(req.getContextPath() + url); return; } else {
+	 * resp.sendRedirect(req.getContextPath() + "/signin"); }
+	 * 
+	 * resp.sendRedirect(req.getContextPath() + "/signin"); }
+	 */
 
 	private void saveRemeberMe(HttpServletResponse resp, int personID) {
 		Cookie cookie = new Cookie("personID", String.valueOf(personID));

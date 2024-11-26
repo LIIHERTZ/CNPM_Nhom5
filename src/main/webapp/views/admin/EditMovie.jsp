@@ -142,6 +142,12 @@
 							<img id="preview-image" src="${imgUrl}"
 								style="width: 400px; height: 400px;" />
 						</div>
+						<label class="sign__label" for="address">Movie Trailer Link:</label>
+						<div class="sign__group">
+						 <input type="text" class="sign__input" name="movie_trailer"
+								value="${Movie.movieTrailer}" placeholder="Trailer Link"
+								required>			
+						</div>
 					</div>
 					<button type="submit" class="sign__btn sign__btn--small">
 						<span>Update</span>
