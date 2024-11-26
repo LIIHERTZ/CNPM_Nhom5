@@ -18,7 +18,7 @@ import java.util.Map;
 public class PaymentServiceImpl implements IPaymentService{
     private IPaymentDAO paymentDAO = new PaymentDAOImpl();
     private ITicketDAO ticketDAO = new TicketDAOImpl();
-    private IPopcornPaymentDAO popcornPaymentDAO = new PopcornPaymentDAOImpl();
+    private IPopcornPaymentDAO popcornPaymentDAO = new PopCornPaymentDAOImpl();
     private IMovieScreeningsDAO movieScreeningsDAO = new MovieScreeningsDAOImpl();
     private IPopCornDAO popcornDAO = new PopCornDAOImpl();
     private ITicketPaymentService ticketPaymentService = new TicketPaymentServiceImpl();

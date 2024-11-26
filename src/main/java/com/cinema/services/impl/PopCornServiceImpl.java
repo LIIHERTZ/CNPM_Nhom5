@@ -38,4 +38,16 @@ public class PopCornServiceImpl  implements IPopCornService{
 	public boolean deletePopCorn(PopCorn popcorn) {
 		return popDao.deletePopCorn(popcorn);
 	}
+	@Override
+	public List<PopCorn> getAllPopcorns() {
+		return popDao.findAll();
+	}
+	@Override
+	public List<PopCorn> getPopcornsByType(String type) {
+		return popDao.findByType(type);
+	}
+	@Override
+	public long countTotalPopCorns(String searchValue) {
+		return popDao.countTotalPopCorns(searchValue);
+	}
 }

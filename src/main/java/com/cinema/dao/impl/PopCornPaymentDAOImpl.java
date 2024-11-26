@@ -2,14 +2,12 @@ package com.cinema.dao.impl;
 
 import com.cinema.configs.JPAConfig;
 import com.cinema.dao.IPopcornPaymentDAO;
-import com.cinema.entity.Payment;
-import com.cinema.entity.PopCorn;
 import com.cinema.entity.PopCornPayment;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-public class PopcornPaymentDAOImpl implements IPopcornPaymentDAO {
+public class PopCornPaymentDAOImpl implements IPopcornPaymentDAO {
 
 	@Override
 	public void savePopcornPayment(PopCornPayment popcornPayment) {
