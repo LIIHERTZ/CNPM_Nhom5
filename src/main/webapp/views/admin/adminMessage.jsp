@@ -159,6 +159,19 @@ textarea:focus {
 		websocket.onopen = function() {
 			addMessage("<--------------------------------------------------------------------Server connected!-------------------------------------------------------------------->", "other");
 			addMessage(username + " đã vào đoạn chat!", "other");
+			
+			// Gửi conversationId để server phân loại cuộc trò chuyện
+	        if (currentConversationId) {
+	            const initMessage = JSON.stringify({
+	                type: "init",
+	                conversationId: currentConversationId,
+	                username: username
+	            });
+	            websocket.send(initMessage);
+	            console.log("Sent init message: ", initMessage);
+	        } else {
+	            console.warn("Không có conversationId để gửi lên WebSocket server!");
+	        }
 		};
 
 		websocket.onmessage = function(message) {
@@ -169,20 +182,21 @@ textarea:focus {
 			console.log("Dữ liệu nhận từ WebSocket:", message.data);
 			
 			try {
-			        const parsedMessage = JSON.parse(message.data);
-			        if (parsedMessage.username && parsedMessage.content) {
-			        	console.log("Username:", parsedMessage.username); // Kiểm tra giá trị username
-			            console.log("Content:", parsedMessage.content);
-// 			            const displayMessage = `${parsedMessage.username}: ${parsedMessage.content}`;
-						const displayMessage = parsedMessage.username + ": " + parsedMessage.content;
-			            console.log("DisplayMessage: ", displayMessage );
-			            addMessage(displayMessage, "other");
-			        } else {
-			            console.error("Dữ liệu JSON không hợp lệ:", message.data);
-			        }
-			    } catch (e) {
-			        console.error("Lỗi khi phân tích JSON:", e, message.data);
-			    }
+		        const parsedMessage = JSON.parse(message.data);
+		        
+		        // Kiểm tra tính hợp lệ của JSON
+		        if (parsedMessage.username && parsedMessage.content) {
+		            const displayMessage = parsedMessage.username + ": " + parsedMessage.content;
+		            console.log("DisplayMessage: ", displayMessage);
+
+		            // Gọi hàm addMessage để thêm tin nhắn vào textarea
+		            addMessage(displayMessage);
+		        } else {
+		            console.error("Dữ liệu JSON không hợp lệ:", parsedMessage);
+		        }
+		    } catch (e) {
+		        console.error("Lỗi khi parse tin nhắn JSON:", e, message.data);
+		    }
 		};
 
 		websocket.onclose = function() {
@@ -221,49 +235,43 @@ textarea:focus {
 		    if (input.value.trim() !== "") {
 		        const messageContent = input.value.trim();
 
-		        // Kiểm tra nếu customerId và conversationId không null
-		        if (!currentCustomerId || !currentConversationId) {
-		            alert("Vui lòng chọn một đoạn chat!");
+		        if (!currentConversationId) {
+		            alert("Không có conversationId. Vui lòng chọn đoạn chat!");
 		            return;
 		        }
 
+		        // Gửi tin nhắn qua WebSocket
+		        const mes = JSON.stringify({
+		            username: username,
+		            content: messageContent,
+		            conversationId: currentConversationId
+		        });
+		        websocket.send(mes);
+		        console.log("Sent message:", mes);
+
+		        // Gửi tin nhắn qua AJAX để lưu vào database
 		        const messageData = {
-		            content: messageContent,		            
-		            conversationId: currentConversationId, // Sử dụng giá trị đã lưu
-		            senderId: "<%= ((Person) session.getAttribute("person")).getPerID() %>", // ID người gửi (admin)
+		            content: messageContent,
+		            conversationId: currentConversationId,
+		            senderId: "<%= ((Person) session.getAttribute("person")).getPerID() %>"
 		        };
-		        
-		        
-		        console.log(messageData);
-		        
-		        // Gửi dữ liệu qua AJAX để lưu vào database
+
 		        fetch("/ValCT_Nhom5/saveMessage", {
 		            method: "POST",
 		            headers: {
-		                "Content-Type": "application/json",
+		                "Content-Type": "application/json"
 		            },
-		            body: JSON.stringify(messageData),
+		            body: JSON.stringify(messageData)
 		        })
 		            .then((response) => response.json())
 		            .then((data) => {
-		                if (data.success) {
-// 		                    addMessage("Bạn: " + messageContent, "user");
-// 		                    input.value = ""; // Xóa nội dung input
-		                	// Sau khi lưu thành công, gửi qua WebSocket
-		                    const mes = JSON.stringify({
-		                        username: "<%= ((Person) session.getAttribute("person")).getFullName() %>",
-		                        content: messageContent,
-		                    });
-		                    websocket.send(mes);
-		                    console.log(mes);
-
-		                    // Xóa nội dung input
-		                    input.value = "";
-		                } else {
-		                    alert("Lỗi khi lưu tin nhắn");
+		                if (!data.success) {
+		                    alert("Lỗi khi lưu tin nhắn vào cơ sở dữ liệu");
 		                }
 		            })
 		            .catch((error) => console.error("Error:", error));
+
+		        input.value = "";
 		    }
 		}
 	</script>

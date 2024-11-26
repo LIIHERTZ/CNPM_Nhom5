@@ -84,7 +84,7 @@
 				</div>
 				<!-- Nút gửi -->
 				<div class="form-group col-3">
-					<input type="submit" value="Send Message"
+					<input type="submit" value="Send Message"	
 						style="width: 100%; padding: 10px; border-radius: 30px; background: linear-gradient(45deg, #ff6b6b, #f06595); color: white; border: none; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: background 0.3s ease;">
 				</div>
 			</form>
@@ -101,6 +101,19 @@
 		websocket.onopen = function() {
 			addMessage("Server connected!", "other");
 			addMessage(username + " đã vào đoạn chat!", "user");
+			
+			// Gửi conversationId khi mở kết nối WebSocket
+	        if (currentConversationId) {
+	            const initMessage = JSON.stringify({
+	                type: "init",
+	                conversationId: currentConversationId,
+	                username: username
+	            });
+	            websocket.send(initMessage);
+	            console.log("Sent init message: ", initMessage);
+	        } else {
+	            console.warn("Conversation ID is null or undefined!");
+	        }
 		};
 
 		websocket.onmessage = function(message) {
@@ -146,7 +159,8 @@
 				// Gửi tin nhắn qua WebSocket
 				const mes = JSON.stringify({
 					username: username,
-					content: messageContent
+					content: messageContent,
+					conversationId: currentConversationId
 				});
 				websocket.send(mes);
 
