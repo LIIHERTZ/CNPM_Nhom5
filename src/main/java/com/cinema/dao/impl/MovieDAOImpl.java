@@ -88,6 +88,7 @@ public class MovieDAOImpl implements IMovieDAO {
                 existingMovie.setCategory(movie.getCategory());
                 existingMovie.setDescription(movie.getDescription());
                 existingMovie.setMovieDuration(movie.getMovieDuration());
+                existingMovie.setMovieTrailer(movie.getMovieTrailer());
                 existingMovie.setReleaseDay(movie.getReleaseDay());
                 existingMovie.setStatus(movie.isStatus());
                 existingMovie.setImage(movie.getImage());
