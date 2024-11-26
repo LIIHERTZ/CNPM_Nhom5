@@ -15,7 +15,7 @@
 
 
 			<property name="jakarta.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=ValCT" />
+				value="jdbc:sqlserver://localhost:1433;databaseName=ValCT3" />
 
 
 			<property name="jakarta.persistence.jdbc.user" value="sa" />

@@ -109,6 +109,7 @@ public class MovieController extends HttpServlet {
         String movieDuration = req.getParameter("movie_duration");
         String description = req.getParameter("description");
         String dateString = req.getParameter("release_day");
+        String trailer = req.getParameter("movie_trailer");
         boolean status = Boolean.parseBoolean(req.getParameter("status"));
         
         Date date = null;
@@ -125,6 +126,7 @@ public class MovieController extends HttpServlet {
         Movie.setDescription(description);
         Movie.setStatus(status);
         Movie.setReleaseDay(date);
+        Movie.setMovieTrailer(trailer);
 
         String oldFile = Movie.getImage();
 		handleImageUpload(req, Movie, uploadPath);
@@ -149,6 +151,7 @@ public class MovieController extends HttpServlet {
                 String movieDuration = req.getParameter("movie_duration");
                 String description = req.getParameter("description");
                 String dateString = req.getParameter("release_day");
+                String trailer = req.getParameter("movie_trailer");
                 boolean status = Boolean.parseBoolean(req.getParameter("status"));
                 Date date = null;
         		try {
@@ -165,6 +168,7 @@ public class MovieController extends HttpServlet {
                 Movie.setDescription(description);
                 Movie.setStatus(status);
                 Movie.setReleaseDay(date);
+                Movie.setMovieTrailer(trailer);
                 String oldFile = req.getParameter("oldImage");
     			
     			try {
