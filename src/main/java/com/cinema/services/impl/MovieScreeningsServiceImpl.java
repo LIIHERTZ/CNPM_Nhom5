@@ -1,13 +1,12 @@
 package com.cinema.services.impl;
 
-import java.sql.Date;
-
-import java.util.List;
-
 import com.cinema.dao.IMovieScreeningsDAO;
 import com.cinema.dao.impl.MovieScreeningsDAOImpl;
 import com.cinema.entity.MovieScreenings;
 import com.cinema.services.IMovieScreeningsService;
+
+import java.sql.Date;
+import java.util.List;
 
 public class MovieScreeningsServiceImpl implements IMovieScreeningsService {
 
@@ -60,5 +59,11 @@ public class MovieScreeningsServiceImpl implements IMovieScreeningsService {
 		public List<MovieScreenings> getMovieScreeningsByRoomIdAndDateWithPagination(int roomID, Date screeningDate, int start, int total) {
 		    return movieScreeningDAO.getMovieScreeningsByRoomIdAndDateWithPagination(roomID, screeningDate, start, total);
 		}
+
+	@Override
+	public List<String> findAvailableDatesByMovieId(Long movieId) {
+		return movieScreeningDAO.findAvailableDatesByMovieId(movieId);
+	}
+
 
 }

@@ -1,44 +1,24 @@
-package com.cinema.entity;
+package com.cinema.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "GoogleAccount") // Tên bảng trong cơ sở dữ liệu
-public class GoogleAccount {
-
-    @Id
-    @Column(nullable = false, unique = true, length = 50) // ID là chuỗi, unique và không được null
+// Tên bảng trong cơ sở dữ liệu
+public class GoogleAccountDTO {
     private String id; // Khóa chính (ID từ Google, dạng String)
-
-    @Column(nullable = false, unique = true) // Email là unique và không được null
     private String email;
-
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "first_name")
     private String firstName;
-
-    @Column(name = "given_name")
     private String givenName;
-
-    @Column(name = "family_name")
     private String familyName;
-
-    @Column(name = "picture", length = 500) // Giới hạn độ dài URL ảnh
     private String picture;
-
-    @Column(name = "verified_email", nullable = false)
     private boolean verifiedEmail;
 
     // Constructor không tham số (dành cho JPA)
-    public GoogleAccount() {
+    public GoogleAccountDTO() {
         super();
     }
 
     // Constructor đầy đủ (dành cho sử dụng thông thường)
-    public GoogleAccount(String id, String email, String name, String firstName, String givenName, String familyName,
-                         String picture, boolean verifiedEmail) {
+    public GoogleAccountDTO(String id, String email, String name, String firstName, String givenName, String familyName,
+                            String picture, boolean verifiedEmail) {
         this.id = id;
         this.email = email;
         this.name = name;

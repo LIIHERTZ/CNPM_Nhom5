@@ -16,7 +16,7 @@
 						<span class="cate">hello</span>
 						<h2 class="title">welcome back</h2>
 					</div>
-					<form action="/ValCT_Nhom5/signin" method="post"
+					<form action="${pageContext.request.contextPath}/signin" method="post"
 						class="account-form">
 						<c:if test="${mess != null}">
 							<label class="form-group">${mess}</label>
@@ -32,8 +32,9 @@
 								value="${password}" name="password" required>
 						</div>
 						<div class="form-group checkgroup">
-							<input type="checkbox" id="bal2" value="on" required checked>
-							<label for="bal2">remember password</label> <a
+							<input type="checkbox" id="bal2" value="on" >
+							<label for="bal2">remember password</label> 
+							<a
 								href="${pageContext.request.contextPath}/forgetpass"
 								class="forget-pass">Forget Password</a>
 						</div>
@@ -42,7 +43,7 @@
 						</div>
 					</form>
 					<div class="option">
-						Don't have an account? <a href="/ValCT_Nhom5/signup">sign up
+						Don't have an account? <a href="${pageContext.request.contextPath}/signup">sign up
 							now</a>
 					</div>
 					<div class="or">
@@ -52,7 +53,7 @@
 						<li><a
 							href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
 
-							&redirect_uri=http://localhost:8080/ValCT_Nhom5/loginwithgoogle
+							&redirect_uri=http://localhost:8080${pageContext.request.contextPath}/loginwithgoogle
 							
 							&response_type=code
 							

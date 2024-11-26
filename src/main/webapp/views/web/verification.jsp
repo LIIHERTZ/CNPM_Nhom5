@@ -16,7 +16,7 @@
 					<div class="section-header-3">
 						<span class="cate">Verify Your Email</span>
 					</div>
-					<form class="account-form" action="/ValCT_Nhom5/verification"
+					<form class="account-form" action="${pageContext.request.contextPath}/verification"
 						method="post">
 						<c:if test="${mess != null}">
 							<label class="form-group">${mess}</label>
@@ -27,7 +27,7 @@
 								style="display: flex; align-items: center; gap: 10px;">
 								<input type="password" placeholder="Enter Code" id="verify"
 									value="${personcode}" name="personcode" required>
-								<button type="button" id="resendCode" class="btn btn-primary" onclick="window.location.href='/ValCT_Nhom5/resend';">Resend Code</button>
+								<button type="button" id="resendCode" class="btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/resend';">Resend Code</button>
 
 							</div>
 							<br>
@@ -37,7 +37,7 @@
 						</div>
 					</form>
 					<div class="option">
-						Already have an account? <a href="/ValCT_Nhom5/signin">Login</a>
+						Already have an account? <a href="${pageContext.request.contextPath}/signin">Login</a>
 					</div>
 				</div>
 			</div>

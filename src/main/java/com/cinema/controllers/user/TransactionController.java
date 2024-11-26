@@ -1,7 +1,10 @@
 package com.cinema.controllers.user;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cinema.dto.TicketHistoryDTO;
 import com.cinema.services.ITicketService;
@@ -16,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class TransactionController extends HttpServlet{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	ITicketService ticketService = new TicketServiceImpl();
@@ -37,7 +40,8 @@ public class TransactionController extends HttpServlet{
 	    // Lấy danh sách giao dịch phân trang
 	    List<TicketHistoryDTO> ticketHistory = ticketService.getPaginatedTicketHistory(personId, page, pageSize);
 
-	    // Tính tổng số trang
+		ticketHistory = groupSeatsByPaymentId(ticketHistory);
+		// Tính tổng số trang
 	    int totalItems = ticketService.countTicketHistory(personId);
 	    int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 
@@ -50,4 +54,35 @@ public class TransactionController extends HttpServlet{
 	    // Chuyển tiếp đến JSP
 	    request.getRequestDispatcher("/views/user/transactionhistory.jsp").forward(request, response);
     }
+	public List<TicketHistoryDTO> groupSeatsByPaymentId(List<TicketHistoryDTO> ticketHistoryList) {
+		Map<Integer, TicketHistoryDTO> groupedHistory = new LinkedHashMap<>();
+
+		for (TicketHistoryDTO ticket : ticketHistoryList) {
+			int paymentId = ticket.getPaymentId();
+			if (!groupedHistory.containsKey(paymentId)) {
+				// Nếu chưa có paymentId trong map, thêm mới
+				groupedHistory.put(paymentId, new TicketHistoryDTO(
+						paymentId,
+						ticket.getMovieName(),
+						ticket.getCinemaName(),
+						ticket.getRoomName(),
+						ticket.getConcatenatedSeats(), // Ghế đầu tiên
+						ticket.getStartHour(),
+						ticket.getEndHour(),
+						ticket.getTotalPrice()
+				));
+			} else {
+				// Nếu đã có, cập nhật
+				TicketHistoryDTO existing = groupedHistory.get(paymentId);
+				// Gộp ghế
+				existing.setConcatenatedSeats(
+						existing.getConcatenatedSeats() + ", " + ticket.getConcatenatedSeats()
+				);
+			}
+		}
+
+		// Trả về danh sách đã được gộp
+		return new ArrayList<>(groupedHistory.values());
+	}
+
 }

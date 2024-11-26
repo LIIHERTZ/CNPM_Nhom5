@@ -2,18 +2,7 @@ package com.cinema.entity;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Room")
@@ -22,26 +11,44 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomID;
 
-
-    @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
+    @Column(nullable = false)
     private String roomName;
 
-
-    @Column(nullable = false , columnDefinition = "NVARCHAR(500)")
+    @Column(nullable = false)
     private String screenType;
     
-    
     private Integer chairNumber;
+
+	@Column(name = "status", nullable = false, columnDefinition = "BIT")
+	private boolean status; // New field for cinema status using bit, named "status"
     
-    @Column(name = "status", nullable = false, columnDefinition = "BIT")
-    private boolean status; // New field for cinema status using bit, named "status"
-    
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Seat> seat;
 
     @ManyToOne
     @JoinColumn(name = "cinemaID", nullable = false)
     private Cinema cinema;
 
-    public int getRoomID() {
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MovieScreenings> movieScreenings;
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public List<Seat> getSeat() {
+		return seat;
+	}
+
+	public void setSeat(List<Seat> seat) {
+		this.seat = seat;
+	}
+
+	public int getRoomID() {
 		return roomID;
 	}
 
@@ -73,15 +80,6 @@ public class Room {
 		this.chairNumber = chairNumber;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-
 	public Cinema getCinema() {
 		return cinema;
 	}
@@ -98,10 +96,5 @@ public class Room {
 		this.movieScreenings = movieScreenings;
 	}
 
-	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MovieScreenings> movieScreenings;
-	
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Seat> seat;
     // Getters and setters
 }

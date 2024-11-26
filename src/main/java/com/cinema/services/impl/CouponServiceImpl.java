@@ -36,4 +36,8 @@ public class CouponServiceImpl implements ICouponService{
 	public boolean deleteCoupon(Coupon coupon) {
 		return couponDao.deleteCoupon(coupon);
 	}
+    @Override
+    public List<Coupon> getAllCouponsValid() {
+        return couponDao.getAllCouponsValid();
+    }
 }

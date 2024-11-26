@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "SeatStatus")
 public class SeatStatus {
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int seatStatusId;
 
@@ -53,5 +52,4 @@ public class SeatStatus {
     public void setStatus(boolean status) {
         this.status = status;
     }
-	
 }

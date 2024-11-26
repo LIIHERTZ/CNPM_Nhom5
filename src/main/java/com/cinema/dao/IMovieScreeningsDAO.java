@@ -20,5 +20,8 @@ public interface IMovieScreeningsDAO {
     List<MovieScreenings> getMovieScreeningsByRoomIdWithPagination(int roomID, int start, int total);
     int getNoOfRecordsByRoomId(int roomID);
     List<MovieScreenings> getMovieScreeningsByRoomIdAndDateWithPagination(int roomID, Date screeningDate, int start, int total);
+	List<String> findAvailableDatesByMovieId(Long movieId);
+
+	MovieScreenings findById(int msID);
 
 }

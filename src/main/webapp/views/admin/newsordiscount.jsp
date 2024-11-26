@@ -8,388 +8,228 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
 </head>
 <body>
-	<!-- main content -->
-	<div class="container-fluid">
-		<div class="row">
-			<!-- main title -->
-			<div class="col-12">
-				<div class="main__title">
-					<h2>News And Discount</h2>
-
-					<!-- <span class="main__title-stat">14,452 Total</span> -->
-
-					<div class="main__title-wrap">
-						<a
-							href="${pageContext.request.contextPath}/adminnewsOrDiscountadd"
-							class="main__title-link main__title-link--wrap">Add item</a>
-						<!-- search -->
-<!-- 												<form action="#" class="main__title-form"> -->
-<!-- 													<input type="text" placeholder="Find...Not Code Yet"> -->
-<!-- 													<button type="button"> -->
-<!-- 														<i class="ti ti-search"></i> -->
-<!-- 													</button> -->
-<!-- 												</form> -->
-						<form action="/ValCT_Nhom5/adminnewsOrDiscounts" class="main__title-form" method="get">
-							<input type="text" name="search" placeholder="Search by title"
-								value="${param.search}">
-							<button type="submit">
-							<i class="ti ti-search"></i>
-							</button>
-						</form>
-						<!-- end search -->
-					</div>
-				</div>
+	<!-- ==========Banner-Section========== -->
+	<section class="main-page-header speaker-banner bg_img"
+		data-background="${pageContext.request.contextPath}/assets/images/banner/banner07.jpg">
+		<div class="container">
+			<div class="speaker-banner-content">
+				<h2 class="title">News And Discount</h2>
+				<ul class="breadcrumb">
+					<li><a href="${pageContext.request.contextPath}/userHome">
+							Home </a></li>
+					<li>News And Discount</li>
+				</ul>
 			</div>
-			<!-- end main title -->
+		</div>
+	</section>
+	<!-- ==========Banner-Section========== -->
 
-			<!-- items -->
-			<div class="col-12">
-				<div class="catalog catalog--1">
-					<table class="catalog__table">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>TITLE</th>
-								<th>Description</th>
-								<th>Images</th>
-								<th>Author</th>
-								<th>Date</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<c:forEach items="${listNewsOrDiscount}" var="newsOrDiscount"
-									varStatus="loopStatus">
-									<tr>
-										<td>
-											<div class="catalog__text">${loopStatus.index + 1}</div>
-										</td>
-										<td>
-											<div class="catalog__text">${newsOrDiscount.title}</div>
-										</td>
-										<td>
-											<div class="catalog__text">${newsOrDiscount.description}</div>
-										</td>
-
-										<td><c:choose>
-												<c:when
-													test="${newsOrDiscount.images.substring(0,5) != 'https'}">
-													<c:url value="/image?fname=${newsOrDiscount.images}"
-														var="imgUrl" />
-												</c:when>
-												<c:otherwise>
-													<c:set var="imgUrl" value="${newsOrDiscount.images}" />
-												</c:otherwise>
-											</c:choose>
-											<div class="catalog__text">
-												<img src="${imgUrl}" alt="${newsOrDiscount.title}"
-													width="150" height="150" />
-											</div></td>
-										<td>
-											<div class="catalog__text">${newsOrDiscount.author}</div>
-										</td>
-
-										<td>
-											<div class="catalog__text">
-												<fmt:formatDate value="${newsOrDiscount.date}"
-													pattern="yyyy-MM-dd" />
+	<!-- ==========Blog-Section========== -->
+	<section class="blog-section padding-top padding-bottom">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 mb-50 mb-lg-0">
+					<article>
+						<c:forEach items="${listNewsOrDiscount}" var="newsOrDiscount">
+							<div class="post-item">
+								<div class="post-thumb">
+									<a
+										href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+										<c:choose>
+											<c:when
+												test="${newsOrDiscount.images.substring(0,5) != 'https'}">
+												<c:url value="/image?fname=${newsOrDiscount.images}"
+													var="imgUrl" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="imgUrl" value="${newsOrDiscount.images}" />
+											</c:otherwise>
+										</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}"
+										style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;" />
+									</a>
+								</div>
+								<div class="post-content">
+									<div class="post-header">
+										<h4 class="title">
+											<a
+												href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+												${newsOrDiscount.title} </a>
+										</h4>
+										<p>${newsOrDiscount.description}</p>
+									</div>
+									<div class="entry-content">
+										<div class="left">
+											<span class="date"> <fmt:formatDate
+													value="${newsOrDiscount.date}" pattern="MMM dd, yyyy" />
+												Bởi tác giả
+											</span>
+											<div class="authors">
+												<h6 class="title">
+													<a href="#0">${newsOrDiscount.author}</a>
+												</h6>
 											</div>
-										</td>
-										<c:set var="formattedDetail"
-											value="${fn:escapeXml(newsOrDiscount.detail)}" />
-										<td>
-											<div class="catalog__btns">
-												<a href="javascript:void(0);"
-													onclick="showDescriptionFromElement(this);"
-													data-description="<c:out value="${newsOrDiscount.detail}" />"
-													class="catalog__btn catalog__btn--edit"> <i
-													class="ti ti-eye"></i>
-												</a> <a
-													href="<c:url value='/adminnewsOrDiscountedit?id=${newsOrDiscount.newsID }'/>"
-													class="catalog__btn catalog__btn--edit"> <i
-													class="ti ti-edit"></i>
-												</a> <a href="javascript:void(0);"
-													onclick="setDeleteId('${newsOrDiscount.newsID}');"
-													data-bs-toggle="modal"
-													class="catalog__btn catalog__btn--delete"
-													data-bs-target="#modal-delete"> <i class="ti ti-trash"></i>
-												</a>
-											</div>
-										</td>
-								</c:forEach>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<!-- end items -->
-
-			<!-- paginator -->
-<!-- 						<div class="col-12"> -->
-<!-- 							<div class="main__paginator"> -->
-<!-- 								amount <span class="main__paginator-pages">10 of 169</span> end -->
-<!-- 								amount -->
-
-<!-- 								<ul class="main__paginator-list"> -->
-<!-- 									<li><a href="#"> <i class="ti ti-chevron-left"></i> <span>Prev</span> -->
-<!-- 									</a></li> -->
-<!-- 									<li><a href="#"> <span>Next</span> <i -->
-<!-- 											class="ti ti-chevron-right"></i> -->
-<!-- 									</a></li> -->
-<!-- 								</ul> -->
-
-<!-- 								<ul class="paginator"> -->
-<!-- 									<li class="paginator__item paginator__item--prev"><a href="#"><i -->
-<!-- 											class="ti ti-chevron-left"></i></a></li> -->
-<!-- 									<li class="paginator__item"><a href="#">1</a></li> -->
-<!-- 									<li class="paginator__item paginator__item--active"><a -->
-<!-- 										href="#">2</a></li> -->
-<!-- 									<li class="paginator__item"><a href="#">3</a></li> -->
-<!-- 									<li class="paginator__item"><a href="#">4</a></li> -->
-<!-- 									<li class="paginator__item"><span>...</span></li> -->
-<!-- 									<li class="paginator__item"><a href="#">29</a></li> -->
-<!-- 									<li class="paginator__item"><a href="#">30</a></li> -->
-<!-- 									<li class="paginator__item paginator__item--next"><a href="#"><i -->
-<!-- 											class="ti ti-chevron-right"></i></a></li> -->
-<!-- 								</ul> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-			<div class="col-12">
-				<div class="main__paginator">
-				 <span class="main__paginator-pages">${currentPage + 1}
+										</div>
+										<a
+											href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}"
+											class="buttons">Read More <i class="flaticon-right"></i></a>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</article>
+					<!-- 										<div class="pagination-area text-center"> -->
+					<!-- 											<a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a> -->
+					<!-- 											<a href="#0">1</a> <a href="#0">2</a> <a href="#0" class="active">3</a> -->
+					<!-- 											<a href="#0">4</a> <a href="#0">5</a> <a href="#0"><span>Next</span><i -->
+					<!-- 												class="fas fa-angle-double-right"></i></a> -->
+					<!-- 										</div> -->
+					<span class="pagination-area text-center">${currentPage + 1}
 						of ${totalPages}</span>
 
-					<ul class="main__paginator-list">
-						<li><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
-								<i class="ti ti-chevron-left"></i> <span>Prev</span>
-						</a></li>
-						<li><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
-								<span>Next</span> <i class="ti ti-chevron-right"></i>
-						</a></li>
-					</ul>
+					<div class="pagination-area text-center">
 
-					<ul class="paginator">
-						<li class="paginator__item paginator__item--prev"><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
-								<i class="ti ti-chevron-left"></i>
-						</a></li>
 
-						<!-- Hiển thị các trang -->
-						<c:forEach begin="0" end="${totalPages - 1}" var="i">
-							<li
-								class="paginator__item ${i == currentPage ? 'paginator__item--active' : ''}">
-								<a
-								href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${i}&search=${param.search}">${i + 1}</a>
-							</li>
-						</c:forEach>
+						<div class="main__paginator-list">
+							<!-- Nút "Prev" -->
+							<c:choose>
+								<c:when test="${currentPage > 0}">
+									<a
+										href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage - 1}"
+										class="paginator__item"> <i
+										class="fas fa-angle-double-left"></i><span>Prev</span>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<span class="paginator__item disabled"> <i
+										class="fas fa-angle-double-left"></i><span>Prev</span>
+									</span>
+								</c:otherwise>
+							</c:choose>
 
-						<li class="paginator__item paginator__item--next"><a
-							href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
-								<i class="ti ti-chevron-right"></i>
-						</a></li>
-					</ul>
-				</div>
-			</div>
+							<!-- Hiển thị từng trang (0-based index) -->
+							<c:forEach var="i" begin="0" end="${totalPages - 1}">
+								<c:choose>
+									<c:when test="${i == currentPage}">
+										<!-- Trang hiện tại -->
+										<a href="#" class="active">${i + 1}</a>
+									</c:when>
+									<c:otherwise>
+										<!-- Các trang khác -->
+										<a
+											href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${i}">
+											${i + 1} </a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
 
-			<!-- end paginator -->
-		</div>
-	</div>
-	<!-- end main content -->
-
-	<style>
-.modal__btns {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px; /* Khoảng cách phía trên nút */
-}
-
-.modal__btn {
-	padding: 10px 20px;
-	background-color: #333; /* Màu nền cho nút */
-	color: #fff; /* Màu chữ cho nút */
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.modal__btn:hover {
-	background-color: #555; /* Màu nền khi hover */
-}
-</style>
-
-	<div class="modal" id="modal-description" tabindex="-1"
-		aria-labelledby="modal-description" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal__content">
-				<div class="modal-header">
-					<h4 class="modal__title">Detail</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p id="descriptionContent" class="modal__text"></p>
-				</div>
-				<div class="modal-footer text-center">
-					<button class="modal__btns text-center" type="button"
-						data-bs-dismiss="modal" aria-label="Close">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<style>
-/* Tùy chỉnh modal */
-#modal-description .modal__content {
-	background-color: #2c2c2c; /* Nền tối */
-	color: #ffffff; /* Màu chữ */
-	padding: 20px;
-	border-radius: 8px;
-}
-
-/* Tùy chỉnh tiêu đề */
-#modal-description .modal__title {
-	color: #ffffff;
-	font-size: 1.5rem;
-	font-weight: bold;
-	margin-bottom: 15px;
-}
-
-/* Tùy chỉnh nội dung văn bản */
-#modal-description .modal__text {
-	color: #dcdcdc;
-	font-size: 1rem;
-	line-height: 1.6;
-}
-
-/* Tùy chỉnh nút Close */
-#modal-description .modal-footer .modal__btns {
-	background-color: #444;
-	color: #ffffff;
-	border: 1px solid #888;
-	padding: 10px 20px;
-	font-size: 1rem;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-/* Hiệu ứng khi hover cho nút Close */
-#modal-description .modal-footer .modal__btns:hover {
-	background-color: #555;
-	border-color: #aaa;
-}
-
-/* Tùy chỉnh nút đóng (btn-close) ở góc modal */
-#modal-description .btn-close {
-	color: #ffffff;
-	opacity: 1;
-}
-
-#modal-description .btn-close:hover {
-	color: #ff0000; /* Đổi màu thành đỏ khi hover */
-}
-</style>
-
-	<div class="modal fade" id="modal-delete" tabindex="-1"
-		aria-labelledby="modal-delete" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal__content">
-					<form action="#" class="modal__form">
-						<input type="hidden" id="delete-id" name="delete-id">
-
-						<h4 class="modal__title">Item delete</h4>
-						<p class="modal__text">Are you sure to permanently delete this
-							item?</p>
-
-						<div class="modal__btns">
-							<button id="confirm-delete" class="modal__btn modal__btn--apply"
-								type="button">
-								<span>Delete</span>
-							</button>
-							<button class="modal__btn modal__btn--dismiss" type="button"
-								data-bs-dismiss="modal" aria-label="Close">
-								<span>Dismiss</span>
-							</button>
+							<!-- Nút "Next" -->
+							<c:choose>
+								<c:when test="${currentPage < totalPages - 1}">
+									<a
+										href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage + 1}"
+										class="paginator__item"> <span>Next</span><i
+										class="fas fa-angle-double-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<span class="paginator__item disabled"> <span>Next</span><i
+										class="fas fa-angle-double-right"></i>
+									</span>
+								</c:otherwise>
+							</c:choose>
 						</div>
-					</form>
+					</div>
+
+				</div>
+				<div class="col-lg-4 col-sm-10 col-md-8">
+					<aside>
+						<!-- 						<div class="widget widget-search"> -->
+						<!-- 							<h5 class="title">search</h5> -->
+						<!-- 							<form class="search-form"> -->
+						<!-- 								<input type="text" placeholder="Enter your Search Content" -->
+						<!-- 									required> -->
+						<!-- 								<button type="submit"> -->
+						<!-- 									<i class="flaticon-loupe"></i>Search -->
+						<!-- 								</button> -->
+						<!-- 							</form> -->
+						<!-- 						</div> -->
+						<div class="widget widget-search">
+							<h5 class="title">Search</h5>
+							<form class="search-form" method="get"
+								action="${pageContext.request.contextPath}/usernewsOrDiscounts">
+								<!-- Thêm một ô input với giá trị là từ khóa tìm kiếm -->
+								<input type="text" name="search" value="${param.search}"
+									placeholder="Enter your Search Content">
+								<button type="submit">
+									<i class="flaticon-loupe"></i>Search
+								</button>
+							</form>
+						</div>
+
+						<div class="widget widget-post">
+							<h5 class="title">latest post</h5>
+							<div class="slider-nav">
+								<span class="flaticon-angle-pointing-to-left widget-prev"></span>
+								<span class="flaticon-right-arrow-angle widget-next active"></span>
+							</div>
+							<div class="widget-slider owl-carousel owl-theme">
+								<!-- Vòng lặp hiển thị các bài viết mới -->
+								<c:forEach items="${listNewsOrDiscount}" var="newsOrDiscount">
+									<div class="item">
+										<div class="thumb">
+											<a
+												href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+												<c:choose>
+													<c:when
+														test="${newsOrDiscount.images.substring(0,5) != 'https'}">
+														<c:url value="/image?fname=${newsOrDiscount.images}"
+															var="imgUrl" />
+													</c:when>
+													<c:otherwise>
+														<c:set var="imgUrl" value="${newsOrDiscount.images}" />
+													</c:otherwise>
+												</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}"
+												style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;" />
+											</a>
+										</div>
+										<div class="content">
+											<h6 class="p-title">
+												<a
+													href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+													${newsOrDiscount.title} </a>
+											</h6>
+											<div class="meta-post">
+												<a href="#0"><i class="flaticon-user"></i>
+													${newsOrDiscount.author}</a>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+					</aside>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- end delete modal -->
+	</section>
+	<!-- ==========Blog-Section========== -->
 
-	<script>
-		// Lấy contextPath để sử dụng trong JavaScript
-		const contextPath = '${pageContext.request.contextPath}';
-
-		function setDeleteId(id) {
-			// Lưu id của item cần xóa vào input hidden trong modal
-			document.getElementById('delete-id').value = id;
-		}
-
-		document
-				.getElementById('confirm-delete')
-				.addEventListener(
-						'click',
-						function() {
-							// Lấy id của item cần xóa từ input hidden
-							const deleteId = document
-									.getElementById('delete-id').value;
-
-							if (deleteId) {
-								// Tạo URL xóa với id
-								// 								const deleteUrl = `${contextPath}/adminnewsOrDiscountdelete?id=${deleteId}`;
-								const deleteUrl = contextPath
-										+ '/adminnewsOrDiscountdelete?id='
-										+ deleteId;
-
-								// Điều hướng trình duyệt đến URL xóa
-								window.location.href = deleteUrl;
-							} else {
-								console
-										.error('ID không tồn tại, không thể thực hiện xóa.');
-							}
-						});
-	</script>
-
-
-	<script>
-		function showDescriptionFromElement(element) {
-			// Lấy dữ liệu description từ thuộc tính data-description
-			var description = element.getAttribute("data-description");
-
-			// Thay thế các ký tự xuống dòng trong mô tả thành thẻ <br> để hiển thị đúng trong HTML
-			description = description.replace(/(?:\r\n|\r|\n)/g, '<br>');
-
-			// Đặt nội dung đã xử lý vào modal và hiển thị
-			document.getElementById('descriptionContent').innerHTML = description;
-			var myModal = new bootstrap.Modal(document
-					.getElementById('modal-description'));
-			myModal.show();
-		}
-	</script>
-
-	<!-- JS -->
-	<script src="/assets2/js/bootstrap.bundle.min.js"></script>
-	<script src="/assets2/js/slimselect.min.js"></script>
-	<script src="/assets2/js/smooth-scrollbar.js"></script>
-	<script src="/assets2/js/admin.js"></script>
-
-
-
-	<!-- Bootstrap JavaScript -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+	<script src="${pageContext.request.contextPath}/assets/js/jquery-3.3.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/modernizr-3.6.0.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/isotope.pkgd.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/magnific-popup.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/countdown.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/odometer.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/viewport.jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/nice-select.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/contact.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
 </body>
 </html>

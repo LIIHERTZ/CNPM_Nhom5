@@ -43,10 +43,10 @@ public class Movie {
     @Column(nullable = false)
     private boolean status;
 
-    @OneToMany(mappedBy = "movie" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie" ,cascade = CascadeType.ALL)
     private List<MovieScreenings> movieScreenings;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
 

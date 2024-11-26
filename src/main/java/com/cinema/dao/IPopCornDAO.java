@@ -13,5 +13,8 @@ public interface IPopCornDAO {
 	PopCorn getOnePopCorn(int id); 
 	boolean insertPopCorn(PopCorn popcorn); 
 	boolean updatePopCorn(PopCorn popcorn); 
-	boolean deletePopCorn(PopCorn popcorn); 
+	boolean deletePopCorn(PopCorn popcorn);
+    PopCorn findByName(String name);
+	List<PopCorn> findAll();
+	List<PopCorn> findByType(String type);
 }

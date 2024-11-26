@@ -1,17 +1,10 @@
 package com.cinema.entity;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Payment")
@@ -32,11 +25,11 @@ public class Payment {
     private Date createdDate;
     private int status;
 
-    @OneToMany(mappedBy = "payment")
-    private List<TicketPayment> TicketPayments;
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    private List<TicketPayment> ticketPayments;
 
-    @OneToMany(mappedBy = "payment")
-    private List<PopCornPayment> PopCornPayments;
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    private List<PopCornPayment> popCornPayments;
 
 	public int getPaymentID() {
 		return paymentID;
@@ -86,23 +79,19 @@ public class Payment {
 		this.status = status;
 	}
 
-	public List<TicketPayment> getTicketPayments() {
-		return TicketPayments;
-	}
+    public List<TicketPayment> getTicketPayments() {
+        return ticketPayments;
+    }
 
-	public void setTicketPayments(List<TicketPayment> ticketPayments) {
-		TicketPayments = ticketPayments;
-	}
+    public void setTicketPayments(List<TicketPayment> ticketPayments) {
+        this.ticketPayments = ticketPayments;
+    }
 
-	public List<PopCornPayment> getPopCornPayments() {
-		return PopCornPayments;
-	}
+    public List<PopCornPayment> getPopCornPayments() {
+        return popCornPayments;
+    }
 
-	public void setPopCornPayments(List<PopCornPayment> popCornPayments) {
-		PopCornPayments = popCornPayments;
-	}
-
-    // Getters and setters
-    
-    
+    public void setPopCornPayments(List<PopCornPayment> popCornPayments) {
+        this.popCornPayments = popCornPayments;
+    }
 }

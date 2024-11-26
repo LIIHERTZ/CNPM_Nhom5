@@ -99,7 +99,7 @@
 						<p>Rating</p>
 					</div>
 				</div>
-				<a href="#0" class="custom-button">book tickets</a>
+				<a href="${pageContext.request.contextPath}/bookTickets?movieId=${movie.movieID}" class="custom-button">book tickets</a>
 			</div>
 		</div>
 	</section>

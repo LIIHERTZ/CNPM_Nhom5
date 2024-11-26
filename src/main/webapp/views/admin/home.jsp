@@ -16,7 +16,7 @@
 					<h2>Admin Dashboard</h2>
 
 					<button class="sidebar__user-btn" type="button"
-						onclick="window.location.href='/ValCT_Nhom5/logout'">
+						onclick="window.location.href='${pageContext.request.contextPath}/logout'">
 						<i class="ti ti-logout"></i>
 					</button>
 				</div>

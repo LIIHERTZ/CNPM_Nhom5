@@ -12,8 +12,8 @@
         <div class="container">
             <div class="footer-top">
                 <div class="logo">
-                    <a href="/ValCT_Nhom5/userHome">
-                        <img src="/ValCT_Nhom5/assets/images/footer/footer-logo.png" alt="footer">
+                    <a href="${pageContext.request.contextPath}/userHome">
+                        <img src="${pageContext.request.contextPath}/assets/images/footer/footer-logo.png" alt="footer">
                     </a>
                 </div>
                 <ul class="social-icons">

@@ -21,12 +21,12 @@
 		<div class="container">
 			<div class="header-wrapper">
 				<div class="logo">
-					<a href="/ValCT_Nhom5/userHome"> <img
-						src="/ValCT_Nhom5/assets/images/logo/logo.png" alt="logo">
+					<a href="${pageContext.request.contextPath}/userHome"> <img
+						src="${pageContext.request.contextPath}/assets/images/logo/logo.png" alt="logo">
 					</a>
 				</div>
 				<ul class="menu">
-					<li><a href="/ValCT_Nhom5/userHome" class="active">Home</a></li>
+					<li><a href="${pageContext.request.contextPath}/userHome" class="active">Home</a></li>
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
 							<li><a href="movie-list.html">List Movie</a></li>

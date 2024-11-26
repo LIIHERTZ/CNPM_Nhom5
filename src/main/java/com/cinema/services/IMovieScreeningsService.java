@@ -7,6 +7,7 @@ import com.cinema.entity.MovieScreenings;
 
 public interface IMovieScreeningsService {
 
+	List<String> findAvailableDatesByMovieId(Long movieId);
 	public List<MovieScreenings> getScreeningsByMovieIdAndCinemaId(int movieId, int cinemaId) ;
 	List<MovieScreenings> getAllMovieScreenings();
     MovieScreenings getMovieScreeningById(int msID);
@@ -17,7 +18,6 @@ public interface IMovieScreeningsService {
     
     List<MovieScreenings> getMovieScreeningsByRoomIdWithPagination(int roomID, int start, int total);
     int getNoOfRecordsByRoomId(int roomID);
-    
     List<MovieScreenings> getMovieScreeningsByRoomIdAndDateWithPagination(int roomID, Date screeningDate, int start, int total);
 
 }

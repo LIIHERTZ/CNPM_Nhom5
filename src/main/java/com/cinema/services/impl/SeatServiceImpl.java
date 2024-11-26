@@ -3,32 +3,48 @@ package com.cinema.services.impl;
 import java.util.List;
 
 import com.cinema.entity.Seat;
+import com.cinema.entity.SeatStatus;
 import com.cinema.services.ISeatService;
 import com.cinema.dao.*;
 import com.cinema.dao.impl.SeatDAOImpl;
 
-public class SeatServiceImpl implements ISeatService  {
-	
-	 ISeatDAO seatDAO = new SeatDAOImpl();
-	
-	 @Override
-	    public boolean addSeat(Seat seat) {
-	        return seatDAO.addSeat(seat);
-	    }
+public class SeatServiceImpl implements ISeatService {
 
-	    @Override
-	    public Seat getSeatById(int seatID) {
-	        return seatDAO.getSeatById(seatID);
-	    }
+    ISeatDAO seatDao = new SeatDAOImpl();
 
-	    @Override
-	    public List<Seat> getSeatsByRoomId(int roomID) {
-	        return seatDAO.getSeatsByRoomId(roomID);
-	    }
+    @Override
+    public boolean addSeat(Seat seat) {
+        return seatDao.addSeat(seat);
+    }
 
-	    @Override
-	    public boolean deleteSeat(int seatID) {
-	        return seatDAO.deleteSeat(seatID);
-	    }
+    @Override
+    public Seat getSeatById(int seatID) {
+        return seatDao.getSeatById(seatID);
+    }
+
+    @Override
+    public List<Seat> getSeatsByRoomId(int roomID) {
+        return seatDao.getSeatsByRoomId(roomID);
+    }
+
+    @Override
+    public boolean deleteSeat(int seatID) {
+        return seatDao.deleteSeat(seatID);
+    }
+
+    @Override
+    public List<SeatStatus> getSeatStatusesByScreeningId(int screeningId) {
+        return seatDao.getSeatStatusesByScreeningId(screeningId);
+    }
+
+    @Override
+    public void updateSeatStatuses(String selectedSeats, int screeningId) {
+        seatDao.updateSeatStatuses(selectedSeats, screeningId);
+    }
+
+    @Override
+    public Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {
+        return seatDao.findSeatIdBySeatNumberAndScreeningId(seatNumber, screeningId);
+    }
 
 }
