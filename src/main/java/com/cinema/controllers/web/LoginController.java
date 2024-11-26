@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
 		String accessToken = getToken(code,req);
 		GoogleAccountDTO acc = getUserInfo(accessToken);
 		String email = acc.getEmail();
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(true);
 		
 		Person per = accService.findByEmail(email);
 		if (per.getEmail() != null) {

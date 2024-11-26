@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/selectSeats")
+@WebServlet(urlPatterns = "/userSelectSeats")
 public class SelectSeatsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -117,7 +117,7 @@ public class SelectSeatsController extends HttpServlet {
 		session.setAttribute("totalPrice", totalPrice);
 		session.setAttribute("amountPayable", amountPayable);
 
-		response.sendRedirect("movieCheckout");
+		response.sendRedirect("userMovieCheckout");
 	}
 
 }

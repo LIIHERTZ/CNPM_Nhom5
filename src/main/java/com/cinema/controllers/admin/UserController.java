@@ -37,8 +37,6 @@ public class UserController extends HttpServlet{
 			  int page =1;
 			  int pageSize = 5;
 			  String searchValue = request.getParameter("searchQuery");
-			  System.out.println("dddd" + request.getParameter("pageNumber"));
-			  System.out.println("ddddssss" +request.getParameter("pageSize"));
 			 	if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
 			 	{
 			 		 page = Integer.parseInt(request.getParameter("pageNumber"));

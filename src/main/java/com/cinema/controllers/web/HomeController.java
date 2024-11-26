@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.cinema.entity.Movie;
+import com.cinema.entity.Person;
 import com.cinema.services.IMovieService;
 import com.cinema.services.impl.MovieServiceImpl;
 
@@ -26,6 +27,18 @@ public class HomeController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
+		if (session != null && session.getAttribute("person") != null) {
+			Person person = (Person) session.getAttribute("person");
+			String url = "/home";
+
+			if (person.getRole().toLowerCase().contains("admin"))
+				url = "/adminHome";
+			else
+				url = "/userHome";
+
+			resp.sendRedirect(req.getContextPath() + url);
+			return;
+		}
 
         // Lấy danh sách phim đang chiếu
         List<Movie> moviesShowing = movieService.getMoviesShowing();

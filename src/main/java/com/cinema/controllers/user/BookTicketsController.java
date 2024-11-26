@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/bookTickets")
+@WebServlet(urlPatterns = "/userBookTickets")
 public class BookTicketsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -151,7 +151,7 @@ public class BookTicketsController extends HttpServlet {
 	    session.setAttribute("cinemaName", cinemaName);
 
 	    // Chuyển hướng tới selectSeats
-	    resp.sendRedirect("selectSeats");
+	    resp.sendRedirect("userSelectSeats");
 	}
 
 }
