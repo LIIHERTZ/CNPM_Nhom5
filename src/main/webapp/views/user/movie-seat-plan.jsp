@@ -11,8 +11,6 @@ int countdownMinutes = 5;
 %>
 <!DOCTYPE html>
 <html>
-<head>
-</head>
 <body>
 
 	<!-- ==========Banner-Section========== -->

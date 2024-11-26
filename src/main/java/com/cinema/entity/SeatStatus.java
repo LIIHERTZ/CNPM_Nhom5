@@ -2,6 +2,8 @@ package com.cinema.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "SeatStatus")
 public class SeatStatus {
@@ -19,6 +21,16 @@ public class SeatStatus {
 
     @Column(name = "status", nullable = false)
     private boolean status;
+
+    private LocalDateTime bookingTime;
+
+    public LocalDateTime getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setBookingTime(LocalDateTime bookingTime) {
+        this.bookingTime = bookingTime;
+    }
 
     // Getters and Setters
     public int getSeatStatusId() {

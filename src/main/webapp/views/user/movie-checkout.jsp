@@ -312,7 +312,6 @@ int countdownMinutes = 5;
             document.getElementById("selectedCouponId").value = couponId;
             document.getElementById("selectedCouponValue").value = couponValue;
             document.getElementById("selectedCouponName").value = couponName;
-            //
             // Láº¥y giÃ¡ trá» totalPrice hiá»n táº¡i vÃ  loáº¡i bá» khoáº£ng tráº¯ng
             const ticketPriceElement = document.getElementById("ticketPrice");
             const ticketPriceText = ticketPriceElement.textContent.trim(); // Loáº¡i bá» khoáº£ng tráº¯ng thá»«a
@@ -381,7 +380,16 @@ int countdownMinutes = 5;
 	        element.style.backgroundRepeat = 'no-repeat'; // Không lặp lại
 	    }
 	}
-</script>
+	// Khi người dùng rời trang, trả lại ghế chưa thanh toán
+	window.addEventListener("beforeunload", function () {
+		fetch('/releaseSeat', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `selectedSeats=${selectedSeats}&screeningId=${screeningId}`
+		});
+	});
+
+	</script>
 
 	<script src="${pageContext.request.contextPath}/assets2/js/bootstrap.bundle.min.js"></script>
 </body>
