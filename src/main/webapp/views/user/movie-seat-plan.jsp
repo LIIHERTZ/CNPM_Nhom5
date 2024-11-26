@@ -60,7 +60,7 @@ int countdownMinutes = 5;
 			<div class="page-title-area">
 				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="${pageContext.request.contextPath}/bookTickets"
+					<a href="${pageContext.request.contextPath}/bookTickets?movieId=${movie.movieID}"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
@@ -152,7 +152,7 @@ int countdownMinutes = 5;
 													alt="seat"> <span>${seatStatus.seat.seatNumber}</span>
 											</label></li>
 										</c:forEach>
-									</ul> <span>${rowEntry.key}</span> <!-- Tên hàng ở cuối --></li>
+									</ul>  <!-- Tên hàng ở cuối --></li>
 							</c:forEach>
 						</ul>
 

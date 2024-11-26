@@ -29,7 +29,7 @@
 					<li><a href="${pageContext.request.contextPath}/userHome" class="active">Home</a></li>
 					<li><a href="#0">movies</a>
 						<ul class="submenu">
-							<li><a href="movie-list.html">List Movie</a></li>
+							<li><a href="${pageContext.request.contextPath}/userMovieList">List Movie</a></li>
 							<li><a href="popcorn.html">Movie Food</a></li>
 						</ul></li>
 					<li><a href="#0">Others</a>
