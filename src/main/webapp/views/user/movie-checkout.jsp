@@ -17,10 +17,7 @@ int countdownMinutes = 5;
 </head>
 <link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/bootstrap.min.css">
-
 <body>
-
 
 
 <!-- ==========Banner-Section========== -->
@@ -29,31 +26,6 @@ int countdownMinutes = 5;
 		data-background="${movieImgUrl}" id = "data-background-MV">
 		<div class="container">
 			<div class="details-banner-wrapper">
-				<div class="details-banner-content">
-					<!-- Display movie title -->
-					<h3 class="title">${movie.movieName}</h3>
-
-					<!-- Optional: Add additional movie information here -->
-					<div class="movie-info">
-						<!-- Example: Movie duration -->
-						<p>
-							<strong>Duration:</strong> ${movie.movieDuration}
-						</p>
-
-						<!-- Example: Movie release date -->
-						<p>
-							<strong>Category:</strong> ${movie.category}
-						</p>
-						<p>
-							<strong>Experience:</strong> ${experience}
-						</p>
-						<p>
-							<strong>version:</strong> ${version}
-						</p>
-						<p>
-							<strong>Location:</strong> ${selectedLocation}
-						</p>
-
 				<div class="details-banner-content">
 					<!-- Display movie title -->
 					<h3 class="title">${movie.movieName}</h3>
@@ -109,7 +81,6 @@ int countdownMinutes = 5;
 
 				<!-- ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c thÃ¡Â»Âi gian -->
 				<div class="item">
-					<h5 class="title" id="countdown-timer">05:00</h5>
 					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
 				</div>
@@ -189,17 +160,12 @@ int countdownMinutes = 5;
 							<li>
 								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
 									${version}</span>
-								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
-									${version}</span>
 							</li>
 							<li>
 								<h6 class="subtitle">
 									<span>${selectedLocation}</span>
-									<span>${selectedLocation}</span>
 								</h6>
 								<div class="info">
-									<span><fmt:formatDate value="${startHour}"
-											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
 									<span><fmt:formatDate value="${startHour}"
 											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
 								</div>
@@ -239,7 +205,6 @@ int countdownMinutes = 5;
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>discount coupon</span><span id="discountValue">$0</span>
 									<span>discount coupon</span><span id="discountValue">$0</span>
 								</h6>
 							</li>

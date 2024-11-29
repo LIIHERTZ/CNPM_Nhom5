@@ -10,16 +10,18 @@
 
 	<div class="sidebar">
 		<!-- sidebar logo -->
-		<a href="${pageContext.request.contextPath}/adminHome" class="sidebar__logo"> <img
-			src="${pageContext.request.contextPath}/assets2/img/logo.png" alt="" width="300"
-			height="300">
+		<a href="${pageContext.request.contextPath}/adminHome"
+			class="sidebar__logo"> <img
+			src="${pageContext.request.contextPath}/assets2/img/logo.png" alt=""
+			width="300" height="300">
 		</a>
 		<!-- end sidebar logo -->
 
 		<!-- sidebar user -->
 		<div class="sidebar__user">
 			<div class="sidebar__user-img">
-				<img src="${pageContext.request.contextPath}/assets2/img/user.svg" alt="">
+				<img src="${pageContext.request.contextPath}/assets2/img/user.svg"
+					alt="">
 			</div>
 
 			<div class="sidebar__user-title">
@@ -34,17 +36,23 @@
 			<ul class="sidebar__nav">
 
 				<li class="sidebar__nav-item"><a
-					href="${pageContext.request.contextPath}/admin/cinemas" class="sidebar__nav-link"><i
-						class="ti ti-door"></i> <span>Cinema</span></a></li>
+					href="${pageContext.request.contextPath}/admin/cinemas"
+					class="sidebar__nav-link"><i class="ti ti-door"></i> <span>Cinema</span></a></li>
 				<li class="sidebar__nav-item"><a
-					href="${pageContext.request.contextPath}/admin/movies" class="sidebar__nav-link"><i
-						class="ti ti-movie"></i> <span>Movie</span></a></li>
+					href="${pageContext.request.contextPath}/admin/movies"
+					class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Movie</span></a></li>
 				<li class="sidebar__nav-item"><a
 					href="${pageContext.request.contextPath}/adminnewsOrDiscounts"
 					class="sidebar__nav-link"><i class="ti ti-news"></i> <span>News
 							And Discount</span></a></li>
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/adminMessage"
+					class="sidebar__nav-link"><i class="ti ti-message-circle"></i>
+						<span>Chats</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="${pageContext.request.contextPath}/admin/users"
+
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/admin/users"
 					class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a></li>
 
 
@@ -59,7 +67,8 @@
 					href="${pageContext.request.contextPath}/admin/revenues-statics"
 					class="sidebar__nav-link"><i class="ti ti-presentation"></i> <span>Revenue</span></a></li>
 
-				<li class="sidebar__nav-item"><a href="${pageContext.request.contextPath}/logout"
+				<li class="sidebar__nav-item"><a
+					href="${pageContext.request.contextPath}/logout"
 					class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back
 							to ValCT</span></a></li>
 			</ul>

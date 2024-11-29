@@ -1,19 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import="java.text.SimpleDateFormat"%>
-<%@ page import="java.util.Calendar"%>
-<%
-// Đặt thời gian đếm ngược (5 phút)
-int countdownMinutes = 5;
-%>
-
-
-
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -39,35 +25,8 @@ int countdownMinutes = 5;
 	<!-- ==========Banner-Section========== -->
 	<section class="details-banner hero-area bg_img"
 		data-background="'assets/images/banner/banner03.jpg'">
-	<section class="details-banner hero-area bg_img"
-		data-background="'assets/images/banner/banner03.jpg'">
 		<div class="container">
 			<div class="details-banner-wrapper">
-				<div class="details-banner-content">
-					<!-- Display movie title -->
-					<h3 class="title">${movie.movieName}</h3>
-
-					<!-- Optional: Add additional movie information here -->
-					<div class="movie-info">
-						<!-- Example: Movie duration -->
-						<p>
-							<strong>Duration:</strong> ${movie.movieDuration}
-						</p>
-
-						<!-- Example: Movie release date -->
-						<p>
-							<strong>Category:</strong> ${movie.category}
-						</p>
-						<p>
-							<strong>Experience:</strong> ${experience}
-						</p>
-						<p>
-							<strong>version:</strong> ${version}
-						</p>
-						<p>
-							<strong>Location:</strong> ${selectedLocation}
-						</p>
-
 				<div class="details-banner-content">
 					<!-- Display movie title -->
 					<h3 class="title">${movie.movieName}</h3>
@@ -105,15 +64,12 @@ int countdownMinutes = 5;
 		<div class="container">
 			<div class="page-title-area">
 				<!-- Nút quay lại -->
-				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="${pageContext.request.contextPath}/movieCheckout"
+					<a href="${pageContext.request.contextPath}/userMovieCheckout"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
 				</div>
-
-				<!-- Hiển thị ngày và giờ đã chọn -->
 
 				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
@@ -121,19 +77,11 @@ int countdownMinutes = 5;
 					<c:if test="${not empty startHour}">
 						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
 					</c:if>
-					<!-- Hiển thị startHour theo định dạng HH:mm, dd/MM/yyyy -->
-					<c:if test="${not empty startHour}">
-						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
-					</c:if>
 				</div>
 
 
 				<!-- Đếm ngược thời gian -->
-
-
-				<!-- Đếm ngược thời gian -->
 				<div class="item">
-					<h5 class="title" id="countdown-timer">05:00</h5>
 					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
 				</div>
@@ -157,14 +105,7 @@ int countdownMinutes = 5;
 							<li data-filter="*" class="active">all</li>
 							<li data-filter=".combos">combos</li>
 							<li data-filter=".beverage">beverage</li>
-							<li data-filter=".beverage">beverage</li>
 							<li data-filter=".popcorn">popcorn</li>
-
-							<!-- <li><a href="/addService?type=all" class="active">All</a></li>
-							<li><a href="/addService?type=combos">Combos</a></li>
-							<li><a href="/addService?type=bevarage">Beverage</a></li>
-							<li><a href="/addService?type=popcorn">Popcorn</a></li> -->
-
 
 							<!-- <li><a href="/addService?type=all" class="active">All</a></li>
 							<li><a href="/addService?type=combos">Combos</a></li>
@@ -221,41 +162,9 @@ int countdownMinutes = 5;
 													onclick="addToBookingSummary('${popcorn.namePopCorn}', ${popcorn.price}, this)">
 													Add</button>
 											</form>
-											<div class="offer-remainder">
-												<h6 class="o-title mt-0">24%</h6>
-												<span>off</span>
-											</div>
-										</div>
-										<div class="grid-content">
-											<h5 class="subtitle">
-												<a href="#0">${popcorn.namePopCorn}</a>
-											</h5>
-											<form class="cart-button">
-												<div class="cart-plus-minus">
-													<input class="cart-plus-minus-box" type="text"
-														name="qtybutton" value="1">
-												</div>
-
-												<!-- 												//dung xoa
-												<form class="cart-button" method="post" action="/addToCart">
-												<div class="cart-plus-minus">
-													<input class="cart-plus-minus-box" type="text"
-														name="qtybutton" value="1">
-												</div> -->
-
-
-												<%-- 												//dung xoa cai nay
-												<input type="hidden" name="popcornID"
-													value="${popcorn.popcornID}"> --%>
-
-												<button type="button" class="custom-button"
-													onclick="addToBookingSummary('${popcorn.namePopCorn}', ${popcorn.price}, this)">
-													Add</button>
-											</form>
 										</div>
 									</div>
 								</div>
-							</c:forEach>
 							</c:forEach>
 						</div>
 					</div>
@@ -267,29 +176,18 @@ int countdownMinutes = 5;
 							<li>
 								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
 									${version}</span>
-								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
-									${version}</span>
 							</li>
 							<li>
 								<h6 class="subtitle">
 									<span>${selectedLocation}</span>
-									<span>${selectedLocation}</span>
 								</h6>
 								<div class="info">
-									<span><fmt:formatDate value="${startHour}"
-											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
 									<span><fmt:formatDate value="${startHour}"
 											pattern="HH:mm, dd/MM/yyyy" /></span> <span>Tickets</span>
 								</div>
 							</li>
 							<li>
 								<h6 class="subtitle mb-0">
-									<span>Tickets Price</span><span>${totalPrice} VND</span>
-								</h6>
-							</li>
-							<li>
-								<h6 class="subtitle mb-0">
-									<span>Seats</span><span>${selectedSeats}</span>
 									<span>Tickets Price</span><span>${totalPrice} VND</span>
 								</h6>
 							</li>
@@ -304,12 +202,9 @@ int countdownMinutes = 5;
 								<h6 class="subtitle">
 									<span>food & bevarage</span><span></span>
 								</h6> <span class="info"></span>
-									<span>food & bevarage</span><span></span>
-								</h6> <span class="info"></span>
 							</li>
 							<li>
 								<h6 class="subtitle">
-									<span>discount coupon</span><span>$0</span>
 									<span>discount coupon</span><span>$0</span>
 								</h6>
 							</li>
@@ -318,18 +213,13 @@ int countdownMinutes = 5;
 							<li><span class="info"><span>price</span><span>${totalPrice}
 										VND</span></span></li>
 						</ul> --%>
-						<%-- 						<ul>
-							<li><span class="info"><span>price</span><span>${totalPrice}
-										VND</span></span></li>
-						</ul> --%>
 					</div>
 					<div class="proceed-area  text-center">
 						<h6 class="subtitle">
 							<span>Amount Payable</span><span>${totalPrice} VND</span>
-							<span>Amount Payable</span><span>${totalPrice} VND</span>
 						</h6>
 
-						<form id="proceedForm" action="${pageContext.request.contextPath}/addService"
+						<form id="proceedForm" action="${pageContext.request.contextPath}/userAddService"
 							method="post" onsubmit="prepareProceedForm()">
 							 <input type="hidden"
 								name="foodAndBeverageTotal" id="foodAndBeverageTotal" />
@@ -341,7 +231,6 @@ int countdownMinutes = 5;
 					</div>
 					<div class="note">
 						<h5 class="title">Note :</h5>
-						<p>Please give us 15 minutes for ValCT preparation once you're
 						<p>Please give us 15 minutes for ValCT preparation once you're
 							at the cinema</p>
 					</div>
@@ -365,7 +254,7 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "${pageContext.request.contextPath}/movieCheckout";// Dừng đếm ngược khi hết thời gian
+				window.location.href = "${pageContext.request.contextPath}/userMovieCheckout";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
 		

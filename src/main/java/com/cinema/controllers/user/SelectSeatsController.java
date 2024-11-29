@@ -66,7 +66,7 @@ public class SelectSeatsController extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (screeningIdStr == null || screeningIdStr.isEmpty()) {
-			resp.sendRedirect("/bookTickets");
+			resp.sendRedirect("/userBookTickets");
 			return;
 		}
 

@@ -84,7 +84,7 @@ public class MovieCheckoutController extends HttpServlet{
 			e.printStackTrace();
 		}
 		if (screeningIdStr == null || screeningIdStr.isEmpty()) {
-			resp.sendRedirect("/ValCT_Nhom5/bookTickets");
+			resp.sendRedirect("/ValCT_Nhom5/userBookTickets");
 			return;
 		}
 
