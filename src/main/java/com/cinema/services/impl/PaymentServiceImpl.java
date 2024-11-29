@@ -49,7 +49,7 @@ public class PaymentServiceImpl implements IPaymentService{
             for (String seat : seats) {
                 Ticket ticket = new Ticket();
                 ticket.setChairNumber(seat);
-                ticket.setDate(selectedDate); // `selectedDate` đã đúng định dạng
+                ticket.setDate(java.sql.Date.valueOf(selectedDate)); // `selectedDate` đã đúng định dạng
                 ticket.setPlaceName(selectedLocation);
                 ticket.setPriceTicket(Double.parseDouble(totalPrice) / seats.length);
                 ticket.setVersionName(version);

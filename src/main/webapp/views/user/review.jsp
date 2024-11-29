@@ -8,14 +8,14 @@
 <body>
 	<!-- ==========Banner-Section========== -->
 	<section class="details-banner bg_img"
-		data-background="/ValCT_Nhom5/assets/images/banner/banner03.jpg">
+		data-background="${pageContext.request.contextPath}/assets/images/banner/banner03.jpg">
 		<div class="container">
 			<div class="details-banner-wrapper">
 				<div class="details-banner-thumb">
-					<img src="/ValCT_Nhom5/assets/images/movie/venus.jpg" alt="movie"> <a
+					<img src="${pageContext.request.contextPath}/assets/images/movie/venus.jpg" alt="movie"> <a
 						href="https://www.youtube.com/watch?v=j9aNzRFaZ5I"
 						class="video-popup"> <img
-						src="/ValCT_Nhom5/assets/images/movie/video-button.png" alt="movie">
+						src="${pageContext.request.contextPath}/assets/images/movie/video-button.png" alt="movie">
 					</a>
 				</div>
 				<div class="details-banner-content offset-lg-3">
@@ -52,7 +52,7 @@
 					<div class="item">
 						<div class="item-header">
 							<div class="thumb">
-								<img src="/ValCT_Nhom5/assets/images/movie/tomato2.png" alt="movie">
+								<img src="${pageContext.request.contextPath}/assets/images/movie/tomato2.png" alt="movie">
 							</div>
 							<div class="counter-area">
 								<span class="counter-item odometer" data-odometer-final="86">0</span>
@@ -63,7 +63,7 @@
 					<div class="item">
 						<div class="item-header">
 							<div class="thumb">
-								<img src="/ValCT_Nhom5/assets/images/movie/cake2.png" alt="movie">
+								<img src="${pageContext.request.contextPath}/assets/images/movie/cake2.png" alt="movie">
 							</div>
 							<div class="counter-area">
 								<span class="counter-item odometer" data-odometer-final="91">0</span>
@@ -195,18 +195,18 @@
 	
 	<!-- ==========Movie-Section========== -->
 
-	<script src="/ValCT_Nhom5/assets/js/jquery-3.3.1.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/modernizr-3.6.0.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/plugins.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/bootstrap.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/isotope.pkgd.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/magnific-popup.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/owl.carousel.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/wow.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/countdown.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/odometer.min.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/viewport.jquery.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/nice-select.js"></script>
-	<script src="/ValCT_Nhom5/assets/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery-3.3.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/modernizr-3.6.0.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/plugins.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/isotope.pkgd.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/magnific-popup.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/countdown.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/odometer.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/viewport.jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/nice-select.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 </body>
 </html>

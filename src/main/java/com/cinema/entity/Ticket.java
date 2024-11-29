@@ -16,7 +16,7 @@ public class Ticket {
     private double priceTicket;
 
     @Column(nullable = false)
-    private String date;
+    private Date date;
 
     @Column(nullable = false)
     private String placeName;
@@ -50,11 +50,11 @@ public class Ticket {
 		this.priceTicket = priceTicket;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

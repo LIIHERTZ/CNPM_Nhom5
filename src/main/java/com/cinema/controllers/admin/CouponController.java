@@ -24,8 +24,8 @@ public class CouponController extends HttpServlet{
 	ICouponService couponService = new CouponServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String action = request.getServletPath();
-			switch (action) {
+		String action = request.getServletPath();
+		switch (action) {
 			case "/admin/coupons/add":
 				request.getRequestDispatcher("/views/admin/coupon/coupon-add.jsp").forward(request, response);
 				break;
@@ -33,69 +33,69 @@ public class CouponController extends HttpServlet{
 				loadCouponForEdit(request, response); // Load category data for edit
 				break;
 			default:
-				 // Lấy thông tin phân trang từ tham số yêu cầu
-		        //int page = Integer.parseInt(request.getParameter("page"));
-			  int page =1;
-			  int pageSize = 5;
-			  String searchValue = request.getParameter("searchQuery");
-			 	if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
-			 	{
-			 		 page = Integer.parseInt(request.getParameter("pageNumber"));
-			 		pageSize = Integer.parseInt(request.getParameter("pageSize"));
-			 	}
-			 	
-			
+				// Lấy thông tin phân trang từ tham số yêu cầu
+				//int page = Integer.parseInt(request.getParameter("page"));
+				int page =1;
+				int pageSize = 5;
+				String searchValue = request.getParameter("searchQuery");
+				if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
+				{
+					page = Integer.parseInt(request.getParameter("pageNumber"));
+					pageSize = Integer.parseInt(request.getParameter("pageSize"));
+				}
 
-		        // Lấy danh sách sản phẩm và tổng số trang
-		        List<Coupon> coupons = couponService.getCoupons(page, pageSize,searchValue);
-		        Long totalPages = couponService.getTotalPages(pageSize,searchValue);
-		        Long couponTotal = couponService.countTotalCoupons(searchValue);
-		        // Đưa dữ liệu vào request để hiển thị ở JSP
-		        request.setAttribute("couponTotal", couponTotal);
-		        request.setAttribute("coupons", coupons);
-		        request.setAttribute("currentPage", page);
-		        request.setAttribute("totalPages", totalPages);
-		        request.setAttribute("pageSize", pageSize);
-		        request.setAttribute("pageNumber", page);
-		        request.setAttribute("searchQuery", searchValue);
 
-		        // Forward đến JSP
-		        request.getRequestDispatcher("/views/admin/coupon/coupon-list.jsp").forward(request, response);
+
+				// Lấy danh sách sản phẩm và tổng số trang
+				List<Coupon> coupons = couponService.getCoupons(page, pageSize,searchValue);
+				Long totalPages = couponService.getTotalPages(pageSize,searchValue);
+				Long couponTotal = couponService.countTotalCoupons(searchValue);
+				// Đưa dữ liệu vào request để hiển thị ở JSP
+				request.setAttribute("couponTotal", couponTotal);
+				request.setAttribute("coupons", coupons);
+				request.setAttribute("currentPage", page);
+				request.setAttribute("totalPages", totalPages);
+				request.setAttribute("pageSize", pageSize);
+				request.setAttribute("pageNumber", page);
+				request.setAttribute("searchQuery", searchValue);
+
+				// Forward đến JSP
+				request.getRequestDispatcher("/views/admin/coupon/coupon-list.jsp").forward(request, response);
 				break;
-	       
-			}
-	 }
-	
+
+		}
+	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
 
 		switch (action) {
-		case "/admin/coupons/save":
-			addCoupon(req, resp);
-			break;
-		case "/admin/coupons/update":
-			updateCoupon(req, resp);
-			break;
-		case "/admin/coupons/delete":
-			deleteCoupon(req, resp);
-			break;
-		default:
-			resp.sendRedirect("admin/coupons");
-			break;
+			case "/admin/coupons/save":
+				addCoupon(req, resp);
+				break;
+			case "/admin/coupons/update":
+				updateCoupon(req, resp);
+				break;
+			case "/admin/coupons/delete":
+				deleteCoupon(req, resp);
+				break;
+			default:
+				resp.sendRedirect("admin/coupons");
+				break;
 		}
 	}
-	
-	
+
+
 	private void addCoupon(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Coupon coupon = new Coupon();
 		coupon.setCouponName(request.getParameter("couponName"));
 		coupon.setCouponType(request.getParameter("couponType"));
 		coupon.setCouponValue(Double.parseDouble(request.getParameter("couponValue")));
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate;
-        Date endDate;
+		Date startDate;
+		Date endDate;
 		try {
 			startDate = formatter.parse(request.getParameter("startDate"));
 			endDate = formatter.parse(request.getParameter("endDate"));
@@ -108,7 +108,7 @@ public class CouponController extends HttpServlet{
 		couponService.insertCoupon(coupon);
 		response.sendRedirect(request.getContextPath() + "/admin/coupons");
 	}
-	
+
 	private void updateCoupon(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int couponId = Integer.parseInt(request.getParameter("couponID"));
 		Coupon coupon = couponService.getOneCoupon(couponId);
@@ -118,8 +118,8 @@ public class CouponController extends HttpServlet{
 			coupon.setCouponType(request.getParameter("couponType"));
 			coupon.setCouponValue(Double.parseDouble(request.getParameter("couponValue")));
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	        Date startDate;
-	        Date endDate;
+			Date startDate;
+			Date endDate;
 			try {
 				startDate = formatter.parse(request.getParameter("startDate"));
 				endDate = formatter.parse(request.getParameter("endDate"));
@@ -129,14 +129,14 @@ public class CouponController extends HttpServlet{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		couponService.updateCoupon(coupon);
 
 		response.sendRedirect(request.getContextPath() + "/admin/coupons");
 
 	}
-	
+
 	private void loadCouponForEdit(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String couponIdParam = request.getParameter("couponID");
@@ -150,7 +150,7 @@ public class CouponController extends HttpServlet{
 			response.sendRedirect(request.getContextPath() + "/admin/coupons");
 		}
 	}
-	
+
 	private void deleteCoupon(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String couponIdParam = request.getParameter("couponID");
 		int couponId = Integer.parseInt(couponIdParam);

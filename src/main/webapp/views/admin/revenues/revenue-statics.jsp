@@ -63,8 +63,8 @@
 						class="form-select  time-group" style="display: none;"
 						value="${dateValue}">
 				</div>
-				<c:if
-					test="${not empty popcornRevenues and not empty movieRevenues}">
+<%--				<c:if--%>
+<%--					test="${not empty popcornRevenues and not empty movieRevenues}">--%>
 
 					<div class="form-select-table  time-group"
 						style="display: none; backgroud-color: #222028;">
@@ -161,7 +161,7 @@
 						</div>
 						<!-- /Revenue -->
 					</div>
-				</c:if>
+<%--				</c:if>--%>
 			</div>
 			<!-- Tab Movie -->
 

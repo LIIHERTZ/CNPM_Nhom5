@@ -52,3 +52,7 @@ replay_pid*
 /.project
 /target
 /.classpath
+/target
+/.settings
+/.classpath
+/.project

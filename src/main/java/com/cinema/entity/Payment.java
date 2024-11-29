@@ -25,10 +25,10 @@ public class Payment {
     private Date createdDate;
     private int status;
 
-    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TicketPayment> ticketPayments;
 
-    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PopCornPayment> popCornPayments;
 
 	public int getPaymentID() {
