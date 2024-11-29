@@ -18,7 +18,7 @@ public class Payment {
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "couponID")
+    @JoinColumn(name = "couponID", nullable = true)
     private Coupon coupon;
 
     private double totalPrice;

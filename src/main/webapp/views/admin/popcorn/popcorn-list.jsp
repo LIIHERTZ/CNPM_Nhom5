@@ -14,8 +14,7 @@
 			<div class="col-12">
 				<div class="main__title">
 					<h2>Popcorns</h2>
-
-					<span class="main__title-stat">3,702 Total</span>
+					<span class="main__title-stat">${popcornTotal } Total</span>
 
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
@@ -102,16 +101,18 @@
 					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector">
-						<label for="pageSize"
-							style="background-color: #1a191f; color: #333; padding: 5px 10px; border-radius: 5px;">Page
-							Size: </label> <select id="pageSize" name="pageSize"
-							onchange="updatePageSize(this)"
-							style="background-color: #222028; border: #222028; color: white;">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+					<div class="col-1.02">
+						<label class="sign__label" for="pageSize">Page Size: </label> <select
+							class="sign__select" id="pageSize" name="pageSize"
+							onchange="updatePageSize(this)">
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5
+								items</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10
+								items</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15
+								items</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20
+								items</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -123,26 +124,97 @@
 					</ul>
 					<ul class="paginator">
 						<!-- Prev button -->
-						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-left"></i>
-						</a></li>
-						<!-- Page numbers -->
-						<c:if test="${totalPages > 0}">
-							<c:forEach var="i" begin="0" end="${totalPages - 1}">
-								<li
-									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+						<li
+							class="paginator__item paginator__item--prev ${currentPage == 1 ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage > 1}">
 									<a
-									href="${pageContext.request.contextPath}/admin/popcorns?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
-										${i + 1} </a>
-								</li>
-							</c:forEach>
+										href="<c:url value='/admin/popcorns'>
+                    <c:param name='pageNumber' value='${currentPage - 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-left"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-left"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+
+						<!-- Display first page and ellipsis if needed -->
+						<c:if test="${currentPage > 3}">
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/popcorns'>
+                <c:param name='pageNumber' value='1'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">1</a>
+							</li>
+							<li class="paginator__item" style = "color : white;">...</li>
 						</c:if>
+
+						<!-- Page numbers around current page -->
+						<c:set var="startPage"
+							value="${currentPage  > 1 ? currentPage  : 1}" />
+						<c:set var="endPage"
+							value="${currentPage + 1 < totalPages ? currentPage + 1 : totalPages}" />
+						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+							<li
+								class="paginator__item ${pageNum == currentPage ? 'paginator__item--active' : ''}">
+								<a
+								href="<c:url value='/admin/popcorns'>
+                <c:param name='pageNumber' value='${pageNum}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${pageNum}</a>
+							</li>
+						</c:forEach>
+
+						<!-- Display last page and ellipsis if needed -->
+						<c:if test="${currentPage < totalPages - 2}">
+							<li class="paginator__item" style = "color : white;">...</li>
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/popcorns'>
+                <c:param name='pageNumber' value='${totalPages}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${totalPages}</a>
+							</li>
+						</c:if>
+
 						<!-- Next button -->
-						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/popcorns?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-right"></i>
-						</a></li>
+						<li
+							class="paginator__item paginator__item--next ${currentPage == totalPages ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage < totalPages}">
+									<a
+										href="<c:url value='/admin/popcorns'>
+                    <c:param name='pageNumber' value='${currentPage + 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-right"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
 					</ul>
 
 				</div>
@@ -194,7 +266,8 @@
 						<div class="col-12">
 							<div class="sign__group">
 								<label class="sign__label" for="status">Status</label> <select
-									class="sign__selectjs" name="status" id="status" required style="color: white; width: 320px;">
+									class="sign__selectjs" name="status" id="status" required
+									style="color: white; width: 320px;">
 									<option value="1" ${popcorn.status == 1 ? 'selected' : ''}>Available</option>
 									<option value="0" ${popcorn.status == 0 ? 'selected' : ''}>Unavailable</option>
 								</select>
@@ -202,7 +275,8 @@
 						</div>
 
 						<div class="col-12">
-							<button type="submit" class="sign__btn sign__btn--small" style="width: 320px;">
+							<button type="submit" class="sign__btn sign__btn--small"
+								style="width: 320px;">
 								<span>Save</span>
 							</button>
 						</div>
@@ -269,7 +343,8 @@
 						</div>
 
 						<div class="col-12">
-							<button type="submit" class="sign__btn sign__btn--small" style="width: 320px;">
+							<button type="submit" class="sign__btn sign__btn--small"
+								style="width: 320px;">
 								<span>Update</span>
 							</button>
 						</div>
@@ -401,3 +476,5 @@
 	});
 
 </script>
+
+

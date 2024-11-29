@@ -10,4 +10,6 @@ public interface IUserService {
 
 	List<Person> getUsers(int page, int pageSize , String searchValue);
 
+	long countTotalUsers(String searchValue);
+
 }

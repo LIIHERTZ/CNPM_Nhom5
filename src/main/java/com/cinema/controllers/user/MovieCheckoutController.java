@@ -34,6 +34,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/userMovieCheckout")
 public class MovieCheckoutController extends HttpServlet{
@@ -83,7 +84,7 @@ public class MovieCheckoutController extends HttpServlet{
 			e.printStackTrace();
 		}
 		if (screeningIdStr == null || screeningIdStr.isEmpty()) {
-			resp.sendRedirect("/ValCT_Nhom5/bookTickets");
+			resp.sendRedirect("/ValCT_Nhom5/userBookTickets");
 			return;
 		}
 

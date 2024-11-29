@@ -134,7 +134,7 @@ public class BookTicketsController extends HttpServlet {
 	    String cinemaName = req.getParameter("cinemaName");
 
 	    if (screeningId == null || screeningId.isEmpty()) {
-	        resp.sendRedirect("/ValCT_Nhom5/bookTickets");
+	        resp.sendRedirect("/ValCT_Nhom5/userBookTickets");
 	        return;
 	    }
 	    Movie movie = movieService.getOneMovie(Integer.parseInt(movieId));

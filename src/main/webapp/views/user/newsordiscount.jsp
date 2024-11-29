@@ -32,52 +32,56 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-8 mb-50 mb-lg-0">
 					<article>
-						<c:forEach items="${listNewsOrDiscount}" var="newsOrDiscount">
-							<div class="post-item">
-								<div class="post-thumb">
-									<a
-										href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
-										<c:choose>
-											<c:when
-												test="${newsOrDiscount.images.substring(0,5) != 'https'}">
-												<c:url value="/image?fname=${newsOrDiscount.images}"
-													var="imgUrl" />
-											</c:when>
-											<c:otherwise>
-												<c:set var="imgUrl" value="${newsOrDiscount.images}" />
-											</c:otherwise>
-										</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}"
-										style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;" />
-									</a>
-								</div>
-								<div class="post-content">
-									<div class="post-header">
-										<h4 class="title">
-											<a
-												href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
-												${newsOrDiscount.title} </a>
-										</h4>
-										<p>${newsOrDiscount.description}</p>
-									</div>
-									<div class="entry-content">
-										<div class="left">
-											<span class="date"> <fmt:formatDate
-													value="${newsOrDiscount.date}" pattern="MMM dd, yyyy" />
-												Bởi tác giả
-											</span>
-											<div class="authors">
-												<h6 class="title">
-													<a href="#0">${newsOrDiscount.author}</a>
-												</h6>
-											</div>
-										</div>
+						<c:if test="${not empty listNewsOrDiscount}">
+							<c:forEach items="${listNewsOrDiscount}" var="newsOrDiscount">
+								<div class="post-item">
+									<div class="post-thumb">
 										<a
-											href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}"
-											class="buttons">Read More <i class="flaticon-right"></i></a>
+											href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">
+											<c:choose>
+												<c:when
+													test="${newsOrDiscount.images.substring(0,5) != 'https'}">
+													<c:url value="/image?fname=${newsOrDiscount.images}"
+														var="imgUrl" />
+												</c:when>
+												<c:otherwise>
+													<c:set var="imgUrl" value="${newsOrDiscount.images}" />
+												</c:otherwise>
+											</c:choose> <img src="${imgUrl}" alt="${newsOrDiscount.title}"
+											style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;" />
+										</a>
+									</div>
+									<div class="post-content">
+										<div class="post-header">
+											<h4 class="title">
+												<a
+													href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}">${newsOrDiscount.title}</a>
+											</h4>
+											<p>${newsOrDiscount.description}</p>
+										</div>
+										<div class="entry-content">
+											<div class="left">
+												<span class="date"> <fmt:formatDate
+														value="${newsOrDiscount.date}" pattern="MMM dd, yyyy" />
+													Bởi tác giả
+												</span>
+												<div class="authors">
+													<h6 class="title">
+														<a href="#0">${newsOrDiscount.author}</a>
+													</h6>
+												</div>
+											</div>
+											<a
+												href="${pageContext.request.contextPath}/usernewsOrDiscountDetail?id=${newsOrDiscount.newsID}"
+												class="buttons">Read More <i class="flaticon-right"></i></a>
+										</div>
 									</div>
 								</div>
-							</div>
-						</c:forEach>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty listNewsOrDiscount}">
+							<div class="text-center">No news or discounts available.</div>
+						</c:if>
 					</article>
 					<!-- 										<div class="pagination-area text-center"> -->
 					<!-- 											<a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a> -->
@@ -85,62 +89,56 @@
 					<!-- 											<a href="#0">4</a> <a href="#0">5</a> <a href="#0"><span>Next</span><i -->
 					<!-- 												class="fas fa-angle-double-right"></i></a> -->
 					<!-- 										</div> -->
-					<span class="pagination-area text-center">${currentPage + 1}
-						of ${totalPages}</span>
+                    <!-- Pagination -->
+                    <c:if test="${totalPages > 0}">
+                        <span class="pagination-area text-center">${currentPage + 1} of ${totalPages}</span>
+                        <div class="pagination-area text-center">
+                            <div class="main__paginator-list">
+                                <!-- Prev Button -->
+                                <c:choose>
+                                    <c:when test="${currentPage > 0}">
+                                        <a href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage - 1}" class="paginator__item">
+                                            <i class="fas fa-angle-double-left"></i><span>Prev</span>
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="paginator__item disabled">
+                                            <i class="fas fa-angle-double-left"></i><span>Prev</span>
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
 
-					<div class="pagination-area text-center">
+                                <!-- Page Numbers -->
+                                <c:forEach var="i" begin="0" end="${totalPages - 1}">
+                                    <c:choose>
+                                        <c:when test="${i == currentPage}">
+                                            <a href="#" class="active">${i + 1}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${i}">${i + 1}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
 
-
-						<div class="main__paginator-list">
-							<!-- Nút "Prev" -->
-							<c:choose>
-								<c:when test="${currentPage > 0}">
-									<a
-										href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage - 1}"
-										class="paginator__item"> <i
-										class="fas fa-angle-double-left"></i><span>Prev</span>
-									</a>
-								</c:when>
-								<c:otherwise>
-									<span class="paginator__item disabled"> <i
-										class="fas fa-angle-double-left"></i><span>Prev</span>
-									</span>
-								</c:otherwise>
-							</c:choose>
-
-							<!-- Hiển thị từng trang (0-based index) -->
-							<c:forEach var="i" begin="0" end="${totalPages - 1}">
-								<c:choose>
-									<c:when test="${i == currentPage}">
-										<!-- Trang hiện tại -->
-										<a href="#" class="active">${i + 1}</a>
-									</c:when>
-									<c:otherwise>
-										<!-- Các trang khác -->
-										<a
-											href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${i}">
-											${i + 1} </a>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-
-							<!-- Nút "Next" -->
-							<c:choose>
-								<c:when test="${currentPage < totalPages - 1}">
-									<a
-										href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage + 1}"
-										class="paginator__item"> <span>Next</span><i
-										class="fas fa-angle-double-right"></i>
-									</a>
-								</c:when>
-								<c:otherwise>
-									<span class="paginator__item disabled"> <span>Next</span><i
-										class="fas fa-angle-double-right"></i>
-									</span>
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</div>
+                                <!-- Next Button -->
+                                <c:choose>
+                                    <c:when test="${currentPage < totalPages - 1}">
+                                        <a href="${pageContext.request.contextPath}/usernewsOrDiscounts?search=${param.search}&page=${currentPage + 1}" class="paginator__item">
+                                            <span>Next</span><i class="fas fa-angle-double-right"></i>
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="paginator__item disabled">
+                                            <span>Next</span><i class="fas fa-angle-double-right"></i>
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${totalPages == 0}">
+                        <div class="pagination-area text-center">No pages available</div>
+                    </c:if>
 
 				</div>
 				<div class="col-lg-4 col-sm-10 col-md-8">
