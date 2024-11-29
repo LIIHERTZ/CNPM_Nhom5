@@ -90,17 +90,7 @@ public class SeatDAOImpl implements ISeatDAO {
         return typedQuery.getResultList();
     }
 
-    @Override
-    public void updateSeatStatuses(String selectedSeats, int screeningId) {
-        EntityManager em = JPAConfig.getEntityManager();
-        em.getTransaction().begin();
-        String query = "UPDATE SeatStatus ss SET ss.status = TRUE WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
-        em.createQuery(query)
-                .setParameter("seatId", Integer.parseInt(selectedSeats))
-                .setParameter("screeningId", screeningId)
-                .executeUpdate();
-        em.getTransaction().commit();
-    }
+
 
     @Override
     public Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId) {

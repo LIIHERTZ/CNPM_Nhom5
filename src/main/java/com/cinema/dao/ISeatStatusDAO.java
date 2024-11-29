@@ -12,4 +12,9 @@ public interface ISeatStatusDAO {
 	
     List<SeatStatus> getSeatStatusesByScreeningAndRoom(int msID, int roomID);
 
+    void updateSeatStatusesTrue(int seatId, int screeningId);
+
+    void updateSeatStatusesFalse(int seatId, int screeningId);
+
+    void resetExpiredSeats();
 }

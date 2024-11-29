@@ -2,7 +2,6 @@ package com.cinema.dao;
 
 import java.util.List;
 
-import com.cinema.entity.Person;
 import com.cinema.entity.PopCorn;
 
 public interface IPopCornDAO {

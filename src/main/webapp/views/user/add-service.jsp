@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -7,7 +7,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%
-// Äáº·t thá»i gian Äáº¿m ngÆ°á»£c (5 phÃºt)
+// Đặt thời gian đếm ngược (5 phút)
 int countdownMinutes = 5;
 %>
 
@@ -22,10 +22,9 @@ int countdownMinutes = 5;
 <body>
 
 
-<!-- ==========Banner-Section========== -->
-	<c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
+	<!-- ==========Banner-Section========== -->
 	<section class="details-banner hero-area bg_img"
-		data-background="${movieImgUrl}" id = "data-background-MV">
+		data-background="'assets/images/banner/banner03.jpg'">
 		<div class="container">
 			<div class="details-banner-wrapper">
 				<div class="details-banner-content">
@@ -64,24 +63,24 @@ int countdownMinutes = 5;
 	<section class="page-title bg-one">
 		<div class="container">
 			<div class="page-title-area">
-				<!-- NÃºt quay láº¡i -->
+				<!-- Nút quay lại -->
 				<div class="item md-order-1">
-					<a href="${pageContext.request.contextPath}/userMovieCheckout"
+					<a href="${pageContext.request.contextPath}/movieCheckout"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
 				</div>
 
-				<!-- Hiá»n thá» ngÃ y vÃ  giá» ÄÃ£ chá»n -->
+				<!-- Hiển thị ngày và giờ đã chọn -->
 				<div class="item date-item">
-					<!-- Hiá»n thá» startHour theo Äá»nh dáº¡ng HH:mm, dd/MM/yyyy -->
+					<!-- Hiển thị startHour theo định dạng HH:mm, dd/MM/yyyy -->
 					<c:if test="${not empty startHour}">
 						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
 					</c:if>
 				</div>
 
 
-				<!-- Äáº¿m ngÆ°á»£c thá»i gian -->
+				<!-- Đếm ngược thời gian -->
 				<div class="item">
 					<h5 class="title" id="countdown-timer">05:00</h5>
 					<p>Mins Left</p>
@@ -220,7 +219,7 @@ int countdownMinutes = 5;
 							<span>Amount Payable</span><span>${totalPrice} VND</span>
 						</h6>
 
-						<form id="proceedForm" action="${pageContext.request.contextPath}/userAddService"
+						<form id="proceedForm" action="${pageContext.request.contextPath}/addService"
 							method="post" onsubmit="prepareProceedForm()">
 							 <input type="hidden"
 								name="foodAndBeverageTotal" id="foodAndBeverageTotal" />
@@ -242,7 +241,7 @@ int countdownMinutes = 5;
 	<!-- ==========Movie-Section========== -->
 
 	<script>
-		// Giáº£ sá»­ thá»i gian Äáº¿m ngÆ°á»£c lÃ  5 phÃºt (5 * 60 = 300 giÃ¢y)
+		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
 		var countdown = 300;
 		var countdownTimer = document.getElementById("countdown-timer");
 
@@ -255,32 +254,32 @@ int countdownMinutes = 5;
 
 			if (countdown < 0) {
 				clearInterval(countdownInterval);
-				window.location.href = "${pageContext.request.contextPath}/userMovieCheckout";// Dá»«ng Äáº¿m ngÆ°á»£c khi háº¿t thá»i gian
+				window.location.href = "${pageContext.request.contextPath}/movieCheckout";// Dừng đếm ngược khi hết thời gian
 			}
 		}, 1000);
 		
 		
 		
-		// Biáº¿n lÆ°u danh sÃ¡ch sáº£n pháº©m trong Booking Summary
+		// Biến lưu danh sách sản phẩm trong Booking Summary
 	    let bookingSummary = [];
 			
-	    let initialTotalPrice = parseInt("${totalPrice}".replace(/\D/g, "")); // Tá»ng tiá»n ban Äáº§u (tickets price)
-	    let currentTotalPrice = initialTotalPrice; // GiÃ¡ trá» hiá»n táº¡i cá»§a tá»ng tiá»n
+	    let initialTotalPrice = parseInt("${totalPrice}".replace(/\D/g, "")); // Tổng tiền ban đầu (tickets price)
+	    let currentTotalPrice = initialTotalPrice; // Giá trị hiện tại của tổng tiền
 	    
 
 	    function addToBookingSummary(name, price, button) {
 	        const qtyInput = button.parentElement.querySelector(".cart-plus-minus-box");
 	        const quantity = parseInt(qtyInput.value);
 
-	        // TÃ¬m xem sáº£n pháº©m ÄÃ£ cÃ³ trong bookingSummary chÆ°a
+	        // Tìm xem sản phẩm đã có trong bookingSummary chưa
 	        const existingProduct = bookingSummary.find(item => item.name === name);
 
 	        if (existingProduct) {
-	            // Náº¿u sáº£n pháº©m ÄÃ£ tá»n táº¡i, tÄng sá» lÆ°á»£ng
+	            // Nếu sản phẩm đã tồn tại, tăng số lượng
 	            existingProduct.quantity += quantity;
 	            existingProduct.totalPrice += price * quantity;
 	        } else {
-	            // Náº¿u sáº£n pháº©m chÆ°a tá»n táº¡i, thÃªm má»i vÃ o danh sÃ¡ch
+	            // Nếu sản phẩm chưa tồn tại, thêm mới vào danh sách
 	            bookingSummary.push({
 	                name: name,
 	                price: price,
@@ -289,10 +288,10 @@ int countdownMinutes = 5;
 	            });
 	        }
 
-	        // Cáº­p nháº­t tá»ng tiá»n
+	        // Cập nhật tổng tiền
 	        currentTotalPrice += price * quantity;
 
-	        // Cáº­p nháº­t láº¡i giao diá»n
+	        // Cập nhật lại giao diện
 	        updateBookingSummary();
 	    }
 
@@ -300,27 +299,27 @@ int countdownMinutes = 5;
 	    	const bookingListElement = document.querySelector(".side-shape .info"); 
 	        const totalAmountElement = document.querySelector(".proceed-area .subtitle span:last-child");
 	        
-	        const foodAndBeverageTotalElement = document.querySelector(".side-shape .subtitle span:nth-child(2)"); // Pháº§n tá»­ chá»©a tá»ng tiá»n food & beverage
+	        const foodAndBeverageTotalElement = document.querySelector(".side-shape .subtitle span:nth-child(2)"); // Phần tử chứa tổng tiền food & beverage
 	        
 	        
 	        let dynamicContent = "";
 	        
 	        let foodAndBeverageTotal = 0;
 
-	        // Render cÃ¡c sáº£n pháº©m trong bookingSummary
+	        // Render các sản phẩm trong bookingSummary
 	         bookingSummary.forEach(item => {
         dynamicContent += 
             '<span>' + item.quantity +' '+ item.name +' '+ item.totalPrice + ' VND</span>';
         foodAndBeverageTotal += item.totalPrice;
     });
 	        
-	      // Thay tháº¿ ná»i dung Äá»ng trong pháº§n info
+	      // Thay thế nội dung động trong phần info
 	         bookingListElement.innerHTML = dynamicContent;
 	      
-	      // Cáº­p nháº­t tá»ng tiá»n food & beverage
+	      // Cập nhật tổng tiền food & beverage
 	         foodAndBeverageTotalElement.textContent = foodAndBeverageTotal + " VND";
 
-	        // Cáº­p nháº­t tá»ng tiá»n
+	        // Cập nhật tổng tiền
 	        totalAmountElement.textContent = currentTotalPrice + " VND";
 	    }
 		
@@ -329,10 +328,10 @@ int countdownMinutes = 5;
 	        const form = document.getElementById("proceedForm");
 
 
-	        // Láº·p qua danh sÃ¡ch sáº£n pháº©m (bookingSummary) vÃ  thÃªm input áº©n
+	        // Lặp qua danh sách sản phẩm (bookingSummary) và thêm input ẩn
 	        bookingSummary.forEach((item, index) => {
 	        		        	        	            
-	        	// Input cho tÃªn sáº£n pháº©m
+	        	// Input cho tên sản phẩm
 	            const nameInput = document.createElement("input");
 	            nameInput.type = "hidden";
 	            nameInput.name = 'product[' + index + '].name';
@@ -340,7 +339,7 @@ int countdownMinutes = 5;
 	            nameInput.classList.add("product-input");
 	            form.appendChild(nameInput);
 
-	            // Input cho sá» lÆ°á»£ng sáº£n pháº©m
+	            // Input cho số lượng sản phẩm
 	            const quantityInput = document.createElement("input");
 	            quantityInput.type = "hidden";
 	            quantityInput.name = 'product[' + index + '].quantity';
@@ -348,7 +347,7 @@ int countdownMinutes = 5;
 	            quantityInput.classList.add("product-input");
 	            form.appendChild(quantityInput);
 
-	            // Input cho tá»ng tiá»n sáº£n pháº©m
+	            // Input cho tổng tiền sản phẩm
 	            const totalPriceInput = document.createElement("input");
 	            totalPriceInput.type = "hidden";
 	            totalPriceInput.name = 'product[' + index + '].totalPrice';
@@ -357,31 +356,18 @@ int countdownMinutes = 5;
 	            form.appendChild(totalPriceInput);
 	        });
 
-	        // Input cho tá»ng tiá»n Food & Beverage
+	        // Input cho tổng tiền Food & Beverage
 	        const foodAndBeverageTotalInput = document.getElementById("foodAndBeverageTotal");
 	        const foodAndBeverageTotal = document.querySelector(".side-shape .subtitle span:nth-child(2)").textContent.trim();
 	        foodAndBeverageTotalInput.value = foodAndBeverageTotal;
 
-	        // Input cho tá»ng tiá»n chung
+	        // Input cho tổng tiền chung
 	        const amountPayableInput = document.getElementById("amountPayable");
 	        amountPayableInput.value = currentTotalPrice;
 	    }
 
 		
-	 // Lấy phần tử bằng id
-		const element = document.getElementById('data-background-MV');
-
-		// Kiểm tra và gán background image nếu element tồn tại
-		if (element) {
-		    const bgImage = element.getAttribute('data-background');
-		    //const image = 'url('+ '"' + bgImage + '"' + ')';
-		    if (bgImage) {
-		        element.style.backgroundImage = 'url('+ '"' + bgImage + '"' + ')';;
-		        element.style.backgroundSize = 'cover'; // Phủ đầy
-		        element.style.backgroundPosition = 'center'; // Canh giữa
-		        element.style.backgroundRepeat = 'no-repeat'; // Không lặp lại
-		    }
-		}
+		
 		
 		
 	</script>

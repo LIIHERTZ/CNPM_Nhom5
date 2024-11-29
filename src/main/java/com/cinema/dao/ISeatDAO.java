@@ -16,7 +16,6 @@ public interface ISeatDAO {
 
     List<SeatStatus> getSeatStatusesByScreeningId(int screeningId);
 
-    void updateSeatStatuses(String selectedSeats, int screeningId);
 
     Seat findSeatIdBySeatNumberAndScreeningId(String seatNumber, int screeningId);
 

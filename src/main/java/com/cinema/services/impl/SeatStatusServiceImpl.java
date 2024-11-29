@@ -9,8 +9,6 @@ import com.cinema.dao.*;
 import com.cinema.dao.impl.*;
 import com.cinema.entity.Seat;
 import com.cinema.entity.SeatStatus;
-import com.cinema.entity.Ticket;
-import com.cinema.entity.TicketPayment;
 
 public class SeatStatusServiceImpl implements ISeatStatusService {
 	
@@ -35,17 +33,20 @@ public class SeatStatusServiceImpl implements ISeatStatusService {
     public List<SeatStatus> getSeatStatusesByScreeningAndRoom(int msID, int roomID) {
         return seatStatusDAO.getSeatStatusesByScreeningAndRoom(msID, roomID);
     }
-    
-    @Override
-    public void updateSeatStatusTmp(String selectedSeats, String screeningId) {
-    	// Lưu Ticket và TicketPayment
-        String[] seats = selectedSeats.split(",");
-        for (String seat : seats) {
-            Seat tmp = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
-            seatService.updateSeatStatuses(Integer.toString(tmp.getSeatID()), Integer.parseInt(screeningId));
-        }
 
+    @Override
+    public void updateSeatStatusesTrue(int seatId, int screeningId) {
+        seatStatusDAO.updateSeatStatusesTrue(seatId, screeningId);
     }
-    
-    
+    @Override
+    public void updateSeatStatusesFalse(int seatId, int screeningId) {
+        seatStatusDAO.updateSeatStatusesFalse(seatId, screeningId);
+    }
+
+    @Override
+    public void resetExpiredSeats() {
+        seatStatusDAO.resetExpiredSeats();
+    }
+
+
 }
