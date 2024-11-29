@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
@@ -29,6 +31,8 @@
 				method="post" onsubmit="transferDataAndSubmit(); return false;">
 				<input type="hidden" name="movieId" value="${movie.movieID}">
 				<input type="hidden" id="startHourInput" name="startHour" value="">
+				<input type="hidden" id="screeningIdInput" name="screeningId"
+					value="">
 				<input type="hidden" id="screeningIdInput" name="screeningId"
 					value="">
 				<button type="submit" class="custom-button seatPlanButton">
@@ -95,6 +99,7 @@
 						%>
 						<option value="<%=date%>"
 							<%=date.equals(selectedDate) ? "selected" : ""%>>
+							<%=date.equals(selectedDate) ? "selected" : ""%>>
 							<%=date%>
 						</option>
 						<%
@@ -103,6 +108,8 @@
 						%>
 					</select>
 				</div>
+
+
 
 
 				<div class="form-group">
@@ -169,6 +176,7 @@
 								</div>
 								<div class="movie-schedule">
 									<!-- Lấy danh sách suất chiếu từ cinemaScreeningsMap -->
+									<!-- Lấy danh sách suất chiếu từ cinemaScreeningsMap -->
 									<c:forEach var="screening"
 										items="${cinemaScreeningsMap[cinema.cinemaID]}">
 										<div class="item" style="cursor: pointer;"
@@ -211,10 +219,14 @@
         const searchForm = document.querySelector('form.ticket-search-form'); // Form tìm kiếm
         const startHourInput = document.getElementById('startHourInput');
         const screeningIdInput = document.getElementById('screeningIdInput');
+        const screeningIdInput = document.getElementById('screeningIdInput');
 
         // Kiểm tra nếu người dùng chưa chọn startHour hoặc screeningId
         if (!startHourInput.value || !screeningIdInput.value) {
+        // Kiểm tra nếu người dùng chưa chọn startHour hoặc screeningId
+        if (!startHourInput.value || !screeningIdInput.value) {
             alert('Please select a showtime before proceeding.');
+            return false;
             return false;
         }
 
@@ -225,11 +237,21 @@
             experience: searchForm.querySelector('select[name="experience"]').value,
             version: searchForm.querySelector('select[name="version"]').value,
         };
+        // Lấy dữ liệu từ form tìm kiếm
+        const data = {
+            date: searchForm.querySelector('select[name="date"]').value,
+            location: searchForm.querySelector('select[name="location"]').value,
+            experience: searchForm.querySelector('select[name="experience"]').value,
+            version: searchForm.querySelector('select[name="version"]').value,
+        };
 
         // Tạo các input ẩn để thêm dữ liệu vào form cần submit
         Object.entries(data).forEach(([name, value]) => {
+        Object.entries(data).forEach(([name, value]) => {
             const input = document.createElement('input');
             input.type = 'hidden';
+            input.name = name;
+            input.value = value;
             input.name = name;
             input.value = value;
             formToSubmit.appendChild(input);
@@ -253,5 +275,8 @@
 	    }
 	}
 </script>
+
+
+
 </body>
 </html>

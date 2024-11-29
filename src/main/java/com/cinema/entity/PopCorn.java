@@ -3,7 +3,15 @@ package com.cinema.entity;
 
 import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PreRemove;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PopCorn")
@@ -22,26 +30,10 @@ public class PopCorn {
     private double price;
 
     @Column(nullable = false)
-    private Boolean status;
+    private boolean  status;
 
-    @OneToMany(mappedBy = "popcorn", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "popcorn", cascade =CascadeType.ALL )
     private List<PopCornPayment> popcornPayments;
-    
-    
-
-	public PopCorn() {
-	}
-
-	public PopCorn(int popcornID, String namePopCorn, String typePopCorn, double price, Boolean status,
-			List<PopCornPayment> popcornPayments) {
-		this.popcornID = popcornID;
-		this.namePopCorn = namePopCorn;
-		this.typePopCorn = typePopCorn;
-		this.price = price;
-		this.status = status;
-		this.popcornPayments = popcornPayments;
-	}
-
 	public int getPopcornID() {
 		return popcornID;
 	}
@@ -74,11 +66,17 @@ public class PopCorn {
 		this.price = price;
 	}
 
-	public Boolean getStatus() {
+
+	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public boolean isStatus() {
+
+		return status;
+	}
+
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
@@ -90,6 +88,10 @@ public class PopCorn {
 		this.popcornPayments = popcornPayments;
 	}
 
-    
+
+
     // Getters and setters
+    
+    
+
 }

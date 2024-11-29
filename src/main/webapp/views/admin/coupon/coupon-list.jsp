@@ -6,14 +6,14 @@
 
 
 <!-- main content -->
-<main class="container-fluid">
-	<div class="container-fluid">
+<main class="container-fluid"> 
+ 	<div class="container-fluid">
 		<div class="row">
 			<!-- main title -->
 			<div class="col-12">
 				<div class="main__title">
 					<h2>Coupons</h2>
-
+					<span class="main__title-stat">${couponTotal } Total</span>
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
 							class="main__title-link main__title-link--wrap"
@@ -57,7 +57,7 @@
 									<td><div class="catalog__text">${coupon.couponName }</div></td>
 									<td><div class="catalog__text">${coupon.couponType }</div></td>
 									<td><div class="catalog__text">${coupon.couponValue }</div></td>
-									<!-- Äá»nh dáº¡ng ngÃ y sá»­ dá»¥ng JSTL -->
+									<!-- Định dạng ngày sử dụng JSTL -->
 									<fmt:formatDate value="${coupon.startDate}"
 										pattern="yyyy-MM-dd" var="startDateFormatted" />
 									<fmt:formatDate value="${coupon.endDate}" pattern="yyyy-MM-dd"
@@ -85,8 +85,6 @@
 								</tr>
 							</c:forEach>
 
-
-
 						</tbody>
 					</table>
 				</div>
@@ -106,19 +104,14 @@
 					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector main__paginator-pages">
-						<label for="pageSize" style="color: #333;"padding: 5px 10px; border-radius: 5px;>Page
-							Size : </label> <select id="pageSize" name="pageSize"
-							onchange="updatePageSize(this)"
-							style="background-color: #222028; border: #222028; color: white;">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>
-								5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>
-								10</option>
-							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>
-								15</option>
-							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>
-								20</option>
+					<div class="col-1.02">
+						<label class="sign__label" for="pageSize" >Page Size: </label> 
+						<select  class="sign__select" id="pageSize" name="pageSize"
+							onchange="updatePageSize(this)">
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5 items</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10 items</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15 items</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20 items</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -130,26 +123,97 @@
 					</ul>
 					<ul class="paginator">
 						<!-- Prev button -->
-						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-left"></i>
-						</a></li>
-						<!-- Page numbers -->
-						<c:if test="${totalPages > 0}">
-							<c:forEach var="i" begin="0" end="${totalPages - 1}">
-								<li
-									class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+						<li
+							class="paginator__item paginator__item--prev ${currentPage == 1 ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage > 1}">
 									<a
-									href="${pageContext.request.contextPath}/admin/coupons?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
-										${i + 1} </a>
-								</li>
-							</c:forEach>
+										href="<c:url value='/admin/coupons'>
+                    <c:param name='pageNumber' value='${currentPage - 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-left"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-left"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+
+						<!-- Display first page and ellipsis if needed -->
+						<c:if test="${currentPage > 3}">
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/coupons'>
+                <c:param name='pageNumber' value='1'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">1</a>
+							</li>
+							<li class="paginator__item" style = "color : white;">...</li>
 						</c:if>
+
+						<!-- Page numbers around current page -->
+						<c:set var="startPage"
+							value="${currentPage   > 1 ? currentPage   : 1}" />
+						<c:set var="endPage"
+							value="${currentPage + 1 < totalPages ? currentPage + 1 : totalPages}" />
+						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+							<li
+								class="paginator__item ${pageNum == currentPage ? 'paginator__item--active' : ''}">
+								<a
+								href="<c:url value='/admin/coupons'>
+                <c:param name='pageNumber' value='${pageNum}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${pageNum}</a>
+							</li>
+						</c:forEach>
+
+						<!-- Display last page and ellipsis if needed -->
+						<c:if test="${currentPage < totalPages - 2}">
+							<li class="paginator__item" style = "color : white;">...</li>
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/coupons'>
+                <c:param name='pageNumber' value='${totalPages}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${totalPages}</a>
+							</li>
+						</c:if>
+
 						<!-- Next button -->
-						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/coupons?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-right"></i>
-						</a></li>
+						<li
+							class="paginator__item paginator__item--next ${currentPage == totalPages ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage < totalPages}">
+									<a
+										href="<c:url value='/admin/coupons'>
+                    <c:param name='pageNumber' value='${currentPage + 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-right"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
 					</ul>
 
 				</div>
@@ -266,7 +330,7 @@
 									id="couponValue" placeholder="Coupon Value" required
 									value="${coupon.couponValue }">
 							</div>
-							<!-- Äá»nh dáº¡ng ngÃ y sá»­ dá»¥ng JSTL -->
+							<!-- Định dạng ngày sử dụng JSTL -->
 							<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd"
 								var="formattedDate" />
 						</div>
@@ -345,14 +409,14 @@
 	}
 	
 	
-	// Láº¯ng nghe sá»± kiá»n khi má» Modal
+	// Lắng nghe sự kiện khi mở Modal
 	document.addEventListener("DOMContentLoaded", function () {
-	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // NÃºt má» modal xÃ³a
+	    const deleteButtons = document.querySelectorAll(".catalog__btn--delete"); // Nút mở modal xóa
 	    const modalForm = document.querySelector(".modal__form_delete"); // Form trong modal
 	    deleteButtons.forEach(button => {
 	        button.addEventListener("click", function () {
-	            const couponID = this.getAttribute("data-id"); // Láº¥y userId tá»« attribute
-	            const baseFormAction = modalForm.getAttribute("action"); // URL ban Äáº§u cá»§a form
+	            const couponID = this.getAttribute("data-id"); // Lấy userId từ attribute
+	            const baseFormAction = modalForm.getAttribute("action"); // URL ban đầu của form
 	            const link = baseFormAction+'?couponID='+couponID;
 	            console.log("link : " + link);
 	            modalForm.setAttribute("action", link); 
@@ -367,12 +431,12 @@
 	    var popcornIDField = document.getElementById('couponID-edit');
 
 	    form.addEventListener('submit', function (event) {
-	        // Láº¥y giÃ¡ trá» cá»§a popcornID
+	        // Lấy giá trị của popcornID
 	        var couponID = popcornIDField.value;
 	        
-	        const baseFormAction = form.getAttribute("action"); // URL ban Äáº§u cá»§a form
+	        const baseFormAction = form.getAttribute("action"); // URL ban đầu của form
             const link = baseFormAction+'?couponID='+couponID;
-	        // GÃ¡n giÃ¡ trá» vÃ o URL cá»§a action
+	        // Gán giá trị vào URL của action
 	        form.action = link
 	        console.log("url : " + form.action )
 	    });
@@ -381,12 +445,12 @@
 	
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	    // Láº¯ng nghe sá»± kiá»n khi modal ÄÆ°á»£c hiá»n thá»
+	    // Lắng nghe sự kiện khi modal được hiển thị
 	    var editModal = document.getElementById('modal-edit');
 	    editModal.addEventListener('show.bs.modal', function (event) {
-	        // NÃºt kÃ­ch hoáº¡t modal
+	        // Nút kích hoạt modal
 	        var button = event.relatedTarget;
-	        // Láº¥y thÃ´ng tin tá»« data-attribute
+	        // Lấy thông tin từ data-attribute
 	        var couponID = button.getAttribute('data-id');
 	        var couponType = button.getAttribute('data-type');
 	        var couponName = button.getAttribute('data-name');
@@ -394,7 +458,7 @@
 	        var startDate = button.getAttribute('data-startDate');
 	        var endDate = button.getAttribute('data-endDate');
 	        
-	        // Äiá»n thÃ´ng tin vÃ o cÃ¡c trÆ°á»ng trong modal
+	        // Điền thông tin vào các trường trong modal
 	        var modalCouponID = editModal.querySelector('#couponID-edit');
 	        var modalCouponType = editModal.querySelector('#couponType');
 	        var modalCouponValue = editModal.querySelector('#couponValue');
@@ -406,7 +470,7 @@
 	        modalCouponType.value = couponType;
 	        modalCouponValue.value = couponValue;
 	        modalCouponName.value = couponName;
-	        // Chuyá»n Äá»nh dáº¡ng ngÃ y trÆ°á»c khi gÃ¡n
+	        // Chuyển định dạng ngày trước khi gán
 	        modalStartDate.value =formatDateToInput(startDate);
 	        modalEndDate.value = formatDateToInput(endDate);
 	        console.log("startDate : " + formatDateToInput(startDate));
@@ -414,9 +478,9 @@
 	    });
 	});
 	
-	// HÃ m Äá»nh dáº¡ng ngÃ y
+	// Hàm định dạng ngày
 	function formatDateToInput(dateString) {
 		const datePart = dateString.split(' ')[0];
-	    return datePart; // Tráº£ vá» pháº§n ngÃ y (yyyy-MM-dd)
+	    return datePart; // Trả về phần ngày (yyyy-MM-dd)
 	}
 </script>

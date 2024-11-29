@@ -30,6 +30,9 @@ buildNumber.properties
 
 .settings
 
+
+.settings
+
 # Package Files #
 *.jar
 *.war

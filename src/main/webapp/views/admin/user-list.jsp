@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- main content -->
 <main class="container-fluid">
 	<div class="container-fluid">
@@ -11,12 +11,13 @@
 				<div class="main__title">
 					<h2>Users</h2>
 
-					<span class="main__title-stat">3,702 Total</span>
+					<span class="main__title-stat">${userTotal } Total</span>
 
 					<div class="main__title-wrap">
 						<button type="button" data-bs-toggle="modal"
-							class="main__title-link main__title-link--wrap" 
-							onclick="window.location.href= '${pageContext.request.contextPath}/admin/users/add '">Add user</button>
+							class="main__title-link main__title-link--wrap"
+							onclick="window.location.href= '${pageContext.request.contextPath}/admin/users/add '">Add
+							user</button>
 						<!-- search -->
 						<form action=" ${pageContext.request.contextPath}/admin/users"
 							method="get" class="main__title-form">
@@ -40,7 +41,9 @@
 							<tr>
 								<th>ID</th>
 								<th>BASIC INFO</th>
-								<th>USERNAME</th>
+								<th>PHONE</th>
+								<th>BIRTHDATE</th>
+								<th>GENDER</th>
 								<th>ACTIONS</th>
 							</tr>
 						</thead>
@@ -53,7 +56,7 @@
 									<td>
 										<div class="catalog__user">
 											<div class="catalog__avatar">
-												<img src="${pageContext.request.contextPath}/assets2/img/user.svg" alt="">
+												<img src="/ValCT_Nhom5/assets2/img/user.svg" alt="">
 											</div>
 											<div class="catalog__meta">
 												<h3>${user.fullName }</h3>
@@ -62,10 +65,26 @@
 										</div>
 									</td>
 									<td><div class="catalog__text">${user.phone }</div></td>
+									<fmt:formatDate value="${user.birthDate}" pattern="dd-MM-yyyy"
+										var="birthDateFormatted" />
+									<td><div class="catalog__text">${birthDateFormatted }</div></td>
+									<td>
+										<div class="catalog__text">
+											<c:choose>
+												<c:when test="${user.gender == 1}">
+									                Male
+									            </c:when>
+												<c:otherwise>
+									                Female
+									            </c:otherwise>
+											</c:choose>
+										</div>
+									</td>
 
 									<td>
 										<div class="catalog__btns">
-											<a href="${pageContext.request.contextPath}/admin/users/edit?userId=${user.perID}"
+											<a
+												href="${pageContext.request.contextPath}/admin/users/edit?userId=${user.perID}"
 												class="catalog__btn catalog__btn--edit"> <i
 												class="ti ti-edit"></i>
 											</a>
@@ -100,16 +119,18 @@
 					</c:if>
 					<!-- end amount -->
 					<!-- Page size selector -->
-					<div class="page-size-selector">
-						<label for="pageSize"
-							style="background-color: #1a191f; color: #333; padding: 5px 10px; border-radius: 5px;">Page
-							Size: </label> <select id="pageSize" name="pageSize"
-							onchange="updatePageSize(this)"
-							style= "background-color : #222028 ;  border :#222028; color :white; ">
-							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
-							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+					<div class="col-1.02">
+						<label class="sign__label" for="pageSize">Page Size: </label> <select
+							class="sign__select" id="pageSize" name="pageSize"
+							onchange="updatePageSize(this)">
+							<option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5
+								items</option>
+							<option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10
+								items</option>
+							<option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15
+								items</option>
+							<option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20
+								items</option>
 						</select>
 					</div>
 					<ul class="main__paginator-list">
@@ -121,26 +142,100 @@
 					</ul>
 					<ul class="paginator">
 						<!-- Prev button -->
-						<li class="paginator__item paginator__item--prev"><a
-							href="<c:if test='${pageNumber > 1}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber - 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-left"></i>
-						</a></li>
-						<!-- Page numbers -->
-						<c:if test="${totalPages > 0}">
-						<c:forEach var="i" begin="0" end="${totalPages - 1}">
-							<li class="paginator__item  ${i+1 == currentPage ? 'paginator__item--active' : ''}">
+						<li
+							class="paginator__item paginator__item--prev ${currentPage == 1 ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage > 1}">
+									<a
+										href="<c:url value='/admin/users'>
+                    <c:param name='pageNumber' value='${currentPage - 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-left"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-left"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+
+						<!-- Display first page and ellipsis if needed -->
+						<c:if test="${currentPage > 3}">
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/users'>
+                <c:param name='pageNumber' value='1'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">1</a>
+							</li>
+							<li class="paginator__item" style = "color : white;">...</li>
+						</c:if>
+
+						<!-- Page numbers around current page -->
+						<c:set var="startPage"
+							value="${currentPage  > 1 ? currentPage  : 1}" />
+						<c:set var="endPage"
+							value="${currentPage + 1 < totalPages ? currentPage + 1 : totalPages}" />
+						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+							<li
+								class="paginator__item ${pageNum == currentPage ? 'paginator__item--active' : ''}">
 								<a
-								href="${pageContext.request.contextPath}/admin/users?pageNumber=${i + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}">
-									${i + 1} </a>
+								href="<c:url value='/admin/users'>
+                <c:param name='pageNumber' value='${pageNum}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${pageNum}</a>
 							</li>
 						</c:forEach>
+
+						<!-- Display last page and ellipsis if needed -->
+						<c:if test="${currentPage < totalPages - 2}">
+							<li class="paginator__item" style = "color : white;">...</li>
+							<li class="paginator__item"><a
+								href="<c:url value='/admin/users'>
+                <c:param name='pageNumber' value='${totalPages}'/>
+                <c:param name='pageSize' value='${pageSize}'/>
+                <c:if test="${not empty searchQuery}">
+                    <c:param name='searchQuery' value='${searchQuery}'/>
+                </c:if>
+            </c:url>">${totalPages}</a>
+							</li>
 						</c:if>
+
 						<!-- Next button -->
-						<li class="paginator__item paginator__item--next"><a
-							href="<c:if test='${pageNumber < totalPages}'>${pageContext.request.contextPath}/admin/users?pageNumber=${pageNumber + 1}&pageSize=${pageSize}&searchQuery=${searchQuery}</c:if>">
-								<i class="ti ti-chevron-right"></i>
-						</a></li>
+						<li
+							class="paginator__item paginator__item--next ${currentPage == totalPages ? 'disabled' : ''}">
+							<c:choose>
+								<c:when test="${currentPage < totalPages}">
+									<a
+										href="<c:url value='/admin/users'>
+                    <c:param name='pageNumber' value='${currentPage + 1}'/>
+                    <c:param name='pageSize' value='${pageSize}'/>
+                    <c:if test="${not empty searchQuery}">
+                        <c:param name='searchQuery' value='${searchQuery}'/>
+                    </c:if>
+                </c:url>">
+										<i class="ti ti-chevron-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#"> <i class="ti ti-chevron-right"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
 					</ul>
+
+
 
 				</div>
 				<!-- end paginator -->
@@ -156,8 +251,8 @@
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal__content">
-				<form action="${pageContext.request.contextPath}/admin/users/delete" method ="POST"
-					class="modal__form_delete">
+				<form action="${pageContext.request.contextPath}/admin/users/delete"
+					method="POST" class="modal__form_delete">
 					<h4 class="modal__title">User delete</h4>
 
 					<p class="modal__text">Are you sure to permanently delete this

@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%
@@ -69,7 +71,12 @@ int countdownMinutes = 5;
 					<c:if test="${not empty startHour}">
 						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
 					</c:if>
+					<!-- Hiển thị startHour theo định dạng HH:mm, dd/MM/yyyy -->
+					<c:if test="${not empty startHour}">
+						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
+					</c:if>
 				</div>
+
 
 
 				<!-- Đếm ngược thời gian -->
@@ -107,11 +114,36 @@ int countdownMinutes = 5;
 }
 </style>
 
+	<style>
+/* Ẩn checkbox */
+.seat-checkbox {
+	display: none;
+}
+
+/* Tạo hiệu ứng tích bằng cách sử dụng label */
+.seat-label {
+	cursor: pointer;
+}
+
+/* Thay đổi hình ảnh ghế khi checkbox được chọn */
+.seat-checkbox:checked+img {
+	content: url("assets/images/movie/seat01-booked.png");
+	/* Hình ảnh ghế thường đang chọn */
+}
+
+.seat-checkbox.couple:checked+img {
+	content: url("assets/images/movie/seat02-booked.png");
+	/* Hình ảnh ghế đôi đang chọn */
+}
+</style>
+
 	<div class="seat-plan-section padding-bottom padding-top">
 		<div class="container">
 			<div class="screen-area">
 				<h4 class="screen">Screen</h4>
+				<h4 class="screen">Screen</h4>
 				<div class="screen-thumb">
+					<img src="assets/images/movie/screen-thumb.png" alt="screen">
 					<img src="assets/images/movie/screen-thumb.png" alt="screen">
 				</div>
 				<h5 class="subtitle">silver plus</h5>
@@ -188,8 +220,14 @@ int countdownMinutes = 5;
 
 
 
+
+
+
 	<!-- ==========Movie-Section========== -->
 	<script>
+		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
+		var countdown = 300;
+		var countdownTimer = document.getElementById("countdown-timer");
 		// Giả sử thời gian đếm ngược là 5 phút (5 * 60 = 300 giây)
 		var countdown = 300;
 		var countdownTimer = document.getElementById("countdown-timer");

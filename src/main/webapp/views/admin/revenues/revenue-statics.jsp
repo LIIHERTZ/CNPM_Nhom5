@@ -11,7 +11,7 @@
 	content="Online Movies, TV Shows & Cinema HTML Template">
 <meta name="keywords" content="">
 <meta name="author" content="Dmitry Volkov">
-<title>HotFlix â Online Movies, TV Shows & Cinema HTML Template</title>
+<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
 
 <!-- Code Thao -->
 </head>
@@ -82,7 +82,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- Láº·p qua danh sÃ¡ch dá»¯ liá»u (vÃ­ dá»¥ tá»« cÆ¡ sá» dá»¯ liá»u) -->
+								<!-- Lặp qua danh sách dữ liệu (ví dụ từ cơ sở dữ liệu) -->
 								<c:forEach var="movieRevenue" items="${movieRevenues}">
 									<tr>
 										<td>${movieRevenue[0]}</td>
@@ -113,7 +113,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- Láº·p qua danh sÃ¡ch dá»¯ liá»u (vÃ­ dá»¥ tá»« cÆ¡ sá» dá»¯ liá»u) -->
+								<!-- Lặp qua danh sách dữ liệu (ví dụ từ cơ sở dữ liệu) -->
 								<c:forEach var="popcornRevenue" items="${popcornRevenues}">
 									<tr>
 										<td>${popcornRevenue[0]}</td>
@@ -194,7 +194,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- Láº·p qua danh sÃ¡ch dá»¯ liá»u (vÃ­ dá»¥ tá»« cÆ¡ sá» dá»¯ liá»u) -->
+								<!-- Lặp qua danh sách dữ liệu (ví dụ từ cơ sở dữ liệu) -->
 								<c:forEach var="tmp" items="${CinemaRevenuesByMovieID}">
 									<tr>
 										<td>${tmp[0]}</td>
@@ -252,7 +252,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<!-- Láº·p qua danh sÃ¡ch dá»¯ liá»u (vÃ­ dá»¥ tá»« cÆ¡ sá» dá»¯ liá»u) -->
+									<!-- Lặp qua danh sách dữ liệu (ví dụ từ cơ sở dữ liệu) -->
 									<c:forEach var="tmp" items="${CustomerAmountAllCinema}">
 										<tr>
 											<td>${tmp[1]}</td>
@@ -308,7 +308,7 @@
 	        showOption(null, "region-group");
 	        document.querySelector(".tab button[onclick*='region-group']").classList.add("active");
 	    } else {
-	        // Máº·c Äá»nh hiá»n thá» tab Äáº§u tiÃªn náº¿u khÃ´ng cÃ³ tham sá»
+	        // Mặc định hiển thị tab đầu tiên nếu không có tham số
 	        showOption(null, "time-group");
 	        document.querySelector(".tab button[onclick*='time-group']").classList.add("active");
 	    }
@@ -316,13 +316,13 @@
 
 
 	function showOptionAndFetchData(evt, optionName) {
-	    // Hiá»n thá» pháº§n tá»­ tÆ°Æ¡ng á»©ng
+	    // Hiển thị phần tử tương ứng
 	   showOption(evt, optionName);
 
-		// Gá»­i yÃªu cáº§u GET tá»i Controller, thay Äá»i URL phÃ¹ há»£p vá»i Controller cá»§a báº¡n
+		// Gửi yêu cầu GET tới Controller, thay đổi URL phù hợp với Controller của bạn
     	const tmp = `${pageContext.request.contextPath}`;
         const url = tmp + "/admin/revenues-statics?cinemaID="+"1" + "&tab=region-group";
-        // Gá»­i yÃªu cáº§u GET (chuyá»n hÆ°á»ng trÃ¬nh duyá»t Äáº¿n URL)
+        // Gửi yêu cầu GET (chuyển hướng trình duyệt đến URL)
         window.location.href = url;
 	}
 
@@ -346,7 +346,7 @@
 			}
 			const elements = document.getElementsByClassName(optionName)
 			Array.from(elements).forEach(element => {
-			    element.style.display = 'block'; // áº¨n tá»«ng pháº§n tá»­
+			    element.style.display = 'block'; // Ẩn từng phần tử
 			});
 			 if (evt) {
 			        evt.currentTarget.className += " active";
@@ -358,38 +358,38 @@
 		
 		//gui yeu cau GET toi controller khi chon time cu the o tab "Time"
 		document.getElementById('dateValue').addEventListener('change', function () {
-		    // Láº¥y giÃ¡ trá» ngÃ y ÄÆ°á»£c chá»n
+		    // Lấy giá trị ngày được chọn
 		    const selectedDate = this.value;
 			const dateType = document.getElementById('time-option').value;
-		    // Kiá»m tra náº¿u giÃ¡ trá» khÃ´ng rá»ng
+		    // Kiểm tra nếu giá trị không rỗng
 		    if (selectedDate) {
-		        // Táº¡o URL Äá» gá»­i yÃªu cáº§u GET
+		        // Tạo URL để gửi yêu cầu GET
 		        const tmp = `${pageContext.request.contextPath}`;
 		        const url = tmp + "/admin/revenues-statics?dateValue="+selectedDate + "&dateType="+dateType +"&tab=time-group";
-		        // Gá»­i yÃªu cáº§u GET (chuyá»n hÆ°á»ng trÃ¬nh duyá»t Äáº¿n URL)
+		        // Gửi yêu cầu GET (chuyển hướng trình duyệt đến URL)
 		        window.location.href = url;
 		    }
 		});
 		//gui yeu cau GET toi controller khi chon movie cu the o tab "Movies"
 		document.getElementById('movie-option').addEventListener('change', function () {
-	        const movieID = this.value; // Láº¥y giÃ¡ trá» ÄÆ°á»£c chá»n (movieID)
+	        const movieID = this.value; // Lấy giá trị được chọn (movieID)
 	        if (movieID) {
-	            // Gá»­i yÃªu cáº§u GET tá»i Controller, thay Äá»i URL phÃ¹ há»£p vá»i Controller cá»§a báº¡n
+	            // Gửi yêu cầu GET tới Controller, thay đổi URL phù hợp với Controller của bạn
 	        	const tmp = `${pageContext.request.contextPath}`;
 		        const url = tmp + "/admin/revenues-statics?movieID="+movieID + "&tab=movie-group";
-		        // Gá»­i yÃªu cáº§u GET (chuyá»n hÆ°á»ng trÃ¬nh duyá»t Äáº¿n URL)
+		        // Gửi yêu cầu GET (chuyển hướng trình duyệt đến URL)
 		        window.location.href = url;
 	        }
 	    });
 		
 		//gui yeu cau GET toi controller khi chon cinema cu the o tab "Regions"
 		document.getElementById('region-option').addEventListener('change', function () {
-	        const cinemaID = this.value; // Láº¥y giÃ¡ trá» ÄÆ°á»£c chá»n (movieID)
+	        const cinemaID = this.value; // Lấy giá trị được chọn (movieID)
 	        if (cinemaID) {
-	            // Gá»­i yÃªu cáº§u GET tá»i Controller, thay Äá»i URL phÃ¹ há»£p vá»i Controller cá»§a báº¡n
+	            // Gửi yêu cầu GET tới Controller, thay đổi URL phù hợp với Controller của bạn
 	        	const tmp = `${pageContext.request.contextPath}`;
 		        const url = tmp + "/admin/revenues-statics?cinemaID="+cinemaID + "&tab=regions";
-		        // Gá»­i yÃªu cáº§u GET (chuyá»n hÆ°á»ng trÃ¬nh duyá»t Äáº¿n URL)
+		        // Gửi yêu cầu GET (chuyển hướng trình duyệt đến URL)
 		        window.location.href = url;
 	        }
 	    });
@@ -398,20 +398,20 @@
 
 	<script>
 	<c:if test="${not empty chartDataMovie}">
-    // Náº¿u attribute tá»n táº¡i, gÃ¡n giÃ¡ trá» cá»§a nÃ³ vÃ o biáº¿n JavaScript
+    // Nếu attribute tồn tại, gán giá trị của nó vào biến JavaScript
     	var chartDataMovie = ${chartDataMovie}; 
 	</c:if>
 	<c:if test="${not empty chartDataPopCorn}">
-	// Náº¿u attribute tá»n táº¡i, gÃ¡n giÃ¡ trá» cá»§a nÃ³ vÃ o biáº¿n JavaScript
+	// Nếu attribute tồn tại, gán giá trị của nó vào biến JavaScript
 		var chartDataPopCorn = ${chartDataPopCorn}; 
 	</c:if>
 	<c:if test="${not empty jsonChartDataMovies}">
-	//Náº¿u attribute tá»n táº¡i, gÃ¡n giÃ¡ trá» cá»§a nÃ³ vÃ o biáº¿n JavaScript
+	//Nếu attribute tồn tại, gán giá trị của nó vào biến JavaScript
 		var jsonChartDataMovies = ${jsonChartDataMovies}; 
 	</c:if>
 	
 	<c:if test="${not empty jsonChartDataCinemas}">
-	//Náº¿u attribute tá»n táº¡i, gÃ¡n giÃ¡ trá» cá»§a nÃ³ vÃ o biáº¿n JavaScript
+	//Nếu attribute tồn tại, gán giá trị của nó vào biến JavaScript
 		var jsonChartDataCinemas = ${jsonChartDataCinemas}; 
 	</c:if>
   
@@ -425,7 +425,7 @@
 			src="${pageContext.request.contextPath}/assets2/js/apexcharts/line-chart-7.js"></script>
 	</c:if>
 
-	<!-- Kiá»m tra vÃ  chá» thÃªm script cho line-chart-popcorn.js náº¿u chartDataPopCorn tá»n táº¡i -->
+	<!-- Kiểm tra và chỉ thêm script cho line-chart-popcorn.js nếu chartDataPopCorn tồn tại -->
 	<c:if test="${not empty chartDataPopCorn}">
 		<script
 			src="${pageContext.request.contextPath}/assets2/js/apexcharts/line-chart-popcorn.js"></script>
@@ -439,13 +439,13 @@
 			src=" ${pageContext.request.contextPath}/assets2/js/apexcharts/line-chart-amount-customer-by-cinema.js"></script>
 	</c:if>
 	<script>
-	// HÃ m thÃªm CSS vÃ o tháº» <head>
+	// Hàm thêm CSS vào thẻ <head>
 	function addStylesToHead() {
-	    // Táº¡o tháº» <style>
+	    // Tạo thẻ <style>
 	    const styleTag = document.createElement('style');
 	    styleTag.type = 'text/css';
 
-	    // Ná»i dung CSS
+	    // Nội dung CSS
 	    const cssContent = `
 	    	#report {
 			background-color: #333;
@@ -457,13 +457,13 @@
 		}
 		
 		.tab {
-			flex: 1; /* Äáº£m báº£o cÃ¡c tab cÃ³ cÃ¹ng chiá»u rá»ng */
-			text-align: center; /* CÄn chá»¯ á» giá»¯a nÃºt */
+			flex: 1; /* Đảm bảo các tab có cùng chiều rộng */
+			text-align: center; /* Căn chữ ở giữa nút */
 			
 		}
 		
 		.tab button {
-			width: 100%; /* Äáº£m báº£o nÃºt chiáº¿m toÃ n bá» chiá»u rá»ng cá»§a tab */
+			width: 100%; /* Đảm bảo nút chiếm toàn bộ chiều rộng của tab */
 			background-color: #222028;
 			padding:10px;
 			color: white;
@@ -475,11 +475,11 @@
 		}
 		
 		.tab button:hover {
-			border-color: #f3a701; /* Äá»i mÃ u khi hover */
+			border-color: #f3a701; /* Đổi màu khi hover */
 		}
 		
 		.tab button.active {
-			border-color: #f3a701; ; /* MÃ u nÃºt khi ÄÆ°á»£c chá»n */
+			border-color: #f3a701; ; /* Màu nút khi được chọn */
 		}
 		
 		/* Style the tab content */
@@ -522,7 +522,7 @@
 	        }
 
 	        tr:hover {
-	        	 border: 2px solid #f3a701; /* MÃ u viá»n khi hover */
+	        	 border: 2px solid #f3a701; /* Màu viền khi hover */
 	        }
 	        //code css chart
 	        .wg-box {
@@ -539,9 +539,9 @@
 
 	        .wg-box .flex.flex-wrap.gap40 {
 	            display: flex;
-	            justify-content: space-between; /* CÄn Äá»u hai pháº§n tá»­ Revenue vÃ  Order */
+	            justify-content: space-between; /* Căn đều hai phần tử Revenue và Order */
 	            align-items: center;
-	            gap: 40px; /* Khoáº£ng cÃ¡ch giá»¯a cÃ¡c pháº§n tá»­ */
+	            gap: 40px; /* Khoảng cách giữa các phần tử */
 	        }
 
 	        .wg-box h5 {
@@ -593,8 +593,8 @@
 	            background-color: #222028 !important;
 	            color: white !important;
 	            padding: 5px;
-	            border-radius: 4px; /* Bo gÃ³c */
-	        appearance: none !important; /* Loáº¡i bá» giao diá»n máº·c Äá»nh */
+	            border-radius: 4px; /* Bo góc */
+	        appearance: none !important; /* Loại bỏ giao diện mặc định */
 	        -moz-appearance: none !important; /* Firefox */
 	        -webkit-appearance: none !important; /* Safari, Chrome */
 	        }
@@ -612,7 +612,7 @@
 	            background-color: #222028;
 	            color: white;
 	            padding: 5px;
-	            border-radius: 4px; /* Bo gÃ³c */
+	            border-radius: 4px; /* Bo góc */
 	        }
 
 	        #time-option option {
@@ -627,32 +627,32 @@
 	            background-color: #222028;
 	            color: white;
 	            padding: 5px;
-	            border-radius: 4px; /* Bo gÃ³c */
+	            border-radius: 4px; /* Bo góc */
 	        }
 	        
-	        /* Thay Äá»i mÃ u cá»§a icon lá»ch */
+	        /* Thay đổi màu của icon lịch */
 	        #dateValue::-webkit-calendar-picker-indicator {
-	            color: white; /* MÃ u icon */
-	            background-color: #333; /* Ná»n icon */
-	            border-radius: 50%; /* TÃ¹y chá»nh gÃ³c bo */
-	            padding: 5px; /* Khoáº£ng cÃ¡ch trong */
+	            color: white; /* Màu icon */
+	            background-color: #333; /* Nền icon */
+	            border-radius: 50%; /* Tùy chỉnh góc bo */
+	            padding: 5px; /* Khoảng cách trong */
 	        }
-	        /* CÄn chá»nh cÃ¡c pháº§n tá»­ trong má»t dÃ²ng */
+	        /* Căn chỉnh các phần tử trong một dòng */
 	        .time-container {
 	            display: flex;
-	            align-items: center; /* CÄn giá»¯a theo chiá»u dá»c */
-	            gap: 10px; /* Khoáº£ng cÃ¡ch giá»¯a cÃ¡c pháº§n tá»­ */
+	            align-items: center; /* Căn giữa theo chiều dọc */
+	            gap: 10px; /* Khoảng cách giữa các phần tử */
 	        }
 	        //
 	    `;
 	    styleTag.innerHTML = cssContent;
 
-	    // ThÃªm tháº» <style> vÃ o <head>
+	    // Thêm thẻ <style> vào <head>
 	    document.head.appendChild(styleTag);
 
 	}
 
-	// Gá»i hÃ m Äá» thÃªm CSS khi tÃ i liá»u ÄÃ£ táº£i
+	// Gọi hàm để thêm CSS khi tài liệu đã tải
 	addStylesToHead();
 	</script>
 </body>

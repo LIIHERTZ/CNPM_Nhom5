@@ -49,7 +49,9 @@ public class CouponController extends HttpServlet{
 		        // Lấy danh sách sản phẩm và tổng số trang
 		        List<Coupon> coupons = couponService.getCoupons(page, pageSize,searchValue);
 		        Long totalPages = couponService.getTotalPages(pageSize,searchValue);
+		        Long couponTotal = couponService.countTotalCoupons(searchValue);
 		        // Đưa dữ liệu vào request để hiển thị ở JSP
+		        request.setAttribute("couponTotal", couponTotal);
 		        request.setAttribute("coupons", coupons);
 		        request.setAttribute("currentPage", page);
 		        request.setAttribute("totalPages", totalPages);
