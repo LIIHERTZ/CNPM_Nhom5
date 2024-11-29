@@ -29,7 +29,6 @@ public class Conversation {
     @JoinColumn(name = "adminID", nullable = false)
     private Person admin;
 
-
 	public int getConversationID() {
 		return conversationID;
 	}
