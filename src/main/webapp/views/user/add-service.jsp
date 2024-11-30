@@ -131,10 +131,6 @@ int countdownMinutes = 5;
 												<fmt:formatNumber value="${popcorn.price}"
 													pattern="#,##0 VND" />
 											</div>
-											<div class="offer-remainder">
-												<h6 class="o-title mt-0">24%</h6>
-												<span>off</span>
-											</div>
 										</div>
 										<div class="grid-content">
 											<h5 class="subtitle">

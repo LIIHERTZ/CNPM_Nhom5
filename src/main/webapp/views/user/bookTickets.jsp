@@ -252,6 +252,6 @@
 	        element.style.backgroundRepeat = 'no-repeat'; // Không lặp lại
 	    }
 	}
-</script>
+	</script>
 </body>
 </html>

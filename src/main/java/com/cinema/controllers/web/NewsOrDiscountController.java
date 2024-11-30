@@ -14,6 +14,7 @@ import java.util.List;
 import com.cinema.entity.NewsOrDiscount;
 import com.cinema.services.*;
 import com.cinema.services.impl.NewsOrDiscountServiceImpl;
+import jakarta.servlet.http.HttpSession;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 @WebServlet(urlPatterns = { "/newsOrDiscounts", "/newsOrDiscountDetail" })
@@ -23,6 +24,11 @@ public class NewsOrDiscountController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(false);
+		if (session != null && session.getAttribute("person") != null) {
+			resp.sendRedirect(req.getContextPath() + "/signin");
+			return;
+		}
 		String url = req.getRequestURI();
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");

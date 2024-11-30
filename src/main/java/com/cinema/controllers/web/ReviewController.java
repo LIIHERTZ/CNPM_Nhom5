@@ -39,6 +39,11 @@ public class ReviewController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("person") != null) {
+            resp.sendRedirect(req.getContextPath() + "/signin");
+            return;
+        }
         String action = req.getRequestURI().toString();
         if (action.contains("/review")) {
             handleUserReview(req, resp);

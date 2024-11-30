@@ -22,30 +22,21 @@ public class ReleaseSeatController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("person") != null) {
 
-            Person person = (Person) session.getAttribute("person");
+        String selectedSeats = request.getParameter("selectedSeats");
+        String screeningId = request.getParameter("screeningId");
 
-            if (!person.getRole().toLowerCase().contains("admin")) {
-                String selectedSeats = request.getParameter("selectedSeats");
-                String screeningId = request.getParameter("screeningId");
+        // Log để kiểm tra xem dữ liệu có được truyền qua hay không
+        System.out.println("Selected Seats: " + selectedSeats);
+        System.out.println("Screening ID: " + screeningId);
 
-                // Log để kiểm tra xem dữ liệu có được truyền qua hay không
-                System.out.println("Selected Seats: " + selectedSeats);
-                System.out.println("Screening ID: " + screeningId);
-
-                String[] seats = selectedSeats.split(",");
-                for (String seat : seats) {
-                    Seat tmp = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
-                    seatStatusService.updateSeatStatusesFalse(tmp.getSeatID(), Integer.parseInt(screeningId));
-                }
-
-                // Trả về phản hồi cho client (optional)
-                response.getWriter().write("Success");
-                return;
-            }
+        String[] seats = selectedSeats.split(",");
+        for (String seat : seats) {
+            Seat tmp = seatService.findSeatIdBySeatNumberAndScreeningId(seat, Integer.parseInt(screeningId));
+            seatStatusService.updateSeatStatusesFalse(tmp.getSeatID(), Integer.parseInt(screeningId));
         }
-        response.sendRedirect(request.getContextPath() + "/signin");
+
+        // Trả về phản hồi cho client (optional)
+        response.getWriter().write("Success");
     }
 }

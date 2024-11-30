@@ -1,6 +1,6 @@
 package com.cinema.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -31,7 +31,7 @@ public class Ticket {
     @JoinColumn(name = "msID")
     private MovieScreenings movieScreenings;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TicketPayment> ticketPayments;
 
 	public int getTicketID() {

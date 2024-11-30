@@ -23,9 +23,10 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/userPaymentReturn")
 public class PaymentReturnController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	ICinemaService cinemaService = new CinemaServiceImpl();
 	IPaymentService paymentService = new PaymentServiceImpl();
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
@@ -41,19 +42,11 @@ public class PaymentReturnController extends HttpServlet {
 					vnp_Params.put(key, value[0]);
 				});
 
-				// Kiểm tra chữ ký hash (bảo mật)
-				String vnp_SecureHash = vnp_Params.remove("vnp_SecureHash");
-				String generatedHash = PaymentConfig.hashAllFields(vnp_Params); // Sử dụng hàm hashAllFields đã xây dựng trước
-				// đó
 				// Kiểm tra mã phản hồi từ VNPay
 				String responseCode = vnp_Params.get("vnp_ResponseCode");
 				if ("00".equals(responseCode)) {
 					// Thanh toán thành công
-					String paymentId = vnp_Params.get("vnp_TxnRef");
-					String transactionNo = vnp_Params.get("vnp_TransactionNo");
-					String amount = vnp_Params.get("vnp_Amount");
 					String payDate = vnp_Params.get("vnp_PayDate");
-
 					String screeningIdStr = (String) session.getAttribute("screeningId");
 					String selectedLocation = (String) session.getAttribute("selectedLocation");
 					String selectedDate = (String) session.getAttribute("selectedDate");
@@ -61,14 +54,11 @@ public class PaymentReturnController extends HttpServlet {
 					String version = (String) session.getAttribute("version");
 					String startHourStr = (String) session.getAttribute("startHour");
 					Movie movie = (Movie) session.getAttribute("movie");
-//			Person person = (Person) session.getAttribute("person");
 
 					String selectedSeats = (String) session.getAttribute("selectedSeats");
-					String totalPrice = (String) session.getAttribute("totalPrice");
-					person = (Person) session.getAttribute("person");
+					String couponId = (String) session.getAttribute("selectedCouponId");
 
 					Map<String, List<Integer>> products = (Map<String, List<Integer>>) session.getAttribute("products");
-					String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
 					String amountPayable = (String) session.getAttribute("amountPayable");
 
 
@@ -76,11 +66,16 @@ public class PaymentReturnController extends HttpServlet {
 					//update ghe da dat
 					try {
 						paymentService.processPayment(screeningIdStr, selectedLocation, selectedDate, experience,
-								version, startHourStr, movie, selectedSeats, amountPayable, payDate, products, person);
+								version, startHourStr, movie, selectedSeats, amountPayable, couponId, payDate, products, person);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					// Chuyển hướng tới JSP hiển thị kết quả
+					session.removeAttribute("selectedSeats");
+					session.removeAttribute("selectedCouponId");
+					session.removeAttribute("products");
+					session.removeAttribute("amountPayable");
+					session.removeAttribute("foodAndBeverageTotal");
 					req.setAttribute("vnp_Params", vnp_Params);
 					req.getRequestDispatcher("/views/user/payment-status.jsp").forward(req, resp);
 				} else {
@@ -93,5 +88,4 @@ public class PaymentReturnController extends HttpServlet {
 		}
 		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
-
 }

@@ -28,6 +28,11 @@ public class SignupController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(false);
+		if (session != null && session.getAttribute("person") != null) {
+			resp.sendRedirect(req.getContextPath() + "/signin");
+			return;
+		}
 		String url = req.getRequestURI().toString();
 		if (url.contains("signup"))
 			showPageSignup(req, resp);

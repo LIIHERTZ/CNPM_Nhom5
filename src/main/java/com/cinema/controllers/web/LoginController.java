@@ -31,14 +31,16 @@ public class LoginController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(false);
+		if (session != null && session.getAttribute("person") != null) {
+			resp.sendRedirect(req.getContextPath() + "/signin");
+			return;
+		}
 		String url = req.getRequestURI().toString();
 		if (url.contains("signin"))
 			showPageLogin(req, resp);
 		else if (url.contains("loginwithgoogle"))
 			showGoogleLogin(req, resp);
-		/*
-		 * else if (url.contains("waiting")) waiting(req, resp);
-		 */
 	}
 
 	private void showGoogleLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

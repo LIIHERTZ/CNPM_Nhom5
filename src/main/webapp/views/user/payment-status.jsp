@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <style>
@@ -73,10 +74,41 @@
             d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
       </path>
     </svg>
+
     <div class="text-center">
-      <h3 class="payment-title">Payment Successful!</h3>
-      <p class="payment-description">Thank you so much.</p>
-      <p> Have a Good day! </p>
+      <h3 class="payment-title">
+        <c:choose>
+          <c:when test="${not empty errorMessage}">
+            Payment Failed
+          </c:when>
+          <c:otherwise>
+            Payment Successful!
+          </c:otherwise>
+        </c:choose>
+      </h3>
+
+      <p class="payment-description">
+        <c:choose>
+          <c:when test="${not empty errorMessage}">
+            ${errorMessage}
+          </c:when>
+          <c:otherwise>
+            Thank you so much.
+          </c:otherwise>
+        </c:choose>
+      </p>
+
+      <p>
+        <c:choose>
+          <c:when test="${not empty errorMessage}">
+            We encountered an issue with your payment. Please try again later.
+          </c:when>
+          <c:otherwise>
+            Have a good day!
+          </c:otherwise>
+        </c:choose>
+      </p>
+
       <div class="payment-button-container">
         <a href="${pageContext.request.contextPath}/home" class="payment-button">
           Go Back
