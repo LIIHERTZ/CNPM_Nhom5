@@ -8,46 +8,45 @@ import com.cinema.entity.Review;
 import com.cinema.services.IReviewService;
 
 public class ReviewServiceImpl implements IReviewService{
-	private ReviewDaoImpl reviewDAO;
+	private IReviewDao reviewDao;
 
     public ReviewServiceImpl() {
-        reviewDAO = new ReviewDaoImpl();
+        reviewDao = new ReviewDaoImpl();
     }
 
+    @Override
     public boolean addReview(Review review) {
-        try {
-            reviewDAO.addReview(review); // Attempt to add the review
-            return true; // If no exception occurs, return true indicating success
-        } catch (Exception e) {
-            e.printStackTrace(); // Log the exception for debugging purposes
-            return false; // Return false if an exception occurs
+        if (review == null) {
+            System.err.println("Review object is null, cannot add to database.");
+            return false;
         }
+        return reviewDao.addReview(review);
     }
 
+    @Override
     public void updateReview(Review review) {
-        reviewDAO.updateReview(review);
+        reviewDao.updateReview(review);
     }
 
-    public void deleteReview(int reviewID) {
-        reviewDAO.deleteReview(reviewID);
+    @Override
+    public boolean deleteReview(int reviewID) {
+        reviewDao.deleteReview(reviewID);
+		return false;
     }
-    
-       
+
+    @Override
     public int countReviewsByMovie(int movieId) {
-        return reviewDAO.countReviewsByMovie(movieId);
-    }
-    
-    public List<Review> getReviewsByMovie(int movieId) {
-        return reviewDAO.getReviewsByMovie(movieId);
-    }
-    
-    public List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize) {
-        int offset = (page - 1) * pageSize; // Tính `offset` dựa trên trang hiện tại và kích thước trang
-        return reviewDAO.getReviewsByMovieWithPagination(movieId, offset, pageSize);
+        return reviewDao.countReviewsByMovie(movieId);
     }
 
-   
-   
-    
-	
+    @Override
+    public List<Review> getReviewsByMovie(int movieId) {
+        return reviewDao.getReviewsByMovie(movieId);
+    }
+    @Override
+    public boolean hasReviewed(int perID, int movieID) {
+        List<Review> reviews = reviewDao.getReviewsByMovieAndPerson(perID, movieID );
+        return reviews != null && !reviews.isEmpty();
+    }
+   	
 }

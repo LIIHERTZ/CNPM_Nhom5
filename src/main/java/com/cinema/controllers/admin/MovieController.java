@@ -246,72 +246,107 @@ public class MovieController extends HttpServlet {
 //    }
 
     private void searchMovies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String keyword = req.getParameter("keyword");
-        String[] categories = req.getParameterValues("category");  // Lấy danh sách các thể loại từ request
+        String keyword = req.getParameter("keyword"); // Lấy từ khóa tìm kiếm
+        String[] categories = req.getParameterValues("category"); // Lấy danh sách thể loại
         int page = 1;
-        int recordsPerPage = 4;
+        int recordsPerPage = 5; // Giá trị mặc định
 
-        // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
+        // Lấy tham số "page"
         if (req.getParameter("page") != null) {
-            page = Integer.parseInt(req.getParameter("page"));
+            try {
+                page = Integer.parseInt(req.getParameter("page"));
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
         }
 
-        // Nếu categories không được chọn (null hoặc chỉ có 'All'), tìm kiếm tất cả
+        // Lấy tham số "soluong"
+        if (req.getParameter("soluong") != null) {
+            try {
+                recordsPerPage = Integer.parseInt(req.getParameter("soluong"));
+            } catch (NumberFormatException e) {
+                recordsPerPage = 5;
+            }
+        }
+
+        // Danh sách phim và tổng số bản ghi
         List<Movie> movies;
         int noOfRecords;
+
+        // Nếu không có danh mục hoặc chọn "All", tìm kiếm tất cả
         if (categories == null || Arrays.asList(categories).contains("All")) {
             movies = movieService.searchMovies(keyword, (page - 1) * recordsPerPage, recordsPerPage);
-            noOfRecords = movieService.getNoOfSearchResults(keyword);
+            noOfRecords = movieService.getNoOfSearchResults(keyword); // Tính tổng số bản ghi theo từ khóa
         } else {
             movies = movieService.searchMovies(keyword, categories, (page - 1) * recordsPerPage, recordsPerPage);
-            noOfRecords = movieService.getNoOfSearchResults(keyword, categories);
+            noOfRecords = movieService.getNoOfSearchResults(keyword, categories); // Tính tổng số bản ghi theo từ khóa và danh mục
         }
 
+        // Tính tổng số trang
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-        // Đặt các thuộc tính vào request để truyền đến JSP
-        req.setAttribute("movies", movies);
-        req.setAttribute("noOfPages", noOfPages);
-        req.setAttribute("currentPage", page);
-        req.setAttribute("keyword", keyword);  // Để giữ lại từ khóa tìm kiếm
-        req.setAttribute("category", categories != null ? String.join(",", categories) : "All");  // Để giữ lại thể loại tìm kiếm
-        req.setAttribute("noOfRecords", noOfRecords); // Thêm thuộc tính này để hiển thị tổng số bản ghi
+        // Đặt các thuộc tính vào request
+        req.setAttribute("movies", movies); // Danh sách phim
+        req.setAttribute("noOfPages", noOfPages); // Số trang
+        req.setAttribute("currentPage", page); // Trang hiện tại
+        req.setAttribute("recordsPerPage", recordsPerPage); // Số lượng bản ghi mỗi trang
+        req.setAttribute("keyword", keyword); // Từ khóa tìm kiếm
+        req.setAttribute("category", categories != null ? String.join(",", categories) : "All"); // Danh mục
+        req.setAttribute("noOfRecords", noOfRecords); // Tổng số bản ghi sau tìm kiếm
 
-        // Chuyển tiếp đến trang Movie.jsp
+        // Chuyển tiếp đến trang JSP
         RequestDispatcher rd = req.getRequestDispatcher("/views/admin/Movie.jsp");
         rd.forward(req, resp);
     }
+
+
+
+
 
 
     
     
     private void listMovies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int page = 1;
-        int recordsPerPage = 4;
-        
-        // Kiểm tra nếu có tham số "page" trong yêu cầu thì sử dụng
+        int recordsPerPage = 5; // Giá trị mặc định số lượng bản ghi mỗi trang
+
+        // Lấy tham số "page" từ yêu cầu
         if (req.getParameter("page") != null) {
-            page = Integer.parseInt(req.getParameter("page"));
+            try {
+                page = Integer.parseInt(req.getParameter("page"));
+            } catch (NumberFormatException e) {
+                page = 1; // Mặc định là trang 1 nếu tham số không hợp lệ
+            }
         }
-        
+
+        // Lấy tham số "soluong" từ yêu cầu (số lượng bản ghi mỗi trang)
+        if (req.getParameter("soluong") != null) {
+            try {
+                recordsPerPage = Integer.parseInt(req.getParameter("soluong"));
+            } catch (NumberFormatException e) {
+                recordsPerPage = 5; // Giá trị mặc định nếu tham số không hợp lệ
+            }
+        }
+
         // Lấy danh sách Movies với phân trang
-        List<Movie> Movies = movieService.getMovies((page - 1) * recordsPerPage, recordsPerPage);
-        
+        List<Movie> movies = movieService.getMovies((page - 1) * recordsPerPage, recordsPerPage);
+
         // Lấy tổng số records để tính số trang
         int noOfRecords = movieService.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
         // Đặt các thuộc tính vào request để truyền đến JSP
-        req.setAttribute("movies", Movies);
+        req.setAttribute("movies", movies);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
-        req.setAttribute("noOfRecords", noOfRecords); // Thêm thuộc tính này để hiển thị tổng số bản ghi
-
+        req.setAttribute("recordsPerPage", recordsPerPage); // Truyền recordsPerPage để giữ giá trị đã chọn
+        req.setAttribute("noOfRecords", noOfRecords); // Tổng số bản ghi
 
         // Chuyển tiếp đến trang Movie.jsp
         RequestDispatcher rd = req.getRequestDispatcher("/views/admin/Movie.jsp");
         rd.forward(req, resp);
     }
+
     private String getChecksum(InputStream inputStream) throws IOException, NoSuchAlgorithmException {
 		MessageDigest digest = MessageDigest.getInstance("SHA-256");
 		byte[] byteArray = new byte[1024];

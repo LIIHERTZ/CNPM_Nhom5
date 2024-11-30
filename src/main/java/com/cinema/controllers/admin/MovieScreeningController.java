@@ -112,7 +112,7 @@ public class MovieScreeningController extends HttpServlet {
 	                int noOfRecords = movieScreeningService.getNoOfRecordsByRoomId(roomID);
 	                int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-	                List<Movie> movies = movieService.getAllMovie();
+	                List<Movie> movies = movieService.getAllMovieActive();
 	                req.setAttribute("movieScreenings", movieScreenings);
 	                req.setAttribute("room", roomService.getRoomById(roomID));
 	                req.setAttribute("movies", movies);
@@ -163,7 +163,7 @@ public class MovieScreeningController extends HttpServlet {
 	                    req.setAttribute("roomID", roomID);
 	                    req.setAttribute("cinemaId", cinemaID);
 
-	                    List<Movie> movies = movieService.getAllMovie(); // Thêm danh sách phim vào để hiển thị trong form
+	                    List<Movie> movies = movieService.getAllMovieActive(); // Thêm danh sách phim vào để hiển thị trong form
 	                    req.setAttribute("movies", movies);
 	                    RequestDispatcher dispatcher = req.getRequestDispatcher("/views/admin/EditMovieScreening.jsp");
 	                    dispatcher.forward(req, resp);

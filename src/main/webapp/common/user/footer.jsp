@@ -12,8 +12,8 @@
         <div class="container">
             <div class="footer-top">
                 <div class="logo">
-                    <a href="index-1.html">
-                        <img src="assets/images/footer/footer-logo.png" alt="footer">
+                    <a href="/ValCT_Nhom5/userHome">
+                        <img src="/ValCT_Nhom5/assets/images/footer/footer-logo.png" alt="footer">
                     </a>
                 </div>
                 <ul class="social-icons">
@@ -47,23 +47,23 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-area">
                     <div class="left">
-                        <p>Copyright © 2020.All Rights Reserved By <a href="#0">ValCT </a></p>
+                        <p>Copyright © 2024.All Rights Reserved By <a href="#0">Nhóm 5 - Công nghệ phần mềm </a></p>
                     </div>
                     <ul class="links">
                         <li>
-                            <a href="#0">About</a>
+                            <a href="">About</a>
                         </li>
                         <li>
-                            <a href="#0">Terms Of Use</a>
+                            <a href="">Terms Of Use</a>
                         </li>
                         <li>
-                            <a href="#0">Privacy Policy</a>
+                            <a href="">Privacy Policy</a>
                         </li>
                         <li>
-                            <a href="#0">FAQ</a>
+                            <a href="">FAQ</a>
                         </li>
                         <li>
-                            <a href="#0">Feedback</a>
+                            <a href="">Feedback</a>
                         </li>
                     </ul>
                 </div>

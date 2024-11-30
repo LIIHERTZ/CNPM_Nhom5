@@ -172,17 +172,17 @@ public class LoginController extends HttpServlet {
 			String url = "/home";
 
 			if (person.getRole().toLowerCase().contains("admin"))
-				url = "/admin/cinemas";
+				url = "/adminHome";
 			else
 				url = "/userHome";
 
 			resp.sendRedirect(req.getContextPath() + url);
 			return;
 		} else {
-			resp.sendRedirect(req.getContextPath() + "/login");
+			resp.sendRedirect(req.getContextPath() + "/signin");
 		}
 
-		resp.sendRedirect(req.getContextPath() + "/sginin");
+		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 
 	private void saveRemeberMe(HttpServletResponse resp, int personID) {

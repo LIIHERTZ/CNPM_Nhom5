@@ -19,6 +19,7 @@ import com.cinema.entity.NewsOrDiscount;
 import com.cinema.entity.Movie;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -75,20 +76,37 @@ public class MovieDAOImpl implements IMovieDAO {
 	@Override
 	public boolean updateMovie(Movie movie) {
 		EntityManager em = JPAConfig.getEntityManager();
+		EntityTransaction transaction = em.getTransaction();
 		try {
-			em.getTransaction().begin(); // Bắt đầu giao dịch
-			em.merge(movie); // Cập nhật bản ghi
-			em.getTransaction().commit(); // Commit giao dịch
-			return true; // Trả về true nếu thành công
-		} catch (Exception e) {
-			if (em.getTransaction().isActive()) {
-				em.getTransaction().rollback(); // Rollback nếu có lỗi
+			transaction.begin();
+
+			// Kiểm tra nếu movie tồn tại
+			Movie existingMovie = em.find(Movie.class, movie.getMovieID());
+			if (existingMovie != null) {
+				// Cập nhật các trường cần thiết
+				existingMovie.setMovieName(movie.getMovieName());
+				existingMovie.setCategory(movie.getCategory());
+				existingMovie.setDescription(movie.getDescription());
+				existingMovie.setMovieDuration(movie.getMovieDuration());
+				existingMovie.setReleaseDay(movie.getReleaseDay());
+				existingMovie.setStatus(movie.isStatus());
+				existingMovie.setImage(movie.getImage());
+				em.merge(existingMovie); // Merge vào database
+			} else {
+				return false; // Không tìm thấy movie
 			}
-			System.err.println("Error updating movie: " + e.getMessage());
+
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			if (transaction.isActive()) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+			return false;
 		} finally {
-			em.close(); // Đóng EntityManager
+			em.close();
 		}
-		return false; // Trả về false nếu có lỗi
 	}
 
 	@Override
@@ -159,21 +177,18 @@ public class MovieDAOImpl implements IMovieDAO {
 
 	@Override
 	public Movie getMovieById(int movieID) {
-	    EntityManager em = JPAConfig.getEntityManager();
-	    try {
-	        Movie movie = em.find(Movie.class, movieID);
-	        if (movie == null) {
-	            System.out.println("Movie with ID " + movieID + " not found in the database.");
-	        }
-	        return movie;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    } finally {
-	        em.close();
-	    }
+		EntityManager em = JPAConfig.getEntityManager();
+		Movie movie = null;
+		try {
+			// Tìm đối tượng Movie dựa trên movieID
+			movie = em.find(Movie.class, movieID);
+		} catch (Exception e) {
+			System.err.println("Error retrieving movie with ID " + movieID + ": " + e.getMessage());
+		} finally {
+			em.close(); // Đóng EntityManager để giải phóng tài nguyên
+		}
+		return movie; // Trả về đối tượng Movie hoặc null nếu không tìm thấy
 	}
-
 
 	@Override
 	public List<Movie> searchMovies(String keyword, int offset, int limit) {
@@ -413,6 +428,25 @@ public class MovieDAOImpl implements IMovieDAO {
 	}
 
 	@Override
+	public List<Movie> getAllMovieActive() {
+		EntityManager em = JPAConfig.getEntityManager();
+		List<Movie> movies = null;
+		try {
+			movies = em.createQuery("FROM Movie WHERE status = :status", Movie.class).setParameter("status", true) // Hoặc
+																													// `1`
+																													// nếu
+																													// kiểu
+																													// `bit`
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return movies;
+	}
+
+	@Override
 	public List<Movie> searchMoviesByName(String movieName) {
 		EntityManager em = JPAConfig.getEntityManager();
 		try {
@@ -453,4 +487,27 @@ public class MovieDAOImpl implements IMovieDAO {
 		}
 	}
 
+	@Override
+	public boolean updateMovieRating(int movieId) {
+	    EntityManager em = JPAConfig.getEntityManager();
+	    try {	        
+	        String sql = "SELECT AVG(r.evaluate) FROM Review r WHERE r.movie.movieID = :movieId";
+	        TypedQuery<Float> query = em.createQuery(sql, Float.class);
+	        query.setParameter("movieId", movieId);      
+	        Float averageRating = query.getSingleResult();
+	        Movie movie = em.find(Movie.class, movieId);
+	        if (movie == null) {	            
+	            System.out.println("Movie not found with ID: " + movieId);
+	            return false;
+	        }
+	        movie.setRating(averageRating);       
+	        em.merge(movie);      
+	        return true;
+	    } catch (Exception e) {
+	        e.printStackTrace();	        
+	        return false;
+	    } finally {
+	        em.close();
+	    }
+	}
 }

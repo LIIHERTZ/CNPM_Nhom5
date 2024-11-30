@@ -3,43 +3,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/all.min.css">
-<link rel="stylesheet" href="assets/css/animate.css">
-<link rel="stylesheet" href="assets/css/flaticon.css">
-<link rel="stylesheet" href="assets/css/magnific-popup.css">
-<link rel="stylesheet" href="assets/css/odometer.css">
-<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="assets/css/nice-select.css">
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="shortcut icon" href="assets/images/favicon.png"
-	type="image/x-icon">
-<title>Boleto - Online Ticket Booking Website HTML Template</title>
-</head>
 <body>
 	<!-- ==========Banner-Section========== -->
 	<section class="details-banner bg_img"
-		data-background="assets/images/banner/banner03.jpg">
+		data-background="assets/images/banner/banner04.jpg">
 		<div class="container">
 			<div class="details-banner-wrapper">
 				<div class="details-banner-thumb">
-					<img src="assets/images/movie/venus.jpg" alt="movie"> <a
-						href="https://www.youtube.com/watch?v=j9aNzRFaZ5I"
-						class="video-popup"> <img
-						src="assets/images/movie/video-button.png" alt="movie">
-					</a>
+					<img src="assets/images/movie/${movie.image}" alt="movie">
 				</div>
 				<div class="details-banner-content offset-lg-3">
 					<h3 class="title">${movie.movieName}</h3>
 					<div class="tags">
 						<a href="#0">Vietnamese</a> <a href="#0">English</a>
 					</div>
-					<a href="#0" class="button">Action</a>
+					<a href="#0" class="button">${movie.category}</a>
 					<div class="social-and-duration">
 						<div class="duration-area">
 							<div class="item">
@@ -113,29 +91,30 @@
 					<div class="movie-details">
 						<div class="tab summery-review">
 							<ul class="tab-menu">
-								<li class="active" onclick="openTab(event, 'summery')">summery</li>
+								<li onclick="openTab(event, 'summery')">summary</li>
 								<li onclick="openTab(event, 'review')">review <span>${count}</span></li>
 								<li onclick="openTab(event, 'post-review')">post review</li>
 							</ul>
 							<div class="tab-area">
-								<div id="summery" class="tab-item active">
-									<!-- Nội dung phần tóm tắt của bạn không thay đổi -->
+								<div id="summery" class="tab-item">
 									<div class="item" style="margin-top: 20px;">
 										<h5 class="sub-title">description</h5>
 										<p>${movie.description}</p>
 									</div>
 								</div>
 
+
+
 								<div id="review" class="tab-item" style="margin-top: 20px;">
-									<!-- Khu vực review ban đầu (hiển thị 3 review đầu tiên) -->
-									<div class="review-list" id="review-list">
+									<div class="review-list" id="review-list"
+										style="max-height: 400px; overflow-y: auto;">
 										<c:forEach var="review" items="${reviews}">
 											<div class="movie-review-item">
 												<div class="author">
 													<div class="thumb">
 														<img
 															src="${pageContext.request.contextPath}/assets2/img/user.svg"
-															alt="cast">
+															alt="user">
 													</div>
 													<div class="movie-review-info">
 														<span class="reply-date">from
@@ -155,20 +134,32 @@
 											</div>
 										</c:forEach>
 									</div>
-									<div class="load-more text-center">
-										<button id="load-more" class="custom-button transparent">Load
-											More</button>
-									</div>
+									
+
+									<!-- Nút Load More 
+									<c:if test="${reviews.size() > 2}">
+										<div class="load-more text-center">
+											<a href="javascript:void(0)" id="load-more-btn"
+												class="custom-button transparent">Load More</a>
+										</div>
+									</c:if>
+									-->
+
 								</div>
-
-
 								<div id="post-review" class="tab-item" style="margin-top: 20px;">
-									<!-- Phần form post review của bạn không thay đổi -->
+									<!-- Form để gửi đánh giá -->
 									<div class="post-review-form"
 										style="background-color: #1b1e3d; padding: 20px; border-radius: 10px;">
-										<form method="post"
-											action="${pageContext.request.contextPath}/userReview">
-											<input type="hidden" name="action" value="addReview">
+										<!-- Kiểm tra và thông báo lỗi nếu có -->
+										<c:if test="${not empty errorMessage}">
+											<div class="alert alert-danger" style="margin-bottom: 15px;">
+												${errorMessage}</div>
+										</c:if>
+										<form
+											action="${pageContext.request.contextPath}/userSubmitReview"
+											method="post">
+											<input type="hidden" name="movieid" value="${movie.movieID}" />
+											<input type="hidden" name="perid" value="${perID}" />
 											<div class="form-group">
 												<label for="rating" style="color: #ffffff; font-size: 1em;">Rating:</label>
 												<select id="rating" name="rating" class="form-control"
@@ -179,7 +170,7 @@
 													<option value="2">Fair</option>
 													<option value="3">Good</option>
 													<option value="4">Very Good</option>
-													<option value="5">Excellent</option>
+													<option value="5" selected>Excellent</option>
 												</select>
 											</div>
 											<div class="form-group" style="margin-top: 15px;">
@@ -190,39 +181,93 @@
 													class="form-control" rows="3" required
 													style="background-color: #283149; color: #ffffff; border: 1px solid #00d1b2; border-radius: 5px; padding: 10px;"></textarea>
 											</div>
-											<div class="form-group text-center" style="margin-top: 20px;">
-												<button type="submit"
-													style="padding: 8px 16px; font-size: 14px; background: linear-gradient(45deg, #ff416c, #ff4b2b); color: #ffffff; border: none; border-radius: 5px; cursor: pointer; display: inline-block; width: auto;">Submit
-													Review</button>
+											<div class="form-group text-center" style="margin-top: 15px;">
+												<button type="submit" class="custom-button"
+													style="background-color: #00d1b2; color: #ffffff; padding: 10px 20px; border-radius: 5px; border: none;">
+													Submit</button>
 											</div>
 										</form>
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
-					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 				</div>
 			</div>
 		</div>
-		
 	</section>
-	
-	
-	<!-- ==========Movie-Section========== -->
 
-	<script src="assets/js/jquery-3.3.1.min.js"></script>
-	<script src="assets/js/modernizr-3.6.0.min.js"></script>
-	<script src="assets/js/plugins.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/isotope.pkgd.min.js"></script>
-	<script src="assets/js/magnific-popup.min.js"></script>
-	<script src="assets/js/owl.carousel.min.js"></script>
-	<script src="assets/js/wow.min.js"></script>
-	<script src="assets/js/countdown.min.js"></script>
-	<script src="assets/js/odometer.min.js"></script>
-	<script src="assets/js/viewport.jquery.js"></script>
-	<script src="assets/js/nice-select.js"></script>
-	<script src="assets/js/main.js"></script>
+	<script>
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function() {
+							// Kiểm tra xem có thông báo lỗi nào không
+							let errorMessage = "${errorMessage}";
+							if (errorMessage && errorMessage.trim() !== "") {
+								// Nếu có lỗi, mở tab "post-review"
+								openTab(
+										{
+											currentTarget : document
+													.querySelector('[onclick*="post-review"]')
+										}, 'post-review');
+							} else {
+								// Giả lập sự kiện click vào tab đầu tiên để hiển thị nội dung mặc định
+								let defaultTab = document
+										.getElementsByClassName("tab-menu")[0].children[0];
+								if (defaultTab) {
+									defaultTab.click(); // Tự động click vào tab đầu tiên nếu không có lỗi
+								}
+							}
+						});
+
+		function openTab(evt, tabName) {
+			// 1. Ẩn tất cả các tab nội dung
+			let tabItems = document.getElementsByClassName("tab-item");
+			for (let i = 0; i < tabItems.length; i++) {
+				tabItems[i].style.display = "none"; // Ẩn từng tab nội dung
+			}
+
+			// 2. Loại bỏ class "active" cho tất cả các tab menu
+			let tabLinks = document.getElementsByClassName("tab-menu")[0].children;
+			for (let i = 0; i < tabLinks.length; i++) {
+				tabLinks[i].classList.remove("active"); // Loại bỏ class "active" khỏi tất cả các tab menu
+			}
+
+			// 3. Hiển thị tab đã chọn
+			document.getElementById(tabName).style.display = "block"; // Hiển thị tab tương ứng với id được truyền vào
+
+			// 4. Thêm class "active" cho tab menu đã được click
+			evt.currentTarget.classList.add("active"); // Đánh dấu tab menu đã chọn là "active"
+		}
+	</script>
+
+
+
+
+
+
+	<style>
+.review-list::-webkit-scrollbar {
+	width: 5px; /* Độ rộng của thanh cuộn */
+}
+
+.review-list::-webkit-scrollbar-track {
+	background: #f1f1f1; /* Màu nền của track thanh cuộn */
+	border-radius: 10px; /* Độ bo góc cho track */
+}
+
+.review-list::-webkit-scrollbar-thumb {
+	background: #888; /* Màu của thanh trượt */
+	border-radius: 10px; /* Độ bo góc cho thanh trượt */
+}
+
+.review-list::-webkit-scrollbar-thumb:hover {
+	background: #555; /* Màu của thanh trượt khi hover */
+}
+</style>
+
+	<!-- ==========Movie-Section========== -->
 </body>
 </html>

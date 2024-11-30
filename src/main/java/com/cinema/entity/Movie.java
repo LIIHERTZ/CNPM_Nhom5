@@ -3,6 +3,7 @@ package com.cinema.entity;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Movie {
     @Column(nullable = false, columnDefinition = "NVARCHAR(100)")
     private String category;
 
-    @Column(columnDefinition = "NVARCHAR(500)")
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
 
     @Column(columnDefinition = "NVARCHAR(255)")
@@ -42,13 +43,14 @@ public class Movie {
     @Column(nullable = false)
     private boolean status;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieScreenings> movieScreenings;
 
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
 
 
+    
     // Getters and setters
 
     public int getMovieID() {
