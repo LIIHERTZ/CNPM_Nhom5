@@ -14,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "UserController", urlPatterns = { "/admin/users", "/admin/users/save", "/admin/users/add",
 		"/admin/users/edit", "/admin/users/update", "/admin/users/delete" })
@@ -24,57 +23,45 @@ public class UserController extends HttpServlet{
 	IPersonService personService = new PersonServiceImpl();
 	 @Override
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 request.setCharacterEncoding("UTF-8");
-		 response.setCharacterEncoding("UTF-8");
-		 HttpSession session = request.getSession(false);
+		 String action = request.getServletPath();
+			switch (action) {
+			case "/admin/users/add":
+				request.getRequestDispatcher("/views/admin/user-add.jsp").forward(request, response);
+				break;
+			case "/admin/users/edit":
+				loadUserForEdit(request, response); // Load category data for edit
+				break;
+			default:
+				 // Lấy thông tin phân trang từ tham số yêu cầu
+		        //int page = Integer.parseInt(request.getParameter("page"));
+			  int page =1;
+			  int pageSize = 5;
+			  String searchValue = request.getParameter("searchQuery");
+			 	if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
+			 	{
+			 		 page = Integer.parseInt(request.getParameter("pageNumber"));
+			 		pageSize = Integer.parseInt(request.getParameter("pageSize"));
+			 	}
+			 	
 
-		 if (session != null && session.getAttribute("person") != null) {
-			 Person person = (Person) session.getAttribute("person");
+		        // Lấy danh sách sản phẩm và tổng số trang
+		        List<Person> users = userService.getUsers(page, pageSize,searchValue);
+		        int totalPages = userService.getTotalPages(pageSize,searchValue);
+		        Long userTotal = userService.countTotalUsers(searchValue);
+		        // Đưa dữ liệu vào request để hiển thị ở JSP
+		        request.setAttribute("userTotal", userTotal);
+		        request.setAttribute("users", users);
+		        request.setAttribute("currentPage", page);
+		        request.setAttribute("totalPages", totalPages);
+		        request.setAttribute("pageSize", pageSize);
+		        request.setAttribute("pageNumber", page);
+		        request.setAttribute("searchQuery", searchValue);
 
-			 if (person.getRole().toLowerCase().contains("admin")) {
-				 String action = request.getServletPath();
-				 switch (action) {
-					 case "/admin/users/add":
-						 request.getRequestDispatcher("/views/admin/user-add.jsp").forward(request, response);
-						 break;
-					 case "/admin/users/edit":
-						 loadUserForEdit(request, response); // Load category data for edit
-						 break;
-					 default:
-						 // Lấy thông tin phân trang từ tham số yêu cầu
-						 //int page = Integer.parseInt(request.getParameter("page"));
-						 int page = 1;
-						 int pageSize = 5;
-						 String searchValue = request.getParameter("searchQuery");
-
-						 if (request.getParameter("pageNumber") != null && request.getParameter("pageSize") != null) {
-							 page = Integer.parseInt(request.getParameter("pageNumber"));
-							 pageSize = Integer.parseInt(request.getParameter("pageSize"));
-						 }
-
-
-						 // Lấy danh sách sản phẩm và tổng số trang
-						 List<Person> users = userService.getUsers(page, pageSize, searchValue);
-						 int totalPages = userService.getTotalPages(pageSize, searchValue);
-						 Long userTotal = userService.countTotalUsers(searchValue);
-						 // Đưa dữ liệu vào request để hiển thị ở JSP
-						 request.setAttribute("userTotal", userTotal);
-						 request.setAttribute("users", users);
-						 request.setAttribute("currentPage", page);
-						 request.setAttribute("totalPages", totalPages);
-						 request.setAttribute("pageSize", pageSize);
-						 request.setAttribute("pageNumber", page);
-						 request.setAttribute("searchQuery", searchValue);
-
-						 // Forward đến JSP
-						 request.getRequestDispatcher("/views/admin/user-list.jsp").forward(request, response);
-						 break;
-
-				 }
-				 return;
-			 }
-		 }
-		 response.sendRedirect(request.getContextPath() + "/signin");
+		        // Forward đến JSP
+		        request.getRequestDispatcher("/views/admin/user-list.jsp").forward(request, response);
+				break;
+	       
+			}
 	 }
 	 
 	 @Override
@@ -99,7 +86,24 @@ public class UserController extends HttpServlet{
 			
 			
 			private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-				Person user = new Person();
+				 // Kiểm tra email đã tồn tại chưa
+				
+				Person tmp = personService.findByEmail(request.getParameter("email"));
+			    if (tmp.getEmail() != null) {
+			        // Nếu email đã tồn tại, trả lại trang thêm người dùng với thông báo lỗi
+			        request.setAttribute("error", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+			        try {
+			        	request.getRequestDispatcher("/views/admin/user-add.jsp").forward(request, response);
+					} catch (ServletException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        return; // Ngừng tiếp tục quá trình thêm người dùng
+			    }
+			    Person user = new Person();
 				user.setFullName(request.getParameter("fname"));
 				user.setEmail(request.getParameter("email"));
 				user.setPassword(request.getParameter("password"));
@@ -122,6 +126,24 @@ public class UserController extends HttpServlet{
 			}
 			
 			private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+				// Kiểm tra email đã tồn tại chưa
+				Person tmp = personService.findByEmail(request.getParameter("email"));
+			    if (tmp.getEmail() != null) {
+			        // Nếu email đã tồn tại, trả lại trang thêm người dùng với thông báo lỗi
+			        request.setAttribute("error", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+			        try {
+			        	loadUserForEdit(request, response); 
+			        	return;
+					} catch (ServletException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        return; // Ngừng tiếp tục quá trình thêm người dùng
+			    }
+			    
 				int userId = Integer.parseInt(request.getParameter("userId"));
 				Person user = personService.getOnePerson(userId);
 
@@ -187,5 +209,4 @@ public class UserController extends HttpServlet{
 	 
 	 
 }
-	 
 	 
