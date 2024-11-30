@@ -56,7 +56,7 @@
 									<td><div class="catalog__text">${coupon.couponID }</div></td>
 									<td><div class="catalog__text">${coupon.couponName }</div></td>
 									<td><div class="catalog__text">${coupon.couponType }</div></td>
-									<td><div class="catalog__text">${coupon.couponValue }</div></td>
+									<td><div class="catalog__text">${coupon.couponValue } %</div></td>
 									<!-- Định dạng ngày sử dụng JSTL -->
 									<fmt:formatDate value="${coupon.startDate}"
 										pattern="yyyy-MM-dd" var="startDateFormatted" />
@@ -247,10 +247,9 @@
 								<label class="sign__label" for="couponType">Type</label> <select
 									class="sign__selectjs" name="couponType" id="couponType"
 									required style="color: white; width: 320px;">
-									<option value="Coupon 1">Coupon 1</option>
-									<option value="Coupon 2">Coupon 2</option>
-									<option value="Coupon 3">Coupon 3</option>
-									<option value="Coupon 4 ">Coupon 4</option>
+									<option value="Student">Student</option>
+									<option value="Children">Children</option>
+									<option value="Festival">Festival</option>
 								</select>
 							</div>
 						</div>
@@ -316,10 +315,9 @@
 								<label class="sign__label" for="couponType">Type</label> <select
 									class="sign__selectjs" name="couponType" id="couponType"
 									required value="${coupon.couponType }" style="color: white; width: 320px;">
-									<option value="Coupon 1">Coupon 1</option>
-									<option value="Coupon 2">Coupon 2</option>
-									<option value="Coupon 3">Coupon 3</option>
-									<option value="Coupon 4 ">Coupon 4</option>
+									<option value="Student">Student</option>
+									<option value="Children">Children</option>
+									<option value="Festival">Festival</option>
 								</select>
 							</div>
 						</div>

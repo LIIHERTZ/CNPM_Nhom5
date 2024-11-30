@@ -2,7 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
 
-
+<c:if test="${not empty error}">
+    <div class="alert alert-danger">
+        ${error}
+    </div>
+</c:if>
 <main class="container-fluid">
 	<div class="container-fluid">
 	<div class="main__title">
@@ -21,7 +25,7 @@
 				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="email2">Email</label> <input
-							id="email2" type="text" name="email" class="sign__input"
+							id="email2" type="email" name="email" class="sign__input"
 							placeholder="email@email.com" value="${user.email}" required>
 					</div>
 				</div>
@@ -43,8 +47,8 @@
 				<div class="col-12" style="width: 50%; margin: 0 auto;">
 					<div class="sign__group">
 						<label class="sign__label" for="phone">Phone</label> <input
-							id="phone" type="number" name="phone" class="sign__input"
-							placeholder="Your phone" value="${user.phone}" required>
+							id="phone" type="tel" name="phone" class="sign__input"
+							placeholder="Your phone" value="${user.phone}" required pattern="^[0-9]{10}$" title="So dien thoai phai co 10 chu so">
 					</div>
 				</div>
 				<!-- Định dạng ngày sử dụng JSTL -->

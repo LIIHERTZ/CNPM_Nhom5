@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- Mirrored from hotflix.volkovdesign.com/admin/users.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 07:09:40 GMT -->
 
 
@@ -57,7 +57,10 @@
 									<td><div class="catalog__text">${popcorn.popcornID }</div></td>
 									<td><div class="catalog__text">${popcorn.namePopCorn }</div></td>
 									<td><div class="catalog__text">${popcorn.typePopCorn }</div></td>
-									<td><div class="catalog__text">${popcorn.price }</div></td>
+                                    
+									<td><div class="catalog__text"><fmt:formatNumber value="${popcorn.price }"
+                                        pattern="#,###" />
+                                    VND</div></td>
 									<td><div class="catalog__text">${popcorn.status == true ? 'Available' : 'Unavailable'}</div></td>
 									<td>
 										<div class="catalog__btns">
@@ -255,10 +258,9 @@
 								<label class="sign__label" for="typePopCorn">Type</label> <select
 									class="sign__selectjs" name="typePopCorn" id="typePopCorn"
 									required style="color: white; width: 320px;">
-									<option value="Small">Small</option>
-									<option value="Regular">Regular</option>
-									<option value="Large">Large</option>
-									<option value="Extra Large">Extra Large</option>
+									<option value="Beverage">Beverage</option>
+									<option value="Popcorn">Popcorn</option>
+									<option value="Combos">Combos</option>
 								</select>
 							</div>
 						</div>
@@ -319,14 +321,12 @@
 							<div class="sign__group">
 								<label class="sign__label" for="typePopCorn">Type</label> <select
 									class="sign__selectjs" name="typePopCorn" id="typePopCorn"
-									required "
+									required 
 									style="color: white; font-weight: bold; width: 320px;">
-									<option value="Small" style="color: white; font-weight: bold;">Small</option>
-									<option value="Regular"
-										style="color: white; font-weight: bold;">Regular</option>
-									<option value="Large" style="color: white; font-weight: bold;">Large</option>
-									<option value="Extra Large"
-										style="color: white; font-weight: bold;">Extra Large</option>
+									<option value="Beverage" style="color: white; font-weight: bold;">Beverage</option>
+									<option value="Popcorn"
+										style="color: white; font-weight: bold;">Popcorn</option>
+									<option value="Combos" style="color: white; font-weight: bold;">Combos</option>
 								</select>
 							</div>
 						</div>
@@ -336,8 +336,8 @@
 								<label class="sign__label" for="status">Status</label> <select
 									class="sign__selectjs" name="status" id="status" required
 									style="color: white; font-weight: bold; width: 320px;">
-									<option value="true" style="color: white; font-weight: bold;">Available</option>
-									<option value="false" style="color: white; font-weight: bold;">Unavailable</option>
+									<option value="1" >Available</option>
+									<option value="0" >Unavailable</option>
 								</select>
 							</div>
 						</div>
@@ -463,7 +463,15 @@
 	        modalPopcornType.value = popcornType;
 	        modalPopcornPrice.value = popcornPrice;
 	        modalPopcornName.value = popcornName;
-	        modalPopcornStatus.value = popcornStatus;
+	        if(popcornStatus == "true")
+	        	{
+	        	modalPopcornStatus.value = "1";
+	        	}
+	        else
+	        	{
+	        	modalPopcornStatus.value = "0";
+	        	}
+	       // modalPopcornStatus.value = popcornStatus;
 	      console.log("popcornID" + popcornID);
 	      console.log("popcornType" + popcornType);
 	      console.log("popcornName" + popcornName);

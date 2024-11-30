@@ -9,7 +9,8 @@
 	content="Online Movies, TV Shows & Cinema HTML Template">
 <meta name="keywords" content="">
 <meta name="author" content="Dmitry Volkov">
-<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
+<title>HotFlix – Online Movies, TV Shows & Cinema HTML
+	Template</title>
 
 <!-- Code Thao -->
 </head>
@@ -83,15 +84,16 @@
 								<!-- Lặp qua danh sách dữ liệu (ví dụ từ cơ sở dữ liệu) -->
 								<c:forEach var="movieRevenue" items="${movieRevenues}">
 									<tr>
+
 										<td>${movieRevenue[0]}</td>
 										<td><fmt:formatNumber value="${movieRevenue[1]}"
-												type="number" maxFractionDigits="2" /></td>
-										<td><fmt:formatNumber value="${movieRevenue[2]}"
-												type="number" maxFractionDigits="2" /></td>
+												pattern="#,###" /> VND</td>
+										<td><fmt:formatNumber value="${movieRevenue[1]}"
+												pattern="#,###" /> VND</td>
 										<td>${movieRevenue[3]}</td>
 										<td><fmt:formatNumber
-												value="${movieRevenue[1] - movieRevenue[2]}" type="number"
-												maxFractionDigits="2" /></td>
+												value="${movieRevenue[1] - movieRevenue[2]}" pattern="#,###" />
+											VND</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -114,15 +116,16 @@
 								<!-- Lặp qua danh sách dữ liệu (ví dụ từ cơ sở dữ liệu) -->
 								<c:forEach var="popcornRevenue" items="${popcornRevenues}">
 									<tr>
+
 										<td>${popcornRevenue[0]}</td>
 										<td><fmt:formatNumber value="${popcornRevenue[1]}"
-												type="number" maxFractionDigits="2" /></td>
+												pattern="#,###" /> VND</td>
 										<td><fmt:formatNumber value="${popcornRevenue[2]}"
-												type="number" maxFractionDigits="2" /></td>
+												pattern="#,###" /> VND</td>
 										<td>${popcornRevenue[3]}</td>
 										<td><fmt:formatNumber
 												value="${popcornRevenue[1] - popcornRevenue[2]}"
-												type="number" maxFractionDigits="2" /></td>
+												pattern="#,###" /> VND</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -196,7 +199,9 @@
 								<c:forEach var="tmp" items="${CinemaRevenuesByMovieID}">
 									<tr>
 										<td>${tmp[0]}</td>
-										<td>${tmp[1]}</td>
+
+										<td><fmt:formatNumber value="${tmp[1]}" pattern="#,###" />
+											VND</td>
 									</tr>
 								</c:forEach>
 							</tbody>
