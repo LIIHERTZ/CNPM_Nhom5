@@ -4,10 +4,7 @@ import com.cinema.configs.JPAConfig;
 import com.cinema.dao.*;
 import com.cinema.dao.impl.*;
 import com.cinema.entity.*;
-import com.cinema.services.IPaymentService;
-import com.cinema.services.ISeatService;
-import com.cinema.services.ISeatStatusService;
-import com.cinema.services.ITicketPaymentService;
+import com.cinema.services.*;
 import jakarta.persistence.EntityManager;
 
 
@@ -25,9 +22,11 @@ public class PaymentServiceImpl implements IPaymentService{
     private ITicketPaymentService ticketPaymentService = new TicketPaymentServiceImpl();
     private ISeatService seatService = new SeatServiceImpl();
     private ISeatStatusService seatStatusService = new SeatStatusServiceImpl();
+    private ICouponService couponService = new CouponServiceImpl();
+
 	@Override
 	public void processPayment(String screeningId, String selectedLocation, String selectedDate, String experience,
-			String version, String startHour, Movie movie, String selectedSeats, String totalPrice, String payDate,
+			String version, String startHour, Movie movie, String selectedSeats, String totalPrice, String couponId, String payDate,
 			Map<String, List<Integer>> products, Person person) throws Exception {
         EntityManager em = JPAConfig.getEntityManager();
         try {
@@ -35,8 +34,10 @@ public class PaymentServiceImpl implements IPaymentService{
             // Lấy thông tin MovieScreenings
             MovieScreenings movieScreening = movieScreeningsDAO.findById(Integer.parseInt(screeningId));
             Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(payDate);
+            Coupon coupon = couponService.getOneCoupon(Integer.parseInt(couponId));
             // Lưu Payment
             Payment payment = new Payment();
+            payment.setCoupon(coupon);
             payment.setCreatedDate(date);
             payment.setStatus(1);
             payment.setTotalPrice(Double.parseDouble(totalPrice));
@@ -47,9 +48,11 @@ public class PaymentServiceImpl implements IPaymentService{
             String[] seats = selectedSeats.split(",");
 
             for (String seat : seats) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date date1 = sdf.parse(selectedDate);
                 Ticket ticket = new Ticket();
                 ticket.setChairNumber(seat);
-                ticket.setDate(java.sql.Date.valueOf(selectedDate)); // `selectedDate` đã đúng định dạng
+                ticket.setDate(date1); // `selectedDate` đã đúng định dạng
                 ticket.setPlaceName(selectedLocation);
                 ticket.setPriceTicket(Double.parseDouble(totalPrice) / seats.length);
                 ticket.setVersionName(version);

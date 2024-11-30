@@ -107,7 +107,7 @@ public class MovieCheckoutController extends HttpServlet{
 		req.setAttribute("selectedDate", selectedDate);
 		req.setAttribute("experience", experience);
 		req.setAttribute("version", version);
-		req.setAttribute("startHour", startHour);	
+		req.setAttribute("startHour", startHour);
 		
 		
 		req.setAttribute("selectedSeats", selectedSeats);
@@ -131,7 +131,11 @@ public class MovieCheckoutController extends HttpServlet{
             String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
             String vnp_IpAddr = PaymentConfig.getIpAddress(req);
             String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
+            HttpSession session = req.getSession();
             String price = req.getParameter("amountPayable");
+            session.setAttribute("amountPayable", price);
+            String couponId = req.getParameter("selectedCouponId");
+            session.setAttribute("selectedCouponId", couponId);
             
             int amount = Integer.parseInt(price) * 100;
             Map<String, String> vnp_Params = new HashMap<>();

@@ -23,7 +23,8 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
 				"JOIN r.cinema c " +
 				"WHERE ms.movie.movieID = :movieId " +
 				"AND c.cinemaID = :cinemaId " +
-				"AND ms.status = true";
+				"AND ms.status = true" +
+                " AND ms.startHour > CURRENT_TIMESTAMP";
 		return em.createQuery(query, MovieScreenings.class).setParameter("movieId", movieId)
 				.setParameter("cinemaId", cinemaId).getResultList();
 	}
@@ -31,8 +32,8 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
 	@Override
 	public List<String> findAvailableDatesByMovieId(Long movieId) {
 		EntityManager entityManager = JPAConfig.getEntityManager();
-		String jpql = "SELECT DISTINCT FUNCTION('DATE_FORMAT', s.startTime, '%Y-%m-%d') "
-				+ "FROM MovieScreenings s WHERE s.movieID= :movieId";
+		String jpql = "SELECT DISTINCT FUNCTION('DATE_FORMAT', s.startHour, '%Y-%m-%d') "
+				+ "FROM MovieScreenings s WHERE s.movie.movieID= :movieId";
 		return entityManager.createQuery(jpql, String.class).setParameter("movieId", movieId).getResultList();
 	}
 

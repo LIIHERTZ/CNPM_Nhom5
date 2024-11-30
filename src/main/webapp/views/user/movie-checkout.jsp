@@ -15,7 +15,7 @@ int countdownMinutes = 5;
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="/ValCT_Nhom5/assets2/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets2/css/bootstrap.min.css">
 
 <body>
 
@@ -64,7 +64,7 @@ int countdownMinutes = 5;
 			<div class="page-title-area">
 				<!-- NÃÂºt quay lÃ¡ÂºÂ¡i -->
 				<div class="item md-order-1">
-					<a href="/ValCT_Nhom5/userSelectSeats"
+					<a href="${pageContext.request.contextPath}/userSelectSeats"
 						class="custom-button back-button"> <i
 						class="flaticon-double-right-arrows-angles"></i>back
 					</a>
@@ -120,8 +120,7 @@ int countdownMinutes = 5;
 									>
 							</div>
 							<!-- Input áº©n Äá» lÆ°u giÃ¡ trá» coupon -->
-							<input type="hidden" id="selectedCouponId"
-								name="selectedCouponId"> <input type="hidden"
+							 <input type="hidden"
 								id="selectedCouponValue" name="selectedCouponValue">
 							<div class="form-group">
 								<!-- NÃºt Äá» má» modal -->
@@ -135,13 +134,13 @@ int countdownMinutes = 5;
 						<h5 class="title">Payment Option</h5>
 						<ul class="payment-option">
 							<li class="active"><a href="#0"> <img
-									src="assets/images/payment/card.png" alt="payment"> <span>Credit
-										Card</span>
+									src="assets/images/payment/card.png" alt="payment"> <span>VNPAY</span>
 							</a></li>
 						</ul>
 						<form action="${pageContext.request.contextPath}/userMovieCheckout" method="post"
 							  class="payment-card-form">
 							<input type="hidden" id="amountPayable" name="amountPayable" value="${amountPayable != null ? amountPayable : totalPrice}">
+							<input type="hidden" id="selectedCouponId" name="selectedCouponId">
 							<div class="form-group">
 								<!-- NÃºt submit sáº½ gá»i phÆ°Æ¡ng thá»©c POST -->
 								<input type="submit" class="custom-button" value="Make Payment">
@@ -155,7 +154,7 @@ int countdownMinutes = 5;
 				</div>
 				<div class="col-lg-4">
 					<div class="booking-summery bg-one">
-						<h4 class="title">booking summery</h4>
+						<h4 class="title">booking summary</h4>
 						<ul>
 							<li>
 								<h6 class="subtitle">${movie.movieName}</h6> <span class="info">${experience},
