@@ -4,6 +4,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
+<style>
+.details-banner-thumb {
+    position: relative;
+    width: 100%; /* Chiều rộng là 100% của phần tử cha */
+    height: 100%; /* Chiều cao có thể tùy chỉnh hoặc tự động theo nội dung */
+    overflow: hidden; /* Ẩn những phần ảnh vượt ra ngoài vùng chứa */
+}
+
+.movie-img {
+    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng */
+    height: 100%; /* Ảnh chiếm toàn bộ chiều cao */
+    object-fit: cover; /* Lấp đầy vùng chứa mà không bị méo */
+    object-position: center; /* Căn giữa ảnh nếu có phần bị cắt */
+}
+</style>
 <body>
 	<!-- ==========Banner-Section========== -->
 	<section class="details-banner bg_img"
