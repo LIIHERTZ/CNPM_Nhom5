@@ -20,6 +20,10 @@
 							<c:set var="imgUrl" value="${movie.image}" />
 						</c:otherwise>
 					</c:choose>
+					<a
+						href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">
+						<img src="${imgUrl}" alt="${movie.movieName}" class="movie-img">
+					</a>
 				</div>
 				<div class="details-banner-content offset-lg-3">
 					<h3 class="title">${movie.movieName}</h3>

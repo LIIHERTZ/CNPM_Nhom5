@@ -14,4 +14,6 @@ public interface ITicketDAO {
 	List<PopCornPayment> getPopCornAndQuantityByPaymentId(int paymentId);
 	
 	Ticket saveTicket(Ticket ticket);
+	
+	List<TicketHistoryDTO> getTicketHistory(int personId);
 }

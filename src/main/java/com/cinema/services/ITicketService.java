@@ -11,5 +11,5 @@ public interface ITicketService {
 	  List<PopCornPayment> getPopCornPaymentsByPaymentId(int paymentId);
 	  List<TicketHistoryDTO> getPaginatedTicketHistory(int personId, int page, int pageSize);
 	  int countTicketHistory(int personId);
-
+	  List<TicketHistoryDTO> getTicketHistory(int personId);
 }
