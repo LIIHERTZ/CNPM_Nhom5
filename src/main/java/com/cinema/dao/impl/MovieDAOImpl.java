@@ -484,27 +484,37 @@ public class MovieDAOImpl implements IMovieDAO {
 			em.close(); // Đóng EntityManager sau khi truy vấn
 		}
 	}
-	public boolean updateMovieRating(int movieId) {
-		EntityManager em = JPAConfig.getEntityManager();
-		try {
-			String sql = "SELECT AVG(r.evaluate) FROM Review r WHERE r.movie.movieID = :movieId";
-			TypedQuery<Float> query = em.createQuery(sql, Float.class);
-			query.setParameter("movieId", movieId);
-			Float averageRating = query.getSingleResult();
-			Movie movie = em.find(Movie.class, movieId);
-			if (movie == null) {
-				System.out.println("Movie not found with ID: " + movieId);
-				return false;
-			}
-			movie.setRating(averageRating.floatValue());
-			em.merge(movie);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			em.close();
-		}
+	public boolean updateMovieRating(int movieId, float rating) {
+	    EntityManager em = JPAConfig.getEntityManager();
+	    EntityTransaction transaction = em.getTransaction();
+	    try {
+	        transaction.begin();
+
+	        // Kiểm tra nếu movie tồn tại
+	        Movie movie = em.find(Movie.class, movieId);
+	        if (movie != null) {
+	            // Chỉ cập nhật cột rating
+	            movie.setRating(rating);
+
+	            // Merge vào database để cập nhật
+	            em.merge(movie); 
+	        } else {
+	            return false; // Không tìm thấy movie
+	        }
+
+	        transaction.commit();
+	        return true;
+	    } catch (Exception e) {
+	        if (transaction.isActive()) {
+	            transaction.rollback();
+	        }
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        em.close();
+	    }
 	}
+
+
 
 }

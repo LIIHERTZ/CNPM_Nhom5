@@ -30,7 +30,7 @@ public class UserHomeController extends HttpServlet {
 			Person person = (Person) session.getAttribute("person");
 
 		    if (!person.getRole().toLowerCase().contains("admin")) {
-
+		    	req.setAttribute("person", person);
 		    	List<Movie> moviesShowing = movieService.getMoviesShowing();
 				req.setAttribute("moviesShowing", moviesShowing);
 

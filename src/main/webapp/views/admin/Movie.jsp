@@ -122,8 +122,7 @@
 									<th>MovieName</th>
 									<th>Category</th>
 									<th>Image</th>
-									<th>MovieDuration</th>
-									<th>Rating</th>
+									<th>MovieDuration</th>									
 									<th>Release Date</th>
 									<th>Status</th>
 									<th>Action</th>
@@ -148,7 +147,7 @@
 													height="150" />
 											</div></td>
 										<td><div class="catalog__text">${movie.movieDuration}</div></td>
-										<td><div class="catalog__text catalog__text--rate">${movie.rating}</div></td>
+										
 										
 										<td>
     										<div class="catalog__text">
@@ -174,6 +173,11 @@
 													data-movie-id="${movie.movieID}">
 													<i class="ti ti-trash"></i>
 												</button>
+												<a
+													href="${pageContext.request.contextPath}/adminReview?movieID=${movie.movieID}"
+													class="catalog__btn catalog__btn--view"> <i
+													class="ti ti-eye"></i>
+												</a>
 											</div>
 										</td>
 									</tr>

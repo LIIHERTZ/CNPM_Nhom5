@@ -25,19 +25,15 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/review"})
 public class ReviewController extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-    private static final Logger logger = Logger.getLogger(ReviewController.class.getName());
+    private static final long serialVersionUID = 1L;    
     private IReviewService reviewService;
     private IMovieService movieService;
-    private IPersonService personService;
-
 
     @Override
     public void init() throws ServletException {
         super.init();
         reviewService = new ReviewServiceImpl();
         movieService = new MovieServiceImpl();
-        personService = new PersonServiceImpl();
 
     }
 
@@ -51,7 +47,6 @@ public class ReviewController extends HttpServlet {
         }
     }
 
-
     private void handleUserReview(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String movieIDParam = req.getParameter("movieID");
 
@@ -61,7 +56,6 @@ public class ReviewController extends HttpServlet {
             rd.forward(req, resp);
             return;
         }
-
         int movieID;
         try {
             movieID = Integer.parseInt(movieIDParam);
@@ -70,8 +64,8 @@ public class ReviewController extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("/userHome");
             rd.forward(req, resp);
             return;
-        }
-        movieService.updateMovieRating(movieID);
+        }       
+        
         Movie movie = movieService.getMovieById(movieID);
         if (movie == null) {
             req.setAttribute("errorMessage", "Phim không tồn tại hoặc đã bị xóa. Vui lòng thử lại.");
@@ -81,11 +75,16 @@ public class ReviewController extends HttpServlet {
         }
         List<Review> reviews = reviewService.getReviewsByMovie(movieID);
         int count = reviewService.countReviewsByMovie(movieID);
-
+        int totalRating = 0;        
+        for (Review review : reviews) {
+            totalRating += review.getEvaluate();        
+        }
+        float rating = (count > 0) ? (float) totalRating / count : 0; 
+        movieService.updateMovieRating(movieID,rating);
         req.setAttribute("movie", movie);
         req.setAttribute("reviews", reviews);
         req.setAttribute("count", count);
-
+        req.setAttribute("rating", rating);
         RequestDispatcher rd = req.getRequestDispatcher("/views/web/review.jsp");
         rd.forward(req, resp);
     }

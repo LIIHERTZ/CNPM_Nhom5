@@ -91,7 +91,7 @@ public class ReviewController extends HttpServlet {
             rd.forward(req, resp);
             return;
         }
-        movieService.updateMovieRating(movieID);
+        
         Movie movie = movieService.getMovieById(movieID);
         if (movie == null) {
             req.setAttribute("errorMessage", "Phim không tồn tại hoặc đã bị xóa. Vui lòng thử lại.");
@@ -103,16 +103,20 @@ public class ReviewController extends HttpServlet {
         int perID = Integer.parseInt(perIDParam);
         List<Review> reviews = reviewService.getReviewsByMovie(movieID);
         int count = reviewService.countReviewsByMovie(movieID);
-
+        int totalRating = 0;  
+        for (Review review : reviews) {
+            totalRating += review.getEvaluate();        
+        }
+        float ratings = (count > 0) ? (float) totalRating / count : 0; // Kiểm tra tránh chia cho 0
+        movieService.updateMovieRating(movieID,ratings);
         req.setAttribute("movie", movie);
         req.setAttribute("reviews", reviews);
         req.setAttribute("count", count);
         req.setAttribute("perID", perID);
-
+        req.setAttribute("ratings", ratings);
         RequestDispatcher rd = req.getRequestDispatcher("/views/user/review.jsp");
         rd.forward(req, resp);
     }
-
     private void handleAddReview(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String movieIDParam = req.getParameter("movieid");
@@ -137,7 +141,7 @@ public class ReviewController extends HttpServlet {
                 review.setPerson(personService.getOnePerson(perID));
 
                 boolean isAdded = reviewService.addReview(review);
-                movieService.updateMovieRating(movieID);
+                
                 if (isAdded) {
                     req.setAttribute("errorMessage", "Đánh giá thành công!");
                     resp.sendRedirect(req.getContextPath() + "/userReview?movieID=" + movieID + "&perID=" + perID);
