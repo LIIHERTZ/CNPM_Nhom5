@@ -114,5 +114,23 @@ public class ReviewDaoImpl implements IReviewDao {
 	    }
 	}
 	
+	@Override
+	public List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize) {
+	    EntityManager em = JPAConfig.getEntityManager();
+	    try {
+	        // Tính toán vị trí bắt đầu của phân trang
+	        int startPosition = (page - 1) * pageSize;
+
+	        TypedQuery<Review> query = em.createQuery(
+	                "SELECT r FROM Review r WHERE r.movie.movieID = :movieId", Review.class);
+	        query.setParameter("movieId", movieId);
+	        query.setFirstResult(startPosition);  // Đặt vị trí bắt đầu
+	        query.setMaxResults(pageSize);  // Đặt số lượng kết quả trên mỗi trang
+
+	        return query.getResultList();
+	    } finally {
+	        em.close();
+	    }
+	}
 
 }

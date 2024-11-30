@@ -16,5 +16,6 @@ public interface IReviewDao {
 	List<Review> getReviewsByMovie(int movieId);
 	
 	List<Review> getReviewsByMovieAndPerson(int perID, int movieID);
-
+	
+	List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize);
 }

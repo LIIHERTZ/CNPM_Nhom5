@@ -16,65 +16,49 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/adminReview", "/admin/deleteReview"})
+@WebServlet(urlPatterns = {"/adminReview"})
 public class ReviewController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private IReviewService reviewService = new ReviewServiceImpl();
+    private IReviewService reviewService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String movieIDParam = req.getParameter("movieID");
-
-        if (movieIDParam == null) {
-            req.setAttribute("errorMessage", "Không tìm thấy thông tin phim. Vui lòng thử lại.");
-            RequestDispatcher rd = req.getRequestDispatcher("/admin/movies");
-            rd.forward(req, resp);
-            return;
-        }
-
-        int movieID;
-        try {
-            movieID = Integer.parseInt(movieIDParam);
-        } catch (NumberFormatException e) {
-            req.setAttribute("errorMessage", "ID của phim không hợp lệ. Vui lòng thử lại.");
-            RequestDispatcher rd = req.getRequestDispatcher("/admin/movies");
-            rd.forward(req, resp);
-            return;
-        }        
-        List<Review> reviews = reviewService.getReviewsByMovie(movieID);
-        int noOfRecords = reviewService.countReviewsByMovie(movieID);
-        // Đặt các thuộc tính vào request để truyền đến JSP
-        req.setAttribute("reviews", reviews);        
-        req.setAttribute("noOfRecords", noOfRecords);
-        RequestDispatcher rd = req.getRequestDispatcher("/views/admin/review.jsp");
-        rd.forward(req, resp);
+    public void init() {
+        reviewService = new ReviewServiceImpl();
     }
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getServletPath();
-        switch (action) {         
-            case "/admin/deleteReview":
-                deleteReview(req, resp); // Thêm dòng này để xử lý xóa bằng POST
-                break;
-        }
-    }
-    private void deleteReview(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String ReviewIDParam = req.getParameter("id");
-        if (ReviewIDParam != null && ! ReviewIDParam.isEmpty()) {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int movieId = Integer.parseInt(request.getParameter("movieID"));
+        int page = 1;  // Mặc định là trang 1
+        int pageSize = 5;  // Mỗi trang có 5 bài đánh giá
+
+        // Lấy số trang từ query parameters nếu có
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
             try {
-                int ReviewID = Integer.parseInt(ReviewIDParam);
-                boolean isDeleted = reviewService.deleteReview(ReviewID);
-                if (isDeleted) {
-                    resp.sendRedirect(req.getContextPath() + "/adminReview");
-                } else {
-                    resp.sendRedirect(req.getContextPath() + "/adminReview?error=deletefailed");
-                }
+                page = Integer.parseInt(pageParam);
             } catch (NumberFormatException e) {
-                resp.sendRedirect(req.getContextPath() + "/adminReview?error=invalidid");
+                page = 1; // Nếu page không phải số hợp lệ, default về trang 1
             }
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/adminReview?error=invalidid");
         }
+
+        // Giới hạn page để không vượt quá tổng số trang
+        int totalReviews = reviewService.getTotalReviewCountByMovie(movieId);
+        int totalPages = (int) Math.ceil((double) totalReviews / pageSize);
+        if (page < 1) page = 1;  // Đảm bảo page không nhỏ hơn 1
+        if (page > totalPages) page = totalPages;  // Đảm bảo page không vượt quá tổng số trang
+
+        // Lấy các bài đánh giá cho trang hiện tại
+        List<Review> reviews = reviewService.getReviewsByMovieWithPagination(movieId, page, pageSize);
+
+        // Lưu vào request attributes
+        request.setAttribute("reviews", reviews);
+        request.setAttribute("noOfRecords", totalReviews);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("movieId", movieId);
+
+        // Chuyển đến JSP
+        request.getRequestDispatcher("/views/admin/review.jsp").forward(request, response);
     }
 }

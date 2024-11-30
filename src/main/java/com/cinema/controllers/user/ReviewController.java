@@ -81,7 +81,7 @@ public class ReviewController extends HttpServlet {
             rd.forward(req, resp);
             return;
         }
-        boolean isUpdate= movieService.updateMovieRating(movieID);
+        movieService.updateMovieRating(movieID);
         Movie movie = movieService.getMovieById(movieID);
         if (movie == null) {
             req.setAttribute("errorMessage", "Phim không tồn tại hoặc đã bị xóa. Vui lòng thử lại.");
@@ -127,7 +127,7 @@ public class ReviewController extends HttpServlet {
                 review.setPerson(personService.getOnePerson(perID));
 
                 boolean isAdded = reviewService.addReview(review);
-                boolean isUpdate = movieService.updateMovieRating(movieID);
+                movieService.updateMovieRating(movieID);
                 if (isAdded) {  
                 	req.setAttribute("errorMessage", "Đánh giá thành công!");
                     resp.sendRedirect(req.getContextPath() + "/userReview?movieID=" + movieID + "&perID=" + perID);

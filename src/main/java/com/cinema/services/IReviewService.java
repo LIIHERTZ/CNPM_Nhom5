@@ -17,5 +17,7 @@ public interface IReviewService {
 	List<Review> getReviewsByMovie(int movieId);
 	
 	boolean hasReviewed(int perID, int movieID);
-
+	
+	List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize);
+	int getTotalReviewCountByMovie(int movieId);
 }

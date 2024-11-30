@@ -48,5 +48,12 @@ public class ReviewServiceImpl implements IReviewService{
         List<Review> reviews = reviewDao.getReviewsByMovieAndPerson(perID, movieID );
         return reviews != null && !reviews.isEmpty();
     }
-   	
+    @Override
+    public List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize) {
+        return reviewDao.getReviewsByMovieWithPagination(movieId, page, pageSize);
+    }
+    
+    public int getTotalReviewCountByMovie(int movieId) {
+        return reviewDao.countReviewsByMovie(movieId);
+    }
 }
