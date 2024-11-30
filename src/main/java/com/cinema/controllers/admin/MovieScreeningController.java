@@ -9,6 +9,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
 import java.time.*;
+
+import com.cinema.entity.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,12 +18,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.cinema.entity.Movie;
-import com.cinema.entity.MovieScreenings;
-import com.cinema.entity.Seat;
-import com.cinema.entity.SeatStatus;
 import com.cinema.services.*;
 import com.cinema.services.impl.*;
+import jakarta.servlet.http.HttpSession;
 
 
 @WebServlet(urlPatterns = {"/admin/moviescreenings", "/admin/addMovieScreening", "/admin/editMovieScreening", "/admin/deleteMovieScreening"})
@@ -38,21 +37,33 @@ public class MovieScreeningController extends HttpServlet {
 
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	        String action = req.getServletPath();
-	        switch (action) {
-	            case "/admin/moviescreenings":
-	                listMovieScreenings(req, resp);
-	                break;
-	            case "/admin/editMovieScreening":
-	                showEditForm(req, resp);
-	                break;
-	            case "/admin/deleteMovieScreening":
-	                deleteMovieScreening(req, resp);
-	                break;
-	            default:
-	                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource not found");
-	                break;      
-	        }
+			req.setCharacterEncoding("UTF-8");
+			resp.setCharacterEncoding("UTF-8");
+			HttpSession session = req.getSession(false);
+
+			if (session != null && session.getAttribute("person") != null) {
+				Person person = (Person) session.getAttribute("person");
+
+				if (person.getRole().toLowerCase().contains("admin")) {
+					String action = req.getServletPath();
+					switch (action) {
+						case "/admin/moviescreenings":
+							listMovieScreenings(req, resp);
+							break;
+						case "/admin/editMovieScreening":
+							showEditForm(req, resp);
+							break;
+						case "/admin/deleteMovieScreening":
+							deleteMovieScreening(req, resp);
+							break;
+						default:
+							resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource not found");
+							break;
+					}
+					return;
+				}
+			}
+			resp.sendRedirect(req.getContextPath() + "/signin");
 	    }
 
 	    @Override

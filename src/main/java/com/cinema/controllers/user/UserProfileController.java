@@ -25,27 +25,36 @@ public class UserProfileController extends HttpServlet{
 
 	    @Override
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    	HttpSession session = request.getSession(false);
-
+			HttpSession session = request.getSession();
 			if (session != null && session.getAttribute("person") != null) {
-				// Lấy thông tin người dùng từ session
-				Person person = (Person) session.getAttribute("person");
-				 if (person.getBirthDate() != null) {
-			            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			            String formattedBirthDate = sdf.format(person.getBirthDate());
-			            request.setAttribute("formattedBirthDate", formattedBirthDate);
-			        }
-			
-				
-				// Gán thông tin người dùng vào request
-				request.setAttribute("person", person);
 
-				// Chuyển hướng đến trang User Profile
-				request.getRequestDispatcher("/views/user/userprofile.jsp").forward(request, response);
-			} else {
-				// Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
-				response.sendRedirect(request.getContextPath() + "/signin");
+				Person person = (Person) session.getAttribute("person");
+
+				if (!person.getRole().toLowerCase().contains("admin")) {
+
+					if (session != null && session.getAttribute("person") != null) {
+						// Lấy thông tin người dùng từ session
+						person = (Person) session.getAttribute("person");
+						if (person.getBirthDate() != null) {
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String formattedBirthDate = sdf.format(person.getBirthDate());
+							request.setAttribute("formattedBirthDate", formattedBirthDate);
+						}
+
+
+						// Gán thông tin người dùng vào request
+						request.setAttribute("person", person);
+
+						// Chuyển hướng đến trang User Profile
+						request.getRequestDispatcher("/views/user/userprofile.jsp").forward(request, response);
+					} else {
+						// Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
+						response.sendRedirect(request.getContextPath() + "/signin");
+					}
+					return;
+				}
 			}
+			response.sendRedirect(request.getContextPath() + "/signin");
 		}
 
 

@@ -79,6 +79,9 @@ public class TicketDAOImpl implements ITicketDAO{
 			em.close();
 		}
 	}
+	
+	
+
 
 
 
@@ -127,5 +130,39 @@ public class TicketDAOImpl implements ITicketDAO{
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public List<TicketHistoryDTO> getTicketHistory(int personId) {
+	    EntityManager em = JPAConfig.getEntityManager();
+	    try {
+	        // Cập nhật JPQL để lấy thêm trường movieID và không cần phân trang
+	    	String jpql = "SELECT new com.cinema.dto.TicketHistoryDTO(" +
+					"p.paymentID, " +
+					"m.movieName, " +
+					"c.cinemaName, " +
+					"r.roomName, " +
+					"t.chairNumber, " +
+					"ms.startHour, " +
+					"ms.endHour, " +
+					"p.totalPrice" +
+					")" +
+					"FROM Ticket t " +
+					"JOIN t.movieScreenings ms " +
+					"JOIN ms.movie m " +
+					"JOIN ms.room r " +
+					"JOIN r.cinema c " +
+					"JOIN t.ticketPayments tp " +
+					"JOIN tp.payment p " +
+					"WHERE p.person.perID = :personId " +
+					"ORDER BY p.paymentID DESC";
 
+	        TypedQuery<TicketHistoryDTO> query = em.createQuery(jpql, TicketHistoryDTO.class);
+	        query.setParameter("personId", personId); // Thiết lập personId
+
+	        return query.getResultList(); // Không cần phân trang
+	    } finally {
+	        em.close(); // Đảm bảo đóng EntityManager
+	    }
+	}
 }

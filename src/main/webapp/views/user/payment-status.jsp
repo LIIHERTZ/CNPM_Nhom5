@@ -1,6 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <style>
   /* Tổng quan */
   .page-background {
@@ -110,7 +109,7 @@
       </p>
 
       <div class="payment-button-container">
-        <a href="${pageContext.request.contextPath}/userHome" class="payment-button">
+        <a href="${pageContext.request.contextPath}/home" class="payment-button">
           Go Back
         </a>
       </div>

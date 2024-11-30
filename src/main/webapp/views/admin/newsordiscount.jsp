@@ -34,7 +34,7 @@
 <!-- 														<i class="ti ti-search"></i> -->
 <!-- 													</button> -->
 <!-- 												</form> -->
-						<form action="/ValCT_Nhom5/adminnewsOrDiscounts" class="main__title-form" method="get">
+						<form action="${pageContext.request.contextPath}/adminnewsOrDiscounts" class="main__title-form" method="get">
 							<input type="text" name="search" placeholder="Search by title"
 								value="${param.search}">
 							<button type="submit">
@@ -167,26 +167,26 @@
                     <c:if test="${totalPages > 0}">
                         <span class="main__paginator-pages">${currentPage + 1} of ${totalPages}</span>
                         <ul class="main__paginator-list">
-                            <li><a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
+                            <li><a href="${pageContext.request.contextPath}/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
                                 <i class="ti ti-chevron-left"></i> <span>Prev</span>
                             </a></li>
-                            <li><a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
+                            <li><a href="${pageContext.request.contextPath}/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
                                 <span>Next</span> <i class="ti ti-chevron-right"></i>
                             </a></li>
                         </ul>
                         <ul class="paginator">
                             <li class="paginator__item paginator__item--prev">
-                                <a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
+                                <a href="${pageContext.request.contextPath}/adminnewsOrDiscounts?page=${currentPage - 1 > 0 ? currentPage - 1 : 0}&search=${param.search}">
                                     <i class="ti ti-chevron-left"></i>
                                 </a>
                             </li>
                             <c:forEach begin="0" end="${totalPages - 1}" var="i">
                                 <li class="paginator__item ${i == currentPage ? 'paginator__item--active' : ''}">
-                                    <a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${i}&search=${param.search}">${i + 1}</a>
+                                    <a href="${pageContext.request.contextPath}/adminnewsOrDiscounts?page=${i}&search=${param.search}">${i + 1}</a>
                                 </li>
                             </c:forEach>
                             <li class="paginator__item paginator__item--next">
-                                <a href="/ValCT_Nhom5/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
+                                <a href="${pageContext.request.contextPath}/adminnewsOrDiscounts?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&search=${param.search}">
                                     <i class="ti ti-chevron-right"></i>
                                 </a>
                             </li>

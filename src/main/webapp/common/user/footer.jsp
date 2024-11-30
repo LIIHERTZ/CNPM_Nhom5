@@ -18,27 +18,27 @@
                 </div>
                 <ul class="social-icons">
                     <li>
-                        <a href="#0">
+                        <a >
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#0" class="active">
+                        <a  class="active">
                             <i class="fab fa-twitter"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#0">
+                        <a >
                             <i class="fab fa-pinterest-p"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#0">
+                        <a >
                             <i class="fab fa-google"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#0">
+                        <a >
                             <i class="fab fa-instagram"></i>
                         </a>
                     </li>
@@ -47,23 +47,23 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-area">
                     <div class="left">
-                        <p>Copyright © 2024.All Rights Reserved By <a href="#0">Nhóm 5 - Công nghệ phần mềm </a></p>
+                        <p>Copyright © 2024.All Rights Reserved By <a >"Nhóm 5 - Công nghệ phần mềm "</a></p>
                     </div>
                     <ul class="links">
                         <li>
-                            <a href="">About</a>
+                            <a >About</a>
                         </li>
                         <li>
-                            <a href="">Terms Of Use</a>
+                            <a >Terms Of Use</a>
                         </li>
                         <li>
-                            <a href="">Privacy Policy</a>
+                            <a >Privacy Policy</a>
                         </li>
                         <li>
-                            <a href="">FAQ</a>
+                            <a >FAQ</a>
                         </li>
                         <li>
-                            <a href="">Feedback</a>
+                            <a>Feedback</a>
                         </li>
                     </ul>
                 </div>

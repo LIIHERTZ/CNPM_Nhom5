@@ -17,7 +17,7 @@
 						<span class="cate">Forget password</span>
 						<h2 class="title">ValCT</h2>
 					</div>
-					<form action="/ValCT_Nhom5/forgetpass" method="post"
+					<form action="${pageContext.request.contextPath}/forgetpass" method="post"
 						class="account-form">
 						<c:if test="${exception != null}">
 							<label class="form-group">${exception}</label>
@@ -33,7 +33,7 @@
 						</div>
 					</form>
 					<div class="option">
-						Already have an account? <a href="/ValCT_Nhom5/signin">Login</a>
+						Already have an account? <a href="${pageContext.request.contextPath}/signin">Login</a>
 					</div>
 				</div>
 			</div>

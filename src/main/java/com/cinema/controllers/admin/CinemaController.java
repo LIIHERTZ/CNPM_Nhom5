@@ -53,16 +53,11 @@ public class CinemaController extends HttpServlet {
 				default:
 					listCinemas(req, resp);
 					break;
-				} 
+				}
+				return;
 		    }
-		    else {
-		    	resp.sendRedirect(req.getContextPath() + "/signin");
-		    }
-
-		} else {
-			resp.sendRedirect(req.getContextPath() + "/signin");
 		}
-
+		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 
 	@Override

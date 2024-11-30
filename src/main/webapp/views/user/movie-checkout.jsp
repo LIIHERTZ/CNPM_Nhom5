@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import="java.text.SimpleDateFormat"%>
-<%@ page import="java.util.Calendar"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
 <%
-// ÃÂÃ¡ÂºÂ·t thÃ¡Â»Âi gian ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c (5 phÃÂºt)
-int countdownMinutes = 5;
+    // ÃÂÃ¡ÂºÂ·t thÃ¡Â»Âi gian ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c (5 phÃÂºt)
+    int countdownMinutes = 5;
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets2/css/bootstrap.min.css">
 
@@ -21,73 +21,73 @@ int countdownMinutes = 5;
 
 
 <!-- ==========Banner-Section========== -->
-	<c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
-	<section class="details-banner hero-area bg_img"
-		data-background="${movieImgUrl}" id = "data-background-MV">
-		<div class="container">
-			<div class="details-banner-wrapper">
-				<div class="details-banner-content">
-					<!-- Display movie title -->
-					<h3 class="title">${movie.movieName}</h3>
+<c:url value="/image?fname=${movie.image}" var="movieImgUrl"></c:url>
+<section class="details-banner hero-area bg_img"
+         data-background="${movieImgUrl}" id="data-background-MV">
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-content">
+                <!-- Display movie title -->
+                <h3 class="title">${movie.movieName}</h3>
 
-					<!-- Optional: Add additional movie information here -->
-					<div class="movie-info">
-						<!-- Example: Movie duration -->
-						<p>
-							<strong>Duration:</strong> ${movie.movieDuration}
-						</p>
+                <!-- Optional: Add additional movie information here -->
+                <div class="movie-info">
+                    <!-- Example: Movie duration -->
+                    <p>
+                        <strong>Duration:</strong> ${movie.movieDuration}
+                    </p>
 
-						<!-- Example: Movie release date -->
-						<p>
-							<strong>Category:</strong> ${movie.category}
-						</p>
-						<p>
-							<strong>Experience:</strong> ${experience}
-						</p>
-						<p>
-							<strong>version:</strong> ${version}
-						</p>
-						<p>
-							<strong>Location:</strong> ${selectedLocation}
-						</p>
+                    <!-- Example: Movie release date -->
+                    <p>
+                        <strong>Category:</strong> ${movie.category}
+                    </p>
+                    <p>
+                        <strong>Experience:</strong> ${experience}
+                    </p>
+                    <p>
+                        <strong>version:</strong> ${version}
+                    </p>
+                    <p>
+                        <strong>Location:</strong> ${selectedLocation}
+                    </p>
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- ==========Banner-Section========== -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
 
-	<!-- ==========Page-Title========== -->
-	<section class="page-title bg-one">
-		<div class="container">
-			<div class="page-title-area">
-				<!-- NÃÂºt quay lÃ¡ÂºÂ¡i -->
-				<div class="item md-order-1">
-					<a href="${pageContext.request.contextPath}/userSelectSeats"
-						class="custom-button back-button"> <i
-						class="flaticon-double-right-arrows-angles"></i>back
-					</a>
-				</div>
+<!-- ==========Page-Title========== -->
+<section class="page-title bg-one">
+    <div class="container">
+        <div class="page-title-area">
+            <!-- NÃÂºt quay lÃ¡ÂºÂ¡i -->
+            <div class="item md-order-1">
+                <a href="${pageContext.request.contextPath}/userSelectSeats"
+                   class="custom-button back-button"> <i
+                        class="flaticon-double-right-arrows-angles"></i>back
+                </a>
+            </div>
 
-				<!-- HiÃ¡Â»Ân thÃ¡Â»Â ngÃ y vÃ  giÃ¡Â»Â ÃÂÃÂ£ chÃ¡Â»Ân -->	
-				<div class="item date-item">
-					<!-- HiÃ¡Â»Ân thÃ¡Â»Â startHour theo ÃÂÃ¡Â»Ânh dÃ¡ÂºÂ¡ng HH:mm, dd/MM/yyyy -->
-					<c:if test="${not empty startHour}">
-						<fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy" />
-					</c:if>
-				</div>
+            <!-- HiÃ¡Â»Ân thÃ¡Â»Â ngÃ y vÃ  giÃ¡Â»Â ÃÂÃÂ£ chÃ¡Â»Ân -->
+            <div class="item date-item">
+                <!-- HiÃ¡Â»Ân thÃ¡Â»Â startHour theo ÃÂÃ¡Â»Ânh dÃ¡ÂºÂ¡ng HH:mm, dd/MM/yyyy -->
+                <c:if test="${not empty startHour}">
+                    <fmt:formatDate value="${startHour}" pattern="HH:mm, dd/MM/yyyy"/>
+                </c:if>
+            </div>
 
 
-				<!-- ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c thÃ¡Â»Âi gian -->
-				<div class="item">
-					<h5 class="title" id="countdown-timer">05:00</h5>
-					<p>Mins Left</p>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- ==========Page-Title========== -->
+            <!-- ÃÂÃ¡ÂºÂ¿m ngÃÂ°Ã¡Â»Â£c thÃ¡Â»Âi gian -->
+            <div class="item">
+                <h5 class="title" id="countdown-timer">05:00</h5>
+                <p>Mins Left</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Page-Title========== -->
 
 	<!-- ==========Movie-Section========== -->
 	<div class="movie-facility padding-bottom padding-top">

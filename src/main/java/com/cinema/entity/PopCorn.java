@@ -20,7 +20,7 @@ public class PopCorn {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int popcornID;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "NVARCHAR(500)")
     private String namePopCorn;
 
     @Column(nullable = false)

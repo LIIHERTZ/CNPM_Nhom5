@@ -6,19 +6,18 @@ import com.cinema.entity.Review;
 
 public interface IReviewService {
 
+	boolean addReview(Review review);
+
 	void updateReview(Review review);
 
-	void deleteReview(int reviewID);
-	
+	boolean deleteReview(int reviewID);
+
 	int countReviewsByMovie(int movieId);
 
 	List<Review> getReviewsByMovie(int movieId);
 
-	boolean addReview(Review review);
+	boolean hasReviewed(int perID, int movieID);
 
 	List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize);
-
-	
-	
-	
+	int getTotalReviewCountByMovie(int movieId);
 }

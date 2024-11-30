@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.cinema.entity.Movie;
+import com.cinema.entity.Person;
 import com.cinema.services.IMovieService;
 import com.cinema.services.impl.MovieServiceImpl;
 
@@ -13,6 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 @WebServlet(urlPatterns = "/userMovieList")
 public class MovieListController extends HttpServlet{
 	IMovieService movieService = new MovieServiceImpl();
@@ -23,28 +26,38 @@ public class MovieListController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 String filter = req.getParameter("filter");
+		HttpSession session = req.getSession();
+		if (session != null && session.getAttribute("person") != null) {
 
-	        List<Movie> movies;
-	        String pageTitle;
+			Person person = (Person) session.getAttribute("person");
 
-	        if ("showing".equalsIgnoreCase(filter)) {
-	            movies = movieService.getMoviesShowing(); // Phim đang chiếu
-	            pageTitle = "Movies Showing";
-	        } else if ("comingSoon".equalsIgnoreCase(filter)) {
-	            movies = movieService.getMoviesComingSoon(); // Phim sắp chiếu
-	            pageTitle = "Movies Coming Soon";
-	        } else {
-	            // Mặc định: Hiển thị cả 2 danh sách
-	            movies = movieService.getAllMovie();
-	            pageTitle = "All Movies";
-	        }
+			if (!person.getRole().toLowerCase().contains("admin")) {
+				String filter = req.getParameter("filter");
 
-	        // Truyền dữ liệu xuống JSP
-	        req.setAttribute("movies", movies);
-	        req.setAttribute("pageTitle", pageTitle);
+				List<Movie> movies;
+				String pageTitle;
 
-	        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/movie-list.jsp");
-	        dispatcher.forward(req, resp);
+				if ("showing".equalsIgnoreCase(filter)) {
+					movies = movieService.getMoviesShowing(); // Phim đang chiếu
+					pageTitle = "Movies Showing";
+				} else if ("comingSoon".equalsIgnoreCase(filter)) {
+					movies = movieService.getMoviesComingSoon(); // Phim sắp chiếu
+					pageTitle = "Movies Coming Soon";
+				} else {
+					// Mặc định: Hiển thị cả 2 danh sách
+					movies = movieService.getAllMovie();
+					pageTitle = "All Movies";
+				}
+
+				// Truyền dữ liệu xuống JSP
+				req.setAttribute("movies", movies);
+				req.setAttribute("pageTitle", pageTitle);
+
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/movie-list.jsp");
+				dispatcher.forward(req, resp);
+				return;
+			}
+		}
+		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 }

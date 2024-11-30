@@ -23,5 +23,9 @@ public class TicketServiceImpl implements ITicketService{
 	public int countTicketHistory(int personId) {
 		return ticketDao.countTicketHistory(personId);
 	}
-
+	
+	public List<TicketHistoryDTO> getTicketHistory(int personId)
+	{
+		return ticketDao.getTicketHistory(personId);
+	}
 }

@@ -21,7 +21,7 @@ public class Review {
     private String content;
 
     @Column(nullable = false)
-    private int evaluate;
+    private float evaluate;
 
     @ManyToOne
     @JoinColumn(name = "movieID", nullable = false)
@@ -47,11 +47,11 @@ public class Review {
 		this.content = content;
 	}
 
-	public int getEvaluate() {
+	public float getEvaluate() {
 		return evaluate;
 	}
 
-	public void setEvaluate(int evaluate) {
+	public void setEvaluate(float evaluate) {
 		this.evaluate = evaluate;
 	}
 

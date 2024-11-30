@@ -1,11 +1,10 @@
 package com.cinema.controllers.admin;
 
+import com.cinema.entity.Person;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
-import jakarta.servlet.http.Part;
 
 import com.cinema.entity.NewsOrDiscount;
 import com.cinema.services.*;
@@ -108,64 +106,72 @@ public class NewsOrDiscountController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String url = req.getRequestURI();
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession(false);
 
-		if (url.contains("newsOrDiscounts")) {
-//			List<NewsOrDiscount> list = newsOrDiscountService.findAll();
-//			req.setAttribute("listNewsOrDiscount", list);
-			
-	        String searchKeyword = req.getParameter("search");
-	        int page = 0;
-	        int pageSize = 5; // Số item trên mỗi trang, có thể tùy chỉnh
+		if (session != null && session.getAttribute("person") != null) {
+			Person person = (Person) session.getAttribute("person");
 
-	        try {
-	            page = Integer.parseInt(req.getParameter("page"));
-	        } catch (NumberFormatException e) {
-	            // Mặc định page = 0 nếu không truyền hoặc lỗi định dạng
-	        }
+			if (person.getRole().toLowerCase().contains("admin")) {
+				String url = req.getRequestURI();
 
-	        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-	            // Tìm kiếm
-	            List<NewsOrDiscount> searchResults = newsOrDiscountService.findByNewsOrDiscountname(searchKeyword, page, pageSize);
-	            
-	            // Tính số trang
-	            int totalItems = newsOrDiscountService.countBySearch(searchKeyword); // Phương thức đếm kết quả tìm kiếm
-	            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-	            
-	            req.setAttribute("listNewsOrDiscount", searchResults);
-	            req.setAttribute("totalPages", totalPages);
-	            req.setAttribute("currentPage", page);
-	        } else {
-	            // Phân trang
-	            List<NewsOrDiscount> pagedResults = newsOrDiscountService.findAll(page, pageSize);
-	            int totalItems = newsOrDiscountService.count();
-	            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+				if (url.contains("newsOrDiscounts")) {
 
-	            req.setAttribute("listNewsOrDiscount", pagedResults);
-	            req.setAttribute("totalPages", totalPages);
-	            req.setAttribute("currentPage", page);
-	        }
-			
-			
-			req.getRequestDispatcher("/views/admin/newsordiscount.jsp").forward(req, resp);
-		} else if (url.contains("newsOrDiscountadd")) {
-			req.getRequestDispatcher("/views/admin/newsordiscount-add.jsp").forward(req, resp);
-		} else if (url.contains("newsOrDiscountedit")) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			NewsOrDiscount newsOrDiscount = newsOrDiscountService.findById(id);
-			req.setAttribute("newsOrDiscount", newsOrDiscount);
-			req.getRequestDispatcher("/views/admin/newsordiscount-edit.jsp").forward(req, resp);
-		} else if (url.contains("newsOrDiscountdelete")) {
-			String id = req.getParameter("id");
-			try {
-				newsOrDiscountService.delete(Integer.parseInt(id));
-			} catch (Exception e) {
-				e.printStackTrace();
+					String searchKeyword = req.getParameter("search");
+					int page = 0;
+					int pageSize = 5; // Số item trên mỗi trang, có thể tùy chỉnh
+
+					try {
+						page = Integer.parseInt(req.getParameter("page"));
+					} catch (NumberFormatException e) {
+						// Mặc định page = 0 nếu không truyền hoặc lỗi định dạng
+					}
+
+					if (searchKeyword != null && !searchKeyword.isEmpty()) {
+						// Tìm kiếm
+						List<NewsOrDiscount> searchResults = newsOrDiscountService.findByNewsOrDiscountname(searchKeyword, page, pageSize);
+
+						// Tính số trang
+						int totalItems = newsOrDiscountService.countBySearch(searchKeyword); // Phương thức đếm kết quả tìm kiếm
+						int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+						req.setAttribute("listNewsOrDiscount", searchResults);
+						req.setAttribute("totalPages", totalPages);
+						req.setAttribute("currentPage", page);
+					} else {
+						// Phân trang
+						List<NewsOrDiscount> pagedResults = newsOrDiscountService.findAll(page, pageSize);
+						int totalItems = newsOrDiscountService.count();
+						int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+						req.setAttribute("listNewsOrDiscount", pagedResults);
+						req.setAttribute("totalPages", totalPages);
+						req.setAttribute("currentPage", page);
+					}
+
+
+					req.getRequestDispatcher("/views/admin/newsordiscount.jsp").forward(req, resp);
+				} else if (url.contains("newsOrDiscountadd")) {
+					req.getRequestDispatcher("/views/admin/newsordiscount-add.jsp").forward(req, resp);
+				} else if (url.contains("newsOrDiscountedit")) {
+					int id = Integer.parseInt(req.getParameter("id"));
+					NewsOrDiscount newsOrDiscount = newsOrDiscountService.findById(id);
+					req.setAttribute("newsOrDiscount", newsOrDiscount);
+					req.getRequestDispatcher("/views/admin/newsordiscount-edit.jsp").forward(req, resp);
+				} else if (url.contains("newsOrDiscountdelete")) {
+					String id = req.getParameter("id");
+					try {
+						newsOrDiscountService.delete(Integer.parseInt(id));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					resp.sendRedirect(req.getContextPath() + "/adminnewsOrDiscounts");
+				}
+				return;
 			}
-			resp.sendRedirect(req.getContextPath() + "/adminnewsOrDiscounts");
 		}
+		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 
 	@Override

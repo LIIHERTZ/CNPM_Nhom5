@@ -24,4 +24,5 @@ public interface IMovieService {
 	 List<Movie> getMoviesShowing();
 	    List<Movie> getMoviesComingSoon();
 	List<Movie> getAllMovieActive();
+	boolean updateMovieRating(int movieID,float rating);
 }

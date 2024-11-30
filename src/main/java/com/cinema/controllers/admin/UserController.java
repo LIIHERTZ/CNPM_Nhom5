@@ -37,7 +37,6 @@ public class UserController extends HttpServlet{
 			  int page =1;
 			  int pageSize = 5;
 			  String searchValue = request.getParameter("searchQuery");
-
 			 	if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
 			 	{
 			 		 page = Integer.parseInt(request.getParameter("pageNumber"));
@@ -87,7 +86,24 @@ public class UserController extends HttpServlet{
 			
 			
 			private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-				Person user = new Person();
+				 // Kiểm tra email đã tồn tại chưa
+				
+				Person tmp = personService.findByEmail(request.getParameter("email"));
+			    if (tmp.getEmail() != null) {
+			        // Nếu email đã tồn tại, trả lại trang thêm người dùng với thông báo lỗi
+			        request.setAttribute("error", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+			        try {
+			        	request.getRequestDispatcher("/views/admin/user-add.jsp").forward(request, response);
+					} catch (ServletException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        return; // Ngừng tiếp tục quá trình thêm người dùng
+			    }
+			    Person user = new Person();
 				user.setFullName(request.getParameter("fname"));
 				user.setEmail(request.getParameter("email"));
 				user.setPassword(request.getParameter("password"));
@@ -110,6 +126,24 @@ public class UserController extends HttpServlet{
 			}
 			
 			private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+				// Kiểm tra email đã tồn tại chưa
+				Person tmp = personService.findByEmail(request.getParameter("email"));
+			    if (tmp.getEmail() != null) {
+			        // Nếu email đã tồn tại, trả lại trang thêm người dùng với thông báo lỗi
+			        request.setAttribute("error", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+			        try {
+			        	loadUserForEdit(request, response); 
+			        	return;
+					} catch (ServletException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        return; // Ngừng tiếp tục quá trình thêm người dùng
+			    }
+			    
 				int userId = Integer.parseInt(request.getParameter("userId"));
 				Person user = personService.getOnePerson(userId);
 
@@ -175,5 +209,4 @@ public class UserController extends HttpServlet{
 	 
 	 
 }
-	 
 	 

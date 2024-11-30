@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.cinema.entity.Movie;
+import com.cinema.entity.Person;
 import com.cinema.entity.PopCorn;
 import com.cinema.entity.SeatStatus;
 import com.cinema.services.IMovieService;
@@ -43,83 +44,92 @@ public class AddServiceController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		HttpSession session = req.getSession();
+		if (session != null && session.getAttribute("person") != null) {
 
-		// Lấy thông tin từ Session
-		String screeningIdStr = (String) session.getAttribute("screeningId");
-		String selectedLocation = (String) session.getAttribute("selectedLocation");
-		String selectedDate = (String) session.getAttribute("selectedDate");
-		String experience = (String) session.getAttribute("experience");
-		String version = (String) session.getAttribute("version");
-		String startHourStr = (String) session.getAttribute("startHour");
-		Movie movie = (Movie) session.getAttribute("movie");
+			Person person = (Person) session.getAttribute("person");
 
-		String selectedSeats = (String) session.getAttribute("selectedSeats");
-		String totalPrice = (String) session.getAttribute("totalPrice");
+			if (!person.getRole().toLowerCase().contains("admin")) {
 
-		// Lấy giá trị từ session nếu tồn tại
-		Map<String, List<Integer>> products = (Map<String, List<Integer>>) session.getAttribute("products");
-		String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
-		String amountPayable = (String) session.getAttribute("amountPayable");
 
-		// Chuyển đổi startHour từ String sang Date
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng của startHour
-		Date startHour = null;
-		try {
-			if (startHourStr != null) {
-				startHour = sdf.parse(startHourStr);
+				// Lấy thông tin từ Session
+				String screeningIdStr = (String) session.getAttribute("screeningId");
+				String selectedLocation = (String) session.getAttribute("selectedLocation");
+				String selectedDate = (String) session.getAttribute("selectedDate");
+				String experience = (String) session.getAttribute("experience");
+				String version = (String) session.getAttribute("version");
+				String startHourStr = (String) session.getAttribute("startHour");
+				Movie movie = (Movie) session.getAttribute("movie");
+
+				String selectedSeats = (String) session.getAttribute("selectedSeats");
+				String totalPrice = (String) session.getAttribute("totalPrice");
+
+				// Lấy giá trị từ session nếu tồn tại
+				Map<String, List<Integer>> products = (Map<String, List<Integer>>) session.getAttribute("products");
+				String foodAndBeverageTotal = (String) session.getAttribute("foodAndBeverageTotal");
+				String amountPayable = (String) session.getAttribute("amountPayable");
+
+				// Chuyển đổi startHour từ String sang Date
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng của startHour
+				Date startHour = null;
+				try {
+					if (startHourStr != null) {
+						startHour = sdf.parse(startHourStr);
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				if (screeningIdStr == null || screeningIdStr.isEmpty()) {
+					resp.sendRedirect("/ValCT_Nhom5/userBookTickets");
+					return;
+				}
+
+				int screeningId = Integer.parseInt(screeningIdStr);
+
+				// Lấy danh sách ghế và trạng thái
+				List<SeatStatus> seatStatuses = seatService.getSeatStatusesByScreeningId(screeningId);
+
+				// Nhóm ghế theo hàng (row)
+				Map<String, List<SeatStatus>> seatStatusesGroupedByRow = seatStatuses.stream()
+						.collect(Collectors.groupingBy(seat -> seat.getSeat().getSeatNumber().substring(0, 1)));
+
+				// Nhận tham số "type" từ request
+				String type = req.getParameter("type");
+
+				List<PopCorn> popcornList;
+				if (type == null || type.equals("all")) {
+					popcornList = popcornService.getAllPopcorns(); // Lấy tất cả popcorn
+				} else {
+					popcornList = popcornService.getPopcornsByType(type); // Lọc theo type
+				}
+
+				// Gán thông tin vào request để truyền tới JSP
+
+				req.setAttribute("movie", movie);
+				req.setAttribute("seatStatusesGroupedByRow", seatStatusesGroupedByRow);
+				req.setAttribute("screeningId", screeningId);
+				req.setAttribute("selectedLocation", selectedLocation);
+				req.setAttribute("selectedDate", selectedDate);
+				req.setAttribute("experience", experience);
+				req.setAttribute("version", version);
+				req.setAttribute("startHour", startHour);
+
+				req.setAttribute("selectedSeats", selectedSeats);
+				req.setAttribute("totalPrice", totalPrice);
+
+				req.setAttribute("popcornList", popcornList);
+
+				// Gán lại vào request attribute để truyền đến JSP
+				req.setAttribute("products", products);
+				req.setAttribute("foodAndBeverageTotal", foodAndBeverageTotal);
+				req.setAttribute("amountPayable", amountPayable);
+
+				RequestDispatcher rd = req.getRequestDispatcher("/views/user/add-service.jsp");
+				rd.forward(req, resp);
+				return;
 			}
-		} catch (ParseException e) {
-			e.printStackTrace();
 		}
-		if (screeningIdStr == null || screeningIdStr.isEmpty()) {
-			resp.sendRedirect("/ValCT_Nhom5/userBookTickets");
-			return;
-		}
-
-		int screeningId = Integer.parseInt(screeningIdStr);
-
-		// Lấy danh sách ghế và trạng thái
-		List<SeatStatus> seatStatuses = seatService.getSeatStatusesByScreeningId(screeningId);
-
-		// Nhóm ghế theo hàng (row)
-		Map<String, List<SeatStatus>> seatStatusesGroupedByRow = seatStatuses.stream()
-				.collect(Collectors.groupingBy(seat -> seat.getSeat().getSeatNumber().substring(0, 1)));
-
-		// Nhận tham số "type" từ request
-		String type = req.getParameter("type");
-
-		List<PopCorn> popcornList;
-		if (type == null || type.equals("all")) {
-			popcornList = popcornService.getAllPopcorns(); // Lấy tất cả popcorn
-		} else {
-			popcornList = popcornService.getPopcornsByType(type); // Lọc theo type
-		}
-
-		// Gán thông tin vào request để truyền tới JSP
-
-		req.setAttribute("movie", movie);
-		req.setAttribute("seatStatusesGroupedByRow", seatStatusesGroupedByRow);
-		req.setAttribute("screeningId", screeningId);
-		req.setAttribute("selectedLocation", selectedLocation);
-		req.setAttribute("selectedDate", selectedDate);
-		req.setAttribute("experience", experience);
-		req.setAttribute("version", version);
-		req.setAttribute("startHour", startHour);
-
-		req.setAttribute("selectedSeats", selectedSeats);
-		req.setAttribute("totalPrice", totalPrice);
-
-		req.setAttribute("popcornList", popcornList);
-
-		// Gán lại vào request attribute để truyền đến JSP
-		req.setAttribute("products", products);
-		req.setAttribute("foodAndBeverageTotal", foodAndBeverageTotal);
-		req.setAttribute("amountPayable", amountPayable);
-
-		RequestDispatcher rd = req.getRequestDispatcher("/views/user/add-service.jsp");
-		rd.forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + "/signin");
 
 	}
 

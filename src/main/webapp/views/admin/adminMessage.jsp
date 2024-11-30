@@ -273,7 +273,7 @@ textarea:focus {
 		            senderId: "<%= ((Person) session.getAttribute("person")).getPerID() %>"
 		        };
 
-		        fetch("/ValCT_Nhom5/saveMessage", {
+		        fetch("${pageContext.request.contextPath}/saveMessage", {
 		            method: "POST",
 		            headers: {
 		                "Content-Type": "application/json"
