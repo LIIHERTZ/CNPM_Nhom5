@@ -20,6 +20,7 @@ import com.cinema.entity.*;
 import com.cinema.entity.SeatStatus;
 import com.cinema.services.*;
 import com.cinema.services.impl.*;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = { "/admin/seatrooms" })
 public class SeatController  extends HttpServlet {
@@ -36,17 +37,29 @@ public class SeatController  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getServletPath();
-        switch (action) {
-            case "/admin/seatrooms":
-                System.out.println("msID: " + req.getParameter("msID"));
-                System.out.println("roomID: " + req.getParameter("roomID"));
-                System.out.println("cinemaId: " + req.getParameter("cinemaId"));
-                viewSeatRoom(req, resp);
-                break;
-            default:
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        HttpSession session = req.getSession(false);
+
+        if (session != null && session.getAttribute("person") != null) {
+            Person person = (Person) session.getAttribute("person");
+
+            if (person.getRole().toLowerCase().contains("admin")) {
+                String action = req.getServletPath();
+                switch (action) {
+                    case "/admin/seatrooms":
+                        System.out.println("msID: " + req.getParameter("msID"));
+                        System.out.println("roomID: " + req.getParameter("roomID"));
+                        System.out.println("cinemaId: " + req.getParameter("cinemaId"));
+                        viewSeatRoom(req, resp);
+                        break;
+                    default:
+                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
+                return;
+            }
         }
+        resp.sendRedirect(req.getContextPath() + "/signin");
     }
 
 

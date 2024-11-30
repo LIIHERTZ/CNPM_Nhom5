@@ -77,7 +77,7 @@
 					<p>Rating</p>
 				</div>
 			</div>
-			<a href="${pageContext.request.contextPath}/userBookTickets?movieId=${movie.movieID}" class="custom-button">book tickets</a>
+			<a href="${pageContext.request.contextPath}/signin" class="custom-button">book tickets</a>
 		</div>
 	</div>
 </section>

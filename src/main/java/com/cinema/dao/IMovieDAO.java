@@ -26,4 +26,5 @@ public interface IMovieDAO {
 	List<Movie> getMoviesShowing(); // Lấy danh sách phim đang chiếu
     List<Movie> getMoviesComingSoon();
 	List<Movie> getAllMovieActive();
+	boolean updateMovieRating(int movieID);
 }

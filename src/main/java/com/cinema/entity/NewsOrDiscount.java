@@ -18,7 +18,7 @@ public class NewsOrDiscount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int newsID;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "NVARCHAR(500)")
     private String title;
 
     @Column(columnDefinition = "NVARCHAR(500)")

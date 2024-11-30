@@ -95,7 +95,7 @@
 						</div>
 					</form>
 					<div class="option">
-						Already have an account? <a href="/ValCT_Nhom5/signin">Login</a>
+						Already have an account? <a href="${pageContext.request.contextPath}/signin">Login</a>
 					</div>
 					<div class="or">
 						<span>Or</span>

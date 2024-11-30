@@ -67,7 +67,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <a
-                                                        href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}">
+                                                        href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">
                                                     <img src="${imgUrl}" alt="${movie.movieName}"
                                                          class="movie-img">
                                                 </a>
@@ -76,19 +76,19 @@
                                             <div class="movie-content bg-one">
                                                 <h5 class="title m-0">
                                                     <a
-                                                            href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}">${movie.movieName}</a>
+                                                            href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">${movie.movieName}</a>
                                                 </h5>
 
                                                 <ul class="movie-action-list">
                                                     <div>
-                                                        <a href="${pageContext.request.contextPath}/userBookTickets?movieId=${movie.movieID}"
+                                                        <a href="${pageContext.request.contextPath}/signin"
                                                            class="custom-button">
                                                             <i class="bi bi-ticket-perforated-fill"></i> Book Ticket
                                                         </a>
                                                     </div>
 
                                                     <div><a
-                                                            href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}"
+                                                            href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}"
                                                             class=" custom-button flaticon-loupe">Detail</a>
                                                     </div>
                                                 </ul>
@@ -189,7 +189,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <a
-                                                    href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}">
+                                                    href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">
                                                 <img src="${imgUrl}" alt="${movie.movieName}"
                                                      class="movie-img">
                                             </a>
@@ -198,7 +198,7 @@
                                         <div class="movie-content bg-one">
                                             <h5 class="title">
                                                 <a
-                                                        href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}">${movie.movieName}</a>
+                                                        href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">${movie.movieName}</a>
                                             </h5>
 
                                             <p class="duration">
@@ -232,7 +232,7 @@
                                                 <div class="book-ticket">
                                                     <div class="react-item mr-auto">
                                                         <a
-                                                                href="${pageContext.request.contextPath}/userBookTickets?movieId=${movie.movieID}">
+                                                                href="${pageContext.request.contextPath}/signin">
                                                             <div class="thumb">
                                                                 <img
                                                                         src="${pageContext.request.contextPath}/assets/images/icons/book.png"
@@ -243,7 +243,7 @@
                                                     </div>
                                                     <div class="react-item mr-auto">
                                                         <a
-                                                                href="${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}">
+                                                                href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">
                                                             <div class="thumb">
                                                                 <img
                                                                         src="${pageContext.request.contextPath}/assets/images/icons/play-button.png"

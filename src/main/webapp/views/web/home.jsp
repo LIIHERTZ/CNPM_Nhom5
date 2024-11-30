@@ -11,8 +11,8 @@
     <meta charset="UTF-8">
     <title>Movie List</title>
     <!-- Owl Carousel CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/${pageContext.request.contextPath}/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/${pageContext.request.contextPath}/assets/owl.theme.default.min.css">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -121,7 +121,7 @@
         margin: 8px auto 0;
         border-radius: 2px;
     }
-  
+
 
 .movie-title {
     text-transform: uppercase; /* Viết hoa tiêu đề */
@@ -131,11 +131,11 @@
 .movie-content span {
     line-height: 1.5; /* Tăng chiều cao dòng để dễ đọc */
 }
-    
+
 </style>
 
 <section class="banner-section">
-    <div class="banner-bg bg_img bg-fixed" data-background="assets/images/banner/banner01.jpg"></div>
+    <div class="banner-bg bg_img bg-fixed" data-background="${pageContext.request.contextPath}/assets/images/banner/banner01.jpg"></div>
     <div class="container">
         <div class="banner-content">
             <h1 class="title cd-headline clip">
@@ -160,7 +160,7 @@
                 <c:forEach var="movie" items="${moviesShowing}">
                     <div class="movie-grid">
                         <div class="movie-thumb c-thumb">
-                            <a href="#0">
+                            <a href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">
                                 <c:if test="${movie.image != null}">
                                     <c:choose>
                                         <c:when test="${movie.image.substring(0, 5) == 'https'}">
@@ -176,18 +176,18 @@
                         </div>
                         <div class="movie-content bg-one">
                             <h5 class="movie-title">
-                                <a href="#0">${movie.movieName}</a>
+                                <a href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">${movie.movieName}</a>
                             </h5>
                             <ul class="movie-rating-percent">
                                  <li>
                                         <div class="thumb">
-                                            <img src="assets/images/movie/tomato.png" alt="rating">
+                                            <img src="${pageContext.request.contextPath}/assets/images/movie/tomato.png" alt="rating">
                                         </div>
                                         <span class="content">Category: ${movie.category}</span>
                                     </li>
                                     <li>
                                         <div class="thumb">
-                                            <img src="assets/images/movie/cake.png" alt="duration">
+                                            <img src="${pageContext.request.contextPath}/assets/images/movie/cake.png" alt="duration">
                                         </div>
                                         <span class="content">Duration: ${movie.movieDuration}</span>
                                     </li>
@@ -217,7 +217,7 @@
                 <c:forEach var="movie" items="${moviesComingSoon}">
                     <div class="movie-grid">
                         <div class="movie-thumb c-thumb">
-                            <a href="#0">
+                            <a href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">
                                 <c:if test="${movie.image != null}">
                                     <c:choose>
                                         <c:when test="${movie.image.substring(0, 5) == 'https'}">
@@ -233,18 +233,18 @@
                         </div>
                         <div class="movie-content bg-one">
                             <h5 class="movie-title">
-                                <a href="#0">${movie.movieName}</a>
+                                <a href="${pageContext.request.contextPath}/review?movieID=${movie.movieID}">${movie.movieName}</a>
                             </h5>
                             <ul class="movie-rating-percent">
                                 <li>
                                         <div class="thumb">
-                                            <img src="assets/images/movie/tomato.png" alt="rating">
+                                            <img src="${pageContext.request.contextPath}/assets/images/movie/tomato.png" alt="rating">
                                         </div>
                                         <span class="content">Category: ${movie.category}</span>
                                     </li>
                                     <li>
                                         <div class="thumb">
-                                            <img src="assets/images/movie/cake.png" alt="duration">
+                                            <img src="${pageContext.request.contextPath}/assets/images/movie/cake.png" alt="duration">
                                         </div>
                                         <span class="content">Duration: ${movie.movieDuration}</span>
                                     </li>

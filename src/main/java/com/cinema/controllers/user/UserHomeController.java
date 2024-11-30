@@ -43,14 +43,7 @@ public class UserHomeController extends HttpServlet {
 				dispatcher.forward(req, resp);
 		        return; 
 		    }
-		    else {
-		    	resp.sendRedirect(req.getContextPath() + "/signin");
-		    }
-			
 		}
-		else {
-			resp.sendRedirect(req.getContextPath() + "/signin");
-		}
-
+		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 }

@@ -98,6 +98,9 @@ public class MovieServiceImpl implements IMovieService{
 		return movieDao.getAllMovieActive();
 
 	}
+	public boolean updateMovieRating(int movieID) {
+		return movieDao.updateMovieRating(movieID);
+	}
 
 	
 }

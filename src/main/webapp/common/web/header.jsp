@@ -21,7 +21,7 @@
             <div class="header-wrapper">
                 <div class="logo">
                     <a href="${pageContext.request.contextPath}/home">
-                        <img src="assets/images/logo/logo.png" alt="logo">
+                        <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png" alt="logo">
                     </a>
                 </div>
                 <ul class="menu">
@@ -32,10 +32,7 @@
                         <a href="#0">movies</a>
                         <ul class="submenu">
                             <li>
-                                <a href="movie-grid.html">Movie List</a>
-                            </li>
-                            <li>
-                                <a href="popcorn.html">Movie Food</a>
+                                <a href="${pageContext.request.contextPath}/movieList">Movie List</a>
                             </li>
                         </ul>
                     </li>

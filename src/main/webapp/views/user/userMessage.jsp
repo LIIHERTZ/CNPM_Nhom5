@@ -182,7 +182,7 @@
 				websocket.send(mes);
 
 				// Gửi tin nhắn qua AJAX để lưu vào database
-				fetch("/ValCT_Nhom5/saveMessage", {
+				fetch("${pageContext.request.contextPath}/saveMessage", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json"

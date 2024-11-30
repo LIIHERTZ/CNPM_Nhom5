@@ -25,25 +25,34 @@ public class UserMessageController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lấy thông tin người dùng từ session
         HttpSession session = req.getSession();
-        Person user = (Person) session.getAttribute("person");
+        if (session != null && session.getAttribute("person") != null) {
 
-        if (user != null) {
-            // Tìm hoặc tạo conversation nếu chưa có
-            Conversation conversation = chatService.findOrCreateConversation(user.getPerID());
+            Person person = (Person) session.getAttribute("person");
 
-            // Lấy danh sách tin nhắn nếu có
-            List<Message> messages = chatService.getMessagesByConversationId(conversation.getConversationID());
-            req.setAttribute("messages", messages);
-            req.setAttribute("conversationId", conversation.getConversationID());
-        } else {
-            req.setAttribute("messages", null); // Người dùng chưa đăng nhập
-            req.setAttribute("conversationId", null);
+            if (!person.getRole().toLowerCase().contains("admin")) {
+                // Lấy thông tin người dùng từ session
+                Person user = (Person) session.getAttribute("person");
+
+                if (user != null) {
+                    // Tìm hoặc tạo conversation nếu chưa có
+                    Conversation conversation = chatService.findOrCreateConversation(user.getPerID());
+
+                    // Lấy danh sách tin nhắn nếu có
+                    List<Message> messages = chatService.getMessagesByConversationId(conversation.getConversationID());
+                    req.setAttribute("messages", messages);
+                    req.setAttribute("conversationId", conversation.getConversationID());
+                } else {
+                    req.setAttribute("messages", null); // Người dùng chưa đăng nhập
+                    req.setAttribute("conversationId", null);
+                }
+
+                // Điều hướng tới trang userMessage.jsp
+                RequestDispatcher rd = req.getRequestDispatcher("/views/user/userMessage.jsp");
+                rd.forward(req, resp);
+                return;
+            }
         }
-
-        // Điều hướng tới trang userMessage.jsp
-        RequestDispatcher rd = req.getRequestDispatcher("/views/user/userMessage.jsp");
-        rd.forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/signin");
     }
 }

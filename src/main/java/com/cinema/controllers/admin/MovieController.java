@@ -14,16 +14,14 @@ import java.util.Formatter;
 import java.util.List;
 
 import com.cinema.entity.Movie;
+import com.cinema.entity.Person;
 import com.cinema.services.impl.CinemaServiceImpl;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 
 import com.cinema.services.IMovieService;
 import com.cinema.services.impl.MovieServiceImpl;
@@ -39,25 +37,37 @@ public class MovieController extends HttpServlet {
 	String uploadPath = "D:/images";
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getServletPath();
-		switch (action) {
-		case "/admin/editMovie":
-			showEditMovieForm(req, resp);
-			break;
-		case "/admin/addMovie":
-			showAddMovieForm(req, resp);
-			break;
-		case "/admin/deleteMovie":
-			deleteMovie(req, resp);
-			break;
-		case "/admin/searchMovie":
-			searchMovies(req, resp);
-			break;
-		case "/admin/Movies":
-		default:
-			listMovies(req, resp);
-			break;
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession(false);
+
+		if (session != null && session.getAttribute("person") != null) {
+			Person person = (Person) session.getAttribute("person");
+
+			if (person.getRole().toLowerCase().contains("admin")) {
+				String action = req.getServletPath();
+				switch (action) {
+					case "/admin/editMovie":
+						showEditMovieForm(req, resp);
+						break;
+					case "/admin/addMovie":
+						showAddMovieForm(req, resp);
+						break;
+					case "/admin/deleteMovie":
+						deleteMovie(req, resp);
+						break;
+					case "/admin/searchMovie":
+						searchMovies(req, resp);
+						break;
+					case "/admin/Movies":
+					default:
+						listMovies(req, resp);
+						break;
+				}
+				return;
+			}
 		}
+		resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 
 	@Override

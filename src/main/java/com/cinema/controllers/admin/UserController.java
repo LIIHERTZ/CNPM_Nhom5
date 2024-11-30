@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "UserController", urlPatterns = { "/admin/users", "/admin/users/save", "/admin/users/add",
 		"/admin/users/edit", "/admin/users/update", "/admin/users/delete" })
@@ -23,46 +24,57 @@ public class UserController extends HttpServlet{
 	IPersonService personService = new PersonServiceImpl();
 	 @Override
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String action = request.getServletPath();
-			switch (action) {
-			case "/admin/users/add":
-				request.getRequestDispatcher("/views/admin/user-add.jsp").forward(request, response);
-				break;
-			case "/admin/users/edit":
-				loadUserForEdit(request, response); // Load category data for edit
-				break;
-			default:
-				 // Lấy thông tin phân trang từ tham số yêu cầu
-		        //int page = Integer.parseInt(request.getParameter("page"));
-			  int page =1;
-			  int pageSize = 5;
-			  String searchValue = request.getParameter("searchQuery");
+		 request.setCharacterEncoding("UTF-8");
+		 response.setCharacterEncoding("UTF-8");
+		 HttpSession session = request.getSession(false);
 
-			 	if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
-			 	{
-			 		 page = Integer.parseInt(request.getParameter("pageNumber"));
-			 		pageSize = Integer.parseInt(request.getParameter("pageSize"));
-			 	}
-			 	
+		 if (session != null && session.getAttribute("person") != null) {
+			 Person person = (Person) session.getAttribute("person");
 
-		        // Lấy danh sách sản phẩm và tổng số trang
-		        List<Person> users = userService.getUsers(page, pageSize,searchValue);
-		        int totalPages = userService.getTotalPages(pageSize,searchValue);
-		        Long userTotal = userService.countTotalUsers(searchValue);
-		        // Đưa dữ liệu vào request để hiển thị ở JSP
-		        request.setAttribute("userTotal", userTotal);
-		        request.setAttribute("users", users);
-		        request.setAttribute("currentPage", page);
-		        request.setAttribute("totalPages", totalPages);
-		        request.setAttribute("pageSize", pageSize);
-		        request.setAttribute("pageNumber", page);
-		        request.setAttribute("searchQuery", searchValue);
+			 if (person.getRole().toLowerCase().contains("admin")) {
+				 String action = request.getServletPath();
+				 switch (action) {
+					 case "/admin/users/add":
+						 request.getRequestDispatcher("/views/admin/user-add.jsp").forward(request, response);
+						 break;
+					 case "/admin/users/edit":
+						 loadUserForEdit(request, response); // Load category data for edit
+						 break;
+					 default:
+						 // Lấy thông tin phân trang từ tham số yêu cầu
+						 //int page = Integer.parseInt(request.getParameter("page"));
+						 int page = 1;
+						 int pageSize = 5;
+						 String searchValue = request.getParameter("searchQuery");
 
-		        // Forward đến JSP
-		        request.getRequestDispatcher("/views/admin/user-list.jsp").forward(request, response);
-				break;
-	       
-			}
+						 if (request.getParameter("pageNumber") != null && request.getParameter("pageSize") != null) {
+							 page = Integer.parseInt(request.getParameter("pageNumber"));
+							 pageSize = Integer.parseInt(request.getParameter("pageSize"));
+						 }
+
+
+						 // Lấy danh sách sản phẩm và tổng số trang
+						 List<Person> users = userService.getUsers(page, pageSize, searchValue);
+						 int totalPages = userService.getTotalPages(pageSize, searchValue);
+						 Long userTotal = userService.countTotalUsers(searchValue);
+						 // Đưa dữ liệu vào request để hiển thị ở JSP
+						 request.setAttribute("userTotal", userTotal);
+						 request.setAttribute("users", users);
+						 request.setAttribute("currentPage", page);
+						 request.setAttribute("totalPages", totalPages);
+						 request.setAttribute("pageSize", pageSize);
+						 request.setAttribute("pageNumber", page);
+						 request.setAttribute("searchQuery", searchValue);
+
+						 // Forward đến JSP
+						 request.getRequestDispatcher("/views/admin/user-list.jsp").forward(request, response);
+						 break;
+
+				 }
+				 return;
+			 }
+		 }
+		 response.sendRedirect(request.getContextPath() + "/signin");
 	 }
 	 
 	 @Override

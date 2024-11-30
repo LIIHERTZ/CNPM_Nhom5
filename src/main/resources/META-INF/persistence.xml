@@ -6,8 +6,9 @@
 		https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 
 	<persistence-unit name="DBSQLSERVER">
-
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
 
 
 			<property name="jakarta.persistence.jdbc.driver"
@@ -25,11 +26,6 @@
 				value="123456" />
 
 
-			<property
-				name="jakarta.persistence.schema-generation.database.action"
-				value="update" />
-
-
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.SQLServer2012Dialect" />
 
@@ -39,8 +35,6 @@
 
 			<property name="hibernate.format_sql" value="true" />
 
-
-			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 
 

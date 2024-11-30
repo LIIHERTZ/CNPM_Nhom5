@@ -14,6 +14,7 @@ import java.util.List;
 import com.cinema.services.*;
 import com.cinema.services.impl.ChatServiceImpl;
 import com.cinema.entity.*;
+import jakarta.servlet.http.HttpSession;
 
 
 @WebServlet(urlPatterns = "/adminMessage")
@@ -25,11 +26,23 @@ public class AdminMessageController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Person> customers = chatService.getAllCustomers();
-        req.setAttribute("customers", customers);
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        HttpSession session = req.getSession(false);
 
-        RequestDispatcher rd = req.getRequestDispatcher("/views/admin/adminMessage.jsp");
-        rd.forward(req, resp);
+        if (session != null && session.getAttribute("person") != null) {
+            Person person = (Person) session.getAttribute("person");
+
+            if (person.getRole().toLowerCase().contains("admin")) {
+                List<Person> customers = chatService.getAllCustomers();
+                req.setAttribute("customers", customers);
+
+                RequestDispatcher rd = req.getRequestDispatcher("/views/admin/adminMessage.jsp");
+                rd.forward(req, resp);
+                return;
+            }
+        }
+        resp.sendRedirect(req.getContextPath() + "/signin");
 	}
 	
 	@Override

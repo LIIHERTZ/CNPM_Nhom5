@@ -3,6 +3,7 @@ package com.cinema.controllers.admin;
 import java.io.IOException;
 import java.util.List;
 import com.cinema.entity.Cinema;
+import com.cinema.entity.Person;
 import com.cinema.entity.Room;
 import com.cinema.entity.Seat;
 import com.cinema.services.*;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = {"/admin/rooms", "/admin/addRoom", "/admin/editRoom" , "/admin/deleteRoom" , "/admin/searchRoom"})
 public class RoomController extends HttpServlet {
@@ -36,25 +38,37 @@ public void init() throws ServletException {
 
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String action = req.getServletPath();
-    switch (action) {
-        case "/admin/rooms":
-            showRoomsByCinema(req, resp);
-            break;
-        case "/admin/editRoom":
-            showEditRoom(req, resp);
-            break;
-        case "/admin/deleteRoom":
-            deleteRoom(req, resp);
-            break;
-        case "/admin/searchRoom":
-        	searchRooms(req, resp);
-            break;
+    req.setCharacterEncoding("UTF-8");
+    resp.setCharacterEncoding("UTF-8");
+    HttpSession session = req.getSession(false);
+
+    if (session != null && session.getAttribute("person") != null) {
+        Person person = (Person) session.getAttribute("person");
+
+        if (person.getRole().toLowerCase().contains("admin")) {
+            String action = req.getServletPath();
+            switch (action) {
+                case "/admin/rooms":
+                    showRoomsByCinema(req, resp);
+                    break;
+                case "/admin/editRoom":
+                    showEditRoom(req, resp);
+                    break;
+                case "/admin/deleteRoom":
+                    deleteRoom(req, resp);
+                    break;
+                case "/admin/searchRoom":
+                    searchRooms(req, resp);
+                    break;
 //        case "/admin/rooms":
 //        default:
 //            listAllRooms(req, resp);
 //            break;
+            }
+            return;
+        }
     }
+    resp.sendRedirect(req.getContextPath() + "/signin");
 }
 
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

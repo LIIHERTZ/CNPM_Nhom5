@@ -8,14 +8,14 @@
 <div class="sidebar">
 	<!-- sidebar logo -->
 	<a href="index.html" class="sidebar__logo"> <img
-		src="/ValCT_Nhom5/assets2/img/logo.svg" alt="">
+		src="${pageContext.request.contextPath}/assets2/img/logo.svg" alt="">
 	</a>
 	<!-- end sidebar logo -->
 
 	<!-- sidebar user -->
 	<div class="sidebar__user">
 		<div class="sidebar__user-img">
-			<img src="/ValCT_Nhom5/assets2/img/user.svg" alt="">
+			<img src="${pageContext.request.contextPath}/assets2/img/user.svg" alt="">
 		</div>
 
 		<div class="sidebar__user-title">

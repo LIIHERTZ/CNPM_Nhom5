@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.cinema.entity.*;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "PopcornController", urlPatterns = { "/admin/popcorns", "/admin/popcorns/save", "/admin/popcorns/add",
 		"/admin/popcorns/edit", "/admin/popcorns/update", "/admin/popcorns/delete" })
@@ -20,46 +21,55 @@ public class PopcornController extends HttpServlet{
 	IPopCornService popcornService = new PopCornServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getServletPath();
-		switch (action) {
-			case "/admin/popcorns/add":
-				request.getRequestDispatcher("/views/admin/popcorn/popcorn-add.jsp").forward(request, response);
-				break;
-			case "/admin/popcorns/edit":
-				loadPopcornForEdit(request, response); // Load category data for edit
-				break;
-			default:
-				// Lấy thông tin phân trang từ tham số yêu cầu
-				//int page = Integer.parseInt(request.getParameter("page"));
-				int page =1;
-				int pageSize = 5;
-				String searchValue = request.getParameter("searchQuery");
-				if (request.getParameter("pageNumber") != null  && request.getParameter("pageSize") != null)
-				{
-					page = Integer.parseInt(request.getParameter("pageNumber"));
-					pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+
+		if (session != null && session.getAttribute("person") != null) {
+			Person person = (Person) session.getAttribute("person");
+
+			if (person.getRole().toLowerCase().contains("admin")) {
+				String action = request.getServletPath();
+				switch (action) {
+					case "/admin/popcorns/add":
+						request.getRequestDispatcher("/views/admin/popcorn/popcorn-add.jsp").forward(request, response);
+						break;
+					case "/admin/popcorns/edit":
+						loadPopcornForEdit(request, response); // Load category data for edit
+						break;
+					default:
+						// Lấy thông tin phân trang từ tham số yêu cầu
+						//int page = Integer.parseInt(request.getParameter("page"));
+						int page = 1;
+						int pageSize = 5;
+						String searchValue = request.getParameter("searchQuery");
+						if (request.getParameter("pageNumber") != null && request.getParameter("pageSize") != null) {
+							page = Integer.parseInt(request.getParameter("pageNumber"));
+							pageSize = Integer.parseInt(request.getParameter("pageSize"));
+						}
+
+
+						// Lấy danh sách sản phẩm và tổng số trang
+						List<PopCorn> popcorns = popcornService.getPopCorns(page, pageSize, searchValue);
+						int totalPages = popcornService.getTotalPages(pageSize, searchValue);
+						Long popcornTotal = popcornService.countTotalPopCorns(searchValue);
+						// Đưa dữ liệu vào request để hiển thị ở JSP
+						request.setAttribute("popcornTotal", popcornTotal);
+						request.setAttribute("popcorns", popcorns);
+						request.setAttribute("currentPage", page);
+						request.setAttribute("totalPages", totalPages);
+						request.setAttribute("pageSize", pageSize);
+						request.setAttribute("pageNumber", page);
+						request.setAttribute("searchQuery", searchValue);
+
+						// Forward đến JSP
+						request.getRequestDispatcher("/views/admin/popcorn/popcorn-list.jsp").forward(request, response);
+						break;
 				}
-
-
-
-				// Lấy danh sách sản phẩm và tổng số trang
-				List<PopCorn> popcorns = popcornService.getPopCorns(page, pageSize,searchValue);
-				int totalPages = popcornService.getTotalPages(pageSize,searchValue);
-				Long popcornTotal = popcornService.countTotalPopCorns(searchValue);
-				// Đưa dữ liệu vào request để hiển thị ở JSP
-				request.setAttribute("popcornTotal", popcornTotal);
-				request.setAttribute("popcorns", popcorns);
-				request.setAttribute("currentPage", page);
-				request.setAttribute("totalPages", totalPages);
-				request.setAttribute("pageSize", pageSize);
-				request.setAttribute("pageNumber", page);
-				request.setAttribute("searchQuery", searchValue);
-
-				// Forward đến JSP
-				request.getRequestDispatcher("/views/admin/popcorn/popcorn-list.jsp").forward(request, response);
-				break;
-
+				return;
+			}
 		}
+		response.sendRedirect(request.getContextPath() + "/signin");
 	}
 
 	@Override
