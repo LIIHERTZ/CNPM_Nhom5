@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cinema.configs.JPAConfig;
@@ -116,6 +117,11 @@ public class ReviewDaoImpl implements IReviewDao {
 
     @Override
     public List<Review> getReviewsByMovieWithPagination(int movieId, int page, int pageSize) {
+        // Kiểm tra page có bằng 0 không
+        if (page == 0) {
+            return new ArrayList<>();  // Trả về danh sách rỗng
+        }
+
         EntityManager em = JPAConfig.getEntityManager();
         try {
             // Tính toán vị trí bắt đầu của phân trang
@@ -132,5 +138,7 @@ public class ReviewDaoImpl implements IReviewDao {
             em.close();
         }
     }
+
+
 
 }

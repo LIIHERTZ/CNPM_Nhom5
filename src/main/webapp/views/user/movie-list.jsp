@@ -199,10 +199,10 @@
 													<a
 														href="<c:choose>
                                                             <c:when test='${not empty sessionScope.person}'>
-                                                            ${pageContext.request.contextPath}/review?movieID=${movie.movieID}&perID=${person.perID}
+                                                            ${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}&perID=${person.perID}
                                                             </c:when>
                                                             <c:otherwise>
-                                                            ${pageContext.request.contextPath}/review?movieID=${movie.movieID}
+                                                            ${pageContext.request.contextPath}/userReview?movieID=${movie.movieID}
                                                             </c:otherwise>
                                                             </c:choose>">
 														${movie.movieName} </a>
