@@ -19,6 +19,13 @@
     object-fit: cover; /* Lấp đầy vùng chứa mà không bị méo */
     object-position: center; /* Căn giữa ảnh nếu có phần bị cắt */
 }
+.details-banner-thumb img {
+	width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng */
+	height: 100%; /* Hình ảnh chiếm toàn bộ chiều cao */
+	object-fit: cover; /* Lấp đầy khung mà không méo hình */
+	display: block;
+	/* Loại bỏ khoảng trống không mong muốn dưới hình ảnh */
+}
 </style>
 <body>
 	<!-- ==========Banner-Section========== -->
