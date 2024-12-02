@@ -34,7 +34,10 @@ public class PaymentServiceImpl implements IPaymentService{
             // Lấy thông tin MovieScreenings
             MovieScreenings movieScreening = movieScreeningsDAO.findById(Integer.parseInt(screeningId));
             Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(payDate);
-            Coupon coupon = couponService.getOneCoupon(Integer.parseInt(couponId));
+            Coupon coupon = new Coupon();
+            if (couponId != null) {
+                coupon = couponService.getOneCoupon(Integer.parseInt(couponId));
+            }
             // Lưu Payment
             Payment payment = new Payment();
             payment.setCoupon(coupon);

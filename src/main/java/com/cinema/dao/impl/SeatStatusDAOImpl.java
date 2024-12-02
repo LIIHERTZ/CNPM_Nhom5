@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SeatStatusDAOImpl implements ISeatStatusDAO {
 
-	@Override
+    @Override
     public boolean addSeatStatus(SeatStatus seatStatus) {
         EntityManager em = JPAConfig.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
@@ -69,16 +69,16 @@ public class SeatStatusDAOImpl implements ISeatStatusDAO {
             em.close();
         }
     }
-    
+
     public List<SeatStatus> getSeatStatusesByScreeningAndRoom(int screeningId, int roomId) {
         EntityManager em = JPAConfig.getEntityManager();
         List<SeatStatus> seatStatuses = null;
         try {
             // Tạo truy vấn với TypedQuery để lấy các SeatStatus
             TypedQuery<SeatStatus> query = em.createQuery(
-                "SELECT ss FROM SeatStatus ss " +
-                "WHERE ss.screening.msID = :screeningId AND ss.seat.room.roomID = :roomId", 
-                SeatStatus.class
+                    "SELECT ss FROM SeatStatus ss " +
+                            "WHERE ss.screening.msID = :screeningId AND ss.seat.room.roomID = :roomId",
+                    SeatStatus.class
             );
             // Set các tham số vào truy vấn
             query.setParameter("screeningId", screeningId);
@@ -97,27 +97,45 @@ public class SeatStatusDAOImpl implements ISeatStatusDAO {
     @Override
     public void updateSeatStatusesTrue(int seatId, int screeningId) {
         EntityManager em = JPAConfig.getEntityManager();
-        em.getTransaction().begin();
-        String query = "UPDATE SeatStatus ss SET ss.status = TRUE, ss.bookingTime = :bookingTime WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
-        em.createQuery(query)
-                .setParameter("seatId", seatId)
-                .setParameter("screeningId", screeningId)
-                .setParameter("bookingTime", LocalDateTime.now())
-                .executeUpdate();
-        em.getTransaction().commit();
+        try {
+            em.getTransaction().begin();
+            String query = "UPDATE SeatStatus ss SET ss.status = TRUE, ss.bookingTime = :bookingTime WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
+            em.createQuery(query)
+                    .setParameter("seatId", seatId)
+                    .setParameter("screeningId", screeningId)
+                    .setParameter("bookingTime", LocalDateTime.now())
+                    .executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public void updateSeatStatusesFalse(int seatId, int screeningId) {
         EntityManager em = JPAConfig.getEntityManager();
-        em.getTransaction().begin();
-        String query = "UPDATE SeatStatus ss SET ss.status = FALSE, ss.bookingTime = :bookingTime WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
-        em.createQuery(query)
-                .setParameter("seatId", seatId)
-                .setParameter("screeningId", screeningId)
-                .setParameter("bookingTime", null)
-                .executeUpdate();
-        em.getTransaction().commit();
+        try {
+            em.getTransaction().begin();
+            String query = "UPDATE SeatStatus ss SET ss.status = FALSE, ss.bookingTime = :bookingTime WHERE ss.seat.seatID = :seatId AND ss.screening.msID = :screeningId";
+            em.createQuery(query)
+                    .setParameter("seatId", seatId)
+                    .setParameter("screeningId", screeningId)
+                    .setParameter("bookingTime", null)
+                    .executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } finally {
+            em.close();
+        }
     }
 
     @Override

@@ -63,7 +63,10 @@
 									<div class="post-header">
 										<h4 class="m-title">${newsOrDiscount.title}</h4>
 										<p>${newsOrDiscount.description}</p>
-										<blockquote>${newsOrDiscount.detail}</blockquote>
+										<blockquote> <pre  style="color: white">
+											${newsOrDiscount.detail}
+										</pre>
+										</blockquote>
 										
 										
 									</div>

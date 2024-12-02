@@ -14,44 +14,58 @@ import jakarta.persistence.TypedQuery;
 
 public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
 
-	@Override
-	public List<MovieScreenings> getScreeningsByMovieIdAndCinemaId(int movieId, int cinemaId) {
-		EntityManager em = JPAConfig.getEntityManager();
-		// Sử dụng ms.movie.movieID và c.cinemaID để truy vấn
-		String query = "SELECT ms FROM MovieScreenings ms " +
-				"JOIN ms.room r " +
-				"JOIN r.cinema c " +
-				"WHERE ms.movie.movieID = :movieId " +
-				"AND c.cinemaID = :cinemaId " +
-				"AND ms.status = true" +
-                " AND ms.startHour > CURRENT_TIMESTAMP";
-		return em.createQuery(query, MovieScreenings.class).setParameter("movieId", movieId)
-				.setParameter("cinemaId", cinemaId).getResultList();
-	}
+    @Override
+    public List<MovieScreenings> getScreeningsByMovieIdAndCinemaId(int movieId, int cinemaId) {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            // Sử dụng ms.movie.movieID và c.cinemaID để truy vấn
+            String query = "SELECT ms FROM MovieScreenings ms " +
+                    "JOIN ms.room r " +
+                    "JOIN r.cinema c " +
+                    "WHERE ms.movie.movieID = :movieId " +
+                    "AND c.cinemaID = :cinemaId " +
+                    "AND ms.status = true" +
+                    " AND ms.startHour > CURRENT_TIMESTAMP";
+            return em.createQuery(query, MovieScreenings.class).setParameter("movieId", movieId)
+                    .setParameter("cinemaId", cinemaId).getResultList();
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            em.close();
+        }
+        return null;
+    }
 
-	@Override
-	public List<String> findAvailableDatesByMovieId(Long movieId) {
-		EntityManager entityManager = JPAConfig.getEntityManager();
-		String jpql = "SELECT DISTINCT FUNCTION('DATE_FORMAT', s.startHour, '%Y-%m-%d') "
-				+ "FROM MovieScreenings s WHERE s.movie.movieID= :movieId";
-		return entityManager.createQuery(jpql, String.class).setParameter("movieId", movieId).getResultList();
-	}
+    @Override
+    public List<String> findAvailableDatesByMovieId(Long movieId) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        try {
+            String jpql = "SELECT DISTINCT FUNCTION('DATE_FORMAT', s.startHour, '%Y-%m-%d') "
+                    + "FROM MovieScreenings s WHERE s.movie.movieID= :movieId";
+            return entityManager.createQuery(jpql, String.class).setParameter("movieId", movieId).getResultList();
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
 
-	@Override
-	public MovieScreenings findById(int msID) {
-		EntityManager em = JPAConfig.getEntityManager();
-		MovieScreenings movie = new MovieScreenings();
-		try {
-			movie = em.find(MovieScreenings.class, msID);
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			em.close();
-		}
-		return movie;
-	}
-	
-	@Override
+    @Override
+    public MovieScreenings findById(int msID) {
+        EntityManager em = JPAConfig.getEntityManager();
+        MovieScreenings movie = new MovieScreenings();
+        try {
+            movie = em.find(MovieScreenings.class, msID);
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            em.close();
+        }
+        return movie;
+    }
+
+    @Override
     public List<MovieScreenings> getAllMovieScreenings() {
         EntityManager em = JPAConfig.getEntityManager();
         try {
@@ -104,7 +118,7 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
             em.close();
         }
     }
-    
+
     @Override
     public boolean deleteMovieScreening(int msID) {
         EntityManager em = JPAConfig.getEntityManager();
@@ -132,8 +146,6 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
     }
 
 
-    
-    
     @Override
     public List<MovieScreenings> getMovieScreeningsByRoomId(int roomID) {
         EntityManager em = JPAConfig.getEntityManager();
@@ -164,19 +176,18 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
 
         return movieScreenings;
     }
-    
-    
-    
+
+
     @Override
     public List<MovieScreenings> getMovieScreeningsByRoomIdWithPagination(int roomID, int start, int total) {
         EntityManager em = JPAConfig.getEntityManager();
         try {
             String jpql = "SELECT ms FROM MovieScreenings ms WHERE ms.room.roomID = :roomID";
             return em.createQuery(jpql, MovieScreenings.class)
-                     .setParameter("roomID", roomID)
-                     .setFirstResult(start)
-                     .setMaxResults(total)
-                     .getResultList();
+                    .setParameter("roomID", roomID)
+                    .setFirstResult(start)
+                    .setMaxResults(total)
+                    .getResultList();
         } finally {
             em.close();
         }
@@ -188,14 +199,14 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
         try {
             String jpql = "SELECT COUNT(ms) FROM MovieScreenings ms WHERE ms.room.roomID = :roomID";
             Long count = em.createQuery(jpql, Long.class)
-                           .setParameter("roomID", roomID)
-                           .getSingleResult();
+                    .setParameter("roomID", roomID)
+                    .getSingleResult();
             return count.intValue();
         } finally {
             em.close();
         }
     }
-    
+
     @Override
     public List<MovieScreenings> getMovieScreeningsByRoomIdAndDateWithPagination(int roomID, Date screeningDate, int offset, int recordsPerPage) {
         EntityManager em = JPAConfig.getEntityManager();
@@ -213,9 +224,4 @@ public class MovieScreeningsDAOImpl implements IMovieScreeningsDAO {
     }
 
 
-    
-    
-    
-    
-	
 }
