@@ -15,7 +15,7 @@ public class ChatServiceImpl implements IChatService {
 
     @Override
     public List<Person> getAllCustomers() {
-        return chatDao.findPersonsByRole("customer"); // Lấy tất cả khách hàng
+        return chatDao.findPersonsByRole("User"); // Lấy tất cả khách hàng
     }
 
     @Override
